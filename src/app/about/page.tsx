@@ -32,8 +32,8 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
-          <div className="absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
         </div>
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
           <div className="text-center">

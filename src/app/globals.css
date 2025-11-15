@@ -10,8 +10,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Default to English font; switch to Arabic via :lang/dir below */
+  --font-sans: var(--font-en);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +39,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Switch to Arabic font automatically when locale/dir is Arabic */
+:lang(ar), [dir="rtl"] {
+  --font-sans: var(--font-ar);
 }
 
 main {

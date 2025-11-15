@@ -11,16 +11,41 @@ const apiClient = axios.create({
   withCredentials: false,
 });
 
-// Attach auth token if present
+// Get current profile ID from localStorage
+export function getActiveProfileId(): string | null {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('active_profile_id');
+  }
+  return null;
+}
+
+// Set active profile ID in localStorage
+export function setActiveProfileId(profileId: number | null) {
+  if (typeof window !== 'undefined') {
+    if (profileId !== null) {
+      localStorage.setItem('active_profile_id', profileId.toString());
+    } else {
+      localStorage.removeItem('active_profile_id');
+    }
+  }
+}
+
+// Attach auth token and active profile headers if present
 apiClient.interceptors.request.use((config) => {
-  if (authToken && config.headers) {
+  if (authToken) {
     config.headers.Authorization = `Bearer ${authToken}`;
   }
-  // Add Accept-Language header from localStorage
-  if (typeof window !== 'undefined' && config.headers) {
+
+  if (typeof window !== 'undefined') {
     const locale = localStorage.getItem('locale') || 'en';
     config.headers['Accept-Language'] = locale;
+
+    const profileId = getActiveProfileId();
+    if (profileId) {
+      config.headers['x-profile-id'] = profileId;
+    }
   }
+
   return config;
 });
 

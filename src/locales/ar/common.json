@@ -104,6 +104,9 @@
     "followInstructions": "اتبع التعليمات لإنشاء كلمة مرور جديدة.",
     "yourInbox": "بريدك الوارد",
     "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "loggedOut": "تم تسجيل الخروج بنجاح",
+    "logoutFailed": "فشل تسجيل الخروج",
+    "loading": "جارٍ التحميل...",
     "verifyEmail": "تحقق من بريدك الإلكتروني",
     "verifyEmailDescription": "أرسلنا رابطاً ورمز تحقق (OTP) إلى بريدك الإلكتروني.",
     "verifyEmailInfo": "لقد أرسلنا رابط تحقق إلى بريدك. يمكنك الضغط على الرابط أو إدخال رمز OTP أدناه.",
@@ -121,6 +124,131 @@
     "continue": "متابعة",
     "enterValidOtp": "أدخل رمز التحقق من بريدك الإلكتروني",
     "loginFailed": "فشل تسجيل الدخول بعد التحقق"
+  },
+  "account": {
+    "title": "إعدادات الحساب",
+    "subtitle": "قم بإدارة إعدادات وتفضيلات حسابك",
+    "status": {
+      "approvedTitle": "مقبول",
+      "approvedDescription": "تمت الموافقة على حسابك وهو نشط الآن.",
+      "pendingTitle": "قيد المراجعة",
+      "pendingDescription": "حسابك قيد المراجعة. سنخطرك بمجرد الموافقة عليه.",
+      "rejectedTitle": "مرفوض",
+      "rejectedDescription": "لم تتم الموافقة على طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل."
+    },
+    "nav": {
+      "profile": "إعداد الملف الشخصي",
+      "basic": "المعلومات الأساسية",
+      "appearance": "المظهر",
+      "profession": "المهنة",
+      "experience": "الخبرة",
+      "portfolio": "الأعمال",
+      "security": "الأمان والخصوصية",
+      "notifications": "الإشعارات",
+      "billing": "الفوترة والباقات"
+    },
+    "profession": {
+      "title": "المعلومات المهنية",
+      "description": "اختر مجالات عملك وقدّم المعلومات المطلوبة",
+      "selector": {
+        "label": "اختر مهنك وتخصصاتك",
+        "selected": "مختار",
+        "specializations": "تخصصات مختارة",
+        "search": "ابحث عن التخصصات...",
+        "noResults": "لا توجد تخصصات",
+        "empty": "اختر المهن أعلاه للبدء"
+      },
+      "media": {
+        "title": "الملفات المطلوبة للتخصصات المختارة",
+        "photo": "صورة",
+        "video": "فيديو",
+        "audio": "صوت",
+        "languages": "اللغات"
+      },
+      "uploads": {
+        "photosLabel": "صورة",
+        "photosTitle": "انقر لرفع صورة",
+        "photosSubtitle": "PNG, JPG حتى 5 ميجابايت",
+        "videoLabel": "فيديو",
+        "videoTitle": "انقر لرفع فيديو",
+        "videoSubtitle": "MP4, MOV حتى 50 ميجابايت",
+        "audioLabel": "صوت",
+        "audioTitle": "انقر لرفع ملف صوتي",
+        "audioSubtitle": "MP3, WAV حتى 20 ميجابايت"
+      },
+      "languages": {
+        "label": "اللغة",
+        "placeholder": "اختر لغة...",
+        "options": {
+          "english": "الإنجليزية",
+          "arabic": "العربية",
+          "french": "الفرنسية",
+          "spanish": "الإسبانية",
+          "german": "الألمانية",
+          "italian": "الإيطالية",
+          "portuguese": "البرتغالية",
+          "russian": "الروسية",
+          "chinese": "الصينية",
+          "japanese": "اليابانية",
+          "korean": "الكورية",
+          "hindi": "الهندية"
+        }
+      },
+      "errors": {
+        "load": "فشل تحميل المهن",
+        "selectProfession": "يرجى اختيار مهنة واحدة على الأقل مع تخصص فرعي",
+        "photoRequired": "يرجى رفع صورة واحدة على الأقل للمهنة رقم {index}",
+        "videoRequired": "يرجى رفع فيديو واحد على الأقل للمهنة رقم {index}",
+        "audioRequired": "يرجى رفع ملف صوتي واحد على الأقل للمهنة رقم {index}",
+        "languageRequired": "يرجى اختيار لغة واحدة على الأقل للمهنة رقم {index}",
+        "save": "فشل حفظ المعلومات المهنية"
+      },
+      "success": "تم حفظ المعلومات المهنية بنجاح",
+      "buttons": {
+        "save": "حفظ المعلومات المهنية",
+        "saving": "جارٍ الحفظ..."
+      },
+      "addEntry": "إضافة مهنة أخرى",
+      "addEntryDesc": "اعرض مواهبك ومهاراتك المتعددة",
+      "upload": {
+        "photo": "صورة",
+        "video": "فيديو",
+        "audio": "صوت",
+        "clickToUpload": "انقر للرفع",
+        "orDragDrop": "أو اسحب وأفلت",
+        "uploading": "جارٍ الرفع...",
+        "fileSizeExceeds": "حجم الملف يتجاوز",
+        "invalidFileType": "نوع ملف غير صالح. يرجى رفع ملف",
+        "file": "ملف"
+      },
+      "languageManager": {
+        "add": "+ إضافة لغة",
+        "empty": "لم تتم إضافة لغات بعد",
+        "voiceSample": "رفع عينة صوتية لـ"
+      },
+      "socials": {
+        "label": "روابط وسائل التواصل الاجتماعي",
+        "add": "إضافة رابط",
+        "addFirst": "أضف رابطك الأول",
+        "empty": "لم تتم إضافة روابط وسائل التواصل بعد",
+        "followers": "المتابعون (اختياري)",
+        "platform": {
+          "instagram": "إنستغرام",
+          "facebook": "فيسبوك",
+          "twitter": "تويتر/إكس",
+          "youtube": "يوتيوب",
+          "linkedin": "لينكد إن",
+          "tiktok": "تيك توك",
+          "other": "أخرى"
+        }
+      }
+    }
+  },
+  "profile": {
+    "switchProfile": "تبديل الملف الشخصي",
+    "switched": "تم تبديل الملف الشخصي بنجاح",
+    "switchFailed": "فشل تبديل الملف الشخصي",
+    "primary": "الأساسي"
   },
   "footer": {
     "copyright": "منصة ألور للكاستينج. جميع الحقوق محفوظة."

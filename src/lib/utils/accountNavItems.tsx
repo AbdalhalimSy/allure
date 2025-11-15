@@ -17,39 +17,26 @@ import {
 } from "./profileCompletion";
 
 export const getAccountNavItems = (profile: ProfileData | undefined) => {
-  const basicCompletion = calculateBasicCompletion(profile);
-  const appearanceCompletion = calculateAppearanceCompletion(profile);
-  const professionCompletion = calculateProfessionCompletion(profile);
-  const experienceCompletion = calculateExperienceCompletion(profile);
-
   return [
     {
-      id: "basic",
-      label: "Basic Information",
+      id: "profile",
+      label: "Profile Setup",
+      labelKey: "account.nav.profile",
       icon: <TbUser />,
-      completion: basicCompletion,
     },
-    {
-      id: "appearance",
-      label: "Appearance",
-      icon: <TbSparkles />,
-      completion: appearanceCompletion,
-    },
-    {
-      id: "profession",
-      label: "Profession",
-      icon: <TbBriefcase />,
-      completion: professionCompletion,
-    },
-    {
-      id: "experience",
-      label: "Experience",
-      icon: <TbStar />,
-      completion: experienceCompletion,
-    },
-    { id: "portfolio", label: "Portfolio", icon: <TbPhoto /> },
-    { id: "security", label: "Security & Privacy", icon: <TbShieldCheck /> },
-    { id: "notifications", label: "Notifications", icon: <TbBell /> },
-    { id: "billing", label: "Billing & Plans", icon: <TbCreditCard /> },
+    { id: "portfolio", label: "Portfolio", labelKey: "account.nav.portfolio", icon: <TbPhoto /> },
+    { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
+    { id: "notifications", label: "Notifications", labelKey: "account.nav.notifications", icon: <TbBell /> },
+    { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
   ];
+};
+
+// Helper function to get individual step completions (used by Profile Setup page)
+export const getProfileStepCompletions = (profile: ProfileData | undefined) => {
+  return {
+    basic: calculateBasicCompletion(profile),
+    appearance: calculateAppearanceCompletion(profile),
+    profession: calculateProfessionCompletion(profile),
+    experience: calculateExperienceCompletion(profile),
+  };
 };

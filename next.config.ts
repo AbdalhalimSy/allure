@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      // Allow images served from the production portal storage
+      {
+        protocol: "https",
+        hostname: "allureportal.sawatech.ae",
+        port: "",
+        pathname: "/storage/**",
+      },
     ],
   },
 };

@@ -33,8 +33,8 @@ export default function AgencyIntro() {
   return (
     <section className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-gray-900 via-gray-800 to-black p-10 text-white shadow-[0_40px_120px_rgba(3,7,18,0.45)]">
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-br from-[#c49a47]/40 via-transparent to-transparent blur-3xl" />
-        <div className="absolute -right-10 bottom-0 h-64 w-64 rounded-full bg-emerald-400/30 blur-3xl" />
+        <div className="absolute inset-y-0 start-0 w-1/3 bg-gradient-to-br from-[#c49a47]/40 via-transparent to-transparent blur-3xl" />
+        <div className="absolute -end-10 bottom-0 h-64 w-64 rounded-full bg-emerald-400/30 blur-3xl" />
       </div>
       <div className="relative space-y-12">
         <SectionHeader
@@ -51,7 +51,7 @@ export default function AgencyIntro() {
               accent="none"
               padding="p-6"
               backgroundClassName="border border-white/15 bg-white/5"
-              className="text-left"
+              className="text-start"
             >
               <h3 className="text-2xl font-semibold text-white">{pillar.title}</h3>
               <p className="mt-3 text-sm text-gray-300">{pillar.description}</p>

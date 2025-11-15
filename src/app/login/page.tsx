@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
 import { useI18n } from "@/contexts/I18nContext";
-import apiClient, { setAuthToken } from "@/lib/api/client";
+import apiClient, { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ import { useAuth } from "@/contexts/AuthContext";
 export default function LoginPage() {
   const { t } = useI18n();
   const router = useRouter();
-  const { setUser, isAuthenticated, hydrated } = useAuth();
+  const { setUser, isAuthenticated, hydrated, fetchProfile } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,16 +35,35 @@ export default function LoginPage() {
         return;
       }
       
-      // API returns { status, message, data: { token, token_type } }
+      // API returns { status, message, data: { token, token_type, user, talent } }
       const token = data?.data?.token;
+      const userData = data?.data?.user;
+      const talentData = data?.data?.talent;
+      
       if (token) {
+        // Step 1: Set auth token
         setAuthToken(token);
         if (typeof window !== "undefined") {
           localStorage.setItem("auth_email", email);
         }
-        // Set user and profile will be fetched automatically by AuthContext
-        setUser({ name: "Allure User", email });
-        toast.success("Login successful!");
+        
+        // Step 2: Set active profile ID FIRST before any API calls
+        if (talentData?.primary_profile_id) {
+          setActiveProfileId(talentData.primary_profile_id);
+        }
+        
+        // Step 3: Set user with initial data including talent
+        setUser({ 
+          id: userData?.id,
+          name: userData?.name || "Allure User", 
+          email: userData?.email || email,
+          talent: talentData,
+        });
+        
+        // Step 4: Fetch full profile data (now profile_id is set in localStorage)
+        await fetchProfile();
+        
+        toast.success(data?.message || "Login successful!");
         router.push("/dashboard");
       } else {
         toast.error("Login failed: No token returned");

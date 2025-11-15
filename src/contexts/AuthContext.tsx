@@ -1,7 +1,21 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import apiClient, { setAuthToken } from "@/lib/api/client";
+import apiClient, { setAuthToken, getActiveProfileId, setActiveProfileId } from "@/lib/api/client";
+import { getMediaUrl } from "@/lib/utils/media";
+
+export type TalentProfile = {
+  id: number;
+  full_name: string;
+  featured_image_url: string;
+  is_primary: boolean;
+  created_at: string;
+};
+
+export type TalentData = {
+  primary_profile_id: number;
+  profiles: TalentProfile[];
+};
 
 export type ProfileData = {
   id: number;
@@ -35,6 +49,7 @@ export type ProfileData = {
   experiences: any[];
   created_at: string;
   updated_at: string;
+  profile_picture?: string | null;
   // Appearance fields with IDs
   hair_color_id?: number | null;
   hair_color?: string | null;
@@ -96,10 +111,12 @@ export type ProfileData = {
 };
 
 type User = {
+  id?: number;
   name?: string;
   email?: string;
   avatarUrl?: string;
   profile?: ProfileData;
+  talent?: TalentData;
 };
 
 type LogoutResult = { success: boolean; message?: string };
@@ -110,6 +127,8 @@ type AuthContextValue = {
   logout: () => Promise<LogoutResult>;
   hydrated: boolean;
   fetchProfile: () => Promise<void>;
+  switchProfile: (profileId: number) => Promise<void>;
+  activeProfileId: number | null;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -118,20 +137,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUserState] = useState<User | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [activeProfileId, setActiveProfileIdState] = useState<number | null>(null);
 
   const fetchProfile = async () => {
     try {
       const { data } = await apiClient.get("/profile/me");
       if (data.status === "success" && data.data) {
-        const profileData = data.data;
-        setUserState({
-          name: `${profileData.first_name} ${profileData.last_name}`,
+        const { profile, talent } = data.data;
+        
+        // Set active profile ID if not already set
+        const currentActiveId = getActiveProfileId();
+        if (!currentActiveId && talent?.primary_profile_id) {
+          setActiveProfileId(talent.primary_profile_id);
+          setActiveProfileIdState(talent.primary_profile_id);
+        } else if (currentActiveId) {
+          setActiveProfileIdState(parseInt(currentActiveId));
+        }
+        
+        setUserState((prev) => ({
+          ...prev,
+          id: profile.id,
+          name: `${profile.first_name} ${profile.last_name}`,
           email: localStorage.getItem("auth_email") || undefined,
-          profile: profileData,
-        });
+          avatarUrl: profile.profile_picture ? getMediaUrl(profile.profile_picture) : undefined,
+          profile,
+          talent,
+        }));
       }
     } catch (error) {
       console.error("Failed to fetch profile:", error);
+    }
+  };
+
+  const switchProfile = async (profileId: number) => {
+    try {
+      setActiveProfileId(profileId);
+      setActiveProfileIdState(profileId);
+      
+      // Re-fetch profile data with new profile_id
+      await fetchProfile();
+    } catch (error) {
+      console.error("Failed to switch profile:", error);
+      throw error;
     }
   };
 
@@ -139,15 +186,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Hydrate from localStorage
     const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const email = typeof window !== "undefined" ? localStorage.getItem("auth_email") : null;
+    const storedProfileId = getActiveProfileId();
+    
     setAuthToken(token);
+    
     if (token) {
       setIsAuthenticated(true);
       setUserState({
         name: "Allure User",
         email: email || "user@example.com",
       });
-      // Fetch profile data
-      fetchProfile();
+      
+      // Set active profile ID from localStorage if exists
+      if (storedProfileId) {
+        setActiveProfileIdState(parseInt(storedProfileId));
+        // Fetch profile data only if we have a profile_id
+        fetchProfile();
+      }
+      // If no profile_id, it will be set on login and then fetchProfile will be called
     } else {
       setIsAuthenticated(false);
       setUserState(null);
@@ -159,10 +215,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUserState(u);
     if (u) {
       setIsAuthenticated(true);
-      // Fetch profile when user is set
-      if (u && !u.profile) {
-        fetchProfile();
-      }
     } else {
       setIsAuthenticated(false);
     }
@@ -187,7 +239,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { success, message };
   };
 
-  const value = useMemo(() => ({ isAuthenticated, user, setUser, logout, hydrated, fetchProfile }), [isAuthenticated, user, hydrated]);
+  const value = useMemo(
+    () => ({ 
+      isAuthenticated, 
+      user, 
+      setUser, 
+      logout, 
+      hydrated, 
+      fetchProfile, 
+      switchProfile, 
+      activeProfileId 
+    }), 
+    [isAuthenticated, user, hydrated, activeProfileId]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -24,8 +24,8 @@ export default function AuthShell({
   return (
     <section className="relative isolate flex min-h-[calc(100vh-160px)] items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 py-16 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 left-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
-        <div className="absolute bottom-0 right-[-80px] h-80 w-80 rounded-full bg-emerald-400/15 blur-3xl" />
+        <div className="absolute -top-32 start-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
+        <div className="absolute bottom-0 end-[-80px] h-80 w-80 rounded-full bg-emerald-400/15 blur-3xl" />
       </div>
       <div className="relative z-10 w-full max-w-lg">
         <SurfaceCard
@@ -56,7 +56,7 @@ export default function AuthShell({
               )}
             </div>
           </div>
-          <div className="mt-10 text-left">{children}</div>
+          <div className="mt-10 text-start">{children}</div>
           {footer && (
             <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
               {footer}

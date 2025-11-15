@@ -29,7 +29,7 @@ export default function TalentSpotlightCard({
           .join(" ")}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <div className="absolute bottom-3 left-3 text-xs uppercase tracking-[0.2em] text-white/80">
+        <div className="absolute bottom-3 start-3 text-xs uppercase tracking-[0.2em] text-white/80">
           Spotlight
         </div>
       </div>

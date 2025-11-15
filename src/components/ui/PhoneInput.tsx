@@ -139,7 +139,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className={`flex items-center gap-2 rounded-l-lg border border-r-0 px-3 transition-all focus:outline-none focus:ring-2 ${
+            className={`flex items-center gap-2 rounded-s-lg border border-e-0 px-3 transition-all focus:outline-none focus:ring-2 ${
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
                 : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 dark:border-gray-700"
@@ -165,7 +165,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             type="tel"
             value={phoneNumber}
             onChange={handlePhoneChange}
-            className={`flex-1 rounded-r-lg border px-4 py-3 transition-all focus:outline-none focus:ring-2 ${
+            className={`flex-1 rounded-e-lg border px-4 py-3 transition-all focus:outline-none focus:ring-2 ${
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
                 : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 dark:border-gray-700"
@@ -198,7 +198,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
                     key={country.code}
                     type="button"
                     onClick={() => handleCountrySelect(country)}
-                    className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
+                    className={`flex w-full items-center gap-3 px-4 py-2.5 text-start text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
                       selectedCountry.code === country.code ? "bg-[#c49a47]/10" : ""
                     }`}
                   >

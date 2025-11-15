@@ -14,7 +14,7 @@ export default function AccountField({ label, children, required, description }:
     <div className="space-y-2">
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         {label}
-        {required && <span className="ml-1 text-rose-500">*</span>}
+        {required && <span className="ms-1 text-rose-500">*</span>}
       </label>
       {children}
       {description && (

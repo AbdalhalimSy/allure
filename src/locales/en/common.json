@@ -103,10 +103,13 @@
     "resetLinkSentPrefix": "We sent a password reset link to",
     "followInstructions": "Follow the instructions to create a new password.",
     "logoutConfirm": "Are you sure you want to logout?",
+    "loggedOut": "Logged out successfully",
+    "logoutFailed": "Failed to logout",
+    "loading": "Loading...",
     "yourInbox": "your inbox",
     "verifyEmail": "Verify your email",
     "verifyEmailDescription": "We sent a link and an OTP code to your email.",
-    "verifyEmailInfo": "We’ve sent a verification link to your email. You can either click the link or enter the OTP code below.",
+    "verifyEmailInfo": "We've sent a verification link to your email. You can either click the link or enter the OTP code below.",
     "enterOtp": "Verification code",
     "otpHint": "Enter the 4–6 digit code we sent to",
     "resendOtp": "Resend code",
@@ -121,6 +124,131 @@
     "continue": "Continue",
     "enterValidOtp": "Enter the verification code from your email",
     "loginFailed": "Login failed after verification"
+  },
+  "account": {
+    "title": "Account Settings",
+    "subtitle": "Manage your account settings and preferences",
+    "status": {
+      "approvedTitle": "approved",
+      "approvedDescription": "Your account has been approved and is active.",
+      "pendingTitle": "pending",
+      "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
+      "rejectedTitle": "rejected",
+      "rejectedDescription": "Your account application was not approved. Please contact support for details."
+    },
+    "nav": {
+      "profile": "Profile Setup",
+      "basic": "Basic Information",
+      "appearance": "Appearance",
+      "profession": "Profession",
+      "experience": "Experience",
+      "portfolio": "Portfolio",
+      "security": "Security & Privacy",
+      "notifications": "Notifications",
+      "billing": "Billing & Plans"
+    },
+    "profession": {
+      "title": "Professional Information",
+      "description": "Select your professions and provide the required information",
+      "selector": {
+        "label": "Select Your Professions & Specializations",
+        "selected": "selected",
+        "specializations": "specializations selected",
+        "search": "Search specializations...",
+        "noResults": "No specializations found",
+        "empty": "Select professions above to get started"
+      },
+      "media": {
+        "title": "Required Media for Selected Specializations",
+        "photo": "Photo",
+        "video": "Video",
+        "audio": "Audio",
+        "languages": "Languages"
+      },
+      "uploads": {
+        "photosLabel": "Photo",
+        "photosTitle": "Click to upload photo",
+        "photosSubtitle": "PNG, JPG up to 5MB",
+        "videoLabel": "Video",
+        "videoTitle": "Click to upload video",
+        "videoSubtitle": "MP4, MOV up to 50MB",
+        "audioLabel": "Audio",
+        "audioTitle": "Click to upload audio",
+        "audioSubtitle": "MP3, WAV up to 20MB"
+      },
+      "languages": {
+        "label": "Language",
+        "placeholder": "Select a language...",
+        "options": {
+          "english": "English",
+          "arabic": "Arabic",
+          "french": "French",
+          "spanish": "Spanish",
+          "german": "German",
+          "italian": "Italian",
+          "portuguese": "Portuguese",
+          "russian": "Russian",
+          "chinese": "Chinese",
+          "japanese": "Japanese",
+          "korean": "Korean",
+          "hindi": "Hindi"
+        }
+      },
+      "errors": {
+        "load": "Failed to load professions",
+        "selectProfession": "Please select at least one profession with a sub-profession",
+        "photoRequired": "Please upload at least one photo for profession #{index}",
+        "videoRequired": "Please upload at least one video for profession #{index}",
+        "audioRequired": "Please upload at least one audio for profession #{index}",
+        "languageRequired": "Please select at least one language for profession #{index}",
+        "save": "Failed to save professional information"
+      },
+      "success": "Professional information saved successfully",
+      "buttons": {
+        "save": "Save Professional Information",
+        "saving": "Saving..."
+      },
+      "addEntry": "Add Another Profession",
+      "addEntryDesc": "Showcase multiple talents and skills",
+      "upload": {
+        "photo": "Photo",
+        "video": "Video",
+        "audio": "Audio",
+        "clickToUpload": "Click to upload",
+        "orDragDrop": "or drag and drop",
+        "uploading": "Uploading...",
+        "fileSizeExceeds": "File size exceeds",
+        "invalidFileType": "Invalid file type. Please upload a",
+        "file": "file"
+      },
+      "languageManager": {
+        "add": "+ Add Language",
+        "empty": "No languages added yet",
+        "voiceSample": "Upload voice sample for"
+      },
+      "socials": {
+        "label": "Social Media Links",
+        "add": "Add Link",
+        "addFirst": "Add Your First Link",
+        "empty": "No social media links added yet",
+        "followers": "Followers (optional)",
+        "platform": {
+          "instagram": "Instagram",
+          "facebook": "Facebook",
+          "twitter": "Twitter/X",
+          "youtube": "YouTube",
+          "linkedin": "LinkedIn",
+          "tiktok": "TikTok",
+          "other": "Other"
+        }
+      }
+    }
+  },
+  "profile": {
+    "switchProfile": "Switch Profile",
+    "switched": "Profile switched successfully",
+    "switchFailed": "Failed to switch profile",
+    "primary": "Primary"
   },
   "footer": {
     "copyright": "Allure Casting Platform. All rights reserved."

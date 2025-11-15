@@ -20,7 +20,7 @@ export default function SectionHeader({
   const alignment =
     align === "center"
       ? "text-center items-center mx-auto"
-      : "text-left items-start";
+      : "text-start items-start";
   const titleColor =
     tone === "dark"
       ? "text-white"

@@ -40,6 +40,15 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
+  // Sync <html> attributes so global styles and fonts react correctly
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const html = document.documentElement;
+      html.setAttribute('lang', locale);
+      html.setAttribute('dir', locale === 'ar' ? 'rtl' : 'ltr');
+    }
+  }, [locale]);
+
   const t = (key: string): string => {
     const keys = key.split('.');
     let value: any = translations[locale];

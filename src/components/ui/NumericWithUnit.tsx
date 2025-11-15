@@ -37,7 +37,7 @@ export default function NumericWithUnit({
         name={name}
         type="number"
         inputMode="numeric"
-        className={`flex-1 rounded-l-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:ring-0 focus:border-[#c49a47] dark:border-gray-700 dark:bg-black dark:text-white`}
+        className={`flex-1 rounded-s-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:ring-0 focus:border-[#c49a47] dark:border-gray-700 dark:bg-black dark:text-white`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -47,7 +47,7 @@ export default function NumericWithUnit({
         step={step}
       />
       <select
-        className={`rounded-r-lg border border-l-0 border-gray-300 bg-white px-3 py-3 text-left text-black transition-all focus:outline-none focus:ring-0 focus:border-[#c49a47] dark:border-gray-700 dark:bg-black dark:text-white`}
+        className={`rounded-e-lg border border-s-0 border-gray-300 bg-white px-3 py-3 text-start text-black transition-all focus:outline-none focus:ring-0 focus:border-[#c49a47] dark:border-gray-700 dark:bg-black dark:text-white`}
         value={unit}
         onChange={(e) => onUnitChange(e.target.value)}
         disabled={disabled}

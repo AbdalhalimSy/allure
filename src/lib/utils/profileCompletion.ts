@@ -39,8 +39,14 @@ export function calculateAppearanceCompletion(profile: ProfileData | undefined):
 }
 
 export function calculateProfessionCompletion(profile: ProfileData | undefined): number {
-  // Placeholder: profession fields not yet in ProfileData
-  // Return 0 for now until backend provides these fields
+  if (!profile) return 0;
+
+  // Check if user has at least one profession
+  // @ts-ignore - professions field may not be in type yet
+  if (profile.professions && Array.isArray(profile.professions) && profile.professions.length > 0) {
+    return 100;
+  }
+  
   return 0;
 }
 

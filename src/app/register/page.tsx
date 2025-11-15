@@ -7,13 +7,12 @@ import PasswordInput from "@/components/ui/PasswordInput";
 import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
+import VerifyEmailForm from "@/components/auth/VerifyEmailForm";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import OTPInput from "@/components/ui/OTPInput";
 import apiClient from "@/lib/api/client";
-import { setAuthToken } from "@/lib/api/client";
 
 export default function RegisterPage() {
   const { t } = useI18n();
@@ -24,9 +23,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState<Step>(1);
   const [isTwins, setIsTwins] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [otpLoading, setOtpLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [otp, setOtp] = useState("");
 
   const [formData, setFormData] = useState({
     // single case
@@ -122,34 +119,7 @@ export default function RegisterPage() {
     }
   };
 
-  const submitOtp = async (code: string) => {
-    if (!code || code.length < 4) {
-      return toast.error(t("auth.enterValidOtp") || "Enter the verification code from your email");
-    }
-    try {
-      setOtpLoading(true);
-      // Verify OTP
-      await apiClient.post('/auth/verify-email', { email: formData.email, code });
-      // Auto login on success
-      const loginRes = await apiClient.post('/auth/login', { email: formData.email, password: formData.password });
-      const token = loginRes?.data?.data?.token;
-      if (token) {
-        setAuthToken(token);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('auth_email', formData.email);
-        }
-        setUser({ name: 'Allure User', email: formData.email });
-        toast.success(t('auth.emailVerified') || 'Email verified. Welcome!');
-        router.push('/dashboard');
-      } else {
-        toast.error(t('auth.loginFailed') || 'Login failed after verification');
-      }
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || err?.message || "Verification failed");
-    } finally {
-      setOtpLoading(false);
-    }
-  };
+
 
   const footer = (
     <>
@@ -352,55 +322,11 @@ export default function RegisterPage() {
           </Button>
         </form>
       ) : (
-        <div className="space-y-6">
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200">
-            {t("auth.verifyEmailInfo") || "We’ve sent a verification link to your email. You can either click the link or enter the OTP code below."}
-          </div>
-
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Label htmlFor="otp" required>
-                {t("auth.enterOtp") || "Verification code"}
-              </Label>
-              <OTPInput
-                length={6}
-                value={otp}
-                onChange={setOtp}
-                onComplete={(code) => submitOtp(code)}
-              />
-              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {t("auth.otpHint") || "Enter the 4–6 digit code we sent to"} {" "}
-                <strong>{formData.email}</strong>
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-              <button
-                type="button"
-                className="font-semibold text-[#c49a47]"
-                onClick={() => {
-                  setOtp("");
-                  toast.success(t("auth.otpResent") || "OTP resent");
-                }}
-                disabled={otpLoading}
-              >
-                {t("auth.resendOtp") || "Resend code"}
-              </button>
-              <Link href="/login" className="text-gray-600 hover:text-[#c49a47] dark:text-gray-400">
-                {t("auth.backToLogin") || "Back to login"}
-              </Link>
-            </div>
-            <Button
-              type="button"
-              variant="primary"
-              className="w-full"
-              isLoading={otpLoading}
-              onClick={() => submitOtp(otp)}
-              disabled={otp.length < 4}
-            >
-              {t("auth.verify") || "Verify"}
-            </Button>
-          </div>
-        </div>
+        <VerifyEmailForm
+          email={formData.email}
+          password={formData.password}
+          onSuccess={() => router.push("/dashboard")}
+        />
       )}
     </AuthShell>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, useState, useRef, useEffect } from "react";
+import Loader from "./Loader";
 
 interface Option {
   id: number;
@@ -65,9 +66,9 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
           onClick={() => !loading && setIsOpen(true)}
         >
           {loading ? (
-            <div className="flex items-center gap-2 py-1 text-sm text-gray-500">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#c49a47]"></div>
-              Loading...
+            <div className="flex items-center gap-2 py-1">
+              <Loader size="sm" variant="spinner" color="primary" />
+              <span className="text-sm text-gray-500">Loading...</span>
             </div>
           ) : selectedOptions.length > 0 ? (
             <div className="flex flex-wrap gap-2">
@@ -117,7 +118,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                       e.stopPropagation();
                       toggleOption(option.id);
                     }}
-                    className={`flex w-full items-center justify-between px-4 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
+                    className={`flex w-full items-center justify-between px-4 py-2 text-start text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
                       value.includes(option.id) ? "bg-[#c49a47]/10 text-[#c49a47]" : "text-gray-900 dark:text-white"
                     }`}
                   >

@@ -13,8 +13,26 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.replace("Bearer ", "");
 
-    // Forward request to backend
-    const response = await fetch(`${BACKEND_URL}/profile/me`, {
+    // Get query parameters from the request URL
+    const { searchParams } = new URL(request.url);
+    let queryString = searchParams.toString();
+
+    // Fallback to profile ID header if not present in query
+    if (!searchParams.has("profile_id")) {
+      const headerProfileId = request.headers.get("x-profile-id");
+      if (headerProfileId) {
+        queryString = queryString
+          ? `${queryString}&profile_id=${headerProfileId}`
+          : `profile_id=${headerProfileId}`;
+      }
+    }
+
+    const url = queryString
+      ? `${BACKEND_URL}/profile/me?${queryString}`
+      : `${BACKEND_URL}/profile/me`;
+
+    // Forward request to backend with query parameters
+    const response = await fetch(url, {
       method: "GET",
       headers: getAuthApiHeaders(request, token),
     });
