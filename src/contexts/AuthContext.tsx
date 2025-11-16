@@ -1,8 +1,10 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import apiClient, { setAuthToken, getActiveProfileId, setActiveProfileId } from "@/lib/api/client";
 import { getMediaUrl } from "@/lib/utils/media";
+import type { ExperienceResponseItem } from "@/types/experience";
+import { isAxiosError } from "axios";
 
 export type TalentProfile = {
   id: number;
@@ -46,7 +48,7 @@ export type ProfileData = {
     code: string;
     name: string;
   }>;
-  experiences: any[];
+  experiences: ExperienceResponseItem[];
   created_at: string;
   updated_at: string;
   profile_picture?: string | null;
@@ -227,10 +229,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const res = await apiClient.post("/auth/logout");
       success = res.status < 400;
       message = (res.data && (res.data.message || res.data.status)) || (success ? "Logged out" : "Logout failed");
-    } catch (e: any) {
-      console.warn("Logout request failed", e);
+    } catch (error: unknown) {
+      console.warn("Logout request failed", error);
       success = false;
-      message = e?.response?.data?.message || e?.message || "Logout failed";
+      if (isAxiosError(error)) {
+        message = error.response?.data?.message || error.message || "Logout failed";
+      } else {
+        message = error instanceof Error ? error.message : "Logout failed";
+      }
     } finally {
       setAuthToken(null);
       setIsAuthenticated(false);
@@ -239,19 +245,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { success, message };
   };
 
-  const value = useMemo(
-    () => ({ 
-      isAuthenticated, 
-      user, 
-      setUser, 
-      logout, 
-      hydrated, 
-      fetchProfile, 
-      switchProfile, 
-      activeProfileId 
-    }), 
-    [isAuthenticated, user, hydrated, activeProfileId]
-  );
+  const value: AuthContextValue = {
+    isAuthenticated,
+    user,
+    setUser,
+    logout,
+    hydrated,
+    fetchProfile,
+    switchProfile,
+    activeProfileId,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

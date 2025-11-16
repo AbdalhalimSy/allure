@@ -5,7 +5,6 @@ import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
 import { Input, Select, Button, NumericWithUnit } from "@/components/ui";
 import {
-  TbUser,
   TbScissors,
   TbEye,
   TbRulerMeasure,
@@ -35,6 +34,29 @@ interface AppearanceContentProps {
   onBack: () => void;
 }
 
+type MeasurementUnit = "cm" | "in" | "EU";
+
+type AppearanceFormState = {
+  profile_id: number;
+  hair_color: string;
+  hair_type: string;
+  hair_length: string;
+  eye_color: string;
+  height_value: string;
+  height_unit: MeasurementUnit | "";
+  shoe_size_value: string;
+  shoe_size_unit: MeasurementUnit | "";
+  tshirt_size: string;
+  pants_size: string;
+  jacket_size: string;
+  chest_value: string;
+  chest_unit: MeasurementUnit | "";
+  bust_value: string;
+  bust_unit: MeasurementUnit | "";
+  waist_value: string;
+  waist_unit: MeasurementUnit | "";
+};
+
 export default function AppearanceContent({
   onNext,
   onBack,
@@ -47,7 +69,7 @@ export default function AppearanceContent({
     hair_lengths: [],
     eye_colors: [],
   });
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<AppearanceFormState>({
     profile_id: 0,
     hair_color: "",
     hair_type: "",
@@ -84,36 +106,36 @@ export default function AppearanceContent({
   }, []);
 
   useEffect(() => {
-    if (user?.profile?.id) {
-      const p: any = user.profile as any;
-      const toStr = (v: any) =>
-        v === null || v === undefined ? "" : String(v);
-      const numStr = (v: any) => {
-        if (v === null || v === undefined) return "";
-        const n = parseFloat(String(v));
-        if (Number.isNaN(n)) return "";
-        return (Math.round(n * 100) / 100).toString();
+    const profile = user?.profile;
+    if (profile?.id) {
+      const toStr = (value: string | number | null | undefined) =>
+        value === null || value === undefined ? "" : String(value);
+      const numStr = (value: string | number | null | undefined) => {
+        if (value === null || value === undefined) return "";
+        const numericValue = typeof value === "number" ? value : parseFloat(String(value));
+        if (Number.isNaN(numericValue)) return "";
+        return (Math.round(numericValue * 100) / 100).toString();
       };
 
       setForm((prev) => ({
         ...prev,
-        profile_id: p.id,
-        hair_color: toStr(p.hair_color || ""),
-        hair_type: toStr(p.hair_type || ""),
-        hair_length: toStr(p.hair_length || ""),
-        eye_color: toStr(p.eye_color || ""),
-        height_value: numStr(p.height),
+        profile_id: profile.id,
+        hair_color: toStr(profile.hair_color || ""),
+        hair_type: toStr(profile.hair_type || ""),
+        hair_length: toStr(profile.hair_length || ""),
+        eye_color: toStr(profile.eye_color || ""),
+        height_value: numStr(profile.height),
         height_unit: prev.height_unit || "cm",
-        shoe_size_value: numStr(p.shoe_size),
+        shoe_size_value: numStr(profile.shoe_size),
         shoe_size_unit: prev.shoe_size_unit || "EU",
-        tshirt_size: toStr(p.tshirt_size || ""),
-        pants_size: toStr(p.pants_size || ""),
-        jacket_size: toStr(p.jacket_size || ""),
-        chest_value: numStr(p.chest),
+        tshirt_size: toStr(profile.tshirt_size || ""),
+        pants_size: toStr(profile.pants_size || ""),
+        jacket_size: toStr(profile.jacket_size || ""),
+        chest_value: numStr(profile.chest),
         chest_unit: prev.chest_unit || "cm",
-        bust_value: numStr(p.bust),
+        bust_value: numStr(profile.bust),
         bust_unit: prev.bust_unit || "cm",
-        waist_value: numStr(p.waist),
+        waist_value: numStr(profile.waist),
         waist_unit: prev.waist_unit || "cm",
       }));
     }
@@ -127,7 +149,17 @@ export default function AppearanceContent({
   };
 
   const validate = (): string | null => {
-    const required = [
+    const requiredFields: Array<
+      keyof Omit<
+        AppearanceFormState,
+        | "profile_id"
+        | "height_unit"
+        | "shoe_size_unit"
+        | "chest_unit"
+        | "bust_unit"
+        | "waist_unit"
+      >
+    > = [
       "hair_color",
       "hair_type",
       "hair_length",
@@ -141,8 +173,9 @@ export default function AppearanceContent({
       "bust_value",
       "waist_value",
     ];
-    for (const key of required) {
-      if (!String((form as any)[key] ?? "").trim()) {
+    for (const key of requiredFields) {
+      const value = form[key];
+      if (typeof value !== "string" || !value.trim()) {
         return `Please fill ${key.replaceAll("_", " ")}`;
       }
     }
@@ -182,12 +215,13 @@ export default function AppearanceContent({
       } else {
         toast.error(data.message || "Failed to update appearance");
       }
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message ||
-          error?.response?.data?.error ||
-          "Failed to update appearance"
-      );
+    } catch (error: unknown) {
+      const message =
+        typeof error === "object" && error !== null && "response" in error
+          ? ((error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.message ??
+            (error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.error)
+          : null;
+      toast.error(message || "Failed to update appearance");
     } finally {
       setLoading(false);
     }
@@ -304,7 +338,7 @@ export default function AppearanceContent({
               unit={form.height_unit}
               onChange={(v) => setForm((p) => ({ ...p, height_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, height_unit: u }))
+                setForm((p) => ({ ...p, height_unit: u as MeasurementUnit }))
               }
               options={[
                 { value: "cm", label: "cm" },
@@ -333,7 +367,7 @@ export default function AppearanceContent({
                 setForm((p) => ({ ...p, shoe_size_value: v }))
               }
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, shoe_size_unit: u }))
+                setForm((p) => ({ ...p, shoe_size_unit: u as MeasurementUnit }))
               }
               options={[
                 { value: "EU", label: "EU" },
@@ -421,7 +455,7 @@ export default function AppearanceContent({
               unit={form.chest_unit}
               onChange={(v) => setForm((p) => ({ ...p, chest_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, chest_unit: u }))
+                setForm((p) => ({ ...p, chest_unit: u as MeasurementUnit }))
               }
               options={[
                 { value: "cm", label: "cm" },
@@ -447,7 +481,7 @@ export default function AppearanceContent({
               value={form.bust_value}
               unit={form.bust_unit}
               onChange={(v) => setForm((p) => ({ ...p, bust_value: v }))}
-              onUnitChange={(u) => setForm((p) => ({ ...p, bust_unit: u }))}
+              onUnitChange={(u) => setForm((p) => ({ ...p, bust_unit: u as MeasurementUnit }))}
               options={[
                 { value: "cm", label: "cm" },
                 { value: "in", label: "in" },
@@ -473,7 +507,7 @@ export default function AppearanceContent({
               unit={form.waist_unit}
               onChange={(v) => setForm((p) => ({ ...p, waist_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, waist_unit: u }))
+                setForm((p) => ({ ...p, waist_unit: u as MeasurementUnit }))
               }
               options={[
                 { value: "cm", label: "cm" },

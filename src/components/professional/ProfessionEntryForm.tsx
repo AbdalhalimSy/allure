@@ -1,7 +1,7 @@
 'use client';
 
 import { TbX, TbCamera, TbVideo, TbMicrophone, TbLanguage, TbShare, TbRuler } from 'react-icons/tb';
-import { Profession, SubProfession, ProfessionEntry } from '@/types/profession';
+import { Profession, ProfessionEntry } from '@/types/profession';
 import { useI18n } from '@/contexts/I18nContext';
 import MediaUploader from '@/components/ui/MediaUploader';
 import LanguageManager from './LanguageManager';
@@ -51,9 +51,7 @@ export default function ProfessionEntryForm({
   );
   const requiresSizes = Boolean(subProfessionRequirements?.requires_sizes);
   // Socials currently defined at profession level, but safely union with sub if ever present
-  const requiresSocials = Boolean(
-    (professionRequirements as any)?.requires_socials || (subProfessionRequirements as any)?.requires_socials
-  );
+  const requiresSocials = Boolean(professionRequirements?.requires_socials);
 
   const handleProfessionChange = (professionId: number) => {
     onChange({

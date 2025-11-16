@@ -3,6 +3,7 @@ import { getApiHeaders } from "@/lib/api/headers";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
 
+interface LookupErrorResponse { error: string; }
 export async function GET(request: NextRequest) {
   try {
     const response = await fetch(`${BACKEND_URL}/lookups/appearance-options`, {
@@ -20,10 +21,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Appearance options fetch error:", error);
     return NextResponse.json(
-      { error: error.message || "Internal server error" },
+      { error: error instanceof Error ? error.message : "Internal server error" } as LookupErrorResponse,
       { status: 500 }
     );
   }

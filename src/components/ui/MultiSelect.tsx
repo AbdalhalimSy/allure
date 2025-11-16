@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useState, useRef, useEffect } from "react";
+import { MutableRefObject, forwardRef, useState, useRef, useEffect } from "react";
 import Loader from "./Loader";
 
 interface Option {
@@ -24,6 +24,14 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
+    const setRefs = (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (typeof ref === "function") {
+        ref(node);
+      } else if (ref) {
+        (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+      }
+    };
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -55,9 +63,8 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     };
 
     return (
-      <div ref={containerRef} className="relative w-full">
+      <div ref={setRefs} className="relative w-full">
         <div
-          ref={ref as any}
           className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error
               ? "border-red-500"

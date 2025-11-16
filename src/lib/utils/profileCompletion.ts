@@ -42,7 +42,7 @@ export function calculateProfessionCompletion(profile: ProfileData | undefined):
   if (!profile) return 0;
 
   // Check if user has at least one profession
-  // @ts-ignore - professions field may not be in type yet
+  // @ts-expect-error professions may not yet be declared on ProfileData; treated as optional dynamic field
   if (profile.professions && Array.isArray(profile.professions) && profile.professions.length > 0) {
     return 100;
   }

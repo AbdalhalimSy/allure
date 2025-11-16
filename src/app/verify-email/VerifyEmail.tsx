@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import AuthShell from "@/components/layout/AuthShell";
 import VerifyEmailForm from "@/components/auth/VerifyEmailForm";
@@ -11,15 +11,10 @@ export default function VerifyEmail() {
   const { t } = useI18n();
   const searchParams = useSearchParams();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    const emailParam = searchParams.get("email");
-    const passwordParam = searchParams.get("password");
-    if (emailParam) setEmail(emailParam);
-    if (passwordParam) setPassword(passwordParam);
-  }, [searchParams]);
+  const initialEmail = searchParams.get("email") ?? "";
+  const initialPassword = searchParams.get("password") ?? "";
+  const [email] = useState(initialEmail);
+  const [password] = useState(initialPassword);
 
   const VerifyIcon = (
     <svg

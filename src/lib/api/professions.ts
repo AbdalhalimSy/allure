@@ -3,6 +3,47 @@ import { ProfessionEntry } from '@/types/profession';
 
 const STORAGE_BASE_URL = 'https://allureportal.sawatech.ae/storage';
 
+type ApiLanguage = {
+  code?: string;
+  language_code?: string;
+  language?: { code?: string };
+  voice?: string | null;
+};
+
+type ApiSocial = {
+  platform?: string;
+  url?: string;
+  followers?: number | string | null;
+};
+
+type ApiMedia = {
+  id?: number;
+  sub_profession_id?: number | null;
+  photo?: string | null;
+  video?: string | null;
+  audio?: string | null;
+  languages?: ApiLanguage[];
+  socials?: ApiSocial[];
+};
+
+type ApiSubProfessionItem = {
+  id?: number;
+  sub_profession_id?: number | null;
+  sub_profession?: { id?: number } | null;
+  media?: ApiMedia | null;
+};
+
+type ApiProfessionItem = {
+  id?: number;
+  profession_id?: number;
+  profession?: { id?: number } | null;
+  sub_profession_id?: number | null;
+  sub_professions?: ApiSubProfessionItem[];
+  media?: ApiMedia | null;
+  languages?: ApiLanguage[];
+  socials?: ApiSocial[];
+};
+
 /**
  * Build FormData payload for syncing professions
  */
@@ -95,7 +136,7 @@ export async function fetchSavedProfessions(): Promise<ProfessionEntry[]> {
     },
   });
   
-  const data = response.data?.data || [];
+  const data: ApiProfessionItem[] = response.data?.data || [];
   
   return mapApiResponseToEntries(data);
 }
@@ -103,14 +144,14 @@ export async function fetchSavedProfessions(): Promise<ProfessionEntry[]> {
 /**
  * Map API response to ProfessionEntry[]
  */
-export function mapApiResponseToEntries(apiData: any[]): ProfessionEntry[] {
+export function mapApiResponseToEntries(apiData: ApiProfessionItem[]): ProfessionEntry[] {
   const entries: ProfessionEntry[] = [];
   
-  apiData.forEach((item: any) => {
+  apiData.forEach((item) => {
     const professionId = item.profession?.id || item.profession_id || 0;
 
     if (Array.isArray(item.sub_professions) && item.sub_professions.length > 0) {
-      item.sub_professions.forEach((subItem: any) => {
+      item.sub_professions.forEach((subItem) => {
         const media = subItem.media || {};
         entries.push({
           id: media.id || subItem.id,
@@ -155,7 +196,7 @@ function getMediaUrl(path: string): string {
 /**
  * Map languages from API response
  */
-function mapLanguages(languages: any): ProfessionEntry['languages'] {
+function mapLanguages(languages?: ApiLanguage[] | null): ProfessionEntry['languages'] {
   if (!languages || !Array.isArray(languages)) return [];
 
   return languages
@@ -177,7 +218,7 @@ function mapLanguages(languages: any): ProfessionEntry['languages'] {
 /**
  * Map socials from API response
  */
-function mapSocials(socials: any): ProfessionEntry['socials'] {
+function mapSocials(socials?: ApiSocial[] | null): ProfessionEntry['socials'] {
   if (!socials || !Array.isArray(socials)) return [];
 
   return socials

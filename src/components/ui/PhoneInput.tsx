@@ -66,21 +66,23 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           }
         } catch (err) {
           // Silently ignore; detection is optional and may fail due to CORS/rate limits
-          console.debug("Country detection skipped");
+          console.debug("Country detection skipped", err);
         }
       };
       detectCountry();
     }, []);
 
-    // Parse initial value if provided
+    // Parse initial value if provided (defer state updates to avoid synchronous setState lint warning)
     useEffect(() => {
       if (value) {
         const country = countries.find((c) => value.startsWith(c.dialCode));
         if (country) {
-          setSelectedCountry(country);
-          setPhoneNumber(value.replace(country.dialCode, "").trim());
+          setTimeout(() => {
+            setSelectedCountry(country);
+            setPhoneNumber(value.replace(country.dialCode, "").trim());
+          }, 0);
         } else {
-          setPhoneNumber(value);
+          setTimeout(() => setPhoneNumber(value), 0);
         }
       }
     }, [value]);

@@ -36,6 +36,19 @@ interface BasicInformationContentProps {
   onNext: () => void;
 }
 
+interface BasicInfoFormState {
+  profile_id: number;
+  first_name: string;
+  last_name: string;
+  gender: string;
+  dob: string;
+  nationality_ids: number[];
+  ethnicity_ids: number[];
+  mobile: string;
+  whatsapp: string;
+  country_id: number;
+}
+
 export default function BasicInformationContent({
   onNext,
 }: BasicInformationContentProps) {
@@ -46,7 +59,7 @@ export default function BasicInformationContent({
   const [ethnicities, setEthnicities] = useState<Ethnicity[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [loadingLookups, setLoadingLookups] = useState(true);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BasicInfoFormState>({
     profile_id: 0,
     first_name: "",
     last_name: "",
@@ -91,24 +104,20 @@ export default function BasicInformationContent({
   }, [locale]);
 
   useEffect(() => {
-    if (user?.profile) {
-      setFormData({
-        profile_id: user.profile.id || 0,
-        first_name: user.profile.first_name || "",
-        last_name: user.profile.last_name || "",
-        gender: user.profile.gender || "",
-        dob: user.profile.dob || "",
-        nationality_ids:
-          user.profile.nationalities?.map((n: any) => n.id) || [],
-        ethnicity_ids: user.profile.ethnicities?.map((e: any) => e.id) || [],
-        mobile: user.profile.mobile || "",
-        whatsapp: user.profile.whatsapp || "",
-        country_id:
-          (user.profile.lc_country_id as any) ||
-          (user.profile.country && (user.profile.country as any).id) ||
-          0,
-      });
-    }
+    const profile = user?.profile;
+    if (!profile) return;
+    setFormData({
+      profile_id: profile.id || 0,
+      first_name: profile.first_name || "",
+      last_name: profile.last_name || "",
+      gender: profile.gender || "",
+      dob: profile.dob || "",
+      nationality_ids: profile.nationalities?.map((n) => n.id) || [],
+      ethnicity_ids: profile.ethnicities?.map((e) => e.id) || [],
+      mobile: profile.mobile || "",
+      whatsapp: profile.whatsapp || "",
+      country_id: profile.lc_country_id ?? profile.country?.id ?? 0,
+    });
   }, [user]);
 
   const handleChange = (
@@ -124,7 +133,7 @@ export default function BasicInformationContent({
     }
   };
 
-  const handlePhoneChange = (value: string, field: string) => {
+  const handlePhoneChange = (value: string, field: "mobile" | "whatsapp") => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -191,12 +200,13 @@ export default function BasicInformationContent({
         await fetchProfile();
         onNext();
       }
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message ||
-          error?.response?.data?.error ||
-          "Failed to update profile"
-      );
+    } catch (error: unknown) {
+      const message =
+        typeof error === "object" && error !== null && "response" in error
+          ? ((error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.message ??
+            (error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.error)
+          : null;
+      toast.error(message || "Failed to update profile");
     } finally {
       setLoading(false);
     }

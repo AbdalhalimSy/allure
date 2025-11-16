@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import { useCallback, useState } from "react";
 import { Upload, X, FileIcon, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
@@ -41,7 +43,7 @@ export default function FileUploader({
     return Math.round(bytes / Math.pow(k, i)) + " " + sizes[i];
   };
 
-  const validateFile = (file: File): string | null => {
+  const validateFile = useCallback((file: File): string | null => {
     if (maxSize && file.size > maxSize) {
       return `File size exceeds ${formatFileSize(maxSize)}`;
     }
@@ -68,9 +70,9 @@ export default function FileUploader({
     }
     
     return null;
-  };
+  }, [accept, maxSize]);
 
-  const simulateUpload = (fileItem: FileItem, index: number) => {
+  const simulateUpload = useCallback((fileItem: FileItem, index: number) => {
     // Simulate upload progress
     const interval = setInterval(() => {
       setFileItems(prev => {
@@ -84,7 +86,7 @@ export default function FileUploader({
         return updated;
       });
     }, 200);
-  };
+  }, []);
 
   const handleFiles = useCallback(
     (files: File[]) => {
@@ -137,7 +139,7 @@ export default function FileUploader({
         onChange(multiple ? [...value, ...validFiles] : [validFiles[0]]);
       }
     },
-    [multiple, value, onChange, fileItems.length]
+    [multiple, value, onChange, fileItems.length, simulateUpload, validateFile]
   );
 
   const handleDragOver = (e: React.DragEvent) => {

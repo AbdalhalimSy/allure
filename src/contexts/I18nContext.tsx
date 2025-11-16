@@ -19,19 +19,19 @@ const translations = {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  // Initialize locale from localStorage, browser language, fallback to 'en'
-  const [locale, setLocale] = useState<Locale>('en');
-
-  useEffect(() => {
-    const stored = typeof window !== 'undefined' ? localStorage.getItem('locale') as Locale | null : null;
-    if (stored && (stored === 'en' || stored === 'ar')) {
-      setLocale(stored);
-    } else if (!stored && typeof window !== 'undefined') {
+  // Initialize locale from localStorage / browser language (no effect needed)
+  const [locale, setLocale] = useState<Locale>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('locale') as Locale | null;
+      if (stored && (stored === 'en' || stored === 'ar')) {
+        return stored;
+      }
       const navLang = navigator.language?.startsWith('ar') ? 'ar' : 'en';
-      setLocale(navLang as Locale);
-      localStorage.setItem('locale', navLang);
+      // side-effect localStorage write deferred to changeLocale
+      return navLang as Locale;
     }
-  }, []);
+    return 'en';
+  });
 
   const changeLocale = useCallback((next: Locale) => {
     setLocale(next);
@@ -50,14 +50,16 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [locale]);
 
   const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[locale];
-    
+    const keys = key.split('.') as string[];
+    let value: unknown = translations[locale];
     for (const k of keys) {
-      value = value?.[k];
+      if (typeof value === 'object' && value !== null && k in (value as Record<string, unknown>)) {
+        value = (value as Record<string, unknown>)[k];
+      } else {
+        return key; // missing path fallback
+      }
     }
-    
-    return value || key;
+    return typeof value === 'string' ? value : key;
   };
 
   return (

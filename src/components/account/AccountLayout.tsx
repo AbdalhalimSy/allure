@@ -40,18 +40,10 @@ export default function AccountLayout({
   const statusTitleKey = approvalStatus
     ? `account.status.${approvalStatus}Title`
     : "";
-  const statusDescriptionKey = approvalStatus
-    ? `account.status.${approvalStatus}Description`
-    : "";
   const translatedStatusTitle =
     statusTitleKey && t(statusTitleKey) !== statusTitleKey
       ? t(statusTitleKey)
       : approvalStatus;
-  const translatedStatusDescription =
-    statusDescriptionKey && t(statusDescriptionKey) !== statusDescriptionKey
-      ? t(statusDescriptionKey)
-      : undefined;
-
   return (
     <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
       <div className={`mb-8 text-start`}>

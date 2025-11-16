@@ -73,19 +73,7 @@ export default function AccountStepper({
                 className={`flex flex-1 flex-col items-center ${
                   accessible ? "cursor-pointer" : "cursor-not-allowed"
                 }`}
-                role={accessible ? "button" : undefined}
-                tabIndex={accessible ? 0 : -1}
-                aria-current={active ? "step" : undefined}
-                aria-disabled={!accessible}
-                title={accessible ? t(step.labelKey) : t('account.step.locked') || 'Complete previous steps first'}
                 onClick={() => accessible && onStepClick(index)}
-                onKeyDown={(e) => {
-                  if (!accessible) return;
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onStepClick(index);
-                  }
-                }}
               >
                 {/* Step Circle */}
                 <div

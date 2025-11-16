@@ -22,7 +22,7 @@ export default function ProfessionContent({
   onNext,
   onBack,
 }: ProfessionContentProps) {
-  const { user, fetchProfile } = useAuth();
+  const { fetchProfile } = useAuth();
   const { t, locale } = useI18n();
   const isRTL = locale === 'ar';
   
@@ -102,14 +102,14 @@ export default function ProfessionContent({
         ? profession.sub_professions.find(sp => sp.id === entry.subProfessionId)
         : null;
 
-  const label = subProfession ? `${profession.name} - ${subProfession.name}` : profession.name;
+      const label = subProfession ? `${profession.name} - ${subProfession.name}` : profession.name;
 
   // Combine requirements from both profession and sub-profession (additive)
   const requiresPhoto = Boolean(profession.requires_photo || subProfession?.requires_photo);
   const requiresVideo = Boolean(profession.requires_video || subProfession?.requires_video);
   const requiresAudio = Boolean(profession.requires_audio || subProfession?.requires_audio);
   const requiresLanguages = Boolean(profession.requires_languages || subProfession?.requires_languages);
-  const requiresSocials = Boolean((profession as any).requires_socials || (subProfession as any)?.requires_socials);
+  const requiresSizes = Boolean(subProfession?.requires_sizes);
 
       // Validate required media
       if (requiresPhoto && !entry.photo) {
@@ -132,7 +132,7 @@ export default function ProfessionContent({
         return false;
       }
 
-      if (requiresSocials && entry.socials.length === 0) {
+          if (requiresSizes && entry.socials.length === 0) {
         toast.error(`At least one social media link is required for ${label}`);
         return false;
       }
@@ -152,12 +152,14 @@ export default function ProfessionContent({
       toast.success(t('account.profession.success') || 'Professions saved successfully!');
       await fetchProfile();
       onNext();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to save professions:', error);
       const errorMessage =
-        error.response?.data?.message || 
-        t('account.profession.errors.save') || 
-        'Failed to save professions';
+        typeof error === "object" && error !== null && "response" in error
+          ? ((error as { response?: { data?: { message?: string } } }).response?.data?.message ||
+            t('account.profession.errors.save') ||
+            'Failed to save professions')
+          : t('account.profession.errors.save') || 'Failed to save professions';
       toast.error(errorMessage);
     } finally {
       setSaving(false);

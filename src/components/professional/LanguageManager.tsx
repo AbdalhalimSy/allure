@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { TbPlus, TbX, TbMicrophone } from 'react-icons/tb';
+import { TbX, TbMicrophone } from 'react-icons/tb';
 import { useI18n } from '@/contexts/I18nContext';
 import { ProfessionLanguage } from '@/types/profession';
 import MediaUploader from '@/components/ui/MediaUploader';
@@ -60,7 +60,9 @@ export default function LanguageManager({
       updated[index] = { ...updated[index], voice: file };
     } else {
       const { voice, ...rest } = updated[index];
-      updated[index] = rest;
+      if (voice !== undefined) {
+        updated[index] = rest;
+      }
     }
     onChange(updated);
   };

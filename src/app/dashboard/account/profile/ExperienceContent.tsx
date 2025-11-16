@@ -1,170 +1,141 @@
 "use client";
 
+import { useEffect, useState } from 'react';
 import AccountSection from "@/components/account/AccountSection";
 import Button from "@/components/ui/Button";
-import { useAuth } from "@/contexts/AuthContext";
-
-const experiences = [
-  {
-    id: 1,
-    title: "Creative Director",
-    company: "Allure Studios",
-    location: "Los Angeles, CA",
-    period: "2020 - Present",
-    description:
-      "Leading creative vision and strategy for high-profile entertainment projects. Managing a team of 15+ designers and coordinating with production teams.",
-  },
-  {
-    id: 2,
-    title: "Senior Art Director",
-    company: "MediaWorks Inc.",
-    location: "New York, NY",
-    period: "2017 - 2020",
-    description:
-      "Directed visual concepts for major brand campaigns. Collaborated with clients to deliver innovative design solutions.",
-  },
-  {
-    id: 3,
-    title: "Art Director",
-    company: "Creative Agency",
-    location: "San Francisco, CA",
-    period: "2014 - 2017",
-    description:
-      "Managed design projects from concept to completion. Worked on diverse projects across digital and print media.",
-  },
-];
+import Loader from "@/components/ui/Loader";
+import { useI18n } from "@/contexts/I18nContext";
+import { toast } from 'react-hot-toast';
+import ExperienceEntryForm from "@/components/professional/ExperienceEntryForm";
+import { ExperienceEntry } from "@/types/experience";
+import { fetchSavedExperiences, syncExperiences } from "@/lib/api/experiences";
 
 interface ExperienceContentProps {
+  onNext: () => void;
   onBack: () => void;
 }
 
-export default function ExperienceContent({
-  onBack,
-}: ExperienceContentProps) {
-  const { user } = useAuth();
+export default function ExperienceContent({ onNext, onBack }: ExperienceContentProps) {
+  const { t } = useI18n();
+
+  const [entries, setEntries] = useState<ExperienceEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const saved = await fetchSavedExperiences();
+        setEntries(saved);
+      } catch {
+        toast.error(t('account.experience.errors.load') || 'Failed to load experiences');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [t]);
+
+  const addEntry = () => {
+    setEntries(prev => [
+      ...prev,
+      { title: '', company: '', start_year: null, end_year: null, is_current: false, description: '', attachment: undefined },
+    ]);
+  };
+
+  const removeEntry = (index: number) => {
+    setEntries(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const updateEntry = (index: number, entry: ExperienceEntry) => {
+    setEntries(prev => prev.map((e, i) => (i === index ? entry : e)));
+  };
+
+  const validate = (): boolean => {
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i];
+      if (!e.title || e.title.trim() === '') {
+        toast.error(t('account.experience.errors.titleRequired') || 'Title is required');
+        return false;
+      }
+      const start = e.start_year ?? undefined;
+      const end = e.is_current ? undefined : (e.end_year ?? undefined);
+      if (!e.is_current && end === undefined) {
+        toast.error(t('account.experience.errors.endYearRequired') || 'End year is required unless current');
+        return false;
+      }
+      if (start !== undefined && end !== undefined && start > end) {
+        toast.error(t('account.experience.errors.yearOrder') || 'Start year must be less than or equal to end year');
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const onSave = async () => {
+    if (!validate()) return;
+    setSaving(true);
+    try {
+      await syncExperiences(entries);
+      toast.success(t('account.experience.success') || 'Experiences saved successfully');
+      onNext();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const onSaveWithErrors = async () => {
+    try {
+      await onSave();
+    } catch (error: unknown) {
+      const responseMessage =
+        typeof error === "object" && error !== null && "response" in error
+          ? ((error as { response?: { data?: { message?: string } } }).response?.data?.message ?? null)
+          : null;
+      const msg = responseMessage || t('account.experience.errors.save') || 'Failed to save experiences';
+      toast.error(msg);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Loader size="lg" text={t('common.loading') || 'Loading...'} center />
+    );
+  }
 
   return (
     <AccountSection
-      title="Work Experience"
-      description="Showcase your professional journey and achievements"
+      title={t('account.experience.title') || 'Experience'}
+      description={t('account.experience.description') || 'Add your relevant experience'}
     >
-      <div className="space-y-4">
-        {experiences.map((exp) => (
-          <div
-            key={exp.id}
-            className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-white/10 dark:bg-white/5"
-          >
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {exp.title}
-                </h3>
-                <p className="mt-1 font-medium text-[#c49a47]">{exp.company}</p>
-                <div className="mt-2 flex flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400">
-                  <span className="flex items-center gap-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="h-4 w-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-                      />
-                    </svg>
-                    {exp.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="h-4 w-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-                      />
-                    </svg>
-                    {exp.period}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-gray-700 dark:text-gray-300">
-                  {exp.description}
-                </p>
-              </div>
-              <div className="ml-4 flex gap-2">
-                <button className="rounded-lg p-2 text-gray-600 hover:bg-white hover:text-[#c49a47] dark:text-gray-400 dark:hover:bg-black">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                    />
-                  </svg>
-                </button>
-                <button className="rounded-lg p-2 text-gray-600 hover:bg-white hover:text-rose-600 dark:text-gray-400 dark:hover:bg-black">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
+      <div className="space-y-6">
+        {entries.map((entry, index) => (
+          <ExperienceEntryForm
+            key={index}
+            entry={entry}
+            onChange={(e) => updateEntry(index, e)}
+            onRemove={() => removeEntry(index)}
+            disabled={saving}
+          />
         ))}
-      </div>
 
-      <div className="flex justify-between border-t border-gray-200 pt-6 dark:border-white/10">
-        <Button type="button" variant="secondary" onClick={onBack}>
-          Back
-        </Button>
-        <Button variant="secondary">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="mr-2 h-5 w-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-          Add Experience
-        </Button>
+        <button
+          type="button"
+          onClick={addEntry}
+          disabled={saving}
+          className="w-full border-2 border-dashed border-gray-300 dark:border-white/20 rounded-xl p-6 text-center hover:border-[#c49a47] dark:hover:border-[#c49a47] hover:bg-[#c49a47]/10 dark:hover:bg-[#c49a47]/20 transition-all duration-200 disabled:opacity-50"
+        >
+          {t('account.experience.addEntry') || 'Add Experience'}
+        </button>
+
+        <div className="flex justify-between border-t border-gray-200 pt-6 dark:border-white/10">
+          <Button type="button" variant="secondary" onClick={onBack}>
+            {t('common.back') || 'Back'}
+          </Button>
+          <Button onClick={onSaveWithErrors} disabled={saving || entries.length === 0}>
+            {saving ? (t('account.experience.buttons.saving') || 'Saving...') : (t('account.experience.buttons.save') || 'Save Experience')}
+          </Button>
+        </div>
       </div>
     </AccountSection>
   );

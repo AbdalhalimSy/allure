@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useI18n } from "@/contexts/I18nContext";
 
 type SectionProps = {
   title: string;
@@ -10,8 +9,6 @@ type SectionProps = {
 };
 
 export default function AccountSection({ title, description, children }: SectionProps) {
-  const { locale } = useI18n();
-
   return (
     <div className="space-y-6">
       <div className={`border-b border-gray-200 pb-4 dark:border-white/10 text-start`}>

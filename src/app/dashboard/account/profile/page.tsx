@@ -14,6 +14,7 @@ import {
   TbSparkles,
   TbBriefcase,
   TbStar,
+  TbPhoto,
 } from "react-icons/tb";
 
 // Import the content components
@@ -21,6 +22,7 @@ import BasicInformationContent from "./BasicInformationContent";
 import AppearanceContent from "./AppearanceContent";
 import ProfessionContent from "./ProfessionContentNew";
 import ExperienceContent from "./ExperienceContent";
+import PortfolioContent from "./PortfolioContent";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -31,10 +33,11 @@ export default function ProfilePage() {
   // Map progress_step to step index
   const getInitialStepFromProgress = (progressStep?: string): number => {
     const stepMap: Record<string, number> = {
-      "basic-information": 0,
+      "basic": 0,
       "appearance": 1,
       "profession": 2,
       "experience": 3,
+      "portfolio": 4,
     };
     return stepMap[progressStep || "basic-information"] || 0;
   };
@@ -43,21 +46,32 @@ export default function ProfilePage() {
     getInitialStepFromProgress(user?.profile?.progress_step)
   );
 
-  // Update current step when user profile changes
+  const profileStep = user?.profile?.progress_step;
+
+  // Redirect to individual tab if profile is complete
   useEffect(() => {
-    if (user?.profile?.progress_step) {
-      const newStep = getInitialStepFromProgress(user.profile.progress_step);
-      setCurrentStep(newStep);
-      setIsLoadingProfile(false);
-    } else if (user !== null) {
-      setIsLoadingProfile(false);
+    if (profileStep === "complete_all") {
+      router.replace("/dashboard/account/basic");
     }
-  }, [user?.profile?.progress_step]);
+  }, [profileStep, router]);
+
+  // Update current step when user profile changes (defer state update to avoid synchronous setState lint warning)
+  useEffect(() => {
+    if (profileStep) {
+      const newStep = getInitialStepFromProgress(profileStep);
+      if (newStep !== currentStep) {
+        setTimeout(() => setCurrentStep(newStep), 0);
+      }
+      setTimeout(() => setIsLoadingProfile(false), 0);
+    } else if (user !== null) {
+      setTimeout(() => setIsLoadingProfile(false), 0);
+    }
+  }, [profileStep, currentStep, user]);
 
   // Get nav items
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
 
-  // Define the 4 steps for the stepper
+  // Define the 5 steps for the stepper
   const steps: StepConfig[] = useMemo(() => {
     return [
       {
@@ -84,8 +98,14 @@ export default function ProfilePage() {
         labelKey: "account.nav.experience",
         icon: <TbStar />,
       },
+      {
+        id: "portfolio",
+        label: "Portfolio",
+        labelKey: "account.nav.portfolio",
+        icon: <TbPhoto />,
+      },
     ];
-  }, [user?.profile]);
+  }, []);
 
   const handleStepClick = (stepIndex: number) => {
     setCurrentStep(stepIndex);
@@ -112,7 +132,9 @@ export default function ProfilePage() {
       case 2:
         return <ProfessionContent onNext={handleNext} onBack={handleBack} />;
       case 3:
-        return <ExperienceContent onBack={handleBack} />;
+        return <ExperienceContent onNext={handleNext} onBack={handleBack} />;
+      case 4:
+        return <PortfolioContent onBack={handleBack} />;
       default:
         return null;
     }

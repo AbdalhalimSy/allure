@@ -13,10 +13,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import apiClient from "@/lib/api/client";
+import { isAxiosError } from "axios";
 
 export default function RegisterPage() {
   const { t } = useI18n();
-  const { isAuthenticated, hydrated, setUser } = useAuth();
+  const { isAuthenticated, hydrated } = useAuth();
   const router = useRouter();
 
   type Step = 1 | 2;
@@ -112,8 +113,13 @@ export default function RegisterPage() {
       const msg = res?.data?.message || t("auth.verifyEmailSent") || "We sent a confirmation email.";
       toast.success(msg);
       setStep(2);
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || err?.message || "Registration failed");
+    } catch (err) {
+      const errData = isAxiosError(err) ? err.response?.data : null;
+      const message =
+        (errData as { message?: string } | null)?.message ||
+        (err instanceof Error ? err.message : null) ||
+        "Registration failed";
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

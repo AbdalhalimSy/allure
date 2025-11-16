@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { isAxiosError } from "axios";
 
 export default function LoginPage() {
   const { t } = useI18n();
@@ -70,8 +71,11 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.error("Login failed", err);
-      const errData = (err as any)?.response?.data;
-      const message = errData?.message || errData?.error || "Unauthorized";
+      const errData = isAxiosError(err) ? err.response?.data : null;
+      const message =
+        (errData as { message?: string; error?: string } | null)?.message ||
+        (errData as { message?: string; error?: string } | null)?.error ||
+        "Unauthorized";
       
       // Check if the error is about email verification
       if (message?.toLowerCase().includes("verify your email")) {

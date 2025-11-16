@@ -1,4 +1,10 @@
 {
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "remove": "Remove",
+    "finish": "Finish"
+  },
   "nav": {
     "castingCalls": "Casting Calls",
     "talents": "Talents",
@@ -243,12 +249,57 @@
         }
       }
     }
+    ,
+    "experience": {
+      "title": "Work Experience",
+      "description": "Add your professional experience entries",
+      "fields": {
+        "title": "Title",
+        "company": "Company",
+        "startYear": "Start Year",
+        "endYear": "End Year",
+        "current": "Current",
+        "description": "Description",
+        "attachment": "Attachment (optional)"
+      },
+      "success": "Experiences saved successfully",
+      "placeholders": {
+        "title": "e.g., Photographer",
+        "company": "e.g., Allure Media",
+        "description": "Brief description of your role"
+      },
+      "errors": {
+        "titleRequired": "Title is required",
+        "endYearRequired": "End year is required unless current",
+        "yearOrder": "Start year must be less than or equal to end year",
+        "load": "Failed to load experiences",
+        "save": "Failed to save experiences"
+      },
+      "buttons": {
+        "save": "Save Experience",
+        "saving": "Saving..."
+      },
+      "addEntry": "Add Experience"
+    }
   },
   "profile": {
     "switchProfile": "Switch Profile",
     "switched": "Profile switched successfully",
     "switchFailed": "Failed to switch profile",
     "primary": "Primary"
+  },
+  "portfolio": {
+    "description": "Showcase your best work and projects. Reorder items and sync when ready.",
+    "sync": "Sync Portfolio",
+    "syncing": "Syncing...",
+    "synced": "Portfolio synced",
+    "reset": "Reset",
+    "dragHint": "Drag and drop to reorder your portfolio items",
+    "noItems": "No portfolio items yet. Upload your work above!",
+    "validationErrors": "Validation errors",
+    "syncFailed": "Sync failed",
+    "onlyOneFeatured": "Only one item can be featured",
+    "loadFailed": "Failed to load portfolio"
   },
   "footer": {
     "copyright": "Allure Casting Platform. All rights reserved."

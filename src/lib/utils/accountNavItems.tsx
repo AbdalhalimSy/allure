@@ -17,6 +17,48 @@ import {
 } from "./profileCompletion";
 
 export const getAccountNavItems = (profile: ProfileData | undefined) => {
+  const isProfileComplete = profile?.progress_step === "complete_all";
+
+  if (isProfileComplete) {
+    // Show individual profile steps as tabs when profile is complete
+    return [
+      {
+        id: "basic",
+        label: "Basic Information",
+        labelKey: "account.nav.basic",
+        icon: <TbUser />,
+      },
+      {
+        id: "appearance",
+        label: "Appearance",
+        labelKey: "account.nav.appearance",
+        icon: <TbSparkles />,
+      },
+      {
+        id: "profession",
+        label: "Professions",
+        labelKey: "account.nav.profession",
+        icon: <TbBriefcase />,
+      },
+      {
+        id: "experience",
+        label: "Experience",
+        labelKey: "account.nav.experience",
+        icon: <TbStar />,
+      },
+      {
+        id: "portfolio",
+        label: "Portfolio",
+        labelKey: "account.nav.portfolio",
+        icon: <TbPhoto />,
+      },
+      { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
+      { id: "notifications", label: "Notifications", labelKey: "account.nav.notifications", icon: <TbBell /> },
+      { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
+    ];
+  }
+
+  // Show Profile Setup during onboarding
   return [
     {
       id: "profile",
@@ -24,7 +66,6 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       labelKey: "account.nav.profile",
       icon: <TbUser />,
     },
-    { id: "portfolio", label: "Portfolio", labelKey: "account.nav.portfolio", icon: <TbPhoto /> },
     { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
     { id: "notifications", label: "Notifications", labelKey: "account.nav.notifications", icon: <TbBell /> },
     { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },

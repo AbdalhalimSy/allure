@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+/* eslint-disable @next/next/no-img-element */
+
+import { useState, useRef } from 'react';
 import { TbX, TbFile, TbPhoto, TbVideo, TbMusic } from 'react-icons/tb';
 import { useI18n } from '@/contexts/I18nContext';
 
@@ -121,7 +123,7 @@ export default function MediaUploader({
     return null;
   };
 
-  const handleFile = useCallback((file: File) => {
+  const handleFile = (file: File) => {
     setError(null);
     
     const validationError = validateFile(file);
@@ -148,7 +150,7 @@ export default function MediaUploader({
       onChange(file);
       setTimeout(() => setUploadProgress(0), 500);
     }, 600);
-  }, [onChange]);
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -199,7 +201,7 @@ export default function MediaUploader({
   const fileSize = value instanceof File ? formatFileSize(value.size) : null;
 
   return (
-    <div className={`space-y-2 ${isRTL ? 'text-right' : ''}`}>
+    <div className={`space-y-2 ${isRTL ? 'text-right' : ''}`} aria-required={required}>
       <input
         ref={fileInputRef}
         type="file"

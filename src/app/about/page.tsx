@@ -191,8 +191,8 @@ export default function AboutPage() {
         <SurfaceCard className="overflow-hidden bg-gradient-to-br from-[#c49a47] to-[#a58138] p-12 text-center text-white">
           <h2 className="mb-4 text-4xl font-bold">Ready to work with us?</h2>
           <p className="mb-8 text-lg opacity-90">
-            Whether you're a talent looking to join our roster or a client
-            seeking the perfect cast, let's start a conversation.
+            Whether you&apos;re a talent looking to join our roster or a client
+            seeking the perfect cast, let&apos;s start a conversation.
           </p>
           <Link href="/contact">
             <Button

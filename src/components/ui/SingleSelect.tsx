@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { MutableRefObject, forwardRef, useEffect, useRef, useState, useId } from "react";
 import Loader from "./Loader";
 
 export type SingleSelectOption = {
@@ -38,6 +38,16 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
+    const listboxId = useId();
+
+    const setRefs = (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (typeof ref === "function") {
+        ref(node);
+      } else if (ref) {
+        (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+      }
+    };
 
     const selected = options.find((o) => String(o.value) === String(value));
 
@@ -67,15 +77,15 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     };
 
     return (
-      <div ref={containerRef} className={`relative w-full ${className}`}>
+      <div ref={setRefs} className={`relative w-full ${className}`}>
         <div
-          ref={ref as any}
           className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error ? "border-red-500" : "border-gray-300 dark:border-gray-700"
           } ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
           onClick={() => !loading && !disabled && setIsOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
+          aria-controls={listboxId}
           role="combobox"
         >
           {loading ? (
@@ -91,7 +101,11 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
         </div>
 
         {isOpen && !loading && (
-          <div className="absolute z-50 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black">
+          <div
+            className="absolute z-50 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
+            id={listboxId}
+            role="listbox"
+          >
             {searchable && (
               <div className="border-b border-gray-200 p-2 dark:border-gray-700">
                 <input

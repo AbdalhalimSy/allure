@@ -5,7 +5,6 @@ import { useI18n } from '@/contexts/I18nContext';
 import { ProfessionSocial } from '@/types/profession';
 import Input from '@/components/ui/Input';
 import SingleSelect from '@/components/ui/SingleSelect';
-import type { IconType } from 'react-icons';
 
 const PLATFORM_OPTIONS = [
   { value: 'instagram', labelKey: 'account.profession.socials.platform.instagram', icon: TbBrandInstagram },
@@ -47,11 +46,6 @@ export default function SocialManager({
     onChange(updated);
   };
 
-  const getPlatformIcon = (platform: string) => {
-    const option = PLATFORM_OPTIONS.find(p => p.value === platform);
-    return option?.icon;
-  };
-
   const getPlatformLabel = (platform: string) => {
     const option = PLATFORM_OPTIONS.find(p => p.value === platform);
     return option ? t(option.labelKey) : platform;
@@ -77,10 +71,7 @@ export default function SocialManager({
 
       {socials.length > 0 ? (
         <div className="space-y-4">
-          {socials.map((social, index) => {
-            const Icon = getPlatformIcon(social.platform);
-            
-            return (
+          {socials.map((social, index) => (
               <div
                 key={index}
                 className="p-4 border border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-white/5 space-y-3"
@@ -139,8 +130,7 @@ export default function SocialManager({
                   </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       ) : (
         <div className="text-center py-8 border-2 border-dashed border-gray-300 dark:border-white/20 rounded-lg">

@@ -82,7 +82,7 @@ export default function ContactPage() {
                   id="phone"
                   name="phone"
                   value={formData.phone}
-                  onChange={(value, countryCode) => {
+                  onChange={(value) => {
                     setFormData({ ...formData, phone: value });
                   }}
                 />
