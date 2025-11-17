@@ -93,9 +93,9 @@ export default function Header() {
           {[
             { href: "/dashboard", label: t("nav.dashboard") },
             { href: "/about", label: t("nav.about") },
-            { href: "/find-talent", label: t("nav.findTalent") || "Find Talent" },
+            { href: "/talents", label: t("nav.talents") },
+            { href: "/jobs", label: t("nav.jobs") || "Jobs" },
             { href: "/casting", label: t("nav.castingCalls") },
-            { href: "/talent", label: t("nav.talents") },
             { href: "/contact", label: t("nav.contact") },
           ].map((item) => (
             <Link

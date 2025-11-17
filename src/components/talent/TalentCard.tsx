@@ -1,37 +1,120 @@
-import SurfaceCard from "@/components/ui/SurfaceCard";
+import Link from "next/link";
+import Image from "next/image";
+import { Talent } from "@/types/talent";
+import { MapPin, Ruler, Instagram, Sparkles, TrendingUp } from "lucide-react";
+import AccentTag from "@/components/ui/AccentTag";
 
-export type Talent = {
-  id: string;
-  name: string;
-  category: string;
-  location: string;
-  availability: string;
-  tags: string[];
-  coverGradient?: string;
-};
+interface TalentCardProps {
+  talent: Talent;
+}
 
-export default function TalentCard({ name, category, location, availability, tags, coverGradient = "bg-gradient-to-tr from-gray-900 via-gray-700 to-amber-600" }: Talent) {
+export default function TalentCard({ talent }: TalentCardProps) {
+  const { profile, professions, media } = talent;
+  
+  // Get featured image or first photo
+  const featuredPhoto = media.photos.find(p => p.featured_image) || media.photos[0];
+  const photoUrl = featuredPhoto?.url || "/placeholder-avatar.jpg";
+  
+  // Get first profession name
+  const primaryProfession = professions[0]?.name || "Talent";
+  
+  // Calculate social reach
+  const totalFollowers = (profile.instagram_followers || 0) + 
+                         (profile.youtube_followers || 0) + 
+                         (profile.tiktok_followers || 0) + 
+                         (profile.facebook_followers || 0);
+  
   return (
-    <SurfaceCard accent="gold" className="h-full">
-      <div className={["aspect-[4/3] w-full rounded-2xl mb-4 overflow-hidden","relative isolate", coverGradient].join(" ")}>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-      </div>
-      <div className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">{category}</p>
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{name}</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{location}</p>
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-gray-800 dark:text-gray-200">{availability}</span>
-          <span className="text-xs uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Ready</span>
+    <Link href={`/talents/${profile.id}`}>
+      <div className="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+        {/* Gradient Border Effect */}
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#c49a47]/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        
+        <div className="relative h-full overflow-hidden rounded-3xl border border-gray-200/50 bg-white/90 backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80">
+          {/* Image */}
+          <div className="relative aspect-[3/4] w-full overflow-hidden">
+            <Image
+              src={photoUrl}
+              alt={`${profile.first_name} ${profile.last_name}`}
+              fill
+              className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#c49a47]/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            
+            {/* Top Badge */}
+            <div className="absolute left-3 top-3">
+              <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>
+                {primaryProfession}
+              </AccentTag>
+            </div>
+
+            {/* Social Reach Badge */}
+            {totalFollowers > 0 && (
+              <div className="absolute right-3 top-3">
+                <div className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                  <TrendingUp className="h-3 w-3" />
+                  {totalFollowers > 1000000 
+                    ? `${(totalFollowers / 1000000).toFixed(1)}M` 
+                    : totalFollowers > 1000 
+                    ? `${(totalFollowers / 1000).toFixed(1)}K`
+                    : totalFollowers}
+                </div>
+              </div>
+            )}
+            
+            {/* Bottom Info Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-4">
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-white drop-shadow-lg">
+                  {profile.first_name} {profile.last_name}
+                </h3>
+                
+                <div className="flex flex-wrap items-center gap-2 text-xs text-white/90">
+                  <div className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 backdrop-blur-sm">
+                    <span className="capitalize">{profile.gender}</span>
+                    <span>•</span>
+                    <span>{profile.age}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 backdrop-blur-sm">
+                    <Ruler className="h-3 w-3" />
+                    <span>{profile.height}cm</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 backdrop-blur-sm">
+                    <MapPin className="h-3 w-3" />
+                    <span className="truncate max-w-[100px]">{profile.country.name}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Professions */}
+          {professions.length > 1 && (
+            <div className="p-3">
+              <div className="flex flex-wrap gap-1.5">
+                {professions.slice(1, 4).map((profession) => (
+                  <span
+                    key={profession.id}
+                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-white/5 dark:text-gray-300"
+                  >
+                    {profession.name}
+                  </span>
+                ))}
+                {professions.length > 4 && (
+                  <span className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-2.5 py-0.5 text-xs font-medium text-white">
+                    +{professions.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-        <div className="flex flex-wrap gap-2 pt-2">
-          {tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-gray-200/80 dark:border-white/20 bg-white/70 dark:bg-white/5 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300">
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
-    </SurfaceCard>
+    </Link>
   );
 }

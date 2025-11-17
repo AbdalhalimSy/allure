@@ -23,7 +23,7 @@ export default function AccentTag({
   return (
     <span
       className={[
-        "inline-flex items-center gap-2 rounded-full border px-4 py-1 text-sm font-medium tracking-tight uppercase",
+        "inline-flex items-center gap-2 rounded-full border px-4 py-1 text-sm font-medium tracking-tight uppercase backdrop-blur-md",
         variantClasses[variant],
         className,
       ]

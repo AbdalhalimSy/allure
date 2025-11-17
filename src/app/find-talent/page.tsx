@@ -12,7 +12,7 @@ const DUMMY_TALENTS: Talent[] = [
   { id: "5", name: "Noor Saad", category: "Host", location: "Dubai, UAE", availability: "Available", tags: ["Bilingual", "Event", "Presenter"], coverGradient: "bg-gradient-to-tr from-amber-600 via-orange-600 to-rose-700" },
 ];
 
-export default function FindTalentPage() {
+export default function TalentsPage() {
   const [filters, setFilters] = useState<TalentFilters>({ q: "", category: "", location: "", availability: "" });
 
   const filtered = useMemo(() => {
@@ -37,12 +37,7 @@ export default function FindTalentPage() {
 
   return (
     <section className="space-y-8 max-w-7xl mx-auto px-6 py-10 lg:px-8">
-      <SectionHeader
-        align="center"
-        eyebrow="Talent Search"
-        title="Find a Talent"
-        description="Search and filter our roster. Connect with the right profiles quickly."
-      />
+      <SectionHeader title="Talents" />
       <TalentFilterBar value={filters} onChange={setFilters} onReset={handleReset} />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((t) => (

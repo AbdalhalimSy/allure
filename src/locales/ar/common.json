@@ -3,7 +3,11 @@
     "loading": "جارٍ التحميل...",
     "back": "رجوع",
     "remove": "حذف",
-    "finish": "إنهاء"
+    "finish": "إنهاء",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "saveAndContinue": "احفظ وتابع",
+    "download": "تحميل"
   },
   "nav": {
     "castingCalls": "فرص الكاستينج",
@@ -16,6 +20,7 @@
     "editProfile": "تعديل الملف الشخصي",
     "manageAccount": "إدارة الحساب",
     "logout": "تسجيل الخروج",
+    "jobs": "الوظائف",
     "findTalent": "ابحث عن موهبة"
   },
   "hero": {
@@ -23,7 +28,26 @@
     "title": "غرفة كاستينج حديثة للعلامات التجارية في الشرق الأوسط.",
     "subtitle": "اعرض قائمتك، راجع الطلبات المنسقة، وأكد الحجوزات بدقة سينمائية - ألور تجلب اهتمام الوكالة إلى تجربة رقمية مبسطة.",
     "browseTalents": "تصفح المواهب",
-    "postCasting": "انشر إعلان كاستينج"
+    "postCasting": "انشر إعلان كاستينج",
+    "stats": {
+      "representedTalents": "مواهب ممثلة",
+      "activeCastings": "إعلانات نشطة",
+      "bookingSuccess": "نسبة الحجز",
+      "averageResponse": "متوسط الاستجابة"
+    },
+    "workflowLabel": "سير عمل ذكي",
+    "workflow": {
+      "step1": "انشر موجز الكاستينج بكل التفاصيل التي يستحقها.",
+      "step2": "استقبل طلبات منسقة يتم اختيارها عبر ذكاء المواهب الخاص بنا.",
+      "step3": "أدر جلسات القياس والمكالمات والاختيارات النهائية في لوحة واحدة."
+    },
+    "categories": {
+      "fashion": "موضة",
+      "commercial": "إعلانات",
+      "creators": "صناع محتوى",
+      "actors": "ممثلون",
+      "hosts": "مقدمون"
+    }
   },
   "featuredTalents": {
     "eyebrow": "قائمة المواهب",
@@ -39,7 +63,28 @@
   },
   "agencyIntro": {
     "eyebrow": "حمض الوكالة",
-    "title": "حساسية بوتيك، تسليم بمستوى المنصة."
+    "title": "حساسية بوتيك، تسليم بمستوى المنصة.",
+    "description": "حيث يلتقي حس البوتيك بدقة المنصات—تجمع ألور بين الرعاية البشرية والتقنية ليجري كل إنتاج بسلاسة أكبر.",
+    "pillars": {
+      "curated": {
+        "title": "تمثيل منسق",
+        "description": "نبني خطط تطوير طويلة الأمد مع كل موهبة، ويتم تحديث الصور والمشاهد التعريفية كل ربع سنة لطلبات فورية."
+      },
+      "matching": {
+        "title": "مواءمة بشرية + بيانات",
+        "description": "يجمع فريق الحجز بين العلاقات والخبرة والبيانات لاقتراح قائمة قصيرة تطابق قصتك منذ اليوم الأول."
+      },
+      "workflow": {
+        "title": "سير عمل آمن للإنتاج",
+        "description": "نوحد اتفاقيات السرية وجداول الاتصال والبروفات وشروط الاستخدام في مساحة موحدة وآمنة للعملاء والمديرين."
+      }
+    },
+    "commitments": {
+      "mena": "فريق استكشاف يركز على المنطقة",
+      "bilingual": "مديرو حسابات ثنائيو اللغة",
+      "studios": "شراكات مع استوديوهات الكاستينج",
+      "support": "دعم في الموقع وعن بعد"
+    }
   },
   "contact": {
     "eyebrow": "تواصل معنا",
@@ -55,7 +100,20 @@
     "emailAddress": "البريد الإلكتروني",
     "phoneNumber": "رقم الهاتف",
     "message": "الرسالة",
-    "sendBtn": "إرسال الرسالة"
+    "sendBtn": "إرسال الرسالة",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "namePlaceholder": "أحمد علي",
+    "emailPlaceholder": "you@example.com",
+    "phonePlaceholder": "52 342 9898",
+    "messagePlaceholder": "اخبرنا بطلبك...",
+    "addressLine1": "برج تشرشل، مكتب 3411",
+    "addressLine2": "الخليج التجاري - دبي",
+    "addressLine3": "الإمارات العربية المتحدة",
+    "openingHoursValue": "الاثنين - السبت: 09:00 - 18:00",
+    "phoneLabel": "الهاتف",
+    "uaeLabel": "الإمارات",
+    "lebanonLabel": "لبنان"
   },
   "about": {
     "title": "عن ألور",
@@ -75,7 +133,15 @@
     "checkAllTalents": "تحقق من جميع المواهب",
     "readyTitle": "هل أنت مستعد للعمل معنا؟",
     "readyDescription": "سواء كنت موهبة تتطلع للانضمام إلى قائمتنا أو عميلاً يبحث عن فريق مثالي، لنبدأ محادثة.",
-    "getInTouch": "تواصل معنا"
+    "getInTouch": "تواصل معنا",
+    "talents": "المواهب",
+    "welcomeParagraph2": "نعتمد على فريق نشط من مخرجي الكاستينج، وأفراد الطاقم، والمحررين، والمصورين، ومنتجي الفيديو لتحويل كل موجز إلى واقع بمهارة.",
+    "expansionParagraph1": "مؤخرًا وسعنا وجودنا إلى دبي بفرع ثانٍ ولاحقًا إلى أبوظبي ليصبح لدينا ثلاثة فروع.",
+    "expansionParagraph2": "يعكس هذا التوسع التزامنا بالنمو وخدمة العملاء بطرق مبتكرة في جميع أنحاء المنطقة.",
+    "rosterEyebrow": "قائمتنا",
+    "rosterTitle": "تعرف على محترفينا المبدعين",
+    "rosterDescription": "اكتشف مجموعة المواهب المتميزة التي تضيف الإبداع والاحترافية لكل مشروع.",
+    "partnersEyebrow": "موثوقون من"
   },
   "auth": {
     "login": "تسجيل الدخول",
@@ -140,7 +206,8 @@
       "pendingTitle": "قيد المراجعة",
       "pendingDescription": "حسابك قيد المراجعة. سنخطرك بمجرد الموافقة عليه.",
       "rejectedTitle": "مرفوض",
-      "rejectedDescription": "لم تتم الموافقة على طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل."
+      "rejectedDescription": "لم تتم الموافقة على طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل.",
+      "ariaLabel": "حالة الموافقة: {{status}}"
     },
     "nav": {
       "profile": "إعداد الملف الشخصي",
@@ -207,7 +274,13 @@
         "videoRequired": "يرجى رفع فيديو واحد على الأقل للمهنة رقم {index}",
         "audioRequired": "يرجى رفع ملف صوتي واحد على الأقل للمهنة رقم {index}",
         "languageRequired": "يرجى اختيار لغة واحدة على الأقل للمهنة رقم {index}",
-        "save": "فشل حفظ المعلومات المهنية"
+        "save": "فشل حفظ المعلومات المهنية",
+        "invalidEntry": "تم اختيار مهنة غير صالحة في العنصر {{index}}",
+        "photoFor": "يتطلب {{label}} صورة",
+        "videoFor": "يتطلب {{label}} فيديو",
+        "audioFor": "يتطلب {{label}} ملفاً صوتياً",
+        "languageFor": "يلزم اختيار لغة واحدة على الأقل لـ {{label}}",
+        "socialFor": "يلزم إضافة رابط تواصل اجتماعي واحد على الأقل لـ {{label}}"
       },
       "success": "تم حفظ المعلومات المهنية بنجاح",
       "buttons": {
@@ -279,6 +352,228 @@
         "saving": "جارٍ الحفظ..."
       },
       "addEntry": "إضافة خبرة"
+    },
+    "basic": {
+      "title": "المعلومات الأساسية",
+      "description": "حدّث بياناتك الشخصية ومعلومات التواصل",
+      "success": "تم تحديث الملف بنجاح",
+      "errors": {
+        "lookups": "تعذر تحميل بيانات النموذج",
+        "nameRequired": "الاسم الأول واسم العائلة مطلوبان",
+        "phoneRequired": "رقما الجوال والواتساب مطلوبان",
+        "genderRequired": "النوع مطلوب",
+        "dobRequired": "تاريخ الميلاد مطلوب",
+        "countryRequired": "بلد الإقامة مطلوب",
+        "nationalityRequired": "يرجى اختيار جنسية واحدة على الأقل",
+        "ethnicityRequired": "يرجى اختيار أصل واحد على الأقل",
+        "saveFailed": "تعذر تحديث الملف"
+      },
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "emailDescription": "البريد المعتمد للتنبيهات",
+        "mobile": "رقم الجوال",
+        "whatsapp": "رقم الواتساب",
+        "dob": "تاريخ الميلاد",
+        "gender": "النوع",
+        "country": "بلد الإقامة",
+        "nationalities": "الجنسيات",
+        "nationalitiesDescription": "اختر جنسية أو أكثر",
+        "ethnicities": "الأصول",
+        "ethnicitiesDescription": "اختر أصلاً أو أكثر"
+      },
+      "placeholders": {
+        "firstName": "أحمد",
+        "lastName": "علي",
+        "email": "you@example.com",
+        "phone": "52 342 9898",
+        "selectGender": "اختر النوع",
+        "selectCountry": "اختر الدولة",
+        "selectNationalities": "اختر الجنسيات...",
+        "selectEthnicities": "اختر الأصول..."
+      },
+      "genderOptions": {
+        "male": "ذكر",
+        "female": "أنثى",
+        "other": "آخر",
+        "preferNot": "أفضل عدم التحديد"
+      }
+    },
+    "appearance": {
+      "title": "المظهر",
+      "description": "شارك تفاصيل مظهرك وقياساتك",
+      "fields": {
+        "hairColor": "لون الشعر",
+        "hairType": "نوع الشعر",
+        "hairLength": "طول الشعر",
+        "eyeColor": "لون العينين",
+        "height": "الطول",
+        "shoeSize": "مقاس الحذاء",
+        "tshirtSize": "مقاس القميص",
+        "pantsSize": "مقاس البنطال",
+        "jacketSize": "مقاس السترة",
+        "chest": "الصدر",
+        "bust": "القياس",
+        "waist": "الخصر"
+      },
+      "placeholders": {
+        "selectHairColor": "اختر لون الشعر",
+        "selectHairType": "اختر نوع الشعر",
+        "selectHairLength": "اختر طول الشعر",
+        "selectEyeColor": "اختر لون العينين",
+        "height": "مثال: 175.5",
+        "shoe": "مثال: 43.5",
+        "selectSize": "اختر المقاس",
+        "pants": "مثال: 32/32 أو M",
+        "jacket": "مثال: 50 EU أو L",
+        "chest": "مثال: 95.5",
+        "bust": "مثال: 88.5",
+        "waist": "مثال: 72.5"
+      },
+      "errors": {
+        "loadFailed": "تعذر تحميل خيارات المظهر",
+        "requiredField": "يرجى تعبئة {{field}}",
+        "profileMissing": "معرّف الملف غير متوفر",
+        "saveFailed": "تعذر تحديث بيانات المظهر"
+      },
+      "success": "تم تحديث بيانات المظهر"
+    },
+    "billing": {
+      "currentPlanTitle": "الخطة الحالية",
+      "currentPlanDescription": "إدارة الاشتراك والفوترة",
+      "badge": "الخطة الحالية",
+      "actions": {
+        "current": "الخطة الحالية",
+        "upgrade": "ترقية"
+      },
+      "plans": {
+        "free": {
+          "name": "مجانية",
+          "period": "مدى الحياة",
+          "features": {
+            "basicProfile": "ملف أساسي",
+            "projects": "5 مشاريع",
+            "support": "دعم مجتمعي",
+            "storage": "1 غيغابايت مساحة"
+          }
+        },
+        "pro": {
+          "name": "احترافية",
+          "period": "شهرياً",
+          "features": {
+            "advancedProfile": "ملف متقدم",
+            "projects": "مشاريع غير محدودة",
+            "support": "دعم أولوية",
+            "storage": "50 غيغابايت مساحة",
+            "analytics": "تحليلات"
+          }
+        },
+        "enterprise": {
+          "name": "مؤسسات",
+          "period": "شهرياً",
+          "features": {
+            "everything": "كل ما في الاحترافية",
+            "branding": "هوية مخصصة",
+            "support": "دعم مخصص",
+            "storage": "500 غيغابايت مساحة",
+            "api": "وصول API",
+            "collaboration": "تعاون الفرق"
+          }
+        }
+      },
+      "paymentMethod": {
+        "title": "طريقة الدفع",
+        "cardLabel": "Visa منتهية بـ 4242",
+        "expires": "تنتهي في 12/2025",
+        "update": "تحديث"
+      },
+      "history": {
+        "title": "سجل الفواتير",
+        "status": {
+          "paid": "مدفوع"
+        },
+        "entries": {
+          "first": {
+            "date": "1 نوفمبر 2024",
+            "invoice": "#INV-001",
+            "amount": "$0.00"
+          },
+          "second": {
+            "date": "1 أكتوبر 2024",
+            "invoice": "#INV-002",
+            "amount": "$0.00"
+          },
+          "third": {
+            "date": "1 سبتمبر 2024",
+            "invoice": "#INV-003",
+            "amount": "$0.00"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "title": "تفضيلات الإشعارات",
+      "description": "اختر طريقة وصول التنبيهات إليك",
+      "channels": {
+        "email": "بريد إلكتروني",
+        "push": "إشعارات دفعية"
+      },
+      "categories": {
+        "activity": "نشاط الحساب",
+        "projects": "المشاريع والتحديثات",
+        "marketing": "التسويق"
+      },
+      "items": {
+        "login": "تسجيل الدخول من جهاز جديد",
+        "password": "تغييرات كلمة المرور",
+        "settings": "تعديلات إعدادات الحساب",
+        "projectAssigned": "تعيين مشروع جديد",
+        "projectStatus": "تغييرات حالة المشروع",
+        "comments": "تعليقات على عملك",
+        "productUpdates": "تحديثات المنتجات والأخبار",
+        "tips": "نصائح ودروس",
+        "offers": "عروض خاصة"
+      }
+    },
+    "security": {
+      "password": {
+        "title": "تغيير كلمة المرور",
+        "description": "قم بتحديث كلمة المرور بانتظام لزيادة الأمان",
+        "fields": {
+          "current": "كلمة المرور الحالية",
+          "new": "كلمة المرور الجديدة",
+          "confirm": "تأكيد كلمة المرور"
+        },
+        "placeholders": {
+          "current": "أدخل كلمة المرور الحالية",
+          "new": "أدخل كلمة المرور الجديدة",
+          "confirm": "أكد كلمة المرور الجديدة"
+        },
+        "update": "تحديث كلمة المرور"
+      },
+      "twoFactor": {
+        "title": "المصادقة الثنائية",
+        "description": "أضف طبقة أمان إضافية لحسابك",
+        "method": "تطبيق المصادقة",
+        "status": "غير مفعّل",
+        "enable": "تفعيل"
+      },
+      "sessions": {
+        "title": "الجلسات النشطة",
+        "description": "إدارة الأجهزة المتصلة حالياً",
+        "mac": "Chrome على macOS",
+        "iphone": "Safari على iPhone",
+        "location": "لوس أنجلوس، كاليفورنيا",
+        "active": "نشط الآن",
+        "revoke": "إلغاء"
+      },
+      "privacy": {
+        "title": "إعدادات الخصوصية",
+        "search": "إظهار الملف في نتائج البحث",
+        "email": "السماح بعرض بريدي الإلكتروني",
+        "status": "إظهار حالتي ونشاطي"
+      }
     }
   },
   "profile": {
@@ -302,5 +597,138 @@
   },
   "footer": {
     "copyright": "منصة ألور للكاستينج. جميع الحقوق محفوظة."
+  },
+  "talentSpotlight": {
+    "badge": "موهبة مميزة",
+    "ready": "جاهز",
+    "cards": {
+      "layla": {
+        "name": "ليلى عارف",
+        "category": "عروض أزياء ومجلات",
+        "location": "دبي، الإمارات العربية المتحدة",
+        "availability": "متاحة لموسم ربيع/صيف 2025",
+        "tags": {
+          "height": "الطول 178 سم",
+          "versatile": "إطلالات متعددة",
+          "languages": "العربية + الإنجليزية"
+        }
+      },
+      "omar": {
+        "name": "عمر الفايد",
+        "category": "مواهب تجارية",
+        "location": "الرياض، المملكة العربية السعودية",
+        "availability": "محجوز حتى نوفمبر",
+        "tags": {
+          "lifestyle": "أسلوب حياة",
+          "swimwear": "ملابس سباحة",
+          "tvReady": "جاهز للتلفزيون"
+        }
+      },
+      "sofia": {
+        "name": "صوفيا حداد",
+        "category": "ممثلون ومقدمو برامج",
+        "location": "بيروت، لبنان",
+        "availability": "تستقبل أعمال الدبلجة الصوتية",
+        "tags": {
+          "acting": "تمثيل",
+          "voice": "أداء صوتي",
+          "mc": "خبرة تقديم"
+        }
+      },
+      "malik": {
+        "name": "مالك رحمن",
+        "category": "صناع رقميون",
+        "location": "الدوحة، قطر",
+        "availability": "استوديو + عن بعد",
+        "tags": {
+          "content": "محتوى",
+          "beauty": "جمال",
+          "arReady": "جاهز للواقع المعزز"
+        }
+      }
+    }
+  },
+  "castingOpportunities": {
+    "luxuryResort": {
+      "title": "حملة منتجع فاخر لموسم ربيع/صيف 2025",
+      "brand": "منتجعات أمااري",
+      "location": "أبوظبي، الإمارات",
+      "timeline": "2 فبراير – 8 فبراير",
+      "budget": "25,000 درهم",
+      "requirements": {
+        "req1": "طاقم مختلط من 6 أشخاص",
+        "req2": "ملابس سباحة ومنتجع",
+        "req3": "القدرة على التصوير تحت الماء"
+      }
+    },
+    "beautyEditorial": {
+      "title": "تحرير تجميلي بالتعاون مع غلوبال غلوس",
+      "brand": "غلوبال غلوس",
+      "location": "جدة، السعودية",
+      "timeline": "15 يناير – 18 يناير",
+      "budget": "16,500 ريال",
+      "requirements": {
+        "req1": "مواهب تظهر بشكل أنثوي",
+        "req2": "عيون معبرة ونمش",
+        "req3": "ارتياح أمام اللقطات القريبة"
+      }
+    },
+    "immersiveFashion": {
+      "title": "عرض أزياء غامر",
+      "brand": "استوديوهات فيوتشرلاب",
+      "location": "حي دبي للتصميم",
+      "timeline": "1 مارس – 12 مارس",
+      "budget": "30,000 درهم",
+      "requirements": {
+        "req1": "خلفية في الحركة/الاستعراض",
+        "req2": "خبرة بالعروض التفاعلية",
+        "req3": "إتقان عدة لغات ميزة إضافية"
+      }
+    },
+    "hospitalityLifestyle": {
+      "title": "سلسلة نمط حياة للضيافة",
+      "brand": "مجموعة كفارا",
+      "location": "الدوحة، قطر",
+      "timeline": "18 فبراير – 22 فبراير",
+      "budget": "18,000 ريال قطري",
+      "requirements": {
+        "req1": "ثنائية متناغمة",
+        "req2": "راحة في الحوار",
+        "req3": "انسجام طبيعي"
+      }
+    }
+  },
+  "languages": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  },
+  "talentList": {
+    "title": "المواهب",
+    "placeholder": "موهبة",
+    "role": "عارض/ة"
+  },
+  "castingList": {
+    "title": "إعلانات كاستينج نشطة",
+    "cardTitle": "إعلان",
+    "roleLabel": "الدور",
+    "countryLabel": "البلد",
+    "deadlineLabel": "الموعد النهائي",
+    "placeholderRole": "عارض/ة",
+    "placeholderCountry": "الإمارات",
+    "placeholderDeadline": "2025-12-01"
+  },
+  "phoneInput": {
+    "searchPlaceholder": "ابحث عن دولة...",
+    "noResults": "لا توجد دول مطابقة"
+  },
+  "castingOpportunity": {
+    "labels": {
+      "location": "الموقع",
+      "timeline": "الجدول الزمني",
+      "budget": "الميزانية",
+      "status": "الحالة",
+      "open": "متاح",
+      "requirements": "المتطلبات الأساسية"
+    }
   }
 }

@@ -3,7 +3,11 @@
     "loading": "Loading...",
     "back": "Back",
     "remove": "Remove",
-    "finish": "Finish"
+    "finish": "Finish",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "saveAndContinue": "Save & Continue",
+    "download": "Download"
   },
   "nav": {
     "castingCalls": "Casting Calls",
@@ -16,6 +20,7 @@
     "editProfile": "Edit Profile",
     "manageAccount": "Manage Account",
     "logout": "Logout",
+    "jobs": "Jobs",
     "findTalent": "Find Talent"
   },
   "hero": {
@@ -23,7 +28,26 @@
     "title": "A modern casting room for brands across the Middle East.",
     "subtitle": "Showcase your roster, review curated submissions, and confirm bookings with cinematic precision—Allure brings agency attention to a streamlined digital experience.",
     "browseTalents": "Browse Talents",
-    "postCasting": "Post a Casting"
+    "postCasting": "Post a Casting",
+    "stats": {
+      "representedTalents": "represented talents",
+      "activeCastings": "active castings",
+      "bookingSuccess": "booking success",
+      "averageResponse": "average response"
+    },
+    "workflowLabel": "Intelligent Workflow",
+    "workflow": {
+      "step1": "Publish your casting brief with all the nuance it deserves.",
+      "step2": "Receive curated submissions matched by our talent intelligence.",
+      "step3": "Book fittings, callbacks, and final selections in one dashboard."
+    },
+    "categories": {
+      "fashion": "Fashion",
+      "commercial": "Commercial",
+      "creators": "Content Creators",
+      "actors": "Actors",
+      "hosts": "Hosts"
+    }
   },
   "featuredTalents": {
     "eyebrow": "Talent Roster",
@@ -39,7 +63,28 @@
   },
   "agencyIntro": {
     "eyebrow": "Agency DNA",
-    "title": "Boutique sensibility, platform-grade delivery."
+    "title": "Boutique sensibility, platform-grade delivery.",
+    "description": "Where boutique sensibility meets platform precision—Allure pairs human care with technology so every production moves with less friction.",
+    "pillars": {
+      "curated": {
+        "title": "Curated Representation",
+        "description": "We build long-term development plans with each talent—digitals, comps, and reels are refreshed quarterly for instant briefs."
+      },
+      "matching": {
+        "title": "Human + Data Matching",
+        "description": "Our bookers combine relationship knowledge with platform data, surfacing a short list that reflects your storyboard from day one."
+      },
+      "workflow": {
+        "title": "Production-Safe Workflow",
+        "description": "Centralize NDAs, call sheets, fittings, and usage terms in one secure workspace, available to clients and talent managers."
+      }
+    },
+    "commitments": {
+      "mena": "MENA-centric scouting team",
+      "bilingual": "Bilingual account managers",
+      "studios": "Casting studio partnerships",
+      "support": "On-set and remote support"
+    }
   },
   "contact": {
     "eyebrow": "Get in Touch",
@@ -55,7 +100,20 @@
     "emailAddress": "Email Address",
     "phoneNumber": "Phone Number",
     "message": "Message",
-    "sendBtn": "Send Message"
+    "sendBtn": "Send Message",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "namePlaceholder": "John Doe",
+    "emailPlaceholder": "you@example.com",
+    "phonePlaceholder": "52 342 9898",
+    "messagePlaceholder": "Tell us about your inquiry...",
+    "addressLine1": "Churchill Tower, Office Number 3411",
+    "addressLine2": "Business Bay - Dubai",
+    "addressLine3": "United Arab Emirates",
+    "openingHoursValue": "Monday - Saturday: 09:00 - 18:00",
+    "phoneLabel": "Phone",
+    "uaeLabel": "UAE",
+    "lebanonLabel": "Lebanon"
   },
   "about": {
     "title": "About Allure",
@@ -75,7 +133,15 @@
     "checkAllTalents": "Check All Talents",
     "readyTitle": "Ready to work with us?",
     "readyDescription": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
-    "getInTouch": "Get in Touch"
+    "getInTouch": "Get in Touch",
+    "talents": "Talents",
+    "welcomeParagraph2": "We are powered by a dynamic team of casting directors, crew, editors, photographers, and videographers who bring every brief to life with precision.",
+    "expansionParagraph1": "In a recent development, we extended our reach to Dubai with a second branch and later to Abu Dhabi, marking our third office.",
+    "expansionParagraph2": "The expansion reflects our dedication to growth and to serving clients in new, innovative ways across the region.",
+    "rosterEyebrow": "Our Roster",
+    "rosterTitle": "Meet our talented and creative professionals",
+    "rosterDescription": "Discover the diverse range of exceptional talents who bring creativity and professionalism to every project.",
+    "partnersEyebrow": "Trusted By"
   },
   "auth": {
     "login": "Login",
@@ -140,7 +206,8 @@
       "pendingTitle": "pending",
       "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
       "rejectedTitle": "rejected",
-      "rejectedDescription": "Your account application was not approved. Please contact support for details."
+      "rejectedDescription": "Your account application was not approved. Please contact support for details.",
+      "ariaLabel": "Approval status: {{status}}"
     },
     "nav": {
       "profile": "Profile Setup",
@@ -207,7 +274,13 @@
         "videoRequired": "Please upload at least one video for profession #{index}",
         "audioRequired": "Please upload at least one audio for profession #{index}",
         "languageRequired": "Please select at least one language for profession #{index}",
-        "save": "Failed to save professional information"
+        "save": "Failed to save professional information",
+        "invalidEntry": "Invalid profession selected for entry {{index}}",
+        "photoFor": "Photo is required for {{label}}",
+        "videoFor": "Video is required for {{label}}",
+        "audioFor": "Audio is required for {{label}}",
+        "languageFor": "At least one language is required for {{label}}",
+        "socialFor": "At least one social media link is required for {{label}}"
       },
       "success": "Professional information saved successfully",
       "buttons": {
@@ -248,8 +321,7 @@
           "other": "Other"
         }
       }
-    }
-    ,
+    },
     "experience": {
       "title": "Work Experience",
       "description": "Add your professional experience entries",
@@ -280,6 +352,228 @@
         "saving": "Saving..."
       },
       "addEntry": "Add Experience"
+    },
+    "basic": {
+      "title": "Basic Information",
+      "description": "Update your personal details and contact information",
+      "success": "Profile updated successfully",
+      "errors": {
+        "lookups": "Failed to load form options",
+        "nameRequired": "First name and last name are required",
+        "phoneRequired": "Mobile and WhatsApp numbers are required",
+        "genderRequired": "Gender is required",
+        "dobRequired": "Date of birth is required",
+        "countryRequired": "Country of residence is required",
+        "nationalityRequired": "Select at least one nationality",
+        "ethnicityRequired": "Select at least one ethnicity",
+        "saveFailed": "Failed to update profile"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "emailDescription": "Your primary email for notifications",
+        "mobile": "Mobile Number",
+        "whatsapp": "WhatsApp Number",
+        "dob": "Date of Birth",
+        "gender": "Gender",
+        "country": "Country of Residence",
+        "nationalities": "Nationalities",
+        "nationalitiesDescription": "Select one or more nationalities",
+        "ethnicities": "Ethnicities",
+        "ethnicitiesDescription": "Select one or more ethnicities"
+      },
+      "placeholders": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "phone": "52 342 9898",
+        "selectGender": "Select gender",
+        "selectCountry": "Select country",
+        "selectNationalities": "Select nationalities...",
+        "selectEthnicities": "Select ethnicities..."
+      },
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other",
+        "preferNot": "Prefer not to say"
+      }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Provide your physical appearance and measurements",
+      "fields": {
+        "hairColor": "Hair Color",
+        "hairType": "Hair Type",
+        "hairLength": "Hair Length",
+        "eyeColor": "Eye Color",
+        "height": "Height",
+        "shoeSize": "Shoe Size",
+        "tshirtSize": "T-Shirt Size",
+        "pantsSize": "Pants Size",
+        "jacketSize": "Jacket Size",
+        "chest": "Chest",
+        "bust": "Bust",
+        "waist": "Waist"
+      },
+      "placeholders": {
+        "selectHairColor": "Select hair color",
+        "selectHairType": "Select hair type",
+        "selectHairLength": "Select hair length",
+        "selectEyeColor": "Select eye color",
+        "height": "e.g., 175.5",
+        "shoe": "e.g., 43.5",
+        "selectSize": "Select size",
+        "pants": "e.g., 32/32 or M",
+        "jacket": "e.g., 50 EU or L",
+        "chest": "e.g., 95.5",
+        "bust": "e.g., 88.5",
+        "waist": "e.g., 72.5"
+      },
+      "errors": {
+        "loadFailed": "Failed to load appearance options",
+        "requiredField": "Please fill {{field}}",
+        "profileMissing": "Profile ID missing",
+        "saveFailed": "Failed to update appearance"
+      },
+      "success": "Appearance updated"
+    },
+    "billing": {
+      "currentPlanTitle": "Current Plan",
+      "currentPlanDescription": "Manage your subscription and billing",
+      "badge": "Current Plan",
+      "actions": {
+        "current": "Current Plan",
+        "upgrade": "Upgrade"
+      },
+      "plans": {
+        "free": {
+          "name": "Free",
+          "period": "forever",
+          "features": {
+            "basicProfile": "Basic profile",
+            "projects": "5 projects",
+            "support": "Community support",
+            "storage": "1GB storage"
+          }
+        },
+        "pro": {
+          "name": "Pro",
+          "period": "per month",
+          "features": {
+            "advancedProfile": "Advanced profile",
+            "projects": "Unlimited projects",
+            "support": "Priority support",
+            "storage": "50GB storage",
+            "analytics": "Analytics"
+          }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "period": "per month",
+          "features": {
+            "everything": "Everything in Pro",
+            "branding": "Custom branding",
+            "support": "Dedicated support",
+            "storage": "500GB storage",
+            "api": "API access",
+            "collaboration": "Team collaboration"
+          }
+        }
+      },
+      "paymentMethod": {
+        "title": "Payment Method",
+        "cardLabel": "Visa ending in 4242",
+        "expires": "Expires 12/2025",
+        "update": "Update"
+      },
+      "history": {
+        "title": "Billing History",
+        "status": {
+          "paid": "Paid"
+        },
+        "entries": {
+          "first": {
+            "date": "Nov 1, 2024",
+            "invoice": "#INV-001",
+            "amount": "$0.00"
+          },
+          "second": {
+            "date": "Oct 1, 2024",
+            "invoice": "#INV-002",
+            "amount": "$0.00"
+          },
+          "third": {
+            "date": "Sep 1, 2024",
+            "invoice": "#INV-003",
+            "amount": "$0.00"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "description": "Choose how you want to be notified about activity",
+      "channels": {
+        "email": "Email",
+        "push": "Push"
+      },
+      "categories": {
+        "activity": "Account Activity",
+        "projects": "Projects & Updates",
+        "marketing": "Marketing"
+      },
+      "items": {
+        "login": "Login from new device",
+        "password": "Password changes",
+        "settings": "Account settings updates",
+        "projectAssigned": "New project assigned",
+        "projectStatus": "Project status changes",
+        "comments": "Comments on your work",
+        "productUpdates": "Product updates and news",
+        "tips": "Tips and tutorials",
+        "offers": "Special offers"
+      }
+    },
+    "security": {
+      "password": {
+        "title": "Change Password",
+        "description": "Update your password regularly to keep your account secure",
+        "fields": {
+          "current": "Current Password",
+          "new": "New Password",
+          "confirm": "Confirm New Password"
+        },
+        "placeholders": {
+          "current": "Enter current password",
+          "new": "Enter new password",
+          "confirm": "Confirm new password"
+        },
+        "update": "Update Password"
+      },
+      "twoFactor": {
+        "title": "Two-Factor Authentication",
+        "description": "Add an extra layer of security to your account",
+        "method": "Authenticator App",
+        "status": "Not enabled",
+        "enable": "Enable"
+      },
+      "sessions": {
+        "title": "Active Sessions",
+        "description": "Manage devices where you're currently logged in",
+        "mac": "Chrome on macOS",
+        "iphone": "Safari on iPhone",
+        "location": "Los Angeles, CA",
+        "active": "Active now",
+        "revoke": "Revoke"
+      },
+      "privacy": {
+        "title": "Privacy Settings",
+        "search": "Show profile in search results",
+        "email": "Allow others to see my email",
+        "status": "Show my activity status"
+      }
     }
   },
   "profile": {
@@ -303,5 +597,138 @@
   },
   "footer": {
     "copyright": "Allure Casting Platform. All rights reserved."
+  },
+  "talentSpotlight": {
+    "badge": "Spotlight",
+    "ready": "Ready",
+    "cards": {
+      "layla": {
+        "name": "Layla Arif",
+        "category": "Runway & Editorial",
+        "location": "Dubai, UAE",
+        "availability": "Available for SS25",
+        "tags": {
+          "height": "Height 178cm",
+          "versatile": "Versatile Looks",
+          "languages": "Arabic + English"
+        }
+      },
+      "omar": {
+        "name": "Omar El Fayed",
+        "category": "Commercial Talent",
+        "location": "Riyadh, KSA",
+        "availability": "Booked through Nov",
+        "tags": {
+          "lifestyle": "Lifestyle",
+          "swimwear": "Swimwear",
+          "tvReady": "TV Ready"
+        }
+      },
+      "sofia": {
+        "name": "Sofia Haddad",
+        "category": "Actors & Hosts",
+        "location": "Beirut, Lebanon",
+        "availability": "Accepting Voiceovers",
+        "tags": {
+          "acting": "Acting",
+          "voice": "Voice",
+          "mc": "MC Experience"
+        }
+      },
+      "malik": {
+        "name": "Malik Rahman",
+        "category": "Digital Creators",
+        "location": "Doha, Qatar",
+        "availability": "Studio + Remote",
+        "tags": {
+          "content": "Content",
+          "beauty": "Beauty",
+          "arReady": "AR Ready"
+        }
+      }
+    }
+  },
+  "castingOpportunities": {
+    "luxuryResort": {
+      "title": "Luxury Resort SS25 Campaign",
+      "brand": "AMAARI Resorts",
+      "location": "Abu Dhabi, UAE",
+      "timeline": "Feb 02 – Feb 08",
+      "budget": "25,000 AED",
+      "requirements": {
+        "req1": "Mixed gender cast of 6",
+        "req2": "Swim + Resort wear",
+        "req3": "Comfort with underwater stills"
+      }
+    },
+    "beautyEditorial": {
+      "title": "Beauty Editorial x Global Gloss",
+      "brand": "Global Gloss",
+      "location": "Jeddah, KSA",
+      "timeline": "Jan 15 – Jan 18",
+      "budget": "16,500 SAR",
+      "requirements": {
+        "req1": "Female-presenting talent",
+        "req2": "Expressive eyes + freckles",
+        "req3": "Comfortable with closeups"
+      }
+    },
+    "immersiveFashion": {
+      "title": "Immersive Fashion Presentation",
+      "brand": "FutureLab Studios",
+      "location": "Dubai Design District",
+      "timeline": "Mar 01 – Mar 12",
+      "budget": "30,000 AED",
+      "requirements": {
+        "req1": "Movement / choreography background",
+        "req2": "Experience with interactive shows",
+        "req3": "Multi-lingual bonus"
+      }
+    },
+    "hospitalityLifestyle": {
+      "title": "Hospitality Lifestyle Series",
+      "brand": "Kafara Collection",
+      "location": "Doha, Qatar",
+      "timeline": "Feb 18 – Feb 22",
+      "budget": "18,000 QAR",
+      "requirements": {
+        "req1": "Couple dynamic",
+        "req2": "Comfort with dialog",
+        "req3": "Natural chemistry"
+      }
+    }
+  },
+  "languages": {
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "talentList": {
+    "title": "Talents",
+    "placeholder": "Talent",
+    "role": "Model"
+  },
+  "castingList": {
+    "title": "Active Casting Calls",
+    "cardTitle": "Casting",
+    "roleLabel": "Role",
+    "countryLabel": "Country",
+    "deadlineLabel": "Deadline",
+    "placeholderRole": "Model",
+    "placeholderCountry": "UAE",
+    "placeholderDeadline": "2025-12-01"
+  },
+  "phoneInput": {
+    "searchPlaceholder": "Search country...",
+    "noResults": "No countries found"
+  },
+  "castingOpportunity": {
+    "labels": {
+      "location": "Location",
+      "timeline": "Timeline",
+      "budget": "Budget",
+      "status": "Status",
+      "open": "Open",
+      "requirements": "Key Requirements"
+    }
   }
 }

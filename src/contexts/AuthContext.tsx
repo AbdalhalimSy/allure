@@ -143,12 +143,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await apiClient.get("/profile/me");
+      // Get the active profile ID from localStorage
+      const currentActiveId = getActiveProfileId();
+      
+      // Include profile_id as query parameter if available
+      const url = currentActiveId 
+        ? `/profile/me?profile_id=${currentActiveId}`
+        : "/profile/me";
+      
+      const { data } = await apiClient.get(url);
       if (data.status === "success" && data.data) {
         const { profile, talent } = data.data;
         
         // Set active profile ID if not already set
-        const currentActiveId = getActiveProfileId();
         if (!currentActiveId && talent?.primary_profile_id) {
           setActiveProfileId(talent.primary_profile_id);
           setActiveProfileIdState(talent.primary_profile_id);
