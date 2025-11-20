@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { isAxiosError } from "axios";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import apiClient from "@/lib/api/client";
 
 export default function ForgotPasswordPage() {
   const { t } = useI18n();
@@ -33,11 +36,31 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Add your forgot password logic here
-    setTimeout(() => {
+    
+    try {
+      const { data } = await apiClient.post("/auth/forgot-password", { email });
+      
+      if (data?.status === "success") {
+        toast.success(data?.message || "Reset code sent to your email!");
+        setMode("success");
+        // Redirect to reset password page with email
+        setTimeout(() => {
+          router.push(`/reset-password?email=${encodeURIComponent(email)}`);
+        }, 2000);
+      } else {
+        toast.error(data?.message || "Failed to send reset code");
+      }
+    } catch (err) {
+      console.error("Forgot password failed", err);
+      const errData = isAxiosError(err) ? err.response?.data : null;
+      const message =
+        (errData as { message?: string; error?: string } | null)?.message ||
+        (errData as { message?: string; error?: string } | null)?.error ||
+        "Failed to send reset code";
+      toast.error(message);
+    } finally {
       setIsLoading(false);
-      setMode("success");
-    }, 2000);
+    }
   };
 
   const description = isSuccess ? (

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilterBar from "@/components/jobs/JobFilterBar";
+import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
 import Loader from "@/components/ui/Loader";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Job, JobFilters, JobsResponse } from "@/types/job";
@@ -89,7 +90,23 @@ export default function JobsPage() {
 
         {/* Loading Initial */}
         {loading && jobs.length === 0 ? (
-          <div className="flex min-h-[500px] items-center justify-center"><div className="text-center"><Loader /><p className="mt-4 text-sm text-gray-600 dark:text-gray-400">Loading jobs...</p></div></div>
+          <>
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <div className="h-6 w-40 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+                <div className="mt-2 h-4 w-56 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <Loader className="h-4 w-4" />
+                <span>Loading jobs...</span>
+              </div>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <JobCardSkeleton key={i} />
+              ))}
+            </div>
+          </>
         ) : error ? (
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-8 text-center">

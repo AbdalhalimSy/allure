@@ -1,0 +1,233 @@
+# Password Reset Implementation Summary
+
+## Overview
+Implemented complete password reset flow with forgot-password and reset-password APIs, integrated into the existing authentication system.
+
+## API Endpoints
+
+### 1. POST /api/auth/forgot-password
+Sends a 6-digit reset code to the user's email.
+
+**Request:**
+```bash
+curl -X POST http://localhost:3000/api/auth/forgot-password \
+  -H "Content-Type: application/json" \
+  -H "Accept-Language: en" \
+  -d '{"email":"a@a.a"}'
+```
+
+**Success Response (200):**
+```json
+{
+  "status": "success",
+  "message": "A password reset code has been sent to your email.",
+  "data": {
+    "email": "a@a.a",
+    "expires_at": "2025-11-20T06:51:25.000000Z"
+  }
+}
+```
+
+**Error Responses:**
+
+**422 - Validation Error (Invalid Email Format):**
+```json
+{
+  "message": "The email field must be a valid email address.",
+  "errors": {
+    "email": ["The email field must be a valid email address."]
+  }
+}
+```
+
+**422 - Validation Error (Email Required):**
+```json
+{
+  "message": "The email field is required.",
+  "errors": {
+    "email": ["The email field is required."]
+  }
+}
+```
+
+**422 - User Not Found:**
+```json
+{
+  "message": "We could not find a user with that email address.",
+  "errors": {
+    "email": ["We could not find a user with that email address."]
+  }
+}
+```
+
+---
+
+### 2. POST /api/auth/reset-password
+Resets the user's password using the code sent via email.
+
+**Request:**
+```bash
+curl -X POST http://localhost:3000/api/auth/reset-password \
+  -H "Content-Type: application/json" \
+  -H "Accept-Language: en" \
+  -d '{
+    "email":"a@a.a",
+    "code":"123456",
+    "password":"NewPassword123!",
+    "password_confirmation":"NewPassword123!"
+  }'
+```
+
+**Success Response (200):**
+```json
+{
+  "status": "success",
+  "message": "Your password has been successfully reset.",
+  "data": null
+}
+```
+
+**Error Responses:**
+
+**422 - Invalid Reset Code:**
+```json
+{
+  "status": "error",
+  "message": "The reset code is invalid.",
+  "data": null
+}
+```
+
+**422 - Password Mismatch:**
+```json
+{
+  "message": "The password field confirmation does not match.",
+  "errors": {
+    "password": ["The password field confirmation does not match."]
+  }
+}
+```
+
+**422 - User Not Found:**
+```json
+{
+  "message": "We could not find a user with that email address.",
+  "errors": {
+    "email": ["We could not find a user with that email address."]
+  }
+}
+```
+
+**410 - Expired Code:**
+```json
+{
+  "status": "error",
+  "message": "The reset code has expired.",
+  "data": null
+}
+```
+
+---
+
+## Files Created/Modified
+
+### New Files:
+1. **`/src/app/api/auth/forgot-password/route.ts`**
+   - Next.js API route that proxies requests to backend
+   - Validates email and forwards to Laravel backend
+
+2. **`/src/app/reset-password/page.tsx`**
+   - Complete reset password page component
+   - Form for email, code, and new password
+   - Integrated with existing UI components
+
+### Modified Files:
+1. **`/src/app/api/auth/reset-password/route.ts`**
+   - Implemented API route (was empty)
+   - Handles password reset with code validation
+
+2. **`/src/app/forgot-password/page.tsx`**
+   - Updated to call actual API endpoint
+   - Integrated with toast notifications
+   - Redirects to reset-password page on success
+
+---
+
+## User Flow
+
+1. **User clicks "Forgot Password" on login page**
+   - Navigates to `/forgot-password`
+
+2. **User enters email and submits**
+   - Frontend calls `/api/auth/forgot-password`
+   - Backend sends 6-digit code to email
+   - Code expires in 15 minutes
+
+3. **User redirected to reset password page**
+   - Automatically redirected to `/reset-password?email=user@example.com`
+   - Form pre-filled with email
+
+4. **User enters code and new password**
+   - Frontend calls `/api/auth/reset-password`
+   - Backend validates code and updates password
+   - All tokens for user are invalidated
+
+5. **Success - User redirected to login**
+   - User can now log in with new password
+
+---
+
+## Test Results
+
+All API endpoints tested successfully with `curl`:
+
+✅ **Forgot Password - Success** (200)
+✅ **Forgot Password - Invalid Email Format** (422)
+✅ **Forgot Password - Email Required** (422)
+✅ **Reset Password - Invalid Code** (422)
+✅ **Reset Password - Password Mismatch** (422)
+✅ **Reset Password - User Not Found** (422)
+
+---
+
+## Integration with Existing Components
+
+The implementation uses existing project components:
+- ✅ `Input` component for email/code fields
+- ✅ `PasswordInput` component for password fields
+- ✅ `Button` component with loading state
+- ✅ `Label` component for form labels
+- ✅ `AuthShell` layout component
+- ✅ `useI18n` hook for translations
+- ✅ `useAuth` hook for authentication state
+- ✅ `apiClient` from `/lib/api/client`
+- ✅ `toast` for notifications
+- ✅ Next.js `useRouter` for navigation
+
+---
+
+## Security Features
+
+1. **6-digit code generation** - Generated by backend
+2. **15-minute expiration** - Codes expire automatically
+3. **Code invalidation** - Old codes are invalidated when new ones are requested
+4. **Token cleanup** - All user tokens deleted on successful password reset
+5. **Email validation** - Required and validated format
+6. **Password confirmation** - Must match password field
+7. **HTTPS ready** - Uses environment-based API URL
+
+---
+
+## Environment Variables Used
+
+- `NEXT_PUBLIC_API_BASE_URL` - Backend API base URL
+- `API_KEY` - API authentication key (via headers)
+
+---
+
+## Notes
+
+- The login page already has a "Forgot Password" link at `/login` (line 153)
+- Backend handles email sending via existing notification system
+- All error responses follow Laravel validation format
+- The implementation follows the exact same patterns as other auth endpoints (login, register)

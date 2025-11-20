@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
+import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
 import Loader from "@/components/ui/Loader";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Talent, TalentFilters, TalentsResponse } from "@/types/talent";
@@ -135,14 +136,23 @@ export default function TalentsPage() {
 
         {/* Loading State */}
         {loading && talents.length === 0 ? (
-          <div className="flex min-h-[500px] items-center justify-center">
-            <div className="text-center">
-              <Loader />
-              <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                Loading talents...
-              </p>
+          <>
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <div className="h-6 w-48 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+                <div className="mt-2 h-4 w-64 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <Loader className="h-4 w-4" />
+                <span>Loading talents...</span>
+              </div>
             </div>
-          </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <TalentCardSkeleton key={i} />
+              ))}
+            </div>
+          </>
         ) : error ? (
           /* Error State */
           <div className="flex min-h-[500px] items-center justify-center">
