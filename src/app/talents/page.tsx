@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import SectionHeader from "@/components/ui/SectionHeader";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
 import Loader from "@/components/ui/Loader";
+import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Talent, TalentFilters, TalentsResponse } from "@/types/talent";
-import { Users, AlertCircle, Briefcase } from "lucide-react";
+import { 
+  Users, 
+  AlertCircle, 
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react";
 
 export default function TalentsPage() {
   const [talents, setTalents] = useState<Talent[]>([]);
@@ -90,174 +95,190 @@ export default function TalentsPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (loading && talents.length === 0) {
-    return (
-      <section className="mx-auto max-w-7xl space-y-8 px-6 py-10 lg:px-8">
-        <SectionHeader title="Talents" />
-        <div className="flex min-h-[400px] items-center justify-center">
-          <Loader />
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="mx-auto max-w-7xl space-y-8 px-6 py-10 lg:px-8">
-        <SectionHeader title="Talents" />
-        <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
-          <AlertCircle className="h-12 w-12 text-red-500" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Failed to Load Talents
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400">{error}</p>
-          <button
-            onClick={fetchTalents}
-            className="rounded-lg bg-primary px-6 py-2 font-medium text-white transition-colors hover:bg-primary/90"
-          >
-            Try Again
-          </button>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section className="mx-auto max-w-7xl space-y-8 px-6 py-10 lg:px-8">
-      {/* Hero Header */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c49a47] to-[#d4af69] shadow-lg">
-            <Users className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-              Discover Talents
+    <div className="bg-white dark:bg-black">
+      {/* Hero Banner Section - Same style as About page */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+        </div>
+        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
+          <div className="text-center">
+            <div className="mb-6 flex items-center justify-center gap-3">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+            </div>
+            <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white md:text-6xl">
+              Discover Our <span className="text-[#c49a47]">Talents</span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              Browse our curated collection of professional talents
+            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+              Explore our curated roster of exceptional professionals ready to bring your vision to life.
+              From models to actors, find the perfect talent for your next project.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Filters */}
-      <TalentFilterBar value={filters} onChange={handleFilterChange} onReset={handleReset} />
-
-      {/* Stats Bar */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 p-6 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#c49a47]/10">
-              <Users className="h-5 w-5 text-[#c49a47]" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{meta.total}</p>
-            </div>
-          </div>
+      {/* Main Content Section */}
+      <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        {/* Filter Section */}
+        <div className="relative z-10 mb-12">
+          <TalentFilterBar 
+            value={filters} 
+            onChange={handleFilterChange} 
+            onReset={handleReset}
+            loadingResults={loading}
+          />
         </div>
 
-        <div className="rounded-2xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 p-6 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10">
-              <Briefcase className="h-5 w-5 text-blue-500" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Showing</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{talents.length}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 p-6 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
-              <Users className="h-5 w-5 text-emerald-500" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Page</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                {meta.current_page}/{meta.last_page}
+        {/* Loading State */}
+        {loading && talents.length === 0 ? (
+          <div className="flex min-h-[500px] items-center justify-center">
+            <div className="text-center">
+              <Loader />
+              <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                Loading talents...
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="rounded-2xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 p-6 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10">
-              <AlertCircle className="h-5 w-5 text-rose-500" />
+        ) : error ? (
+          /* Error State */
+          <div className="flex min-h-[500px] items-center justify-center">
+            <SurfaceCard className="max-w-md p-8 text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
+                  <AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
+                </div>
+              </div>
+              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                Failed to Load Talents
+              </h3>
+              <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
+              <button
+                onClick={fetchTalents}
+                className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+              >
+                Try Again
+              </button>
+            </SurfaceCard>
+          </div>
+        ) : talents.length === 0 ? (
+          /* Empty State */
+          <div className="flex min-h-[500px] items-center justify-center">
+            <SurfaceCard className="max-w-md p-12 text-center">
+              <div className="mb-6 flex justify-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                  <Users className="h-10 w-10 text-gray-400" />
+                </div>
+              </div>
+              <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+                No Talents Found
+              </h3>
+              <p className="mb-8 text-gray-600 dark:text-gray-400">
+                We couldn't find any talents matching your criteria. Try adjusting your filters to see more results.
+              </p>
+              <button
+                onClick={handleReset}
+                className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+              >
+                Clear All Filters
+              </button>
+            </SurfaceCard>
+          </div>
+        ) : (
+          /* Talents Grid */
+          <>
+            {/* Results Header */}
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {meta.total} {meta.total === 1 ? 'Talent' : 'Talents'} Found
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Showing {((meta.current_page - 1) * meta.per_page) + 1} - {Math.min(meta.current_page * meta.per_page, meta.total)} of {meta.total}
+                </p>
+              </div>
+              {loading && (
+                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                  <Loader className="h-4 w-4" />
+                  <span>Updating...</span>
+                </div>
+              )}
             </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Per Page</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{meta.per_page}</p>
+
+            {/* Grid */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {talents.map((talent) => (
+                <TalentCard key={talent.profile.id} talent={talent} />
+              ))}
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Talents Grid */}
-      {talents.length === 0 ? (
-        <div className="flex min-h-[400px] flex-col items-center justify-center gap-6 rounded-3xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 p-12 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-            <Users className="h-10 w-10 text-gray-400" />
-          </div>
-          <div className="text-center">
-            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-              No talents found
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Try adjusting your filters to see more results
-            </p>
-          </div>
-          <button
-            onClick={handleReset}
-            className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-6 py-2.5 font-medium text-white shadow-lg transition-all hover:shadow-xl hover:scale-105"
-          >
-            Clear All Filters
-          </button>
-        </div>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {talents.map((talent) => (
-            <TalentCard key={talent.profile.id} talent={talent} />
-          ))}
-        </div>
-      )}
+            {/* Pagination */}
+            {meta.last_page > 1 && (
+              <div className="mt-12 flex flex-col items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => handlePageChange(meta.current_page - 1)}
+                    disabled={meta.current_page === 1}
+                    className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                    <span className="relative z-10">Previous</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    {/* Page Numbers */}
+                    {Array.from({ length: Math.min(5, meta.last_page) }, (_, i) => {
+                      let pageNum;
+                      if (meta.last_page <= 5) {
+                        pageNum = i + 1;
+                      } else if (meta.current_page <= 3) {
+                        pageNum = i + 1;
+                      } else if (meta.current_page >= meta.last_page - 2) {
+                        pageNum = meta.last_page - 4 + i;
+                      } else {
+                        pageNum = meta.current_page - 2 + i;
+                      }
+                      
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => handlePageChange(pageNum)}
+                          className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${
+                            pageNum === meta.current_page
+                              ? 'border-[#c49a47] bg-gradient-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg'
+                              : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-      {/* Pagination */}
-      {meta.last_page > 1 && (
-        <div className="flex items-center justify-center gap-3">
-          <button
-            onClick={() => handlePageChange(meta.current_page - 1)}
-            disabled={meta.current_page === 1}
-            className="group relative overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-6 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
-          >
-            <span className="relative z-10">Previous</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
-          </button>
-          
-          <div className="flex items-center gap-2 rounded-xl border border-gray-200/50 bg-gradient-to-br from-white/90 to-white/70 px-6 py-3 backdrop-blur-xl dark:border-white/10 dark:from-gray-900/80 dark:to-gray-900/60">
-            <span className="font-medium text-gray-900 dark:text-white">
-              {meta.current_page}
-            </span>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-600 dark:text-gray-400">
-              {meta.last_page}
-            </span>
-          </div>
+                  <button
+                    onClick={() => handlePageChange(meta.current_page + 1)}
+                    disabled={meta.current_page === meta.last_page}
+                    className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
+                  >
+                    <span className="relative z-10">Next</span>
+                    <ChevronRight className="h-5 w-5" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </button>
+                </div>
 
-          <button
-            onClick={() => handlePageChange(meta.current_page + 1)}
-            disabled={meta.current_page === meta.last_page}
-            className="group relative overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-6 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
-          >
-            <span className="relative z-10">Next</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
-          </button>
-        </div>
-      )}
-    </section>
+                {/* Page Info Text */}
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Page {meta.current_page} of {meta.last_page}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </div>
   );
 }

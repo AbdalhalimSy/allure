@@ -12,19 +12,19 @@ export default function AboutPage() {
     { value: "1000+", label: "Projects" },
   ];
 
-  const partners = [
-    "ADC Bank",
-    "Al Jazeera",
-    "Colgate",
-    "Dubai Fashion Week",
-    "Expo 2020",
-    "Hardee's",
-    "KFC",
-    "Kinder",
-    "Lay's",
-    "Lexus",
-    "L'Oréal",
-    "McDonald's",
+  const partnerLogos = [
+    { name: "McDonald's", src: "https://allureagencys.com//front/widgets/hp-trusted-by/McDonalds.png" },
+    { name: "ADC Bank", src: "https://allureagencys.com//front/widgets/hp-trusted-by/adc bank.png" },
+    { name: "Al Jazeera", src: "https://allureagencys.com//front/widgets/hp-trusted-by/Al Jazeera.png" },
+    { name: "Colgate", src: "https://allureagencys.com//front/widgets/hp-trusted-by/colgate.png" },
+    { name: "Dubai Fashion Week", src: "https://allureagencys.com//front/widgets/hp-trusted-by/dubai fashion week.png" },
+    { name: "Expo 2020", src: "https://allureagencys.com//front/widgets/hp-trusted-by/expo 2020.png" },
+    { name: "Hardee's", src: "https://allureagencys.com//front/widgets/hp-trusted-by/hardees.png" },
+    { name: "KFC", src: "https://allureagencys.com//front/widgets/hp-trusted-by/Kfc.png" },
+    { name: "Kinder", src: "https://allureagencys.com//front/widgets/hp-trusted-by/kinder.png" },
+    { name: "Lay's", src: "https://allureagencys.com//front/widgets/hp-trusted-by/Lays.png" },
+    { name: "Lexus", src: "https://allureagencys.com//front/widgets/hp-trusted-by/Lexus.png" },
+    { name: "L'Oréal", src: "https://allureagencys.com//front/widgets/hp-trusted-by/oreal.png" },
   ];
 
   return (
@@ -84,16 +84,10 @@ export default function AboutPage() {
               Welcome to Allure Media Agency
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Established in 2009 and deeply rooted in Lebanon, we have
-              flourished into a distinguished casting and modeling agency
-              celebrated for our steadfast commitment to excellence, creativity,
-              and superior service.
+              Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              We are powered by a dynamic team of seasoned professionals,
-              including casting directors, crew members, editors, photographers,
-              and videographers, all dedicated to bringing your vision to life
-              with precision and artistry.
+              Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.
             </p>
           </div>
         </div>
@@ -113,16 +107,10 @@ export default function AboutPage() {
                 Expanding Across the Region
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300">
-                In a recent and exhilarating development, we extended our reach
-                to the vibrant city of Dubai, establishing a second branch, and
-                later to Abu Dhabi, marking our third branch.
+                Responding to growing regional demand we expanded to Dubai and later Abu Dhabi—forming a tri‑city presence that gives productions diverse talent pools with on‑the‑ground support.
               </p>
               <p className="text-gray-600 dark:text-gray-300">
-                This expansion is a testament to our unwavering dedication to
-                growth and our enthusiasm for exploring new horizons to serve
-                our clients in exciting and innovative ways. We eagerly embrace
-                the opportunities this expansion presents and remain ardent in
-                our commitment to continue offering unparalleled service.
+                Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow that reduces friction from first brief to final usage.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="/talent">
@@ -162,7 +150,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Partners Section */}
+      {/* Partners Section (Logo Grid) */}
       <section className="bg-gray-50 dark:bg-gray-950">
         <div className="container mx-auto max-w-7xl px-6 py-24 lg:px-8">
           <SectionHeader
@@ -171,16 +159,20 @@ export default function AboutPage() {
             title="Partners"
             description="We have worked with some of the best names in the market. Be one of them!"
           />
-          <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-6">
-            {partners.map((partner) => (
-              <SurfaceCard
-                key={partner}
-                className="flex items-center justify-center p-6 transition-all hover:scale-105"
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {partnerLogos.map((p) => (
+              <div
+                key={p.name}
+                className="flex h-24 w-full items-center justify-center rounded-2xl border border-gray-200/60 bg-white px-4 shadow-sm transition-colors hover:border-[#c49a47] dark:border-white/10 dark:bg-white/5 dark:hover:border-[#d4a855]"
               >
-                <p className="text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  {partner}
-                </p>
-              </SurfaceCard>
+                <Image
+                  src={p.src}
+                  alt={p.name}
+                  width={180}
+                  height={72}
+                  className="max-h-16 w-auto object-contain"
+                />
+              </div>
             ))}
           </div>
         </div>

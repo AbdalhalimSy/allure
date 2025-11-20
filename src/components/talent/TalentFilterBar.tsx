@@ -4,13 +4,29 @@ import Select from "@/components/ui/Select";
 import SingleSelect from "@/components/ui/SingleSelect";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
+import Label from "@/components/ui/Label";
 import { useState, useEffect } from "react";
-import SurfaceCard from "@/components/ui/SurfaceCard";
 import Loader from "@/components/ui/Loader";
 import { TalentFilters } from "@/types/talent";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { 
+  Search, 
+  SlidersHorizontal, 
+  X, 
+  ChevronDown,
+  ChevronUp,
+  Users,
+  Ruler,
+  MapPin,
+  Briefcase,
+  Palette,
+  Eye,
+  RotateCcw
+} from "lucide-react";
 import apiClient from "@/lib/api/client";
 import { useI18n } from "@/contexts/I18nContext";
+
+// Re-export TalentFilters for convenience
+export type { TalentFilters };
 
 type Props = {
   value: TalentFilters;
@@ -121,32 +137,47 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
   const handleReset = () => {
     const empty: TalentFilters = {};
     setLocal(empty);
+    setSearchText("");
     onChange(empty);
     onReset?.();
   };
 
+  // Count active filters
+  const activeFiltersCount = Object.keys(local).filter(key => {
+    const value = local[key as keyof TalentFilters];
+    return value !== undefined && value !== null && value !== "";
+  }).length;
+
   return (
-    <div className="space-y-4">
-      {/* Main Filters */}
-      <SurfaceCard accent="gold" padding="p-4">
-        <div className="grid gap-3 md:grid-cols-4">
-          {/* Search */}
-          <div className="relative md:col-span-2">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+    <div className="relative space-y-4">
+      {/* Main Filters - Single Row */}
+      <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Search Input */}
+          <div className="relative flex-1 min-w-0">
+            <Search className="pointer-events-none absolute left-3 sm:left-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
-              placeholder="Search by name..."
+              placeholder="Search talents..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="pl-10 pr-10"
+              className="h-10 sm:h-12 pl-10 sm:pl-12 pr-10 sm:pr-12 text-sm sm:text-base"
             />
+            {searchText && (
+              <button
+                onClick={() => setSearchText("")}
+                className="absolute right-10 sm:right-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+              >
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+              </button>
+            )}
             {(loadingResults || loadingLookups) && (
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="pointer-events-none absolute right-3 sm:right-4 top-1/2 -translate-y-1/2">
                 <Loader size="sm" variant="spinner" color="primary" />
               </div>
             )}
           </div>
 
-          {/* Gender */}
+          {/* Gender Filter */}
           <SingleSelect
             searchable={false}
             options={[
@@ -157,206 +188,279 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             ]}
             value={local.gender ?? ""}
             onChange={(val) => update({ gender: val ? (val as any) : undefined })}
+            className="w-28 sm:w-32 lg:w-36 shrink-0"
           />
 
-          {/* Advanced Toggle */}
+          {/* Divider */}
+          <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700 shrink-0" />
+
+          {/* Advanced Filters Toggle */}
           <Button
             type="button"
-            variant="secondary"
+            variant={showAdvanced ? "primary" : "secondary"}
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center justify-center gap-2"
+            className="flex items-center gap-1 sm:gap-2 shrink-0 px-3 sm:px-4"
           >
-            <SlidersHorizontal className="h-4 w-4" />
-            {showAdvanced ? "Hide" : "Advanced"}
+            <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Filters</span>
+            {activeFiltersCount > 0 && (
+              <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#c49a47] text-[10px] sm:text-xs font-semibold text-white">
+                {activeFiltersCount}
+              </span>
+            )}
+            {showAdvanced ? (
+              <ChevronUp className="h-3 w-3 sm:h-4 sm:w-4" />
+            ) : (
+              <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
+            )}
           </Button>
+
+          {/* Reset Filters Button */}
+          {activeFiltersCount > 0 && (
+            <>
+              <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700 shrink-0" />
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleReset}
+                className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
+              >
+                <RotateCcw className="h-4 w-4" />
+                <span>Reset</span>
+              </Button>
+              {/* Mobile Reset Icon Only */}
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleReset}
+                className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
+                title="Reset All Filters"
+              >
+                <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+            </>
+          )}
         </div>
-      </SurfaceCard>
+      </div>
 
-      {/* Advanced Filters */}
+      {/* Advanced Filters Panel */}
       {showAdvanced && (
-        <SurfaceCard accent="none" padding="p-4">
-          <div className="grid gap-4 md:grid-cols-3">
-          {/* Age Range */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Age Range</label>
-            <div className="flex gap-2">
-              <Input
-                type="number"
-                placeholder="Min"
-                value={local.min_age || ""}
-                onChange={(e) => update({ min_age: e.target.value ? Number(e.target.value) : undefined })}
-                min="0"
-                max="100"
-              />
-              <Input
-                type="number"
-                placeholder="Max"
-                value={local.max_age || ""}
-                onChange={(e) => update({ max_age: e.target.value ? Number(e.target.value) : undefined })}
-                min="0"
-                max="100"
-              />
+        <div className="relative z-40 rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+          <div className="space-y-6 p-6">
+            {/* Demographics Section */}
+            <div className="relative z-40 space-y-4">
+              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Demographics</h3>
+              </div>
+              
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {/* Age Range */}
+                <div className="space-y-2">
+                  <Label>Age Range</Label>
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      placeholder="Min"
+                      value={local.min_age || ""}
+                      onChange={(e) => update({ min_age: e.target.value ? Number(e.target.value) : undefined })}
+                      min="0"
+                      max="100"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={local.max_age || ""}
+                      onChange={(e) => update({ max_age: e.target.value ? Number(e.target.value) : undefined })}
+                      min="0"
+                      max="100"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
+                    />
+                  </div>
+                </div>
+
+                {/* Height Range */}
+                <div className="space-y-2">
+                  <Label>Height (cm)</Label>
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      placeholder="Min"
+                      value={local.min_height || ""}
+                      onChange={(e) => update({ min_height: e.target.value ? Number(e.target.value) : undefined })}
+                      min="0"
+                      max="250"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={local.max_height || ""}
+                      onChange={(e) => update({ max_height: e.target.value ? Number(e.target.value) : undefined })}
+                      min="0"
+                      max="250"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
+                    />
+                  </div>
+                </div>
+
+                {/* Sort */}
+                <div className="space-y-2">
+                  <Label>Sort By</Label>
+                  <div className="flex gap-2">
+                    <SingleSelect
+                      searchable={false}
+                      options={[
+                        { value: "", label: "Default" },
+                        { value: "age", label: "Age" },
+                        { value: "height", label: "Height" },
+                        { value: "created_at", label: "Newest" },
+                        { value: "instagram_followers", label: "Followers" },
+                      ]}
+                      value={local.sort_by || ""}
+                      onChange={(val) => update({ sort_by: (val as any) || undefined })}
+                      className="flex-1"
+                    />
+                    <SingleSelect
+                      searchable={false}
+                      options={[
+                        { value: "asc", label: "↑ Asc" },
+                        { value: "desc", label: "↓ Desc" },
+                      ]}
+                      value={local.sort_order || "asc"}
+                      onChange={(val) => update({ sort_order: (val as any) || "asc" })}
+                      disabled={!local.sort_by}
+                      className="w-32"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Professional Section */}
+            <div className="relative z-30 space-y-4">
+              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Professional</h3>
+              </div>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                {/* Professions */}
+                <div className="space-y-2">
+                  <Label>Professions</Label>
+                  <MultiSelect
+                    options={professions}
+                    value={
+                      local.profession_ids
+                        ? local.profession_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ profession_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select professions..."
+                    loading={loadingLookups}
+                  />
+                </div>
+
+                {/* Ethnicities */}
+                <div className="space-y-2">
+                  <Label>Ethnicities</Label>
+                  <MultiSelect
+                    options={ethnicities}
+                    value={
+                      local.ethnicity_ids
+                        ? local.ethnicity_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ ethnicity_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select ethnicities..."
+                    loading={loadingLookups}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Location Section */}
+            <div className="relative z-20 space-y-4">
+              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Location & Origin</h3>
+              </div>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                {/* Countries */}
+                <div className="space-y-2">
+                  <Label>Countries</Label>
+                  <MultiSelect
+                    options={countries}
+                    value={
+                      local.country_ids
+                        ? local.country_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ country_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select countries..."
+                    loading={loadingLookups}
+                  />
+                </div>
+
+                {/* Nationalities */}
+                <div className="space-y-2">
+                  <Label>Nationalities</Label>
+                  <MultiSelect
+                    options={nationalities}
+                    value={
+                      local.nationality_ids
+                        ? local.nationality_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ nationality_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select nationalities..."
+                    loading={loadingLookups}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Appearance Section */}
+            <div className="relative z-10 space-y-4">
+              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Appearance</h3>
+              </div>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                {/* Hair Colors */}
+                <div className="space-y-2">
+                  <Label>Hair Colors</Label>
+                  <MultiSelect
+                    options={hairColors}
+                    value={
+                      local.hair_color_ids
+                        ? local.hair_color_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ hair_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select hair colors..."
+                    loading={loadingLookups}
+                  />
+                </div>
+
+                {/* Eye Colors */}
+                <div className="space-y-2">
+                  <Label>Eye Colors</Label>
+                  <MultiSelect
+                    options={eyeColors}
+                    value={
+                      local.eye_color_ids
+                        ? local.eye_color_ids.split(',').map(Number)
+                        : []
+                    }
+                    onChange={(ids) => update({ eye_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
+                    placeholder="Select eye colors..."
+                    loading={loadingLookups}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Height Range */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Height (cm)</label>
-            <div className="flex gap-2">
-              <Input
-                type="number"
-                placeholder="Min"
-                value={local.min_height || ""}
-                onChange={(e) => update({ min_height: e.target.value ? Number(e.target.value) : undefined })}
-                min="0"
-                max="250"
-              />
-              <Input
-                type="number"
-                placeholder="Max"
-                value={local.max_height || ""}
-                onChange={(e) => update({ max_height: e.target.value ? Number(e.target.value) : undefined })}
-                min="0"
-                max="250"
-              />
-            </div>
-          </div>
-
-          {/* Sort */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Sort By</label>
-            <div className="flex gap-2">
-              <Select
-                value={local.sort_by || ""}
-                onChange={(e) => update({ sort_by: (e.target.value as any) || undefined })}
-                className="flex-1"
-              >
-                <option value="">Default</option>
-                <option value="age">Age</option>
-                <option value="height">Height</option>
-                <option value="created_at">Newest</option>
-                <option value="instagram_followers">Followers</option>
-              </Select>
-              <Select
-                value={local.sort_order || "asc"}
-                onChange={(e) => update({ sort_order: (e.target.value as any) || "asc" })}
-                disabled={!local.sort_by}
-              >
-                <option value="asc">↑ Asc</option>
-                <option value="desc">↓ Desc</option>
-              </Select>
-            </div>
-          </div>
-
-          {/* Professions */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Professions</label>
-            <MultiSelect
-              options={professions}
-              value={
-                local.profession_ids
-                  ? local.profession_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ profession_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select professions..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Countries */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Countries</label>
-            <MultiSelect
-              options={countries}
-              value={
-                local.country_ids
-                  ? local.country_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ country_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select countries..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Nationalities */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Nationalities</label>
-            <MultiSelect
-              options={nationalities}
-              value={
-                local.nationality_ids
-                  ? local.nationality_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ nationality_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select nationalities..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Ethnicities */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Ethnicities</label>
-            <MultiSelect
-              options={ethnicities}
-              value={
-                local.ethnicity_ids
-                  ? local.ethnicity_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ ethnicity_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select ethnicities..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Hair Colors */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Hair Colors</label>
-            <MultiSelect
-              options={hairColors}
-              value={
-                local.hair_color_ids
-                  ? local.hair_color_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ hair_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select hair colors..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Eye Colors */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Eye Colors</label>
-            <MultiSelect
-              options={eyeColors}
-              value={
-                local.eye_color_ids
-                  ? local.eye_color_ids.split(',').map(Number)
-                  : []
-              }
-              onChange={(ids) => update({ eye_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-              placeholder="Select eye colors..."
-              loading={loadingLookups}
-            />
-          </div>
-
-          {/* Reset Button */}
-          <div className="flex items-end">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={handleReset}
-              className="w-full"
-            >
-              Reset All Filters
-            </Button>
-          </div>
-          </div>
-        </SurfaceCard>
+        </div>
       )}
     </div>
   );

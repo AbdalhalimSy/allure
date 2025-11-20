@@ -127,7 +127,7 @@ export interface Talent {
 }
 
 export interface TalentsResponse {
-  status: string;
+  status: string | boolean; // Can be 'success' string or boolean
   message: string;
   data: Talent[];
   meta: {
@@ -138,22 +138,43 @@ export interface TalentsResponse {
   };
 }
 
+export interface TalentDetailResponse {
+  status: string | boolean;
+  message: string;
+  data: Talent;
+}
+
 export interface TalentFilters {
+  // Basic filters
   gender?: "male" | "female" | "other";
+  search?: string;
+  
+  // Age filters
   min_age?: number;
   max_age?: number;
+  
+  // Height filters (in cm)
   min_height?: number;
   max_height?: number;
-  profession_ids?: string; // comma-separated IDs
+  
+  // Multi-select filters (comma-separated IDs)
+  profession_ids?: string;
   sub_profession_ids?: string;
   country_ids?: string;
   nationality_ids?: string;
   ethnicity_ids?: string;
+  
+  // Appearance filters
   hair_color_ids?: string;
+  hair_type_ids?: string;
+  hair_length_ids?: string;
   eye_color_ids?: string;
-  search?: string;
-  sort_by?: "age" | "height" | "created_at" | "instagram_followers";
+  
+  // Sorting
+  sort_by?: "first_name" | "age" | "height" | "created_at" | "instagram_followers";
   sort_order?: "asc" | "desc";
+  
+  // Pagination
   per_page?: number;
   page?: number;
 }

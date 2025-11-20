@@ -1,6 +1,7 @@
 "use client";
 
 import { MutableRefObject, forwardRef, useEffect, useRef, useState, useId } from "react";
+import { ChevronDown } from "lucide-react";
 import Loader from "./Loader";
 
 export type SingleSelectOption = {
@@ -77,7 +78,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     };
 
     return (
-      <div ref={setRefs} className={`relative w-full ${className}`}>
+      <div ref={setRefs} className={`relative w-full z-50 ${className}`}>
         <div
           className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error ? "border-red-500" : "border-gray-300 dark:border-gray-700"
@@ -88,21 +89,26 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
           aria-controls={listboxId}
           role="combobox"
         >
-          {loading ? (
-            <div className="flex items-center gap-2 py-1">
-              <Loader size="sm" variant="spinner" color="primary" />
-              <span className="text-sm text-gray-500">Loading...</span>
-            </div>
-          ) : selected ? (
-            <div className="py-1 text-sm">{selected.label}</div>
-          ) : (
-            <div className="py-1 text-sm text-gray-500">{placeholder}</div>
-          )}
+          <div className="flex items-center justify-between gap-2">
+            {loading ? (
+              <div className="flex items-center gap-2 py-1">
+                <Loader size="sm" variant="spinner" color="primary" />
+                <span className="text-sm text-gray-500">Loading...</span>
+              </div>
+            ) : selected ? (
+              <div className="py-1 text-sm">{selected.label}</div>
+            ) : (
+              <div className="py-1 text-sm text-gray-500">{placeholder}</div>
+            )}
+            <ChevronDown 
+              className={`h-4 w-4 text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            />
+          </div>
         </div>
 
         {isOpen && !loading && (
           <div
-            className="absolute z-50 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
+            className="absolute z-[9999] mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
             id={listboxId}
             role="listbox"
           >

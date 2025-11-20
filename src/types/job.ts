@@ -12,13 +12,14 @@ export interface Job {
   id: number;
   title: string;
   description: string;
-  skills: string;
+  highlights?: string | null; // Optional highlights field
+  skills?: string; // Optional field
   shooting_date: string;
   expiration_date: string;
   is_active: boolean;
   roles_count: number;
-  countries: string[];
-  professions: string[];
+  countries?: string[]; // Optional - API returns 'countries' not 'job_countries'
+  professions?: string[]; // Optional
   roles: Role[];
 }
 
@@ -53,17 +54,20 @@ export interface DetailedRole extends Role {
   conditions: Condition[];
 }
 
-export interface DetailedJob extends Omit<Job, 'roles' | 'roles_count'> {
+export interface DetailedJob extends Omit<Job, 'roles' | 'roles_count' | 'countries'> {
+  image?: string | null;
+  job_countries: string[]; // Detail endpoint uses 'job_countries' instead of 'countries'
+  residence_countries?: string[];
   sub_professions: string[];
   roles: DetailedRole[];
 }
 
 // API Response types
 export interface JobsResponse {
-  status: string;
+  status: string | boolean; // Can be 'success' string or boolean
   message: string;
   data: Job[];
-  meta: {
+  meta: { // API returns 'meta' field
     current_page: number;
     per_page: number;
     total: number;
@@ -71,8 +75,27 @@ export interface JobsResponse {
   };
 }
 
+// Filter parameters for jobs API
+export interface JobFilters {
+  per_page?: number;
+  title?: string;
+  shooting_date_from?: string; // YYYY-MM-DD format
+  shooting_date_to?: string; // YYYY-MM-DD format
+  expiration_date_from?: string; // YYYY-MM-DD format
+  expiration_date_to?: string; // YYYY-MM-DD format
+  country_ids?: number | number[]; // Job location countries
+  talent_country_ids?: number | number[]; // Talent residence countries
+  profession_ids?: number | number[]; // Required professions
+  sub_profession_ids?: number | number[]; // Required sub professions
+  nationality_ids?: number | number[]; // Talent nationalities (same lookup as talents page)
+  ethnicity_ids?: number | number[]; // Talent ethnicities
+  hair_color_ids?: number | number[]; // Hair colors
+  eye_color_ids?: number | number[]; // Eye colors
+  page?: number; // Pagination page index (1-based)
+}
+
 export interface JobDetailResponse {
-  status: string;
+  status: string | boolean; // Can be 'success' string or boolean
   message: string;
   data: DetailedJob;
 }

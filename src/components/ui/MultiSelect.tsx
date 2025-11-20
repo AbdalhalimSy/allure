@@ -63,7 +63,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     };
 
     return (
-      <div ref={setRefs} className="relative w-full">
+      <div ref={setRefs} className="relative w-full z-50">
         <div
           className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error
@@ -104,7 +104,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
         </div>
 
         {isOpen && !loading && (
-          <div className="absolute z-50 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black">
+          <div className="absolute z-[9999] mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black">
             <div className="border-b border-gray-200 p-2 dark:border-gray-700">
               <input
                 type="text"

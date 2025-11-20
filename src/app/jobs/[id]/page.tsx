@@ -55,7 +55,7 @@ export default function JobDetailPage() {
       
       const result: JobDetailResponse = await response.json();
       
-      if (result.status === "success") {
+      if (result.status === "success" || result.status === true) {
         setJob(result.data);
       } else {
         throw new Error(result.message || "Failed to load job");
@@ -177,7 +177,7 @@ export default function JobDetailPage() {
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">Locations</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {job.countries.length} Countries
+                    {job.job_countries?.length || 0} Countries
                   </p>
                 </div>
               </div>
@@ -189,24 +189,26 @@ export default function JobDetailPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Skills Section */}
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-              <div className="mb-4 flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-[#c49a47]" />
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Required Skills
-                </h2>
+            {job.skills && (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                <div className="mb-4 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-[#c49a47]" />
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                    Required Skills
+                  </h2>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {job.skills.split(",").map((skill, index) => (
+                    <span
+                      key={index}
+                      className="rounded-lg bg-[#c49a47]/10 px-4 py-2 text-sm font-medium text-[#c49a47] dark:bg-[#c49a47]/20"
+                    >
+                      {skill.trim()}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {job.skills.split(",").map((skill, index) => (
-                  <span
-                    key={index}
-                    className="rounded-lg bg-[#c49a47]/10 px-4 py-2 text-sm font-medium text-[#c49a47] dark:bg-[#c49a47]/20"
-                  >
-                    {skill.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
+            )}
 
             {/* Roles Section */}
             <div className="space-y-4">
@@ -346,7 +348,7 @@ export default function JobDetailPage() {
                 </h3>
               </div>
               <ul className="space-y-2">
-                {job.countries.map((country, index) => (
+                {job.job_countries?.map((country, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
@@ -354,7 +356,7 @@ export default function JobDetailPage() {
                     <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                     {country}
                   </li>
-                ))}
+                )) || <li className="text-sm text-gray-500">No locations specified</li>}
               </ul>
             </div>
 
@@ -367,14 +369,14 @@ export default function JobDetailPage() {
                 </h3>
               </div>
               <div className="flex flex-wrap gap-2">
-                {job.professions.map((profession, index) => (
+                {job.professions?.map((profession, index) => (
                   <span
                     key={index}
                     className="rounded-lg border border-[#c49a47] bg-[#c49a47]/5 px-3 py-1 text-sm font-medium text-[#c49a47]"
                   >
                     {profession}
                   </span>
-                ))}
+                )) || <span className="text-sm text-gray-500">No professions specified</span>}
               </div>
             </div>
 

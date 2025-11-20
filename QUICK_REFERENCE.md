@@ -1,5 +1,81 @@
 # Quick Reference - Profession Management
 
+## Jobs Filtering & API (Casting Calls)
+
+### UI Usage
+The jobs page (`/jobs`) now mirrors the talents page design:
+- Hero banner with casting context
+- Debounced search (title)
+- Advanced filter panel (dates, professional, location/origin, appearance)
+- Pagination with fast aborting of in‑flight requests
+
+### Available Filter Keys (query params)
+| Param | Description | Example |
+|-------|-------------|---------|
+| `title` | Full/partial job title search | `title=director` |
+| `shooting_date_from` | Shooting start date (YYYY-MM-DD) | `shooting_date_from=2025-12-01` |
+| `shooting_date_to` | Shooting end date | `shooting_date_to=2025-12-31` |
+| `expiration_date_from` | Expiration start date | `expiration_date_from=2025-11-01` |
+| `expiration_date_to` | Expiration end date | `expiration_date_to=2025-12-01` |
+| `country_ids` | Comma separated job country IDs | `country_ids=1,5` |
+| `talent_country_ids` | Comma separated talent residence country IDs | `talent_country_ids=2,3` |
+| `profession_ids` | Comma separated profession IDs | `profession_ids=7,9` |
+| `sub_profession_ids` | Comma separated sub profession IDs | `sub_profession_ids=12` |
+| `nationality_ids` | Comma separated nationality IDs | `nationality_ids=4,8` |
+| `ethnicity_ids` | Comma separated ethnicity IDs | `ethnicity_ids=3` |
+| `hair_color_ids` | Comma separated hair color IDs | `hair_color_ids=2,6` |
+| `eye_color_ids` | Comma separated eye color IDs | `eye_color_ids=1` |
+| `per_page` | Page size (default 12) | `per_page=12` |
+| `page` | Page number (1-based) | `page=2` |
+
+### Basic Fetch (Browser / fetch)
+```ts
+await fetch('/api/jobs?title=model&profession_ids=7,9&country_ids=1&page=1');
+```
+
+### curl Examples (Local dev assumes http://localhost:3000)
+```bash
+# 1. Simple title search
+curl -G http://localhost:3000/api/jobs \
+  --data-urlencode "title=photographer"
+
+# 2. Filter by profession & country
+curl -G http://localhost:3000/api/jobs \
+  -d profession_ids=7,9 -d country_ids=1,5 -d per_page=12
+
+# 3. Combined date range + nationality
+curl -G http://localhost:3000/api/jobs \
+  -d shooting_date_from=2025-12-01 -d shooting_date_to=2025-12-20 \
+  -d nationality_ids=4,8 -d page=2
+
+# 4. Appearance filters
+curl -G http://localhost:3000/api/jobs \
+  -d hair_color_ids=2,6 -d eye_color_ids=1
+
+# 5. Full example
+curl -G http://localhost:3000/api/jobs \
+  --data-urlencode "title=assistant" \
+  -d profession_ids=7,9 -d sub_profession_ids=12 \
+  -d shooting_date_from=2025-12-01 -d shooting_date_to=2025-12-15 \
+  -d country_ids=1,5 -d talent_country_ids=2,3 \
+  -d per_page=12 -d page=1
+```
+
+### Pagination Notes
+- The response contains `meta.current_page`, `meta.last_page`, `meta.total`, `meta.per_page`.
+- Navigate by updating `page` parameter; component auto scrolls to top.
+- Requests use `AbortController` to cancel stale fetches when filters change quickly.
+
+### Error & Empty States
+- Non-OK responses surface an error card with retry.
+- Empty results show a reset button to clear all filters.
+
+### Performance Tips
+- Keep array filters small; join logic happens client-side before request.
+- Debounced search (500ms) reduces unnecessary network calls.
+- Always request only needed page (`per_page=12` default) for faster UI.
+
+
 ## 🚀 Quick Start
 
 ### Using the New Components

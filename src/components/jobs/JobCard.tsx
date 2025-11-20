@@ -71,12 +71,14 @@ export default function JobCard({ job }: JobCardProps) {
             <span>{formatDate(job.expiration_date)}</span>
           </div>
           
-          <div className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-            <MapPin className="h-4 w-4 flex-shrink-0 text-[#c49a47]" />
-            <span className="line-clamp-1">{job.countries.slice(0, 2).join(", ")}
-              {job.countries.length > 2 && ` +${job.countries.length - 2}`}
-            </span>
-          </div>
+          {job.countries && job.countries.length > 0 && (
+            <div className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+              <MapPin className="h-4 w-4 flex-shrink-0 text-[#c49a47]" />
+              <span className="line-clamp-1">{job.countries.slice(0, 2).join(", ")}
+                {job.countries.length > 2 && ` +${job.countries.length - 2}`}
+              </span>
+            </div>
+          )}
           
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Users className="h-4 w-4 text-[#c49a47]" />
@@ -98,21 +100,23 @@ export default function JobCard({ job }: JobCardProps) {
         )}
 
         {/* Professions Tags */}
-        <div className="mb-4 flex flex-wrap gap-2">
-          {job.professions.slice(0, 3).map((profession) => (
-            <span
-              key={profession}
-              className="rounded-lg bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] dark:bg-[#c49a47]/20"
-            >
-              {profession}
-            </span>
-          ))}
-          {job.professions.length > 3 && (
-            <span className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-              +{job.professions.length - 3}
-            </span>
-          )}
-        </div>
+        {job.professions && job.professions.length > 0 && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            {job.professions.slice(0, 3).map((profession) => (
+              <span
+                key={profession}
+                className="rounded-lg bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] dark:bg-[#c49a47]/20"
+              >
+                {profession}
+              </span>
+            ))}
+            {job.professions.length > 3 && (
+              <span className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                +{job.professions.length - 3}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* View Details Button */}
         <Link
