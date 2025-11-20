@@ -1,133 +1,325 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import AccountLayout from "@/components/account/AccountLayout";
-import AccountSection from "@/components/account/AccountSection";
-import Button from "@/components/ui/Button";
-import { useAuth } from "@/contexts/AuthContext";
-import { getAccountNavItems } from "@/lib/utils/accountNavItems";
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    features: ["Basic profile", "5 projects", "Community support", "1GB storage"],
-    current: true,
-  },
-  {
-    name: "Pro",
-    price: "$29",
-    period: "per month",
-    features: ["Advanced profile", "Unlimited projects", "Priority support", "50GB storage", "Analytics"],
-    current: false,
-  },
-  {
-    name: "Enterprise",
-    price: "$99",
-    period: "per month",
-    features: ["Everything in Pro", "Custom branding", "Dedicated support", "500GB storage", "API access", "Team collaboration"],
-    current: false,
-  },
-];
+import { useState, useEffect, useMemo } from 'react';
+import { Loader2, ShoppingCart, Tag } from 'lucide-react';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import AccountLayout from '@/components/account/AccountLayout';
+import AccountSection from '@/components/account/AccountSection';
+import Button from '@/components/ui/Button';
+import { useAuth } from '@/contexts/AuthContext';
+import { getAccountNavItems } from '@/lib/utils/accountNavItems';
+import { PackageCard } from '@/components/subscriptions/PackageCard';
+import { CouponInput } from '@/components/subscriptions/CouponInput';
+import { SubscriptionStatus } from '@/components/subscriptions/SubscriptionStatus';
+import { SubscriptionHistoryList } from '@/components/subscriptions/SubscriptionHistoryList';
+import { PaymentHistoryTable } from '@/components/subscriptions/PaymentHistoryTable';
+import {
+  getSubscriptionPackages,
+  getSubscriptionStatus,
+  getSubscriptionHistory,
+  getPaymentHistory,
+  createSubscription,
+} from '@/lib/api/subscriptions';
+import type {
+  SubscriptionPackage,
+  PricingDetails,
+  Coupon,
+  Subscription,
+  Payment,
+} from '@/types/subscription';
+import { getActiveProfileId } from '@/lib/api/client';
 
 export default function BillingPage() {
   const { user } = useAuth();
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
+  
+  const [profileId, setProfileId] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<'subscribe' | 'history' | 'payments'>('subscribe');
+  const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState('');
+
+  // Subscription data
+  const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
+  const [selectedPackageId, setSelectedPackageId] = useState<number | null>(null);
+  const [currentSubscription, setCurrentSubscription] = useState<Subscription | null>(null);
+  const [hasSubscription, setHasSubscription] = useState(false);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [totalSpent, setTotalSpent] = useState(0);
+
+  // Coupon state
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [pricing, setPricing] = useState<PricingDetails | null>(null);
+
+  useEffect(() => {
+    const activeProfileId = getActiveProfileId();
+    if (activeProfileId) {
+      setProfileId(Number(activeProfileId));
+      loadData(Number(activeProfileId));
+    } else {
+      setError('Please select a profile first');
+      setLoading(false);
+    }
+  }, []);
+
+  const loadData = async (profId: number) => {
+    try {
+      setLoading(true);
+      const [packagesRes, statusRes, historyRes, paymentsRes] = await Promise.all([
+        getSubscriptionPackages(),
+        getSubscriptionStatus(profId),
+        getSubscriptionHistory(profId),
+        getPaymentHistory(profId),
+      ]);
+
+      setPackages(packagesRes.data.packages);
+      setHasSubscription(statusRes.data.has_subscription);
+      setCurrentSubscription(statusRes.data.subscription || null);
+      setSubscriptions(historyRes.data.subscriptions);
+      setPayments(paymentsRes.data.payments);
+      setTotalSpent(paymentsRes.data.total_spent);
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to load subscription data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCouponApplied = (newPricing: PricingDetails, coupon: Coupon) => {
+    setPricing(newPricing);
+    setAppliedCoupon(coupon);
+  };
+
+  const handleCouponRemoved = () => {
+    setPricing(null);
+    setAppliedCoupon(null);
+  };
+
+  const handleSubscribe = async () => {
+    if (!selectedPackageId || !profileId) return;
+
+    setProcessing(true);
+    setError('');
+
+    try {
+      const paymentRef = `PAY_${Date.now()}_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+      const selectedPackage = packages.find((p) => p.id === selectedPackageId);
+      if (!selectedPackage) throw new Error('Selected package not found');
+
+      const finalPrice = pricing?.final_price || selectedPackage.price;
+
+      await createSubscription({
+        profile_id: profileId,
+        package_id: selectedPackageId,
+        coupon_code: appliedCoupon?.code,
+        payment_reference: paymentRef,
+        payment_method: 'credit_card',
+        amount_paid: finalPrice,
+      });
+
+      // Reload data and switch to history tab
+      await loadData(profileId);
+      setSelectedPackageId(null);
+      setAppliedCoupon(null);
+      setPricing(null);
+      setActiveTab('history');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to create subscription');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <ProtectedRoute requireAuth={true}>
+        <AccountLayout navItems={navItems}>
+          <div className="flex min-h-[400px] items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-[#c49a47]" />
+          </div>
+        </AccountLayout>
+      </ProtectedRoute>
+    );
+  }
+
+  const selectedPackage = packages?.find((p) => p.id === selectedPackageId);
+  const finalPrice = pricing?.final_price || selectedPackage?.price || 0;
 
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
         <div className="space-y-8">
-          <AccountSection title="Current Plan" description="Manage your subscription and billing">
-            <div className="grid gap-6 md:grid-cols-3">
-              {plans.map((plan) => (
-                <div
-                  key={plan.name}
-                  className={`rounded-xl border-2 p-6 ${
-                    plan.current
-                      ? "border-[#c49a47] bg-[#c49a47]/5"
-                      : "border-gray-200 dark:border-white/10"
-                  }`}
-                >
-                  {plan.current && (
-                    <span className="mb-4 inline-block rounded-full bg-[#c49a47] px-3 py-1 text-xs font-semibold text-white">
-                      Current Plan
-                    </span>
-                  )}
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">/{plan.period}</span>
+          {error && (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          )}
+
+          {/* Current Subscription Status */}
+          {profileId && (
+            <AccountSection title="Subscription Status" description="Your current subscription details">
+              <SubscriptionStatus
+                subscription={currentSubscription}
+                hasSubscription={hasSubscription}
+              />
+            </AccountSection>
+          )}
+
+          {/* Tab Navigation */}
+          <div className="border-b border-gray-200 dark:border-white/10">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab('subscribe')}
+                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                  activeTab === 'subscribe'
+                    ? 'border-[#c49a47] text-[#c49a47]'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Available Plans
+              </button>
+              <button
+                onClick={() => setActiveTab('history')}
+                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                  activeTab === 'history'
+                    ? 'border-[#c49a47] text-[#c49a47]'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Subscription History ({subscriptions?.length || 0})
+              </button>
+              <button
+                onClick={() => setActiveTab('payments')}
+                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                  activeTab === 'payments'
+                    ? 'border-[#c49a47] text-[#c49a47]'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Payment History ({payments?.length || 0})
+              </button>
+            </nav>
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'subscribe' && (
+            <>
+              <AccountSection
+                title="Available Packages"
+                description="Choose a subscription package that fits your needs"
+              >
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {packages?.map((pkg) => (
+                    <PackageCard
+                      key={pkg.id}
+                      package={pkg}
+                      isSelected={selectedPackageId === pkg.id}
+                      onSelect={setSelectedPackageId}
+                      discountedPrice={
+                        selectedPackageId === pkg.id && pricing
+                          ? pricing.final_price
+                          : undefined
+                      }
+                    />
+                  ))}
+                </div>
+                
+                {(packages?.length ?? 0) === 0 && (
+                  <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center dark:border-white/10 dark:bg-white/5">
+                    <p className="text-gray-600 dark:text-gray-400">
+                      No packages available at this time. Please check back later.
+                    </p>
                   </div>
-                  <ul className="mt-6 space-y-3">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-5 w-5 text-[#c49a47]">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    variant={plan.current ? "secondary" : "primary"}
-                    className="mt-6 w-full"
-                    disabled={plan.current}
-                  >
-                    {plan.current ? "Current Plan" : "Upgrade"}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </AccountSection>
+                )}
+              </AccountSection>
 
-          <AccountSection title="Payment Method">
-            <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
-              <div className="flex items-center gap-4">
-                <div className="rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-3 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Visa ending in 4242</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Expires 12/2025</p>
-                </div>
-              </div>
-              <Button variant="secondary">Update</Button>
-            </div>
-          </AccountSection>
+              {selectedPackageId && profileId && (
+                <AccountSection title="Complete Your Order">
+                  <div className="space-y-6">
+                    <CouponInput
+                      profileId={profileId}
+                      packageId={selectedPackageId}
+                      onCouponApplied={handleCouponApplied}
+                      onCouponRemoved={handleCouponRemoved}
+                    />
 
-          <AccountSection title="Billing History">
-            <div className="space-y-3">
-              {[
-                { date: "Nov 1, 2024", amount: "$0.00", status: "Paid", invoice: "#INV-001" },
-                { date: "Oct 1, 2024", amount: "$0.00", status: "Paid", invoice: "#INV-002" },
-                { date: "Sep 1, 2024", amount: "$0.00", status: "Paid", invoice: "#INV-003" },
-              ].map((bill) => (
-                <div
-                  key={bill.invoice}
-                  className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5"
-                >
-                  <div className="flex items-center gap-4">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">{bill.date}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{bill.invoice}</p>
+                    {/* Order Summary */}
+                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">Order Summary</h3>
+                      <div className="mt-4 space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600 dark:text-gray-400">Package:</span>
+                          <span className="font-medium text-gray-900 dark:text-white">
+                            {selectedPackage?.name}
+                          </span>
+                        </div>
+                        {pricing && (
+                          <>
+                            <div className="flex justify-between text-sm">
+                              <span className="text-gray-600 dark:text-gray-400">Original Price:</span>
+                              <span className="text-gray-900 line-through dark:text-white">
+                                {pricing.original_price.toFixed(2)} AED
+                              </span>
+                            </div>
+                            <div className="flex justify-between text-sm text-green-600">
+                              <span>Discount:</span>
+                              <span>-{pricing.discount_amount.toFixed(2)} AED</span>
+                            </div>
+                          </>
+                        )}
+                        <div className="border-t border-gray-200 pt-2 dark:border-white/10">
+                          <div className="flex justify-between">
+                            <span className="text-lg font-bold text-gray-900 dark:text-white">Total:</span>
+                            <span className="text-2xl font-bold text-[#c49a47]">
+                              {finalPrice.toFixed(2)} AED
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Subscribe Button */}
+                    <Button
+                      onClick={handleSubscribe}
+                      disabled={processing}
+                      className="w-full"
+                    >
+                      {processing ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="mr-2 h-5 w-5" />
+                          Subscribe Now
+                        </>
+                      )}
+                    </Button>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-semibold text-gray-900 dark:text-white">{bill.amount}</span>
-                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-400">
-                      {bill.status}
-                    </span>
-                    <button className="text-sm font-medium text-[#c49a47] hover:underline">Download</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AccountSection>
+                </AccountSection>
+              )}
+            </>
+          )}
+
+          {activeTab === 'history' && (
+            <AccountSection
+              title="Subscription History"
+              description="View all your past and current subscriptions"
+            >
+              <SubscriptionHistoryList subscriptions={subscriptions || []} />
+            </AccountSection>
+          )}
+
+          {activeTab === 'payments' && (
+            <AccountSection
+              title="Payment History"
+              description="View all your payment transactions"
+>
+              <PaymentHistoryTable payments={payments || []} totalSpent={totalSpent} />
+            </AccountSection>
+          )}
         </div>
       </AccountLayout>
     </ProtectedRoute>
