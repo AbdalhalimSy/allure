@@ -105,7 +105,7 @@ export default function JobFilterBar({ value, onChange, onReset, loadingResults 
 
   return (
     <div className="relative space-y-4">
-      <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+      <div className="relative z-[70] rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search */}
           <div className="relative flex-1 min-w-0">
@@ -173,8 +173,10 @@ export default function JobFilterBar({ value, onChange, onReset, loadingResults 
         </div>
       </div>
 
-      {showAdvanced && (
-        <div className="relative z-40 rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+      <div
+        className={`relative ${showAdvanced ? 'z-[60] opacity-100 translate-y-0 max-h-[2000px] overflow-visible' : 'z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none'} rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95`}
+        aria-hidden={!showAdvanced}
+      >
           <div className="space-y-6 p-6">
             {/* Date Section */}
             <div className="space-y-4">
@@ -216,7 +218,6 @@ export default function JobFilterBar({ value, onChange, onReset, loadingResults 
                 </div>
               </div>
             </div>
-
             {/* Professional */}
             <div className="space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
