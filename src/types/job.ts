@@ -46,12 +46,35 @@ export interface MetaCondition {
   piercings?: number;
 }
 
+// Call Time types
+export interface AvailableTime {
+  time: string; // HH:MM:SS format
+  available_spots: number;
+  is_fully_booked: boolean;
+}
+
+export interface CallTimeSlot {
+  id: number;
+  start_time: string; // HH:MM:SS format
+  end_time: string; // HH:MM:SS format
+  interval_minutes: number;
+  max_talents: number;
+  available_times: AvailableTime[];
+}
+
+export interface CallTimeSlotGroup {
+  date: string; // "YYYY-MM-DD HH:MM:SS" format
+  slots: CallTimeSlot[];
+}
+
 export interface DetailedRole extends Role {
   description: string;
   ethnicity: string;
   payment_terms_days: number;
   meta_conditions: MetaCondition[];
   conditions: Condition[];
+  call_time_enabled: boolean;
+  call_time_slots?: CallTimeSlotGroup[];
 }
 
 export interface DetailedJob extends Omit<Job, 'roles' | 'roles_count' | 'countries'> {

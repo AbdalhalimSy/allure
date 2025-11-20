@@ -29,7 +29,7 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full border border-[#c49a47]/40 px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47]/80 dark:text-white"
+        className="flex items-center gap-2 rounded-full border border-[#c49a47]/40 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 dark:text-white"
       >
         <span>{currentLang?.flag}</span>
         <span>{currentLang?.label}</span>
@@ -43,8 +43,13 @@ export default function LanguageSwitcher() {
         </svg>
       </button>
 
-      {isOpen && (
-        <div className="absolute end-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl dark:border-[#c49a47]/20 dark:bg-gray-900">
+      <div
+        className={`absolute end-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl dark:border-[#c49a47]/20 dark:bg-gray-900 transition-all duration-200 ease-in-out origin-top-right ${
+          isOpen
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+        }`}
+      >
           {languages.map((language) => (
             <button
               key={language.code}
@@ -52,7 +57,7 @@ export default function LanguageSwitcher() {
                 setLocale(language.code);
                 setIsOpen(false);
               }}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-start transition-colors ${
+              className={`w-full flex items-center gap-3 px-4 py-3 text-start transition-all duration-200 ease-in-out ${
                 locale === language.code
                   ? 'bg-[#c49a47]/10 text-[#c49a47]'
                   : 'hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -67,8 +72,7 @@ export default function LanguageSwitcher() {
               )}
             </button>
           ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

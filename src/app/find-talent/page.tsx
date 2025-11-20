@@ -1,49 +1,100 @@
 "use client";
 import SectionHeader from "@/components/ui/SectionHeader";
-import TalentCard, { Talent } from "@/components/talent/TalentCard";
-import TalentFilterBar, { TalentFilters } from "@/components/talent/TalentFilterBar";
-import { useState, useMemo } from "react";
-
-const DUMMY_TALENTS: Talent[] = [
-  { id: "1", name: "Layla Arif", category: "Model", location: "Dubai, UAE", availability: "Available", tags: ["Height 178cm", "Arabic + English", "Editorial"], coverGradient: "bg-gradient-to-tr from-gray-900 via-gray-700 to-amber-600" },
-  { id: "2", name: "Omar El Fayed", category: "Model", location: "Riyadh, KSA", availability: "Booked", tags: ["Lifestyle", "TV Ready", "Swimwear"], coverGradient: "bg-gradient-to-tr from-emerald-400 via-emerald-600 to-gray-900" },
-  { id: "3", name: "Sofia Haddad", category: "Actor", location: "Beirut, Lebanon", availability: "Remote Only", tags: ["Acting", "Voice", "MC"], coverGradient: "bg-gradient-to-tr from-rose-500 via-fuchsia-600 to-gray-900" },
-  { id: "4", name: "Malik Rahman", category: "Creator", location: "Doha, Qatar", availability: "Available", tags: ["Beauty", "Content", "AR"], coverGradient: "bg-gradient-to-tr from-slate-900 via-blue-700 to-cyan-500" },
-  { id: "5", name: "Noor Saad", category: "Host", location: "Dubai, UAE", availability: "Available", tags: ["Bilingual", "Event", "Presenter"], coverGradient: "bg-gradient-to-tr from-amber-600 via-orange-600 to-rose-700" },
-];
+import TalentCard from "@/components/talent/TalentCard";
+import { Talent, TalentFilters } from "@/types/talent";
+import TalentFilterBar from "@/components/talent/TalentFilterBar";
+import { useState, useEffect } from "react";
+import apiClient from "@/lib/api/client";
+import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
 
 export default function TalentsPage() {
-  const [filters, setFilters] = useState<TalentFilters>({ q: "", category: "", location: "", availability: "" });
+  const [filters, setFilters] = useState<TalentFilters>({
+    search: "",
+    per_page: 12,
+    page: 1,
+  });
+  const [talents, setTalents] = useState<Talent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(0);
 
-  const filtered = useMemo(() => {
-    return DUMMY_TALENTS.filter((t) => {
-      const matchesQ = filters.q
-        ? [t.name, t.category, t.location, ...t.tags].join(" ").toLowerCase().includes(filters.q.toLowerCase())
-        : true;
-      const matchesCategory = filters.category
-        ? t.category.toLowerCase().includes(filters.category.toLowerCase())
-        : true;
-      const matchesLocation = filters.location
-        ? t.location.toLowerCase().includes(filters.location.toLowerCase())
-        : true;
-      const matchesAvailability = filters.availability
-        ? t.availability.toLowerCase().includes(filters.availability.toLowerCase())
-        : true;
-      return matchesQ && matchesCategory && matchesLocation && matchesAvailability;
-    });
+  useEffect(() => {
+    const fetchTalents = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        
+        // Add all filter parameters
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            params.append(key, String(value));
+          }
+        });
+
+        const response = await apiClient.get(`/talents?${params.toString()}`);
+        setTalents(response.data.data || []);
+        setTotal(response.data.total || 0);
+      } catch (error) {
+        console.error("Failed to fetch talents:", error);
+        setTalents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTalents();
   }, [filters]);
 
-  const handleReset = () => setFilters({ q: "", category: "", location: "", availability: "" });
+  const handleReset = () => {
+    setFilters({
+      search: "",
+      per_page: 12,
+      page: 1,
+    });
+  };
 
   return (
     <section className="space-y-8 max-w-7xl mx-auto px-6 py-10 lg:px-8">
-      <SectionHeader title="Talents" />
-      <TalentFilterBar value={filters} onChange={setFilters} onReset={handleReset} />
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((t) => (
-          <TalentCard key={t.id} {...t} />
-        ))}
-      </div>
+      <SectionHeader 
+        title="Find Talent" 
+        description="Discover talented professionals for your next project"
+      />
+      
+      <TalentFilterBar
+        value={filters}
+        onChange={setFilters}
+        onReset={handleReset}
+        loadingResults={loading}
+      />
+
+      {loading ? (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <TalentCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : talents.length > 0 ? (
+        <>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Found {total} {total === 1 ? "talent" : "talents"}
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {talents.map((talent) => (
+              <TalentCard key={talent.profile.id} talent={talent} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <p className="text-lg font-medium text-gray-900 dark:text-white">
+            No talents found
+          </p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Try adjusting your filters to see more results
+          </p>
+        </div>
+      )}
     </section>
   );
 }

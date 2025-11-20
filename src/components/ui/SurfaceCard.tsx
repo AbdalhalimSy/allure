@@ -30,7 +30,7 @@ export default function SurfaceCard({
   return (
     <div
       className={[
-        "group relative overflow-hidden rounded-3xl backdrop-blur-2xl shadow-[0_25px_80px_rgba(15,23,42,0.15)] transition-transform duration-300 hover:-translate-y-1",
+        "group relative overflow-hidden rounded-3xl backdrop-blur-2xl shadow-[0_25px_80px_rgba(15,23,42,0.15)] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-2xl",
         background,
         className,
       ]
@@ -39,7 +39,7 @@ export default function SurfaceCard({
     >
       <div
         className={[
-          "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+          "pointer-events-none absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-105",
           "bg-gradient-to-br",
           accentMap[accent],
         ]

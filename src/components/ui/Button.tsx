@@ -16,15 +16,15 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50";
+    "inline-flex items-center justify-center rounded-lg px-6 py-3 font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50";
 
   const variants = {
     primary:
-      "bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/30 hover:-translate-y-0.5",
+      "bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0",
     secondary:
-      "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700",
+      "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300 hover:shadow-md hover:-translate-y-0.5 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 active:translate-y-0",
     link:
-      "bg-transparent px-4 py-2 text-[#c49a47] hover:text-[#b88833] dark:text-[#e3c37b]",
+      "bg-transparent px-4 py-2 text-[#c49a47] hover:text-[#b88833] hover:underline dark:text-[#e3c37b] transition-colors duration-200",
   };
 
   return (

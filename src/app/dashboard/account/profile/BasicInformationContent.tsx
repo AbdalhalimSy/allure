@@ -7,6 +7,7 @@ import Input from "@/components/ui/Input";
 import SingleSelect from "@/components/ui/SingleSelect";
 import MultiSelect from "@/components/ui/MultiSelect";
 import PhoneInput from "@/components/ui/PhoneInput";
+import DatePicker from "@/components/ui/DatePicker";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
@@ -273,12 +274,13 @@ export default function BasicInformationContent({
           </AccountField>
 
           <AccountField label="Date of Birth" required>
-            <Input
-              type="date"
-              name="dob"
+            <DatePicker
               value={formData.dob}
-              onChange={handleChange}
-              required
+              onChange={(date) =>
+                setFormData((prev) => ({ ...prev, dob: date }))
+              }
+              placeholder="Select your date of birth"
+              maxDate={new Date().toISOString().split('T')[0]}
             />
           </AccountField>
 

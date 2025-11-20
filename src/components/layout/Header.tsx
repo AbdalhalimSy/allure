@@ -101,7 +101,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-gray-900 transition-colors hover:text-[#c49a47] dark:text-white"
+              className="text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:text-[#c49a47] hover:-translate-y-0.5 dark:text-white"
             >
               {item.label}
             </Link>
@@ -113,13 +113,13 @@ export default function Header() {
             <>
               <Link
                 href="/login"
-                className="text-sm font-medium text-gray-900 transition-colors hover:text-[#c49a47] dark:text-white"
+                className="text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:text-[#c49a47] hover:-translate-y-0.5 dark:text-white"
               >
                 {t("nav.login")}
               </Link>
               <Link
                 href="/register"
-                className="rounded-full bg-[#c49a47] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition hover:-translate-y-0.5"
+                className="rounded-full bg-[#c49a47] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0"
               >
                 {t("nav.signUp")}
               </Link>
@@ -128,7 +128,7 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-gray-100 text-sm font-semibold text-gray-700 dark:border-white/20 dark:bg-white/10 dark:text-white"
+                className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-gray-100 text-sm font-semibold text-gray-700 transition-all duration-200 ease-in-out hover:scale-110 hover:shadow-md active:scale-100 dark:border-white/20 dark:bg-white/10 dark:text-white"
                 aria-label="Open user menu"
               >
                 {avatarSrc && !avatarError ? (
@@ -146,8 +146,13 @@ export default function Header() {
                   </span>
                 )}
               </button>
-              {open && (
-                <div className="absolute end-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-black">
+              <div
+                className={`absolute end-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-black transition-all duration-200 ease-in-out origin-top-right ${
+                  open
+                    ? "opacity-100 scale-100 translate-y-0"
+                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+              >
                   {/* Current Profile Info */}
                   <div className="border-b border-gray-200 p-3 dark:border-white/10">
                     <div className="mb-2 rounded-md bg-gray-50 p-3 text-sm text-gray-700 dark:bg-white/5 dark:text-gray-200">
@@ -179,24 +184,29 @@ export default function Header() {
                     {otherProfiles.length > 0 && (
                       <button
                         onClick={() => setShowProfiles(!showProfiles)}
-                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/5"
+                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:translate-x-1 dark:text-gray-200 dark:hover:bg-white/5"
                       >
                         <span>{t("profile.switchProfile") || "Switch Profile"}</span>
                         <ChevronRight 
-                          className={`h-4 w-4 transition-transform ${showProfiles ? "rotate-90" : ""}`} 
+                          className={`h-4 w-4 transition-transform duration-200 ${showProfiles ? "rotate-90" : ""}`} 
                         />
                       </button>
                     )}
 
                     {/* Sub-profiles List */}
-                    {showProfiles && otherProfiles.length > 0 && (
-                      <div className="mt-2 space-y-1 rounded-md border border-gray-200 bg-gray-50 p-2 dark:border-white/10 dark:bg-white/5">
+                    <div
+                      className={`mt-2 space-y-1 rounded-md border border-gray-200 bg-gray-50 p-2 dark:border-white/10 dark:bg-white/5 transition-all duration-200 ease-in-out origin-top ${
+                        showProfiles && otherProfiles.length > 0
+                          ? "opacity-100 max-h-96 scale-y-100"
+                          : "opacity-0 max-h-0 scale-y-0 overflow-hidden pointer-events-none"
+                      }`}
+                    >
                         {otherProfiles.map((profile) => (
                           <button
                             key={profile.id}
                             onClick={() => handleSwitchProfile(profile.id)}
                             disabled={isSwitchingProfile}
-                            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm hover:bg-white dark:hover:bg-white/10 disabled:opacity-50"
+                            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-102 dark:hover:bg-white/10 disabled:opacity-50"
                           >
                             <Image
                               src={profile.featured_image_url}
@@ -220,28 +230,26 @@ export default function Header() {
                             )}
                           </button>
                         ))}
-                      </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Menu Actions */}
                   <div className="p-3">
                     <Link
                       href="/dashboard/account"
-                      className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/5"
+                      className="block rounded-md px-3 py-2 text-sm text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:translate-x-1 dark:text-gray-200 dark:hover:bg-white/5"
                       onClick={() => setOpen(false)}
                     >
                       {t("nav.manageAccount") || "Manage Account"}
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="mt-1 w-full rounded-md px-3 py-2 text-start text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/20"
+                      className="mt-1 w-full rounded-md px-3 py-2 text-start text-sm text-rose-600 transition-all duration-200 ease-in-out hover:bg-rose-50 hover:translate-x-1 dark:text-rose-400 dark:hover:bg-rose-950/20"
                     >
                       {t("nav.logout") || "Logout"}
                     </button>
                   </div>
                 </div>
-              )}
             </div>
           )}
         </div>

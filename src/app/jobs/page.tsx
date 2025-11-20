@@ -89,7 +89,7 @@ export default function JobsPage() {
         </div>
 
         {/* Loading Initial */}
-        {loading && jobs.length === 0 ? (
+        {loading ? (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>

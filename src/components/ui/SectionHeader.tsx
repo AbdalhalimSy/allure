@@ -33,7 +33,7 @@ export default function SectionHeader({
   return (
     <div
       className={[
-        "flex flex-col gap-4 max-w-3xl",
+        "flex flex-col gap-4 max-w-3xl animate-fade-in",
         alignment,
         className,
       ]

@@ -221,7 +221,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
               <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700 shrink-0" />
               <Button
                 type="button"
-                variant="ghost"
+                variant="secondary"
                 onClick={handleReset}
                 className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
               >
@@ -231,7 +231,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
               {/* Mobile Reset Icon Only */}
               <Button
                 type="button"
-                variant="ghost"
+                variant="secondary"
                 onClick={handleReset}
                 className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
                 title="Reset All Filters"
@@ -244,9 +244,15 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
       </div>
 
       {/* Advanced Filters Panel */}
-      {showAdvanced && (
-        <div className="relative z-40 rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
-          <div className="space-y-6 p-6">
+      <div
+        className={`relative ${
+          showAdvanced
+            ? "z-[60] opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
+            : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
+        } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95`}
+        aria-hidden={!showAdvanced}
+      >
+        <div className="space-y-6 p-6">
             {/* Demographics Section */}
             <div className="relative z-40 space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
@@ -461,7 +467,6 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
   );
 }

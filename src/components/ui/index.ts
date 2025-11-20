@@ -5,6 +5,7 @@ export { default as SingleSelect } from "./SingleSelect";
 export { default as MultiSelect } from "./MultiSelect";
 export { default as TextArea } from "./TextArea";
 export { default as PhoneInput } from "./PhoneInput";
+export { default as DatePicker } from "./DatePicker";
 export { default as Label } from "./Label";
 export { default as Button } from "./Button";
 export { default as NumericWithUnit } from "./NumericWithUnit";

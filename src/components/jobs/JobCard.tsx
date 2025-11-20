@@ -34,9 +34,9 @@ export default function JobCard({ job }: JobCardProps) {
   const isExpiringSoon = daysUntilExpiry <= 7 && daysUntilExpiry > 0;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] dark:border-gray-800 dark:bg-gray-900">
       {/* Gradient Header */}
-      <div className={`h-2 bg-gradient-to-r ${gradient}`} />
+      <div className={`h-2 bg-gradient-to-r ${gradient} transition-all duration-300 group-hover:h-3`} />
       
       {/* Status Badge */}
       {isExpiringSoon && (

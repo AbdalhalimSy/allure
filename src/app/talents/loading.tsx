@@ -16,7 +16,7 @@ export default function LoadingTalents() {
           <span>Loading talents...</span>
         </div>
       </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {Array.from({ length: 9 }).map((_, i) => (
           <TalentCardSkeleton key={i} />
         ))}

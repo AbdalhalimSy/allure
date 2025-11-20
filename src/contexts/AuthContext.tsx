@@ -173,8 +173,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           talent,
         }));
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to fetch profile:", error);
+      // If 401, clear auth state
+      if (error?.response?.status === 401) {
+        logout();
+      }
     }
   };
 

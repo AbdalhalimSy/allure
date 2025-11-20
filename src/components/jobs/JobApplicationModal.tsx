@@ -15,6 +15,8 @@ import TextArea from "@/components/ui/TextArea";
 import Label from "@/components/ui/Label";
 import Button from "@/components/ui/Button";
 import FileUploader from "@/components/ui/FileUploader";
+import CallTimeSelector from "@/components/jobs/CallTimeSelector";
+import { CallTimeSlotGroup } from "@/types/job";
 
 interface Condition {
   id: number;
@@ -29,6 +31,8 @@ interface Role {
   name: string;
   description: string;
   conditions: Condition[];
+  call_time_enabled: boolean;
+  call_time_slots?: CallTimeSlotGroup[];
 }
 
 interface JobApplicationModalProps {
@@ -55,8 +59,17 @@ export default function JobApplicationModal({
   const [responses, setResponses] = useState<Record<number, any>>({});
   const [mediaFiles, setMediaFiles] = useState<Record<number, File>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCallTimeSlotId, setSelectedCallTimeSlotId] = useState<number | null>(null);
+  const [selectedCallTime, setSelectedCallTime] = useState<string | null>(null);
+  const [callTimeError, setCallTimeError] = useState<string>("");
 
   if (!isOpen) return null;
+
+  const handleCallTimeChange = (slotId: number, time: string) => {
+    setSelectedCallTimeSlotId(slotId);
+    setSelectedCallTime(time);
+    setCallTimeError("");
+  };
 
   const handleInputChange = (conditionId: number, value: any) => {
     setResponses((prev) => ({
@@ -96,6 +109,16 @@ export default function JobApplicationModal({
   };
 
   const validateForm = () => {
+    // Validate call time if enabled
+    if (role.call_time_enabled) {
+      if (!selectedCallTimeSlotId || !selectedCallTime) {
+        setCallTimeError("Please select a call time slot and time");
+        toast.error("Please select a call time slot and time");
+        return false;
+      }
+    }
+
+    // Validate conditions
     for (const condition of role.conditions) {
       if (condition.is_required) {
         const response = responses[condition.id];
@@ -125,6 +148,13 @@ export default function JobApplicationModal({
     try {
       const formData = new FormData();
       formData.append("profile_id", profileId.toString());
+      formData.append("approved_payment_terms", "true");
+
+      // Add call time data if enabled
+      if (role.call_time_enabled && selectedCallTimeSlotId && selectedCallTime) {
+        formData.append("call_time_slot_id", selectedCallTimeSlotId.toString());
+        formData.append("selected_time", selectedCallTime);
+      }
 
       // Build responses array
       const responsesArray = role.conditions.map((condition) => {
@@ -163,8 +193,19 @@ export default function JobApplicationModal({
         onClose();
         setResponses({});
         setMediaFiles({});
+        setSelectedCallTimeSlotId(null);
+        setSelectedCallTime(null);
+        setCallTimeError("");
       } else {
-        toast.error(result.message || "Failed to submit application");
+        // Handle specific error messages from backend
+        const errorMessage = result.message || "Failed to submit application";
+        
+        // Check for call time specific errors
+        if (errorMessage.includes("call time") || errorMessage.includes("slot") || errorMessage.includes("time")) {
+          setCallTimeError(errorMessage);
+        }
+        
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error("Error submitting application:", error);
@@ -370,6 +411,20 @@ export default function JobApplicationModal({
           </div>
 
           <div className="space-y-6">
+            {/* Call Time Selection */}
+            {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
+              <div className="space-y-2">
+                <Label required>Call Time</Label>
+                <CallTimeSelector
+                  slotGroups={role.call_time_slots}
+                  selectedSlotId={selectedCallTimeSlotId}
+                  selectedTime={selectedCallTime}
+                  onSlotChange={handleCallTimeChange}
+                  error={callTimeError}
+                />
+              </div>
+            )}
+
             {role.conditions.map((condition) => (
               <div key={condition.id} className="space-y-2">
                 <Label required={condition.is_required}>

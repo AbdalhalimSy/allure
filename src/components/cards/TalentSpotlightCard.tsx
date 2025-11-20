@@ -18,11 +18,11 @@ export default function TalentSpotlightCard({
   coverGradient,
 }: TalentSpotlightCardProps) {
   return (
-    <SurfaceCard accent="gold" className="h-full">
+    <SurfaceCard accent="gold" className="h-full group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
       <div
         className={[
           "aspect-[4/3] w-full rounded-2xl mb-6 overflow-hidden",
-          "relative isolate",
+          "relative isolate transition-transform duration-300 group-hover:scale-105",
           coverGradient,
         ]
           .filter(Boolean)

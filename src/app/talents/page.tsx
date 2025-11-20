@@ -135,7 +135,7 @@ export default function TalentsPage() {
         </div>
 
         {/* Loading State */}
-        {loading && talents.length === 0 ? (
+        {loading ? (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
@@ -147,7 +147,7 @@ export default function TalentsPage() {
                 <span>Loading talents...</span>
               </div>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {Array.from({ length: 9 }).map((_, i) => (
                 <TalentCardSkeleton key={i} />
               ))}
@@ -219,7 +219,7 @@ export default function TalentsPage() {
             </div>
 
             {/* Grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {talents.map((talent) => (
                 <TalentCard key={talent.profile.id} talent={talent} />
               ))}
