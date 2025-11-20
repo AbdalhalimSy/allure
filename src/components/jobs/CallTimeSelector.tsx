@@ -71,9 +71,9 @@ export default function CallTimeSelector({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 dark:border-blue-900/40 dark:bg-blue-900/20">
-        <AlertCircle className="h-5 w-5 flex-shrink-0 text-blue-700 dark:text-blue-300" />
-        <div className="text-sm text-blue-700 dark:text-blue-300">
+      <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-gradient-to-r from-[#fff8ec] to-[#f7e6c2] p-4 dark:border-[#c49a47]/40 dark:bg-gradient-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
+        <AlertCircle className="h-5 w-5 flex-shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
+        <div className="text-sm text-[#c49a47] dark:text-[#c49a47]">
           <p className="font-semibold mb-1">Call Time Required</p>
           <p>
             This role requires you to select a call time slot. Please choose an
@@ -121,9 +121,15 @@ export default function CallTimeSelector({
                       <div className="flex items-center gap-3">
                         <Clock className="h-5 w-5 text-[#c49a47]" />
                         <div>
-                          <div className="font-medium text-gray-900 dark:text-white">
-                            {formatTime(slot.start_time)} -{" "}
-                            {formatTime(slot.end_time)}
+                          <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                            {formatTime(slot.start_time)} - {formatTime(slot.end_time)}
+                            {/* Show selected time if this slot is selected */}
+                            {selectedSlotId === slot.id && selectedTime && (
+                              <span className="ml-2 inline-flex items-center rounded bg-[#c49a47]/10 px-2 py-0.5 text-xs font-semibold text-[#c49a47] border border-[#c49a47]/30">
+                                <Clock className="mr-1 h-3 w-3 text-[#c49a47]" />
+                                {selectedTime}
+                              </span>
+                            )}
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400">
                             {slot.interval_minutes} min intervals

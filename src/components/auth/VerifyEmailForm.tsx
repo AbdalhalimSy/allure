@@ -8,7 +8,7 @@ import { useI18n } from "@/contexts/I18nContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import OTPInput from "@/components/ui/OTPInput";
-import apiClient, { setAuthToken } from "@/lib/api/client";
+import apiClient, { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface VerifyEmailFormProps {
@@ -26,7 +26,7 @@ export default function VerifyEmailForm({
 }: VerifyEmailFormProps) {
   const { t } = useI18n();
   const router = useRouter();
-  const { setUser } = useAuth();
+  const { setUser, fetchProfile } = useAuth();
 
   const [otp, setOtp] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
@@ -76,17 +76,29 @@ export default function VerifyEmailForm({
 
       // Auto login if password is available
       if (password) {
-        const loginRes = await apiClient.post("/auth/login", {
-          email,
-          password,
-        });
+        const loginRes = await apiClient.post("/auth/login", { email, password });
         const token = loginRes?.data?.data?.token;
+        const talent = loginRes?.data?.data?.talent;
+        const userData = loginRes?.data?.data?.user;
         if (token) {
+          // Set auth token
           setAuthToken(token);
           if (typeof window !== "undefined") {
             localStorage.setItem("auth_email", email);
           }
-          setUser({ name: "Allure User", email });
+          // Set active profile id BEFORE fetching profile
+          if (talent?.primary_profile_id) {
+            setActiveProfileId(talent.primary_profile_id);
+          }
+          // Set initial user (profile details will be enriched in fetchProfile)
+            setUser({
+              id: userData?.id,
+              name: userData?.name || "Allure User",
+              email: userData?.email || email,
+              talent,
+            });
+          // Fetch full profile now that profile_id is stored
+          await fetchProfile();
           toast.success(t("auth.emailVerified") || "Email verified. Welcome!");
           if (onSuccess) {
             onSuccess();

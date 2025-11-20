@@ -18,67 +18,80 @@ export function PackageCard({
 }: PackageCardProps) {
   const hasDiscount = discountedPrice !== undefined && discountedPrice < pkg.price;
 
+  const featureLines = pkg.description
+    .split(/\n+/)
+    .map(f => f.trim())
+    .filter(Boolean);
+
   return (
     <div
       onClick={() => onSelect(pkg.id)}
-      className={`relative cursor-pointer rounded-xl border-2 p-6 transition-all hover:shadow-lg ${
+      className={`group relative cursor-pointer rounded-2xl p-[2px] transition-all duration-300 ${
         isSelected
-          ? 'border-primary bg-primary/5 shadow-md'
-          : 'border-gray-200 hover:border-primary/50'
+          ? 'bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#e6c678] shadow-xl'
+          : 'bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 hover:from-[#c49a47]/40 hover:via-[#d4a855]/40 hover:to-[#e6c678]/40'
       }`}
     >
-      {isSelected && (
-        <div className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
-          <Check className="h-5 w-5" />
-        </div>
-      )}
-
-      <div className="mb-4">
-        <h3 className="text-2xl font-bold text-gray-900">{pkg.name}</h3>
-        <p className="mt-2 text-sm text-gray-600">{pkg.description}</p>
-      </div>
-
-      <div className="mb-4">
-        {hasDiscount ? (
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-bold text-primary">
-                {discountedPrice?.toFixed(2)}
-              </span>
-              <span className="text-lg text-gray-500">AED</span>
-            </div>
-            <div className="mt-1 flex items-center gap-2">
-              <span className="text-lg text-gray-400 line-through">
-                {pkg.price.toFixed(2)} AED
-              </span>
-              <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
-                Save {((pkg.price - discountedPrice) / pkg.price * 100).toFixed(0)}%
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-gray-900">
-              {pkg.price.toFixed(2)}
-            </span>
-            <span className="text-lg text-gray-500">AED</span>
+      <div
+        className={`rounded-2xl h-full w-full p-6 transition-colors duration-300 ${
+          isSelected
+            ? 'bg-white dark:bg-black'
+            : 'bg-white dark:bg-black'
+        }`}
+      >
+        {isSelected && (
+          <div className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/40">
+            <Check className="h-5 w-5" />
           </div>
         )}
-      </div>
 
-      <div className="border-t border-gray-200 pt-4">
-        <div className="flex items-center text-sm text-gray-600">
-          <Check className="mr-2 h-4 w-4 text-green-500" />
-          <span>{pkg.duration_in_days} days of access</span>
+        <div className="mb-5">
+          <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            {pkg.name}
+          </h3>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <span className="inline-flex items-center rounded-full border border-[#c49a47]/30 bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold text-[#c49a47]">
+              {pkg.duration_in_days} Days
+            </span>
+          </div>
         </div>
-        <div className="mt-2 flex items-center text-sm text-gray-600">
-          <Check className="mr-2 h-4 w-4 text-green-500" />
-          <span>Full platform features</span>
+
+        <div className="mb-6">
+          {hasDiscount ? (
+            <div>
+              <div className="flex items-end gap-2">
+                <span className="text-4xl font-bold text-[#c49a47]">
+                  {discountedPrice?.toFixed(2)}
+                </span>
+                <span className="mb-1 text-sm font-medium text-gray-500">AED</span>
+              </div>
+              <div className="mt-2 flex items-center gap-2">
+                <span className="text-sm text-gray-400 line-through">
+                  {pkg.price.toFixed(2)} AED
+                </span>
+                <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
+                  Save {(((pkg.price - (discountedPrice ?? 0)) / pkg.price) * 100).toFixed(0)}%
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-end gap-2">
+              <span className="text-4xl font-bold text-gray-900 dark:text-white">
+                {pkg.price.toFixed(2)}
+              </span>
+              <span className="mb-1 text-sm font-medium text-gray-500">AED</span>
+            </div>
+          )}
         </div>
-        <div className="mt-2 flex items-center text-sm text-gray-600">
-          <Check className="mr-2 h-4 w-4 text-green-500" />
-          <span>Priority support</span>
-        </div>
+
+        <ul className="space-y-2">
+          {featureLines.map((feat, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+              <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#c49a47]" />
+              <span>{feat}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

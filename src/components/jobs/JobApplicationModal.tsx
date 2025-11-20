@@ -451,9 +451,9 @@ export default function JobApplicationModal({
           </div>
 
           {/* Info Box */}
-          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-amber-300 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-900/20">
-            <AlertCircle className="h-5 w-5 flex-shrink-0 text-amber-700 dark:text-amber-300" />
-            <p className="text-sm text-amber-700 dark:text-amber-300">
+          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-gradient-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-gradient-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
+            <p className="text-sm text-[#c49a47] dark:text-[#c49a47]">
               Make sure all required fields are filled before submitting. Your
               application will be reviewed by the casting team.
             </p>

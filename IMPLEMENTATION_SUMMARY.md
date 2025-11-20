@@ -1,5 +1,21 @@
 # Profession Management Rebuild - Implementation Summary
 
+## 🔧 Recent Fix: Auth Profile Initialization
+
+An intermittent error `{"error":"Profile not found for this talent."}` occurred after automatic login via the email verification flow because the active profile ID was never initialized before fetching `/api/profile/me`. The standard login page set `primary_profile_id` in localStorage and then called `fetchProfile()`, but `VerifyEmailForm` skipped those steps when auto-logging in the user.
+
+### Resolution (Nov 20, 2025)
+- Updated `src/components/auth/VerifyEmailForm.tsx` to:
+   - Import and call `setActiveProfileId(talent.primary_profile_id)` after successful login.
+   - Set initial user state including `talent` data.
+   - Invoke `fetchProfile()` so `/api/profile/me` includes the correct `profile_id` query parameter / header.
+- This prevents backend fallback logic from failing when a profile ID is required for talents with multiple profiles or delayed enrichment.
+
+### Impact
+- Eliminates intermittent missing profile errors post email verification.
+- Ensures consistent behavior between regular login and auto-login after verification.
+
+
 ## ✅ Completed Tasks
 
 ### 1. **TypeScript Types Refactoring** ✓

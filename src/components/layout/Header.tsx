@@ -4,7 +4,7 @@ import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "react-hot-toast";
@@ -14,7 +14,20 @@ export default function Header() {
   const { t } = useI18n();
   const { isAuthenticated, user, logout, switchProfile, activeProfileId } = useAuth();
   const [open, setOpen] = useState(false);
-  const [showProfiles, setShowProfiles] = useState(false);
+  // Removed showProfiles toggle; profiles list now always visible when other profiles exist
+    const menuRef = useRef<HTMLDivElement | null>(null);
+
+    // Close menu when clicking outside
+    useEffect(() => {
+      if (!open) return;
+      const handleOutside = (e: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+          setOpen(false);
+        }
+      };
+      document.addEventListener("mousedown", handleOutside);
+      return () => document.removeEventListener("mousedown", handleOutside);
+    }, [open]);
   const [confirmLogoutOpen, setConfirmLogoutOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isSwitchingProfile, setIsSwitchingProfile] = useState(false);
@@ -51,7 +64,6 @@ export default function Header() {
       setIsSwitchingProfile(true);
       await switchProfile(profileId);
       toast.success(t("profile.switched") || "Profile switched successfully");
-      setShowProfiles(false);
       setOpen(false);
       router.refresh();
     } catch (error) {
@@ -125,7 +137,7 @@ export default function Header() {
               </Link>
             </>
           ) : (
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <button
                 onClick={() => setOpen((v) => !v)}
                 className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-gray-100 text-sm font-semibold text-gray-700 transition-all duration-200 ease-in-out hover:scale-110 hover:shadow-md active:scale-100 dark:border-white/20 dark:bg-white/10 dark:text-white"
@@ -180,27 +192,9 @@ export default function Header() {
                       )}
                     </div>
 
-                    {/* Profile Switcher */}
+                    {/* Profiles List (always visible when more profiles exist) */}
                     {otherProfiles.length > 0 && (
-                      <button
-                        onClick={() => setShowProfiles(!showProfiles)}
-                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:translate-x-1 dark:text-gray-200 dark:hover:bg-white/5"
-                      >
-                        <span>{t("profile.switchProfile") || "Switch Profile"}</span>
-                        <ChevronRight 
-                          className={`h-4 w-4 transition-transform duration-200 ${showProfiles ? "rotate-90" : ""}`} 
-                        />
-                      </button>
-                    )}
-
-                    {/* Sub-profiles List */}
-                    <div
-                      className={`mt-2 space-y-1 rounded-md border border-gray-200 bg-gray-50 p-2 dark:border-white/10 dark:bg-white/5 transition-all duration-200 ease-in-out origin-top ${
-                        showProfiles && otherProfiles.length > 0
-                          ? "opacity-100 max-h-96 scale-y-100"
-                          : "opacity-0 max-h-0 scale-y-0 overflow-hidden pointer-events-none"
-                      }`}
-                    >
+                      <div className="mt-2 space-y-1 rounded-md border border-gray-200 bg-gray-50 p-2 dark:border-white/10 dark:bg-white/5">
                         {otherProfiles.map((profile) => (
                           <button
                             key={profile.id}
@@ -230,7 +224,8 @@ export default function Header() {
                             )}
                           </button>
                         ))}
-                    </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Menu Actions */}
