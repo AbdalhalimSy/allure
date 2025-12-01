@@ -163,7 +163,7 @@ Now using existing UI components:
 **Language Pills**:
 ```tsx
 // Before
-className="bg-gradient-to-r from-blue-500 to-purple-500"
+className="bg-linear-to-r from-blue-500 to-purple-500"
 
 // After
 className="bg-[#c49a47]"

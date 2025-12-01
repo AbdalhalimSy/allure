@@ -167,6 +167,7 @@ export default function ProfilePage() {
             steps={steps}
             currentStep={currentStep}
             onStepClick={handleStepClick}
+            progressStep={user?.profile?.progress_step}
           />
           <div className="min-h-[400px]">{renderStepContent()}</div>
         </div>

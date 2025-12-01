@@ -48,13 +48,14 @@ interface BasicInfoFormState {
   mobile: string;
   whatsapp: string;
   country_id: number;
+  differentWhatsApp: boolean;
 }
 
 export default function BasicInformationContent({
   onNext,
 }: BasicInformationContentProps) {
   const { user, fetchProfile } = useAuth();
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [nationalities, setNationalities] = useState<Nationality[]>([]);
   const [ethnicities, setEthnicities] = useState<Ethnicity[]>([]);
@@ -71,6 +72,7 @@ export default function BasicInformationContent({
     mobile: "",
     whatsapp: "",
     country_id: 0,
+    differentWhatsApp: false,
   });
 
   useEffect(() => {
@@ -107,6 +109,10 @@ export default function BasicInformationContent({
   useEffect(() => {
     const profile = user?.profile;
     if (!profile) return;
+    const mobile = profile.mobile || "";
+    const whatsapp = profile.whatsapp || "";
+    const isDifferent = mobile !== whatsapp && whatsapp !== "";
+    
     setFormData({
       profile_id: profile.id || 0,
       first_name: profile.first_name || "",
@@ -115,9 +121,10 @@ export default function BasicInformationContent({
       dob: profile.dob || "",
       nationality_ids: profile.nationalities?.map((n) => n.id) || [],
       ethnicity_ids: profile.ethnicities?.map((e) => e.id) || [],
-      mobile: profile.mobile || "",
-      whatsapp: profile.whatsapp || "",
+      mobile: mobile,
+      whatsapp: whatsapp,
       country_id: profile.lc_country_id ?? profile.country?.id ?? 0,
+      differentWhatsApp: isDifferent,
     });
   }, [user]);
 
@@ -135,7 +142,23 @@ export default function BasicInformationContent({
   };
 
   const handlePhoneChange = (value: string, field: "mobile" | "whatsapp") => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      // If not using different WhatsApp and mobile changes, sync whatsapp
+      if (field === "mobile" && !prev.differentWhatsApp) {
+        updated.whatsapp = value;
+      }
+      return updated;
+    });
+  };
+
+  const handleWhatsAppToggle = (checked: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      differentWhatsApp: checked,
+      // If unchecking, sync WhatsApp with mobile
+      whatsapp: checked ? prev.whatsapp : prev.mobile,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -148,8 +171,13 @@ export default function BasicInformationContent({
         setLoading(false);
         return;
       }
-      if (!formData.mobile || !formData.whatsapp) {
-        toast.error("Mobile and WhatsApp numbers are required");
+      if (!formData.mobile) {
+        toast.error("Mobile number is required");
+        setLoading(false);
+        return;
+      }
+      if (formData.differentWhatsApp && !formData.whatsapp) {
+        toast.error("WhatsApp number is required");
         setLoading(false);
         return;
       }
@@ -179,14 +207,15 @@ export default function BasicInformationContent({
         return;
       }
 
+      const cleanMobile = formData.mobile.replace(/\s/g, "");
       const payload = {
         profile_id: formData.profile_id,
         first_name: formData.first_name,
         last_name: formData.last_name,
         gender: formData.gender,
         dob: formData.dob,
-        mobile: formData.mobile.replace(/\s/g, ""),
-        whatsapp: formData.whatsapp.replace(/\s/g, ""),
+        mobile: cleanMobile,
+        whatsapp: formData.differentWhatsApp ? formData.whatsapp.replace(/\s/g, "") : cleanMobile,
         country_id: formData.country_id,
         nationality_ids: formData.nationality_ids,
         ethnicity_ids: formData.ethnicity_ids,
@@ -263,15 +292,35 @@ export default function BasicInformationContent({
             />
           </AccountField>
 
-          <AccountField label="WhatsApp Number" required>
-            <PhoneInput
-              name="whatsapp"
-              placeholder="123-4567"
-              value={formData.whatsapp}
-              onChange={(value) => handlePhoneChange(value, "whatsapp")}
-              required
-            />
+          <AccountField label="">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="differentWhatsApp"
+                checked={formData.differentWhatsApp}
+                onChange={(e) => handleWhatsAppToggle(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-[#c49a47] focus:ring-[#c49a47] dark:border-gray-600 dark:bg-gray-800"
+              />
+              <label
+                htmlFor="differentWhatsApp"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer select-none"
+              >
+                {t('account.basicInfo.fields.differentWhatsApp')}
+              </label>
+            </div>
           </AccountField>
+
+          {formData.differentWhatsApp && (
+            <AccountField label="WhatsApp Number" required>
+              <PhoneInput
+                name="whatsapp"
+                placeholder="123-4567"
+                value={formData.whatsapp}
+                onChange={(value) => handlePhoneChange(value, "whatsapp")}
+                required
+              />
+            </AccountField>
+          )}
 
           <AccountField label="Date of Birth" required>
             <DatePicker

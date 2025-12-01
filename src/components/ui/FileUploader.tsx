@@ -236,7 +236,7 @@ export default function FileUploader({
               className="flex items-center gap-3 p-3 border border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-white/5"
             >
               {/* Preview or Icon */}
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 {item.preview ? (
                   <img
                     src={item.preview}
@@ -282,7 +282,7 @@ export default function FileUploader({
               </div>
 
               {/* Status Icons and Actions */}
-              <div className="flex-shrink-0 flex items-center gap-2">
+              <div className="shrink-0 flex items-center gap-2">
                 {item.status === "uploading" && (
                   <Loader2 className="h-5 w-5 text-[#c49a47] animate-spin" />
                 )}
@@ -347,7 +347,7 @@ export default function FileUploader({
                 className="flex items-center gap-3 p-3 border border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-white/5"
               >
                 {/* Preview or Icon */}
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   {showImagePreview ? (
                     <img
                       src={url}

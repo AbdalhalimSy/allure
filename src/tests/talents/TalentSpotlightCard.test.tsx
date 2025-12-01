@@ -9,7 +9,7 @@ describe('TalentSpotlightCard', () => {
     location: 'Dubai, UAE',
     availability: 'Available Now',
     tags: ['Editorial', 'Commercial', 'Runway'],
-    coverGradient: 'bg-gradient-to-br from-purple-500 to-pink-500'
+    coverGradient: 'bg-linear-to-br from-purple-500 to-pink-500'
   };
 
   it('renders talent name and category', () => {

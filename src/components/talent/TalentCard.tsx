@@ -31,11 +31,11 @@ export default function TalentCard({ talent }: TalentCardProps) {
     <Link href={`/talents/${profile.id}`}>
       <div className="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
         {/* Gradient Border Effect */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#c49a47]/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-[#c49a47]/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
         <div className="relative h-full overflow-hidden rounded-3xl border border-gray-200/50 bg-white/90 backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80">
           {/* Image */}
-          <div className="relative aspect-[3/4] w-full overflow-hidden">
+          <div className="relative aspect-3/4 w-full overflow-hidden">
             <Image
               src={photoUrl}
               alt={`${profile.first_name} ${profile.last_name}`}
@@ -44,8 +44,8 @@ export default function TalentCard({ talent }: TalentCardProps) {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             />
             {/* Gradient Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#c49a47]/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-linear-to-br from-[#c49a47]/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             
             {/* Top Badge */}
             <div className="absolute left-3 top-3">
@@ -109,7 +109,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
                   </span>
                 ))}
                 {professions.length > 4 && (
-                  <span className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-2.5 py-0.5 text-xs font-medium text-white">
+                  <span className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-2.5 py-0.5 text-xs font-medium text-white">
                     +{professions.length - 4}
                   </span>
                 )}

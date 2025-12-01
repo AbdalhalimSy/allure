@@ -122,7 +122,7 @@ export default function ContactPage() {
   return (
     <div className="bg-white dark:bg-black">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
           <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
@@ -255,10 +255,10 @@ export default function ContactPage() {
                 key={index}
                 className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
               >
-                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-gradient-to-br from-[#c49a47]/10 to-[#d4a855]/10 blur-2xl transition-all group-hover:scale-150"></div>
+                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-linear-to-br from-[#c49a47]/10 to-[#d4a855]/10 blur-2xl transition-all group-hover:scale-150"></div>
 
                 <div className="relative">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#c49a47] to-[#d4a855] shadow-lg">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-[#c49a47] to-[#d4a855] shadow-lg">
                     <card.icon className="h-6 w-6 text-white" />
                   </div>
 

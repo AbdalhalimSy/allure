@@ -291,7 +291,7 @@ export default function MediaUploader({
 
           {type === 'audio' && (
             <div className="p-6 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-[#c49a47] flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-[#c49a47] flex items-center justify-center shrink-0">
                 <TbMusic className="w-6 h-6 text-white" />
               </div>
               {value instanceof File && (

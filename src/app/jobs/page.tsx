@@ -62,14 +62,14 @@ export default function JobsPage() {
   return (
     <div className="bg-white dark:bg-black">
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
           <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
         </div>
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8 text-center">
           <div className="mb-6 flex items-center justify-center gap-3">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
               <Briefcase className="h-8 w-8 text-white" />
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function JobsPage() {
         </div>
 
         {/* Loading Initial */}
-        {loading ? (
+        {loading && jobs.length === 0 ? (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
@@ -113,16 +113,16 @@ export default function JobsPage() {
               <div className="mb-4 flex justify-center"><div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20"><AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" /></div></div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Failed to Load Jobs</h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
-              <button onClick={fetchJobs} className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Try Again</button>
+              <button onClick={fetchJobs} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Try Again</button>
             </SurfaceCard>
           </div>
         ) : jobs.length === 0 ? (
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-12 text-center">
-              <div className="mb-6 flex justify-center"><div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900"><Briefcase className="h-10 w-10 text-gray-400" /></div></div>
+              <div className="mb-6 flex justify-center"><div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900"><Briefcase className="h-10 w-10 text-gray-400" /></div></div>
               <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">No Jobs Found</h3>
               <p className="mb-8 text-gray-600 dark:text-gray-400">No casting calls match your criteria. Try adjusting filters or reset to see all.</p>
-              <button onClick={handleReset} className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Clear All Filters</button>
+              <button onClick={handleReset} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Clear All Filters</button>
             </SurfaceCard>
           </div>
         ) : (
@@ -141,19 +141,19 @@ export default function JobsPage() {
               <div className="mt-12 flex flex-col items-center gap-6">
                 <div className="flex items-center gap-3">
                   <button onClick={() => handlePageChange(meta.current_page - 1)} disabled={meta.current_page === 1} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <ChevronLeft className="h-5 w-5" /><span className="relative z-10">Previous</span><div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <ChevronLeft className="h-5 w-5" /><span className="relative z-10">Previous</span><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                   <div className="flex items-center gap-2">
                     {Array.from({ length: Math.min(5, meta.last_page) }, (_, i) => {
                       let pageNum;
                       if (meta.last_page <= 5) pageNum = i + 1; else if (meta.current_page <= 3) pageNum = i + 1; else if (meta.current_page >= meta.last_page - 2) pageNum = meta.last_page - 4 + i; else pageNum = meta.current_page - 2 + i;
                       return (
-                        <button key={pageNum} onClick={() => handlePageChange(pageNum)} className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${pageNum === meta.current_page ? 'border-[#c49a47] bg-gradient-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg' : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'}`}>{pageNum}</button>
+                        <button key={pageNum} onClick={() => handlePageChange(pageNum)} className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${pageNum === meta.current_page ? 'border-[#c49a47] bg-linear-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg' : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'}`}>{pageNum}</button>
                       );
                     })}
                   </div>
                   <button onClick={() => handlePageChange(meta.current_page + 1)} disabled={meta.current_page === meta.last_page} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <span className="relative z-10">Next</span><ChevronRight className="h-5 w-5" /><div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <span className="relative z-10">Next</span><ChevronRight className="h-5 w-5" /><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Page {meta.current_page} of {meta.last_page}</p>

@@ -72,7 +72,7 @@ export default function FAQPage() {
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black p-8 lg:p-12">
+          <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-linear-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black p-8 lg:p-12">
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
               {t("faq.stillHaveQuestions")}
             </h3>
@@ -81,7 +81,7 @@ export default function FAQPage() {
             </p>
             <Link
               href="/contact"
-              className="mt-4 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] bg-size-200 bg-pos-0 px-8 py-3 text-sm font-medium text-white shadow-lg transition-all duration-500 hover:bg-pos-100 hover:shadow-xl"
+              className="mt-4 inline-flex items-center justify-center rounded-full bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] bg-size-200 bg-pos-0 px-8 py-3 text-sm font-medium text-white shadow-lg transition-all duration-500 hover:bg-pos-100 hover:shadow-xl"
             >
               {t("faq.contactUs")}
             </Link>

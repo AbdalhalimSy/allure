@@ -385,7 +385,7 @@ export default function JobApplicationModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
       <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-900">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-[#c49a47] to-[#d4a855] p-6 dark:border-gray-800">
+        <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 dark:border-gray-800">
           <div>
             <h2 className="text-2xl font-bold text-white">Apply for Role</h2>
             <p className="text-sm text-white/90">{role.name}</p>
@@ -451,8 +451,8 @@ export default function JobApplicationModal({
           </div>
 
           {/* Info Box */}
-          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-gradient-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-gradient-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
-            <AlertCircle className="h-5 w-5 flex-shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
+          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
+            <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
             <p className="text-sm text-[#c49a47] dark:text-[#c49a47]">
               Make sure all required fields are filled before submitting. Your
               application will be reviewed by the casting team.

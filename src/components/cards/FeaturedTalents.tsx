@@ -11,7 +11,7 @@ const talents = [
     location: "Dubai, UAE",
     availability: "Available for SS25",
     tags: ["Height 178cm", "Versatile Looks", "Arabic + English"],
-    coverGradient: "bg-gradient-to-tr from-gray-900 via-gray-700 to-amber-600",
+    coverGradient: "bg-linear-to-tr from-gray-900 via-gray-700 to-amber-600",
   },
   {
     name: "Omar El Fayed",
@@ -19,7 +19,7 @@ const talents = [
     location: "Riyadh, KSA",
     availability: "Booked thru Nov",
     tags: ["Lifestyle", "Swimwear", "TV Ready"],
-    coverGradient: "bg-gradient-to-tr from-emerald-400 via-emerald-600 to-gray-900",
+    coverGradient: "bg-linear-to-tr from-emerald-400 via-emerald-600 to-gray-900",
   },
   {
     name: "Sofia Haddad",
@@ -27,7 +27,7 @@ const talents = [
     location: "Beirut, Lebanon",
     availability: "Accepting Voiceovers",
     tags: ["Acting", "Voice", "MC Experience"],
-    coverGradient: "bg-gradient-to-tr from-rose-500 via-fuchsia-600 to-gray-900",
+    coverGradient: "bg-linear-to-tr from-rose-500 via-fuchsia-600 to-gray-900",
   },
   {
     name: "Malik Rahman",
@@ -35,7 +35,7 @@ const talents = [
     location: "Doha, Qatar",
     availability: "Studio + Remote",
     tags: ["Content", "Beauty", "AR Ready"],
-    coverGradient: "bg-gradient-to-tr from-slate-900 via-blue-700 to-cyan-500",
+    coverGradient: "bg-linear-to-tr from-slate-900 via-blue-700 to-cyan-500",
   },
 ];
 

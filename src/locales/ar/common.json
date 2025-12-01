@@ -378,6 +378,7 @@
         "emailDescription": "البريد المعتمد للتنبيهات",
         "mobile": "رقم الجوال",
         "whatsapp": "رقم الواتساب",
+        "differentWhatsApp": "رقم واتساب مختلف",
         "dob": "تاريخ الميلاد",
         "gender": "النوع",
         "country": "بلد الإقامة",

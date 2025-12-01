@@ -7,11 +7,12 @@ export default function AboutSnippet() {
   return (
     <section>
       <div className="grid items-center gap-8 md:grid-cols-2">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <div className="relative aspect-4/3 overflow-hidden rounded-2xl">
           <Image
             src="https://allureagencys.com//front/widgets/hp-welcome-to-allure/image.jpg"
             alt="Welcome to Allure Agency"
             fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

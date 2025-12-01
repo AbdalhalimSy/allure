@@ -31,9 +31,9 @@ const commitments = [
 export default function AgencyIntro() {
   const { t } = useI18n();
   return (
-    <section className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-gray-900 via-gray-800 to-black p-10 text-white shadow-[0_40px_120px_rgba(3,7,18,0.45)]">
+    <section className="relative overflow-hidden rounded-[32px] bg-linear-to-br from-gray-900 via-gray-800 to-black p-10 text-white shadow-[0_40px_120px_rgba(3,7,18,0.45)]">
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute inset-y-0 start-0 w-1/3 bg-gradient-to-br from-[#c49a47]/40 via-transparent to-transparent blur-3xl" />
+        <div className="absolute inset-y-0 start-0 w-1/3 bg-linear-to-br from-[#c49a47]/40 via-transparent to-transparent blur-3xl" />
         <div className="absolute -end-10 bottom-0 h-64 w-64 rounded-full bg-emerald-400/30 blur-3xl" />
       </div>
       <div className="relative space-y-12">

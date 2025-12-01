@@ -173,7 +173,7 @@ export default function HorizontalCarousel<T = unknown>({
             ? `-${idx >= items.length ? "clone" : "orig"}-${duplicateIndex}`
             : "";
           return (
-            <div key={`${item.key}${keySuffix}`} className="flex-shrink-0">
+            <div key={`${item.key}${keySuffix}`} className="shrink-0">
               {renderItem(item)}
             </div>
           );

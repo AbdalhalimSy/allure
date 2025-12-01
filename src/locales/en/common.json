@@ -378,6 +378,7 @@
         "emailDescription": "Your primary email for notifications",
         "mobile": "Mobile Number",
         "whatsapp": "WhatsApp Number",
+        "differentWhatsApp": "Different number for WhatsApp",
         "dob": "Date of Birth",
         "gender": "Gender",
         "country": "Country of Residence",

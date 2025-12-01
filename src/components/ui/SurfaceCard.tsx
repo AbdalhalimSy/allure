@@ -40,7 +40,7 @@ export default function SurfaceCard({
       <div
         className={[
           "pointer-events-none absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-105",
-          "bg-gradient-to-br",
+          "bg-linear-to-br",
           accentMap[accent],
         ]
           .filter(Boolean)

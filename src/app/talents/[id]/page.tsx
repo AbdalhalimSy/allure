@@ -122,7 +122,7 @@ export default function TalentDetailPage() {
   const { profile, professions, sub_professions, media } = talent;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         {/* Back Button */}
         <button
@@ -135,7 +135,7 @@ export default function TalentDetailPage() {
 
         {/* Header Section (mirrors Job header card) */}
         <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900">
-          <div className="h-2 bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
+          <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
           <div className="p-8">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
@@ -219,12 +219,13 @@ export default function TalentDetailPage() {
               <div className="grid gap-4 lg:grid-cols-2">
                 {/* Main Photo */}
                 {selectedPhoto && (
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
+                  <div className="relative aspect-3/4 overflow-hidden rounded-xl">
                     <Image
                       src={selectedPhoto.url}
                       alt={`${profile.first_name} ${profile.last_name}`}
                       fill
                       className="object-cover"
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       priority
                     />
                     {selectedPhoto.featured_image && (
@@ -254,7 +255,13 @@ export default function TalentDetailPage() {
                             : "opacity-80 hover:opacity-100"
                         }`}
                       >
-                        <Image src={photo.url} alt="Gallery" fill className="object-cover" />
+                        <Image
+                          src={photo.url}
+                          alt="Gallery"
+                          fill
+                          className="object-cover"
+                          sizes="(min-width: 1024px) 16vw, (min-width: 640px) 30vw, 33vw"
+                        />
                       </button>
                     ))}
                   </div>
@@ -411,7 +418,7 @@ export default function TalentDetailPage() {
                   {profile.instagram_followers && profile.instagram_followers > 0 && (
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-purple-600">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-pink-500 to-purple-600">
                           <Instagram className="h-5 w-5 text-white" />
                         </div>
                         <span className="text-sm text-gray-700 dark:text-gray-300">Instagram</span>

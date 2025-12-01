@@ -5,7 +5,7 @@ import { Skeleton, SkeletonLine } from "@/components/ui/Skeleton";
 export default function JobCardSkeleton() {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900">
-      <div className="h-2 w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800" />
+      <div className="h-2 w-full bg-linear-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800" />
       <div className="p-6 space-y-4">
         <SkeletonLine width="w-3/4" className="h-5" />
         <div className="space-y-2">

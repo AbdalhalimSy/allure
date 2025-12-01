@@ -30,7 +30,7 @@ export default function AboutPage() {
   return (
     <div className="bg-white dark:bg-black">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
           <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
@@ -66,11 +66,12 @@ export default function AboutPage() {
       {/* Welcome Section */}
       <section className="container mx-auto max-w-7xl px-6 py-24 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+          <div className="relative aspect-4/3 overflow-hidden rounded-3xl">
             <Image
               src="https://allureagencys.com//front/widgets/about-widget/welcome.jpg"
               alt="Allure Agency"
               fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
           </div>
@@ -121,11 +122,12 @@ export default function AboutPage() {
                 </Link>
               </div>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:order-first">
+            <div className="relative aspect-4/3 overflow-hidden rounded-3xl lg:order-first">
               <Image
                 src="https://allureagencys.com//front/widgets/hp-welcome-to-allure/image.jpg"
                 alt="Allure Expansion"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -171,6 +173,7 @@ export default function AboutPage() {
                   width={180}
                   height={72}
                   className="max-h-16 w-auto object-contain"
+                  style={{ width: "auto", height: "auto" }}
                 />
               </div>
             ))}
@@ -180,7 +183,7 @@ export default function AboutPage() {
 
       {/* CTA Section */}
       <section className="container mx-auto max-w-7xl px-6 py-24 lg:px-8">
-        <SurfaceCard className="overflow-hidden bg-gradient-to-br from-[#c49a47] to-[#a58138] p-12 text-center text-white">
+        <SurfaceCard className="overflow-hidden bg-linear-to-br from-[#c49a47] to-[#a58138] p-12 text-center text-white">
           <h2 className="mb-4 text-4xl font-bold">Ready to work with us?</h2>
           <p className="mb-8 text-lg opacity-90">
             Whether you&apos;re a talent looking to join our roster or a client

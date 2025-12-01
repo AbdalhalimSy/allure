@@ -29,7 +29,14 @@ export default function Partners() {
           items={partners.map<HorizontalCarouselItem<typeof partners[0]>>((p, i) => ({ key: p.name + i, data: p }))}
           renderItem={({ data }) => (
             <div className="flex h-24 w-52 items-center justify-center rounded-2xl border border-gray-200/60 bg-white px-4 shadow-sm transition-colors hover:border-[#c49a47] dark:border-white/10 dark:bg-white/5 dark:hover:border-[#d4a855]">
-              <Image src={data.src} alt={data.name} width={200} height={80} className="max-h-16 w-auto object-contain" />
+              <Image
+                src={data.src}
+                alt={data.name}
+                width={200}
+                height={80}
+                className="max-h-16 w-auto object-contain"
+                style={{ width: "auto", height: "auto" }}
+              />
             </div>
           )}
           autoScroll

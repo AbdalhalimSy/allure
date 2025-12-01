@@ -78,7 +78,7 @@ export default function SocialManager({
               >
                 <div className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   {/* Platform Selector */}
-                  <div className="flex-shrink-0 min-w-[180px]">
+                  <div className="shrink-0 min-w-[180px]">
                     <SingleSelect
                       options={PLATFORM_OPTIONS.map(option => ({
                         value: option.value,
@@ -107,7 +107,7 @@ export default function SocialManager({
                     type="button"
                     onClick={() => handleRemove(index)}
                     disabled={disabled}
-                    className="flex-shrink-0 p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
+                    className="shrink-0 p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
                   >
                     <TbX className="w-5 h-5" />
                   </button>

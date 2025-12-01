@@ -71,8 +71,8 @@ export default function CallTimeSelector({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-gradient-to-r from-[#fff8ec] to-[#f7e6c2] p-4 dark:border-[#c49a47]/40 dark:bg-gradient-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
-        <AlertCircle className="h-5 w-5 flex-shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
+      <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] p-4 dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
+        <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
         <div className="text-sm text-[#c49a47] dark:text-[#c49a47]">
           <p className="font-semibold mb-1">Call Time Required</p>
           <p>

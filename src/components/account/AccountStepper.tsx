@@ -15,24 +15,45 @@ type AccountStepperProps = {
   steps: StepConfig[];
   currentStep: number;
   onStepClick: (stepIndex: number) => void;
+  progressStep?: string;
 };
 
 export default function AccountStepper({
   steps,
   currentStep,
   onStepClick,
+  progressStep,
 }: AccountStepperProps) {
   const { t, locale } = useI18n();
   const isRTL = locale === "ar";
 
+  // Map progress_step to the maximum accessible step index
+  const getMaxAccessibleStep = (): number => {
+    if (!progressStep) return currentStep;
+    
+    const stepMap: Record<string, number> = {
+      "basic": 0,
+      "appearance": 1,
+      "profession": 2,
+      "experience": 3,
+      "portfolio": 4,
+      "complete_all": 4,
+    };
+    
+    return stepMap[progressStep] ?? currentStep;
+  };
+
+  const maxAccessibleStep = getMaxAccessibleStep();
+
   const isStepAccessible = (stepIndex: number): boolean => {
-    // Allow navigating only to already completed steps and the current step
-    return stepIndex <= currentStep;
+    // Allow navigating to any completed step or current step
+    // Based on the user's progress_step from the backend
+    return stepIndex <= maxAccessibleStep;
   };
 
   const isStepCompleted = (stepIndex: number): boolean => {
-    // A step is completed if it's before the current step
-    return stepIndex < currentStep;
+    // A step is completed if it's before the max accessible step
+    return stepIndex < maxAccessibleStep;
   };
 
   return (

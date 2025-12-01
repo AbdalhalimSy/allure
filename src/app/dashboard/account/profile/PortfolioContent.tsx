@@ -47,9 +47,9 @@ function SortableItem({ item, onChange, onRemove, isFeaturedDisabled }: Sortable
     <div
       ref={setNodeRef}
       style={style}
-      className="group relative overflow-hidden rounded-lg border border-gray-200 bg-gradient-to-br from-gray-100 to-gray-200 dark:border-white/10 dark:from-white/5 dark:to-white/10"
+      className="group relative overflow-hidden rounded-lg border border-gray-200 bg-linear-to-br from-gray-100 to-gray-200 dark:border-white/10 dark:from-white/5 dark:to-white/10"
     >
-      <div {...attributes} {...listeners} className="relative aspect-[4/3] overflow-hidden cursor-move">
+      <div {...attributes} {...listeners} className="relative aspect-4/3 overflow-hidden cursor-move">
         {item.file_url ? (
           // Existing or preview image/video
           item.media_type.startsWith("video") ? (

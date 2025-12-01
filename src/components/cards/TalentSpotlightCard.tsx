@@ -21,14 +21,14 @@ export default function TalentSpotlightCard({
     <SurfaceCard accent="gold" className="h-full group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
       <div
         className={[
-          "aspect-[4/3] w-full rounded-2xl mb-6 overflow-hidden",
+          "aspect-4/3 w-full rounded-2xl mb-6 overflow-hidden",
           "relative isolate transition-transform duration-300 group-hover:scale-105",
           coverGradient,
         ]
           .filter(Boolean)
           .join(" ")}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
         <div className="absolute bottom-3 start-3 text-xs uppercase tracking-[0.2em] text-white/80">
           Spotlight
         </div>

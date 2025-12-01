@@ -39,7 +39,7 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg bg-gradient-to-br from-primary to-primary/80 p-6 text-white">
+      <div className="rounded-lg bg-linear-to-br from-primary to-primary/80 p-6 text-white">
         <p className="text-sm font-medium opacity-90">Total Spent</p>
         <p className="mt-2 text-3xl font-bold">{totalSpent.toFixed(2)} AED</p>
       </div>

@@ -36,7 +36,7 @@ export default function JobCard({ job }: JobCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] dark:border-gray-800 dark:bg-gray-900">
       {/* Gradient Header */}
-      <div className={`h-2 bg-gradient-to-r ${gradient} transition-all duration-300 group-hover:h-3`} />
+      <div className={`h-2 bg-linear-to-r ${gradient} transition-all duration-300 group-hover:h-3`} />
       
       {/* Status Badge */}
       {isExpiringSoon && (
@@ -73,7 +73,7 @@ export default function JobCard({ job }: JobCardProps) {
           
           {job.countries && job.countries.length > 0 && (
             <div className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <MapPin className="h-4 w-4 flex-shrink-0 text-[#c49a47]" />
+              <MapPin className="h-4 w-4 shrink-0 text-[#c49a47]" />
               <span className="line-clamp-1">{job.countries.slice(0, 2).join(", ")}
                 {job.countries.length > 2 && ` +${job.countries.length - 2}`}
               </span>
@@ -121,7 +121,7 @@ export default function JobCard({ job }: JobCardProps) {
         {/* View Details Button */}
         <Link
           href={`/jobs/${job.id}`}
-          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40 group-hover:gap-3"
+          className="flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40 group-hover:gap-3"
         >
           View Details
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -8,12 +8,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "react-hot-toast";
-import { ChevronRight, Check } from "lucide-react";
+import { ChevronRight, Check, Menu, X } from "lucide-react";
 
 export default function Header() {
   const { t } = useI18n();
   const { isAuthenticated, user, logout, switchProfile, activeProfileId } = useAuth();
   const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // Removed showProfiles toggle; profiles list now always visible when other profiles exist
     const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,6 +29,18 @@ export default function Header() {
       document.addEventListener("mousedown", handleOutside);
       return () => document.removeEventListener("mousedown", handleOutside);
     }, [open]);
+
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+      if (mobileMenuOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }, [mobileMenuOpen]);
   const [confirmLogoutOpen, setConfirmLogoutOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isSwitchingProfile, setIsSwitchingProfile] = useState(false);
@@ -88,28 +101,45 @@ export default function Header() {
     setAvatarError(false);
   }, [avatarSrc]);
   const otherProfiles = user?.talent?.profiles.filter(p => p.id !== activeProfileId) || [];
+  
+  const navItems = [
+    { href: "/dashboard", label: t("nav.dashboard") },
+    { href: "/about", label: t("nav.about") },
+    { href: "/talents", label: t("nav.talents") },
+    { href: "/jobs", label: t("nav.jobs") || "Jobs" },
+    ...(isAuthenticated ? [{ href: "/dashboard/applied-jobs", label: "My Applications" }] : []),
+    ...(!isAuthenticated ? [{ href: "/packages", label: "Packages" }] : []),
+    { href: "/faq", label: t("nav.faq") || "FAQ" },
+    { href: "/contact", label: t("nav.contact") },
+  ];
+
   return (
     <>
     <header className="sticky top-0 z-50 border-b border-[#c49a47]/30 bg-white/90 shadow-sm backdrop-blur dark:border-[#c49a47]/20 dark:bg-black/80">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <Link href="/" className="group flex items-center gap-3">
-          <Image
-            src="/logo/logo-black.svg"
-            alt="Allure Logo"
-            width={40}
-            height={40}
-            className="h-10 w-auto"
-          />
-        </Link>
+        <div className="flex items-center gap-4">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg text-gray-900 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 dark:text-white dark:hover:bg-white/10"
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+          
+          <Link href="/" className="group flex items-center gap-3">
+            <Image
+              src="/logo/logo-black.svg"
+              alt="Allure Logo"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+              style={{ width: "auto" }}
+            />
+          </Link>
+        </div>
         <nav className="hidden items-center gap-8 md:flex">
-          {[
-            { href: "/dashboard", label: t("nav.dashboard") },
-            { href: "/about", label: t("nav.about") },
-            { href: "/talents", label: t("nav.talents") },
-            { href: "/jobs", label: t("nav.jobs") || "Jobs" },
-            { href: "/faq", label: t("nav.faq") || "FAQ" },
-            { href: "/contact", label: t("nav.contact") },
-          ].map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -250,6 +280,202 @@ export default function Header() {
         </div>
       </div>
     </header>
+
+    {/* Mobile Side Menu */}
+    <>
+      {/* Backdrop Overlay */}
+      <div
+        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      {/* Side Drawer */}
+      <div
+        className={`fixed top-0 start-0 z-50 h-full w-80 bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-black md:hidden ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex h-full flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-white/10">
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
+              <Image
+                src="/logo/logo-black.svg"
+                alt="Allure Logo"
+                width={32}
+                height={32}
+                className="h-8 w-auto"
+                style={{ width: "auto" }}
+              />
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-900 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 dark:text-white dark:hover:bg-white/10"
+              aria-label="Close menu"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+          {/* User Info (if authenticated) */}
+          {isAuthenticated && (
+            <div className="border-b border-gray-200 p-6 dark:border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-gray-100 dark:border-white/20 dark:bg-white/10">
+                  {avatarSrc && !avatarError ? (
+                    <Image
+                      src={avatarSrc}
+                      alt="Avatar"
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 rounded-full object-cover"
+                      onError={() => setAvatarError(true)}
+                    />
+                  ) : (
+                    <span className="text-lg font-bold text-gray-700 dark:text-white">
+                      {avatarLetter}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <div className="truncate font-semibold text-gray-900 dark:text-white">
+                    {currentProfile?.full_name || user?.name || "Allure User"}
+                  </div>
+                  <div className="truncate text-sm text-gray-500 dark:text-gray-400">
+                    {user?.email || "user@example.com"}
+                  </div>
+                  {user?.profile?.approval_status && (
+                    <div className="mt-1 flex items-center gap-1.5">
+                      <span
+                        className={`inline-flex h-2 w-2 rounded-full ${
+                          user.profile.approval_status === "approved"
+                            ? "bg-green-500"
+                            : user.profile.approval_status === "pending"
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
+                        }`}
+                      />
+                      <span className="text-xs font-medium capitalize text-gray-600 dark:text-gray-400">
+                        {user.profile.approval_status}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Other Profiles */}
+              {otherProfiles.length > 0 && (
+                <div className="mt-4 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-white/10 dark:bg-white/5">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    {t("profile.switchTo") || "Switch Profile"}
+                  </div>
+                  {otherProfiles.map((profile) => (
+                    <button
+                      key={profile.id}
+                      onClick={() => {
+                        handleSwitchProfile(profile.id);
+                        setMobileMenuOpen(false);
+                      }}
+                      disabled={isSwitchingProfile}
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-[1.02] active:scale-100 dark:hover:bg-white/10 disabled:opacity-50"
+                    >
+                      <Image
+                        src={profile.featured_image_url}
+                        alt={profile.full_name}
+                        width={28}
+                        height={28}
+                        className="h-7 w-7 rounded-full object-cover"
+                      />
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900 dark:text-white">
+                          {profile.full_name}
+                        </div>
+                        {profile.is_primary && (
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                            {t("profile.primary") || "Primary"}
+                          </div>
+                        )}
+                      </div>
+                      {profile.id === activeProfileId && (
+                        <Check className="h-4 w-4 text-[#c49a47]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Navigation Links */}
+          <nav className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="space-y-1">
+              {navItems.map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="group flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-gray-900 transition-all duration-200 ease-in-out hover:bg-[#c49a47]/10 hover:translate-x-1 active:scale-95 dark:text-white dark:hover:bg-[#c49a47]/20"
+                  style={{ 
+                    animationDelay: `${index * 50}ms`,
+                  }}
+                >
+                  <span className="flex-1">{item.label}</span>
+                  <ChevronRight className="h-4 w-4 text-gray-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#c49a47]" />
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          {/* Footer Actions */}
+          <div className="border-t border-gray-200 p-6 dark:border-white/10">
+            <div className="mb-4 flex items-center justify-center">
+              <LanguageSwitcher />
+            </div>
+            
+            {!isAuthenticated ? (
+              <div className="space-y-3">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full rounded-lg border border-[#c49a47] px-5 py-3 text-center text-sm font-semibold text-[#c49a47] transition-all duration-200 ease-in-out hover:bg-[#c49a47]/10 active:scale-95"
+                >
+                  {t("nav.login")}
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full rounded-lg bg-[#c49a47] px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all duration-200 ease-in-out hover:shadow-xl hover:shadow-[#c49a47]/40 active:scale-95"
+                >
+                  {t("nav.signUp")}
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Link
+                  href="/dashboard/account"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full rounded-lg px-4 py-3 text-center text-sm font-medium text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 active:scale-95 dark:text-gray-200 dark:hover:bg-white/5"
+                >
+                  {t("nav.manageAccount") || "Manage Account"}
+                </Link>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full rounded-lg px-4 py-3 text-sm font-medium text-rose-600 transition-all duration-200 ease-in-out hover:bg-rose-50 active:scale-95 dark:text-rose-400 dark:hover:bg-rose-950/20"
+                >
+                  {t("nav.logout") || "Logout"}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+
     <ConfirmDialog
       open={confirmLogoutOpen}
       title={t("auth.logoutTitle") || "Log out?"}

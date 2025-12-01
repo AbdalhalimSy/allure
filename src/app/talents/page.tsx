@@ -99,7 +99,7 @@ export default function TalentsPage() {
   return (
     <div className="bg-white dark:bg-black">
       {/* Hero Banner Section - Same style as About page */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
           <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
@@ -107,7 +107,7 @@ export default function TalentsPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
           <div className="text-center">
             <div className="mb-6 flex items-center justify-center gap-3">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
                 <Users className="h-8 w-8 text-white" />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function TalentsPage() {
         </div>
 
         {/* Loading State */}
-        {loading ? (
+        {loading && talents.length === 0 ? (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
@@ -168,7 +168,7 @@ export default function TalentsPage() {
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
               <button
                 onClick={fetchTalents}
-                className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
                 Try Again
               </button>
@@ -179,7 +179,7 @@ export default function TalentsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-12 text-center">
               <div className="mb-6 flex justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
                   <Users className="h-10 w-10 text-gray-400" />
                 </div>
               </div>
@@ -191,7 +191,7 @@ export default function TalentsPage() {
               </p>
               <button
                 onClick={handleReset}
-                className="rounded-full bg-gradient-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
                 Clear All Filters
               </button>
@@ -236,7 +236,7 @@ export default function TalentsPage() {
                   >
                     <ChevronLeft className="h-5 w-5" />
                     <span className="relative z-10">Previous</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                   
                   <div className="flex items-center gap-2">
@@ -259,7 +259,7 @@ export default function TalentsPage() {
                           onClick={() => handlePageChange(pageNum)}
                           className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${
                             pageNum === meta.current_page
-                              ? 'border-[#c49a47] bg-gradient-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg'
+                              ? 'border-[#c49a47] bg-linear-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg'
                               : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'
                           }`}
                         >
@@ -276,7 +276,7 @@ export default function TalentsPage() {
                   >
                     <span className="relative z-10">Next</span>
                     <ChevronRight className="h-5 w-5" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                 </div>
 

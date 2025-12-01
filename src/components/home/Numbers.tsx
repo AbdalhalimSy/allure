@@ -55,11 +55,11 @@ export default function Numbers() {
             backgroundClassName="border border-gray-200/60 bg-white/90 dark:border-white/10 dark:bg-white/5"
           >
             <div className="flex items-center gap-4">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-[#c49a47]/15 via-white to-[#d4a855]/15 text-[#c49a47] dark:from-[#c49a47]/25 dark:to-[#d4a855]/25">
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-linear-to-br from-[#c49a47]/15 via-white to-[#d4a855]/15 text-[#c49a47] dark:from-[#c49a47]/25 dark:to-[#d4a855]/25">
                 <Icon className="h-6 w-6" />
               </div>
               <div className="min-w-0">
-                <div className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-[#c49a47] to-[#d4a855] bg-clip-text text-transparent">
+                <div className="text-3xl md:text-4xl font-extrabold tracking-tight bg-linear-to-r from-[#c49a47] to-[#d4a855] bg-clip-text text-transparent">
                   {value}
                 </div>
                 <div className="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400">

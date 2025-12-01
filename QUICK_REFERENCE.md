@@ -316,7 +316,7 @@ for (let [key, value] of formData.entries()) {
 ### Custom Colors
 ```typescript
 // Modify gradients in components
-className="bg-gradient-to-r from-blue-500 to-purple-500"
+className="bg-linear-to-r from-blue-500 to-purple-500"
 
 // Change accent colors
 className="text-blue-600 dark:text-blue-400"

@@ -21,11 +21,12 @@ export default function TwinsBanner() {
               </Link>
             </div>
           </div>
-          <div className="relative aspect-[16/10] md:aspect-auto md:h-full">
+          <div className="relative aspect-16/10 md:aspect-auto md:h-full">
             <Image
               src="https://allureagencys.com/front/widgets/hp-twins-models/image.jpg"
               alt="Twins banner"
               fill
+              sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
             />
           </div>

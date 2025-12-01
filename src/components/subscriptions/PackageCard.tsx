@@ -28,8 +28,8 @@ export function PackageCard({
       onClick={() => onSelect(pkg.id)}
       className={`group relative cursor-pointer rounded-2xl p-[2px] transition-all duration-300 ${
         isSelected
-          ? 'bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#e6c678] shadow-xl'
-          : 'bg-gradient-to-r from-gray-200 via-gray-100 to-gray-50 hover:from-[#c49a47]/40 hover:via-[#d4a855]/40 hover:to-[#e6c678]/40'
+          ? 'bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#e6c678] shadow-xl'
+          : 'bg-linear-to-r from-gray-200 via-gray-100 to-gray-50 hover:from-[#c49a47]/40 hover:via-[#d4a855]/40 hover:to-[#e6c678]/40'
       }`}
     >
       <div
@@ -87,7 +87,7 @@ export function PackageCard({
         <ul className="space-y-2">
           {featureLines.map((feat, idx) => (
             <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#c49a47]" />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#c49a47]" />
               <span>{feat}</span>
             </li>
           ))}

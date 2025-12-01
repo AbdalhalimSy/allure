@@ -101,7 +101,7 @@ export default function JobDetailPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         {/* Back Button */}
         <button
@@ -114,7 +114,7 @@ export default function JobDetailPage() {
 
         {/* Header Section */}
         <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900">
-          <div className="h-2 bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
+          <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
           
           <div className="p-8">
             <div className="mb-4 flex items-start justify-between">
@@ -307,9 +307,9 @@ export default function JobDetailPage() {
                             className="flex items-start gap-2 text-sm"
                           >
                             {condition.is_required ? (
-                              <CheckCircle className="h-4 w-4 flex-shrink-0 text-[#c49a47]" />
+                              <CheckCircle className="h-4 w-4 shrink-0 text-[#c49a47]" />
                             ) : (
-                              <div className="h-4 w-4 flex-shrink-0 rounded-full border-2 border-gray-300 dark:border-gray-600" />
+                              <div className="h-4 w-4 shrink-0 rounded-full border-2 border-gray-300 dark:border-gray-600" />
                             )}
                             <span className="text-gray-700 dark:text-gray-300">
                               {condition.label}
@@ -328,7 +328,7 @@ export default function JobDetailPage() {
                       setSelectedRole(role);
                       setIsModalOpen(true);
                     }}
-                    className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl"
+                    className="mt-4 w-full rounded-lg bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl"
                   >
                     Apply for {role.name}
                   </button>
