@@ -4,11 +4,11 @@ import { useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import AccountLayout from "@/components/account/AccountLayout";
-import PortfolioContent from "../profile/PortfolioContent";
+import AppearanceContent from "../profile/AppearanceContent";
 import { useAuth } from "@/contexts/AuthContext";
 import { getAccountNavItems } from "@/lib/utils/accountNavItems";
 
-export default function PortfolioPage() {
+export default function AppearancePage() {
   const { user } = useAuth();
   const router = useRouter();
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
@@ -16,14 +16,14 @@ export default function PortfolioPage() {
   // Redirect to profile setup if profile is not complete
   useEffect(() => {
     if (user?.profile && user.profile.progress_step !== "complete_all") {
-      router.replace("/dashboard/account/profile");
+      router.replace("/account/profile");
     }
   }, [user?.profile, router]);
 
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
-        <PortfolioContent onBack={() => {}} />
+        <AppearanceContent onNext={() => {}} onBack={() => {}} />
       </AccountLayout>
     </ProtectedRoute>
   );

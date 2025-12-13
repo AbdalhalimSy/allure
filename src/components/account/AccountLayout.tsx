@@ -31,8 +31,8 @@ export default function AccountLayout({
 
   const isActive = (id: string) => {
     return (
-      pathname === `/dashboard/account/${id}` ||
-      (pathname === "/dashboard/account" && id === "basic")
+      pathname === `/account/${id}` ||
+      (pathname === "/account" && id === "basic")
     );
   };
 
@@ -87,7 +87,7 @@ export default function AccountLayout({
               return (
                 <Link
                   key={item.id}
-                  href={`/dashboard/account/${item.id}`}
+                  href={`/account/${item.id}`}
                   className={`group flex items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                     active
                       ? "bg-[#c49a47] text-white"

@@ -103,11 +103,10 @@ export default function Header() {
   const otherProfiles = user?.talent?.profiles.filter(p => p.id !== activeProfileId) || [];
   
   const navItems = [
-    { href: "/dashboard", label: t("nav.dashboard") },
+    { href: "/", label: t("nav.home") || "Home" },
     { href: "/about", label: t("nav.about") },
     { href: "/talents", label: t("nav.talents") },
     { href: "/jobs", label: t("nav.jobs") || "Jobs" },
-    ...(isAuthenticated ? [{ href: "/dashboard/applied-jobs", label: "My Applications" }] : []),
     ...(!isAuthenticated ? [{ href: "/packages", label: "Packages" }] : []),
     { href: "/faq", label: t("nav.faq") || "FAQ" },
     { href: "/contact", label: t("nav.contact") },
@@ -261,7 +260,7 @@ export default function Header() {
                   {/* Menu Actions */}
                   <div className="p-3">
                     <Link
-                      href="/dashboard/account"
+                      href="/account"
                       className="block rounded-md px-3 py-2 text-sm text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:translate-x-1 dark:text-gray-200 dark:hover:bg-white/5"
                       onClick={() => setOpen(false)}
                     >
@@ -454,7 +453,7 @@ export default function Header() {
             ) : (
               <div className="space-y-2">
                 <Link
-                  href="/dashboard/account"
+                  href="/account"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block w-full rounded-lg px-4 py-3 text-center text-sm font-medium text-gray-700 transition-all duration-200 ease-in-out hover:bg-gray-50 active:scale-95 dark:text-gray-200 dark:hover:bg-white/5"
                 >

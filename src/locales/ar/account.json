@@ -1,0 +1,455 @@
+{
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "forgotPassword": "نسيت كلمة المرور",
+    "rememberMe": "تذكرني",
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "createAccount": "إنشاء حساب",
+    "role": "أنا",
+    "roleTalent": "موهبة / عارض",
+    "roleClient": "عميل / علامة تجارية",
+    "agreePrefix": "أوافق على",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "and": "و",
+    "registerDescription": "أنشئ ملفك الشخصي، وقدّم إلى إعلانات الكاستينج المختارة، وتعاون مع أفضل العملاء في المنطقة.",
+    "accountRecovery": "استعادة الحساب",
+    "checkYourInbox": "تحقق من بريدك",
+    "noWorries": "لا تقلق، سنرسل لك تعليمات إعادة التعيين.",
+    "differentInboxQuestion": "تحتاج بريداً مختلفاً؟",
+    "tryAnotherEmail": "جرّب بريداً آخر",
+    "rememberedPasswordQuestion": "تذكرت كلمة المرور؟",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "didntReceiveEmail": "لم يصلك البريد؟ تحقق من مجلد الرسائل غير المرغوب فيها",
+    "or": "أو",
+    "resetLinkSentPrefix": "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى",
+    "followInstructions": "اتبع التعليمات لإنشاء كلمة مرور جديدة.",
+    "yourInbox": "بريدك الوارد",
+    "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "loggedOut": "تم تسجيل الخروج بنجاح",
+    "logoutFailed": "فشل تسجيل الخروج",
+    "loading": "جارٍ التحميل...",
+    "verifyEmail": "تحقق من بريدك الإلكتروني",
+    "verifyEmailDescription": "أرسلنا رابطاً ورمز تحقق (OTP) إلى بريدك الإلكتروني.",
+    "verifyEmailInfo": "لقد أرسلنا رابط تحقق إلى بريدك. يمكنك الضغط على الرابط أو إدخال رمز OTP أدناه.",
+    "enterOtp": "رمز التحقق",
+    "otpHint": "أدخل الرمز المكون من 4 إلى 6 أرقام الذي أرسلناه إلى",
+    "resendOtp": "إعادة إرسال الرمز",
+    "otpResent": "تمت إعادة إرسال الرمز",
+    "verify": "تحقق",
+    "emailVerified": "تم التحقق من البريد الإلكتروني بنجاح.",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "acceptTermsError": "يرجى قبول الشروط",
+    "missingNames": "يرجى إدخال أسماء التوأم والاسم الأخير",
+    "singleRegistration": "تسجيل فردي",
+    "twinsRegistration": "تسجيل توأم",
+    "continue": "متابعة",
+    "enterValidOtp": "أدخل رمز التحقق من بريدك الإلكتروني",
+    "loginFailed": "فشل تسجيل الدخول بعد التحقق"
+  },
+  "account": {
+    "title": "إعدادات الحساب",
+    "subtitle": "قم بإدارة إعدادات وتفضيلات حسابك",
+    "status": {
+      "approvedTitle": "مقبول",
+      "approvedDescription": "تمت الموافقة على حسابك وهو نشط الآن.",
+      "pendingTitle": "قيد المراجعة",
+      "pendingDescription": "حسابك قيد المراجعة. سنخطرك بمجرد الموافقة عليه.",
+      "rejectedTitle": "مرفوض",
+      "rejectedDescription": "لم تتم الموافقة على طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل.",
+      "ariaLabel": "حالة الموافقة: {{status}}"
+    },
+    "nav": {
+      "profile": "إعداد الملف الشخصي",
+      "basic": "المعلومات الأساسية",
+      "appearance": "المظهر",
+      "profession": "المهنة",
+      "experience": "الخبرة",
+      "portfolio": "الأعمال",
+      "security": "الأمان والخصوصية",
+      "notifications": "الإشعارات",
+      "billing": "الفوترة والباقات"
+    },
+    "profession": {
+      "title": "المعلومات المهنية",
+      "description": "اختر مجالات عملك وقدّم المعلومات المطلوبة",
+      "selector": {
+        "label": "اختر مهنك وتخصصاتك",
+        "selected": "مختار",
+        "specializations": "تخصصات مختارة",
+        "search": "ابحث عن التخصصات...",
+        "noResults": "لا توجد تخصصات",
+        "empty": "اختر المهن أعلاه للبدء"
+      },
+      "media": {
+        "title": "الملفات المطلوبة للتخصصات المختارة",
+        "photo": "صورة",
+        "video": "فيديو",
+        "audio": "صوت",
+        "languages": "اللغات"
+      },
+      "uploads": {
+        "photosLabel": "صورة",
+        "photosTitle": "انقر لرفع صورة",
+        "photosSubtitle": "PNG, JPG حتى 5 ميجابايت",
+        "videoLabel": "فيديو",
+        "videoTitle": "انقر لرفع فيديو",
+        "videoSubtitle": "MP4, MOV حتى 50 ميجابايت",
+        "audioLabel": "صوت",
+        "audioTitle": "انقر لرفع ملف صوتي",
+        "audioSubtitle": "MP3, WAV حتى 20 ميجابايت"
+      },
+      "languages": {
+        "label": "اللغة",
+        "placeholder": "اختر لغة...",
+        "options": {
+          "english": "الإنجليزية",
+          "arabic": "العربية",
+          "french": "الفرنسية",
+          "spanish": "الإسبانية",
+          "german": "الألمانية",
+          "italian": "الإيطالية",
+          "portuguese": "البرتغالية",
+          "russian": "الروسية",
+          "chinese": "الصينية",
+          "japanese": "اليابانية",
+          "korean": "الكورية",
+          "hindi": "الهندية"
+        }
+      },
+      "errors": {
+        "load": "فشل تحميل المهن",
+        "selectProfession": "يرجى اختيار مهنة واحدة على الأقل مع تخصص فرعي",
+        "photoRequired": "يرجى رفع صورة واحدة على الأقل للمهنة رقم {index}",
+        "videoRequired": "يرجى رفع فيديو واحد على الأقل للمهنة رقم {index}",
+        "audioRequired": "يرجى رفع ملف صوتي واحد على الأقل للمهنة رقم {index}",
+        "languageRequired": "يرجى اختيار لغة واحدة على الأقل للمهنة رقم {index}",
+        "save": "فشل حفظ المعلومات المهنية",
+        "invalidEntry": "تم اختيار مهنة غير صالحة في العنصر {{index}}",
+        "photoFor": "يتطلب {{label}} صورة",
+        "videoFor": "يتطلب {{label}} فيديو",
+        "audioFor": "يتطلب {{label}} ملفاً صوتياً",
+        "languageFor": "يلزم اختيار لغة واحدة على الأقل لـ {{label}}",
+        "socialFor": "يلزم إضافة رابط تواصل اجتماعي واحد على الأقل لـ {{label}}"
+      },
+      "success": "تم حفظ المعلومات المهنية بنجاح",
+      "buttons": {
+        "save": "حفظ المعلومات المهنية",
+        "saving": "جارٍ الحفظ..."
+      },
+      "addEntry": "إضافة مهنة أخرى",
+      "addEntryDesc": "اعرض مواهبك ومهاراتك المتعددة",
+      "upload": {
+        "photo": "صورة",
+        "video": "فيديو",
+        "audio": "صوت",
+        "clickToUpload": "انقر للرفع",
+        "orDragDrop": "أو اسحب وأفلت",
+        "uploading": "جارٍ الرفع...",
+        "fileSizeExceeds": "حجم الملف يتجاوز",
+        "invalidFileType": "نوع ملف غير صالح. يرجى رفع ملف",
+        "file": "ملف"
+      },
+      "languageManager": {
+        "add": "+ إضافة لغة",
+        "empty": "لم تتم إضافة لغات بعد",
+        "voiceSample": "رفع عينة صوتية لـ"
+      },
+      "socials": {
+        "label": "روابط وسائل التواصل الاجتماعي",
+        "add": "إضافة رابط",
+        "addFirst": "أضف رابطك الأول",
+        "empty": "لم تتم إضافة روابط وسائل التواصل بعد",
+        "followers": "المتابعون (اختياري)",
+        "platform": {
+          "instagram": "إنستغرام",
+          "facebook": "فيسبوك",
+          "twitter": "تويتر/إكس",
+          "youtube": "يوتيوب",
+          "linkedin": "لينكد إن",
+          "tiktok": "تيك توك",
+          "other": "أخرى"
+        }
+      }
+    },
+    "experience": {
+      "title": "الخبرة العملية",
+      "description": "أضف سجلات خبراتك المهنية",
+      "fields": {
+        "title": "المسمى الوظيفي",
+        "company": "الشركة",
+        "startYear": "سنة البداية",
+        "endYear": "سنة الانتهاء",
+        "current": "حالي",
+        "description": "الوصف",
+        "attachment": "مرفق (اختياري)"
+      },
+      "success": "تم حفظ الخبرات بنجاح",
+      "placeholders": {
+        "title": "مثال: مصور",
+        "company": "مثال: ألور ميديا",
+        "description": "وصف مختصر لدورك"
+      },
+      "errors": {
+        "titleRequired": "المسمى الوظيفي مطلوب",
+        "endYearRequired": "سنة الانتهاء مطلوبة إذا لم تكن الخبرة حالية",
+        "yearOrder": "يجب أن تكون سنة البداية أقل من أو تساوي سنة الانتهاء",
+        "load": "فشل تحميل الخبرات",
+        "save": "فشل حفظ الخبرات"
+      },
+      "buttons": {
+        "save": "حفظ الخبرات",
+        "saving": "جارٍ الحفظ..."
+      },
+      "addEntry": "إضافة خبرة"
+    },
+    "basic": {
+      "title": "المعلومات الأساسية",
+      "description": "حدّث بياناتك الشخصية ومعلومات التواصل",
+      "success": "تم تحديث الملف بنجاح",
+      "errors": {
+        "lookups": "تعذر تحميل بيانات النموذج",
+        "nameRequired": "الاسم الأول واسم العائلة مطلوبان",
+        "phoneRequired": "رقما الجوال والواتساب مطلوبان",
+        "genderRequired": "النوع مطلوب",
+        "dobRequired": "تاريخ الميلاد مطلوب",
+        "countryRequired": "بلد الإقامة مطلوب",
+        "nationalityRequired": "يرجى اختيار جنسية واحدة على الأقل",
+        "ethnicityRequired": "يرجى اختيار أصل واحد على الأقل",
+        "saveFailed": "تعذر تحديث الملف"
+      },
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "emailDescription": "البريد المعتمد للتنبيهات",
+        "mobile": "رقم الجوال",
+        "whatsapp": "رقم الواتساب",
+        "differentWhatsApp": "رقم واتساب مختلف",
+        "dob": "تاريخ الميلاد",
+        "gender": "النوع",
+        "country": "بلد الإقامة",
+        "nationalities": "الجنسيات",
+        "nationalitiesDescription": "اختر جنسية أو أكثر",
+        "ethnicities": "الأصول",
+        "ethnicitiesDescription": "اختر أصلاً أو أكثر"
+      },
+      "placeholders": {
+        "firstName": "أحمد",
+        "lastName": "علي",
+        "email": "you@example.com",
+        "phone": "52 342 9898",
+        "selectGender": "اختر النوع",
+        "selectCountry": "اختر الدولة",
+        "selectNationalities": "اختر الجنسيات...",
+        "selectEthnicities": "اختر الأصول..."
+      },
+      "genderOptions": {
+        "male": "ذكر",
+        "female": "أنثى",
+        "other": "آخر",
+        "preferNot": "أفضل عدم التحديد"
+      }
+    },
+    "appearance": {
+      "title": "المظهر",
+      "description": "شارك تفاصيل مظهرك وقياساتك",
+      "fields": {
+        "hairColor": "لون الشعر",
+        "hairType": "نوع الشعر",
+        "hairLength": "طول الشعر",
+        "eyeColor": "لون العينين",
+        "height": "الطول",
+        "shoeSize": "مقاس الحذاء",
+        "tshirtSize": "مقاس القميص",
+        "pantsSize": "مقاس البنطال",
+        "jacketSize": "مقاس السترة",
+        "chest": "الصدر",
+        "bust": "القياس",
+        "waist": "الخصر"
+      },
+      "placeholders": {
+        "selectHairColor": "اختر لون الشعر",
+        "selectHairType": "اختر نوع الشعر",
+        "selectHairLength": "اختر طول الشعر",
+        "selectEyeColor": "اختر لون العينين",
+        "height": "مثال: 175.5",
+        "shoe": "مثال: 43.5",
+        "selectSize": "اختر المقاس",
+        "pants": "مثال: 32/32 أو M",
+        "jacket": "مثال: 50 EU أو L",
+        "chest": "مثال: 95.5",
+        "bust": "مثال: 88.5",
+        "waist": "مثال: 72.5"
+      },
+      "errors": {
+        "loadFailed": "تعذر تحميل خيارات المظهر",
+        "requiredField": "يرجى تعبئة {{field}}",
+        "profileMissing": "معرّف الملف غير متوفر",
+        "saveFailed": "تعذر تحديث بيانات المظهر"
+      },
+      "success": "تم تحديث بيانات المظهر"
+    },
+    "billing": {
+      "currentPlanTitle": "الخطة الحالية",
+      "currentPlanDescription": "إدارة الاشتراك والفوترة",
+      "badge": "الخطة الحالية",
+      "actions": {
+        "current": "الخطة الحالية",
+        "upgrade": "ترقية"
+      },
+      "plans": {
+        "free": {
+          "name": "مجانية",
+          "period": "مدى الحياة",
+          "features": {
+            "basicProfile": "ملف أساسي",
+            "projects": "5 مشاريع",
+            "support": "دعم مجتمعي",
+            "storage": "1 غيغابايت مساحة"
+          }
+        },
+        "pro": {
+          "name": "احترافية",
+          "period": "شهرياً",
+          "features": {
+            "advancedProfile": "ملف متقدم",
+            "projects": "مشاريع غير محدودة",
+            "support": "دعم أولوية",
+            "storage": "50 غيغابايت مساحة",
+            "analytics": "تحليلات"
+          }
+        },
+        "enterprise": {
+          "name": "مؤسسات",
+          "period": "شهرياً",
+          "features": {
+            "everything": "كل ما في الاحترافية",
+            "branding": "هوية مخصصة",
+            "support": "دعم مخصص",
+            "storage": "500 غيغابايت مساحة",
+            "api": "وصول API",
+            "collaboration": "تعاون الفرق"
+          }
+        }
+      },
+      "paymentMethod": {
+        "title": "طريقة الدفع",
+        "cardLabel": "Visa منتهية بـ 4242",
+        "expires": "تنتهي في 12/2025",
+        "update": "تحديث"
+      },
+      "history": {
+        "title": "سجل الفواتير",
+        "status": {
+          "paid": "مدفوع"
+        },
+        "entries": {
+          "first": {
+            "date": "1 نوفمبر 2024",
+            "invoice": "#INV-001",
+            "amount": "$0.00"
+          },
+          "second": {
+            "date": "1 أكتوبر 2024",
+            "invoice": "#INV-002",
+            "amount": "$0.00"
+          },
+          "third": {
+            "date": "1 سبتمبر 2024",
+            "invoice": "#INV-003",
+            "amount": "$0.00"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "title": "تفضيلات الإشعارات",
+      "description": "اختر طريقة وصول التنبيهات إليك",
+      "channels": {
+        "email": "بريد إلكتروني",
+        "push": "إشعارات دفعية"
+      },
+      "categories": {
+        "activity": "نشاط الحساب",
+        "projects": "المشاريع والتحديثات",
+        "marketing": "التسويق"
+      },
+      "items": {
+        "login": "تسجيل الدخول من جهاز جديد",
+        "password": "تغييرات كلمة المرور",
+        "settings": "تعديلات إعدادات الحساب",
+        "projectAssigned": "تعيين مشروع جديد",
+        "projectStatus": "تغييرات حالة المشروع",
+        "comments": "تعليقات على عملك",
+        "productUpdates": "تحديثات المنتجات والأخبار",
+        "tips": "نصائح ودروس",
+        "offers": "عروض خاصة"
+      }
+    },
+    "security": {
+      "password": {
+        "title": "تغيير كلمة المرور",
+        "description": "قم بتحديث كلمة المرور بانتظام لزيادة الأمان",
+        "fields": {
+          "current": "كلمة المرور الحالية",
+          "new": "كلمة المرور الجديدة",
+          "confirm": "تأكيد كلمة المرور"
+        },
+        "placeholders": {
+          "current": "أدخل كلمة المرور الحالية",
+          "new": "أدخل كلمة المرور الجديدة",
+          "confirm": "أكد كلمة المرور الجديدة"
+        },
+        "update": "تحديث كلمة المرور"
+      },
+      "twoFactor": {
+        "title": "المصادقة الثنائية",
+        "description": "أضف طبقة أمان إضافية لحسابك",
+        "method": "تطبيق المصادقة",
+        "status": "غير مفعّل",
+        "enable": "تفعيل"
+      },
+      "sessions": {
+        "title": "الجلسات النشطة",
+        "description": "إدارة الأجهزة المتصلة حالياً",
+        "mac": "Chrome على macOS",
+        "iphone": "Safari على iPhone",
+        "location": "لوس أنجلوس، كاليفورنيا",
+        "active": "نشط الآن",
+        "revoke": "إلغاء"
+      },
+      "privacy": {
+        "title": "إعدادات الخصوصية",
+        "search": "إظهار الملف في نتائج البحث",
+        "email": "السماح بعرض بريدي الإلكتروني",
+        "status": "إظهار حالتي ونشاطي"
+      }
+    }
+  },
+  "profile": {
+    "switchProfile": "تبديل الملف الشخصي",
+    "switched": "تم تبديل الملف الشخصي بنجاح",
+    "switchFailed": "فشل تبديل الملف الشخصي",
+    "primary": "الأساسي"
+  },
+  "portfolio": {
+    "description": "اعرض أفضل أعمالك ومشاريعك. أعد ترتيب العناصر ثم قم بالمزامنة عند الاستعداد.",
+    "sync": "مزامنة الأعمال",
+    "syncing": "جارٍ المزامنة...",
+    "synced": "تمت مزامنة الأعمال",
+    "reset": "إعادة تعيين",
+    "dragHint": "اسحب وأفلت لإعادة ترتيب عناصر الأعمال",
+    "noItems": "لا توجد أعمال بعد. قم برفع أعمالك بالأعلى!",
+    "validationErrors": "أخطاء التحقق",
+    "syncFailed": "فشلت المزامنة",
+    "onlyOneFeatured": "يمكن تمييز عنصر واحد فقط",
+    "loadFailed": "فشل تحميل الأعمال"
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "hero": {
+    "badge": "Casting • Representation • Production Support",
+    "title": "Regional casting & talent intelligence since 2009.",
+    "subtitle": "Allure unites curated representation, data‑driven matching, and production‑ready workflow so brands secure the right talent faster across Lebanon, Dubai & Abu Dhabi.",
+    "browseTalents": "Browse Talents",
+    "exploreJobs": "Explore Jobs",
+    "stats": {
+      "representedTalents": "represented talents",
+      "activeCastings": "active castings",
+      "bookingSuccess": "booking success",
+      "averageResponse": "average response"
+    },
+    "workflowLabel": "Intelligent Workflow",
+    "workflow": {
+      "step1": "Publish your casting brief with all the nuance it deserves.",
+      "step2": "Receive curated submissions matched by our talent intelligence.",
+      "step3": "Book fittings, callbacks, and final selections in one dashboard."
+    },
+    "categories": {
+      "fashion": "Fashion",
+      "commercial": "Commercial",
+      "creators": "Content Creators",
+      "actors": "Actors",
+      "hosts": "Hosts"
+    }
+  },
+  "featuredTalents": {
+    "eyebrow": "Talent Roster",
+    "title": "Spotlighted profiles moving the region forward.",
+    "description": "Handpicked and personally managed, each talent listed below is prepped with digitals, reels, and availability so you can confirm the perfect fit in hours.",
+    "viewAll": "View All"
+  },
+  "featuredCastings": {
+    "eyebrow": "Live Opportunities",
+    "title": "Current casting calls curated by the Allure team.",
+    "description": "Explore curated opportunities across the region. Submit your profile or post your own casting.",
+    "postYourOwn": "Post Your Own"
+  },
+  "agencyIntro": {
+    "eyebrow": "Agency DNA",
+    "title": "Boutique sensibility, platform-grade delivery.",
+    "description": "Where boutique sensibility meets platform precision—Allure pairs human care with technology so every production moves with less friction.",
+    "pillars": {
+      "curated": {
+        "title": "Curated Representation",
+        "description": "We build long-term development plans with each talent—digitals, comps, and reels are refreshed quarterly for instant briefs."
+      },
+      "matching": {
+        "title": "Human + Data Matching",
+        "description": "Our bookers combine relationship knowledge with platform data, surfacing a short list that reflects your storyboard from day one."
+      },
+      "workflow": {
+        "title": "Production-Safe Workflow",
+        "description": "Centralize NDAs, call sheets, fittings, and usage terms in one secure workspace, available to clients and talent managers."
+      }
+    },
+    "commitments": {
+      "mena": "MENA-centric scouting team",
+      "bilingual": "Bilingual account managers",
+      "studios": "Casting studio partnerships",
+      "support": "On-set and remote support"
+    }
+  },
+  "contact": {
+    "eyebrow": "Get in Touch",
+    "title": "Let's start a conversation",
+    "titlePart1": "Let's start a",
+    "titlePart2": "conversation",
+    "description": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, we're here to help.",
+    "sendMessage": "Send us a message",
+    "contactInfo": "Contact Information",
+    "address": "Address",
+    "openingHours": "Opening Hours",
+    "forTalents": "For Talents",
+    "forClients": "For Clients",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "message": "Message",
+    "sendBtn": "Send Message",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "namePlaceholder": "John Doe",
+    "emailPlaceholder": "you@example.com",
+    "phonePlaceholder": "52 342 9898",
+    "messagePlaceholder": "Tell us about your inquiry...",
+    "addressLine1": "Churchill Tower, Office Number 3411",
+    "addressLine2": "Business Bay - Dubai",
+    "addressLine3": "United Arab Emirates",
+    "openingHoursValue": "Monday - Saturday: 09:00 - 18:00",
+    "phoneLabel": "Phone",
+    "uaeLabel": "UAE",
+    "lebanonLabel": "Lebanon"
+  },
+  "about": {
+    "title": "About Allure",
+    "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East.",
+    "established": "Established",
+    "branches": "Branches",
+    "projects": "Projects",
+    "ourStory": "Our Story",
+    "welcomeTitle": "Welcome to Allure Media Agency",
+    "welcomeText": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
+    "ourHistory": "Our History",
+    "expansionTitle": "Expanding Across the Region",
+    "partnersTitle": "Partners",
+    "partnersDescription": "We have worked with some of the best names in the market. Be one of them!",
+    "becomeTalent": "Become a Talent",
+    "findJob": "Find a Job",
+    "checkAllTalents": "Check All Talents",
+    "readyTitle": "Ready to work with us?",
+    "readyDescription": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
+    "getInTouch": "Get in Touch",
+    "talents": "Talents",
+    "welcomeParagraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
+    "expansionParagraph1": "We expanded to Dubai and later Abu Dhabi—forming a tri‑city presence that gives productions diverse talent pools with on‑the‑ground support.",
+    "expansionParagraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow from first brief to final usage.",
+    "rosterEyebrow": "Our Roster",
+    "rosterTitle": "Meet our talented and creative professionals",
+    "rosterDescription": "Discover the diverse range of exceptional talents who bring creativity and professionalism to every project.",
+    "partnersEyebrow": "Trusted By"
+  },
+  "talentSpotlight": {
+    "badge": "Spotlight",
+    "ready": "Ready",
+    "cards": {
+      "layla": {
+        "name": "Layla Arif",
+        "category": "Runway & Editorial",
+        "location": "Dubai, UAE",
+        "availability": "Available for SS25",
+        "tags": {
+          "height": "Height 178cm",
+          "versatile": "Versatile Looks",
+          "languages": "Arabic + English"
+        }
+      },
+      "omar": {
+        "name": "Omar El Fayed",
+        "category": "Commercial Talent",
+        "location": "Riyadh, KSA",
+        "availability": "Booked through Nov",
+        "tags": {
+          "lifestyle": "Lifestyle",
+          "swimwear": "Swimwear",
+          "tvReady": "TV Ready"
+        }
+      },
+      "sofia": {
+        "name": "Sofia Haddad",
+        "category": "Actors & Hosts",
+        "location": "Beirut, Lebanon",
+        "availability": "Accepting Voiceovers",
+        "tags": {
+          "acting": "Acting",
+          "voice": "Voice",
+          "mc": "MC Experience"
+        }
+      },
+      "malik": {
+        "name": "Malik Rahman",
+        "category": "Digital Creators",
+        "location": "Doha, Qatar",
+        "availability": "Studio + Remote",
+        "tags": {
+          "content": "Content",
+          "beauty": "Beauty",
+          "arReady": "AR Ready"
+        }
+      }
+    }
+  },
+  "castingOpportunities": {
+    "luxuryResort": {
+      "title": "Luxury Resort SS25 Campaign",
+      "brand": "AMAARI Resorts",
+      "location": "Abu Dhabi, UAE",
+      "timeline": "Feb 02 – Feb 08",
+      "budget": "25,000 AED",
+      "requirements": {
+        "req1": "Mixed gender cast of 6",
+        "req2": "Swim + Resort wear",
+        "req3": "Comfort with underwater stills"
+      }
+    },
+    "beautyEditorial": {
+      "title": "Beauty Editorial x Global Gloss",
+      "brand": "Global Gloss",
+      "location": "Jeddah, KSA",
+      "timeline": "Jan 15 – Jan 18",
+      "budget": "16,500 SAR",
+      "requirements": {
+        "req1": "Female-presenting talent",
+        "req2": "Expressive eyes + freckles",
+        "req3": "Comfortable with closeups"
+      }
+    },
+    "immersiveFashion": {
+      "title": "Immersive Fashion Presentation",
+      "brand": "FutureLab Studios",
+      "location": "Dubai Design District",
+      "timeline": "Mar 01 – Mar 12",
+      "budget": "30,000 AED",
+      "requirements": {
+        "req1": "Movement / choreography background",
+        "req2": "Experience with interactive shows",
+        "req3": "Multi-lingual bonus"
+      }
+    },
+    "hospitalityLifestyle": {
+      "title": "Hospitality Lifestyle Series",
+      "brand": "Kafara Collection",
+      "location": "Doha, Qatar",
+      "timeline": "Feb 18 – Feb 22",
+      "budget": "18,000 QAR",
+      "requirements": {
+        "req1": "Couple dynamic",
+        "req2": "Comfort with dialog",
+        "req3": "Natural chemistry"
+      }
+    }
+  },
+  "talentList": {
+    "title": "Talents",
+    "placeholder": "Talent",
+    "role": "Model"
+  },
+  "castingList": {
+    "title": "Active Casting Calls",
+    "cardTitle": "Casting",
+    "roleLabel": "Role",
+    "countryLabel": "Country",
+    "deadlineLabel": "Deadline",
+    "placeholderRole": "Model",
+    "placeholderCountry": "UAE",
+    "placeholderDeadline": "2025-12-01"
+  },
+  "faq": {
+    "eyebrow": "FAQs",
+    "title": "Frequently Asked Questions",
+    "subtitle": "If you have any further questions don't hesitate to",
+    "contactUs": "contact us",
+    "stillHaveQuestions": "Still have questions?",
+    "weAreHereToHelp": "Our team is here to help. Reach out to us and we'll get back to you as soon as possible.",
+    "questions": {
+      "q1": {
+        "question": "How can I become a model or talent represented by your agency?",
+        "answer": "To become a part of our agency, you can start by submitting an online application through our website. We review applications regularly and will contact you if we believe you're a good fit for our agency."
+      },
+      "q2": {
+        "question": "Do I need professional modeling or acting experience to apply?",
+        "answer": "No prior experience is required to apply to our agency. We welcome individuals of all experience levels and backgrounds. Our team will assess your potential and guide you accordingly."
+      },
+      "q3": {
+        "question": "What services does your casting/modeling agency offer?",
+        "answer": "We offer a wide range of services including model representation, talent casting, and more. Our goal is to connect talented individuals with exciting opportunities in the entertainment and fashion industries."
+      },
+      "q4": {
+        "question": "How long does it typically take to hear back after applying?",
+        "answer": "We understand the importance of timely communication. After applying or attending a casting session, we strive to get back to you as soon as possible. However, the response time may vary depending on the volume of applications or the specific casting process. Rest assured, we do our best to keep you informed about the status of your application or casting session within a reasonable time frame."
+      },
+      "q5": {
+        "question": "What are the age requirements to join your agency?",
+        "answer": "We represent talents of various age groups, from children to mature adults. The specific age requirements may vary depending on the type of work and the client's needs. We encourage individuals of all ages to apply, and we'll guide you on the best opportunities that match your profile."
+      },
+      "q6": {
+        "question": "How do you select talents for specific casting calls?",
+        "answer": "Our selection process is based on matching client requirements with our talent roster. We consider factors such as physical attributes, experience, personality, and availability. When a suitable opportunity arises, we'll reach out to you with all the details."
+      },
+      "q7": {
+        "question": "What should I include in my application portfolio?",
+        "answer": "Your portfolio should include high-quality photos showcasing different looks and expressions, your measurements, experience (if any), and any special skills or talents. Natural, well-lit photos work best, and you don't need professional photos to start - we can guide you on developing your portfolio once you join."
+      },
+      "q8": {
+        "question": "Do you charge any fees to join the agency?",
+        "answer": "Legitimate agencies don't charge upfront fees to join. We earn our commission only when you book paid work. Be cautious of anyone asking for money to register or guarantee work."
+      }
+    }
+  }
+}

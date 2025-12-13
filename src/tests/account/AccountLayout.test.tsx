@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import AccountLayout from '@/components/account/AccountLayout';
 
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/dashboard/account/details'
+  usePathname: () => '/account/details'
 }));
 
 jest.mock('@/contexts/I18nContext', () => ({

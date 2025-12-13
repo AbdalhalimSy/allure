@@ -1,0 +1,455 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot Password",
+    "rememberMe": "Remember me",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "role": "I am a",
+    "roleTalent": "Talent / Model",
+    "roleClient": "Client / Brand",
+    "agreePrefix": "I agree to the",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "and": "and",
+    "registerDescription": "Build your profile, submit to curated castings, and collaborate with the region’s top clients.",
+    "accountRecovery": "Account Recovery",
+    "checkYourInbox": "Check your inbox",
+    "noWorries": "No worries, we’ll send you reset instructions.",
+    "differentInboxQuestion": "Need a different inbox?",
+    "tryAnotherEmail": "Try another email",
+    "rememberedPasswordQuestion": "Remembered your password?",
+    "backToLogin": "Back to login",
+    "sendResetLink": "Send Reset Link",
+    "didntReceiveEmail": "Didn't receive the email? Check your spam folder",
+    "or": "or",
+    "resetLinkSentPrefix": "We sent a password reset link to",
+    "followInstructions": "Follow the instructions to create a new password.",
+    "logoutConfirm": "Are you sure you want to logout?",
+    "loggedOut": "Logged out successfully",
+    "logoutFailed": "Failed to logout",
+    "loading": "Loading...",
+    "yourInbox": "your inbox",
+    "verifyEmail": "Verify your email",
+    "verifyEmailDescription": "We sent a link and an OTP code to your email.",
+    "verifyEmailInfo": "We've sent a verification link to your email. You can either click the link or enter the OTP code below.",
+    "enterOtp": "Verification code",
+    "otpHint": "Enter the 4–6 digit code we sent to",
+    "resendOtp": "Resend code",
+    "otpResent": "OTP resent",
+    "verify": "Verify",
+    "emailVerified": "Email verified successfully.",
+    "passwordsMismatch": "Passwords do not match",
+    "acceptTermsError": "Please accept the terms",
+    "missingNames": "Please fill twin names and last name",
+    "singleRegistration": "Single registration",
+    "twinsRegistration": "Twins registration",
+    "continue": "Continue",
+    "enterValidOtp": "Enter the verification code from your email",
+    "loginFailed": "Login failed after verification"
+  },
+  "account": {
+    "title": "Account Settings",
+    "subtitle": "Manage your account settings and preferences",
+    "status": {
+      "approvedTitle": "approved",
+      "approvedDescription": "Your account has been approved and is active.",
+      "pendingTitle": "pending",
+      "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
+      "rejectedTitle": "rejected",
+      "rejectedDescription": "Your account application was not approved. Please contact support for details.",
+      "ariaLabel": "Approval status: {{status}}"
+    },
+    "nav": {
+      "profile": "Profile Setup",
+      "basic": "Basic Information",
+      "appearance": "Appearance",
+      "profession": "Profession",
+      "experience": "Experience",
+      "portfolio": "Portfolio",
+      "security": "Security & Privacy",
+      "notifications": "Notifications",
+      "billing": "Billing & Plans"
+    },
+    "profession": {
+      "title": "Professional Information",
+      "description": "Select your professions and provide the required information",
+      "selector": {
+        "label": "Select Your Professions & Specializations",
+        "selected": "selected",
+        "specializations": "specializations selected",
+        "search": "Search specializations...",
+        "noResults": "No specializations found",
+        "empty": "Select professions above to get started"
+      },
+      "media": {
+        "title": "Required Media for Selected Specializations",
+        "photo": "Photo",
+        "video": "Video",
+        "audio": "Audio",
+        "languages": "Languages"
+      },
+      "uploads": {
+        "photosLabel": "Photo",
+        "photosTitle": "Click to upload photo",
+        "photosSubtitle": "PNG, JPG up to 5MB",
+        "videoLabel": "Video",
+        "videoTitle": "Click to upload video",
+        "videoSubtitle": "MP4, MOV up to 50MB",
+        "audioLabel": "Audio",
+        "audioTitle": "Click to upload audio",
+        "audioSubtitle": "MP3, WAV up to 20MB"
+      },
+      "languages": {
+        "label": "Language",
+        "placeholder": "Select a language...",
+        "options": {
+          "english": "English",
+          "arabic": "Arabic",
+          "french": "French",
+          "spanish": "Spanish",
+          "german": "German",
+          "italian": "Italian",
+          "portuguese": "Portuguese",
+          "russian": "Russian",
+          "chinese": "Chinese",
+          "japanese": "Japanese",
+          "korean": "Korean",
+          "hindi": "Hindi"
+        }
+      },
+      "errors": {
+        "load": "Failed to load professions",
+        "selectProfession": "Please select at least one profession with a sub-profession",
+        "photoRequired": "Please upload at least one photo for profession #{index}",
+        "videoRequired": "Please upload at least one video for profession #{index}",
+        "audioRequired": "Please upload at least one audio for profession #{index}",
+        "languageRequired": "Please select at least one language for profession #{index}",
+        "save": "Failed to save professional information",
+        "invalidEntry": "Invalid profession selected for entry {{index}}",
+        "photoFor": "Photo is required for {{label}}",
+        "videoFor": "Video is required for {{label}}",
+        "audioFor": "Audio is required for {{label}}",
+        "languageFor": "At least one language is required for {{label}}",
+        "socialFor": "At least one social media link is required for {{label}}"
+      },
+      "success": "Professional information saved successfully",
+      "buttons": {
+        "save": "Save Professional Information",
+        "saving": "Saving..."
+      },
+      "addEntry": "Add Another Profession",
+      "addEntryDesc": "Showcase multiple talents and skills",
+      "upload": {
+        "photo": "Photo",
+        "video": "Video",
+        "audio": "Audio",
+        "clickToUpload": "Click to upload",
+        "orDragDrop": "or drag and drop",
+        "uploading": "Uploading...",
+        "fileSizeExceeds": "File size exceeds",
+        "invalidFileType": "Invalid file type. Please upload a",
+        "file": "file"
+      },
+      "languageManager": {
+        "add": "+ Add Language",
+        "empty": "No languages added yet",
+        "voiceSample": "Upload voice sample for"
+      },
+      "socials": {
+        "label": "Social Media Links",
+        "add": "Add Link",
+        "addFirst": "Add Your First Link",
+        "empty": "No social media links added yet",
+        "followers": "Followers (optional)",
+        "platform": {
+          "instagram": "Instagram",
+          "facebook": "Facebook",
+          "twitter": "Twitter/X",
+          "youtube": "YouTube",
+          "linkedin": "LinkedIn",
+          "tiktok": "TikTok",
+          "other": "Other"
+        }
+      }
+    },
+    "experience": {
+      "title": "Work Experience",
+      "description": "Add your professional experience entries",
+      "fields": {
+        "title": "Title",
+        "company": "Company",
+        "startYear": "Start Year",
+        "endYear": "End Year",
+        "current": "Current",
+        "description": "Description",
+        "attachment": "Attachment (optional)"
+      },
+      "success": "Experiences saved successfully",
+      "placeholders": {
+        "title": "e.g., Photographer",
+        "company": "e.g., Allure Media",
+        "description": "Brief description of your role"
+      },
+      "errors": {
+        "titleRequired": "Title is required",
+        "endYearRequired": "End year is required unless current",
+        "yearOrder": "Start year must be less than or equal to end year",
+        "load": "Failed to load experiences",
+        "save": "Failed to save experiences"
+      },
+      "buttons": {
+        "save": "Save Experience",
+        "saving": "Saving..."
+      },
+      "addEntry": "Add Experience"
+    },
+    "basic": {
+      "title": "Basic Information",
+      "description": "Update your personal details and contact information",
+      "success": "Profile updated successfully",
+      "errors": {
+        "lookups": "Failed to load form options",
+        "nameRequired": "First name and last name are required",
+        "phoneRequired": "Mobile and WhatsApp numbers are required",
+        "genderRequired": "Gender is required",
+        "dobRequired": "Date of birth is required",
+        "countryRequired": "Country of residence is required",
+        "nationalityRequired": "Select at least one nationality",
+        "ethnicityRequired": "Select at least one ethnicity",
+        "saveFailed": "Failed to update profile"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "emailDescription": "Your primary email for notifications",
+        "mobile": "Mobile Number",
+        "whatsapp": "WhatsApp Number",
+        "differentWhatsApp": "Different number for WhatsApp",
+        "dob": "Date of Birth",
+        "gender": "Gender",
+        "country": "Country of Residence",
+        "nationalities": "Nationalities",
+        "nationalitiesDescription": "Select one or more nationalities",
+        "ethnicities": "Ethnicities",
+        "ethnicitiesDescription": "Select one or more ethnicities"
+      },
+      "placeholders": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "phone": "52 342 9898",
+        "selectGender": "Select gender",
+        "selectCountry": "Select country",
+        "selectNationalities": "Select nationalities...",
+        "selectEthnicities": "Select ethnicities..."
+      },
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other",
+        "preferNot": "Prefer not to say"
+      }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Provide your physical appearance and measurements",
+      "fields": {
+        "hairColor": "Hair Color",
+        "hairType": "Hair Type",
+        "hairLength": "Hair Length",
+        "eyeColor": "Eye Color",
+        "height": "Height",
+        "shoeSize": "Shoe Size",
+        "tshirtSize": "T-Shirt Size",
+        "pantsSize": "Pants Size",
+        "jacketSize": "Jacket Size",
+        "chest": "Chest",
+        "bust": "Bust",
+        "waist": "Waist"
+      },
+      "placeholders": {
+        "selectHairColor": "Select hair color",
+        "selectHairType": "Select hair type",
+        "selectHairLength": "Select hair length",
+        "selectEyeColor": "Select eye color",
+        "height": "e.g., 175.5",
+        "shoe": "e.g., 43.5",
+        "selectSize": "Select size",
+        "pants": "e.g., 32/32 or M",
+        "jacket": "e.g., 50 EU or L",
+        "chest": "e.g., 95.5",
+        "bust": "e.g., 88.5",
+        "waist": "e.g., 72.5"
+      },
+      "errors": {
+        "loadFailed": "Failed to load appearance options",
+        "requiredField": "Please fill {{field}}",
+        "profileMissing": "Profile ID missing",
+        "saveFailed": "Failed to update appearance"
+      },
+      "success": "Appearance updated"
+    },
+    "billing": {
+      "currentPlanTitle": "Current Plan",
+      "currentPlanDescription": "Manage your subscription and billing",
+      "badge": "Current Plan",
+      "actions": {
+        "current": "Current Plan",
+        "upgrade": "Upgrade"
+      },
+      "plans": {
+        "free": {
+          "name": "Free",
+          "period": "forever",
+          "features": {
+            "basicProfile": "Basic profile",
+            "projects": "5 projects",
+            "support": "Community support",
+            "storage": "1GB storage"
+          }
+        },
+        "pro": {
+          "name": "Pro",
+          "period": "per month",
+          "features": {
+            "advancedProfile": "Advanced profile",
+            "projects": "Unlimited projects",
+            "support": "Priority support",
+            "storage": "50GB storage",
+            "analytics": "Analytics"
+          }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "period": "per month",
+          "features": {
+            "everything": "Everything in Pro",
+            "branding": "Custom branding",
+            "support": "Dedicated support",
+            "storage": "500GB storage",
+            "api": "API access",
+            "collaboration": "Team collaboration"
+          }
+        }
+      },
+      "paymentMethod": {
+        "title": "Payment Method",
+        "cardLabel": "Visa ending in 4242",
+        "expires": "Expires 12/2025",
+        "update": "Update"
+      },
+      "history": {
+        "title": "Billing History",
+        "status": {
+          "paid": "Paid"
+        },
+        "entries": {
+          "first": {
+            "date": "Nov 1, 2024",
+            "invoice": "#INV-001",
+            "amount": "$0.00"
+          },
+          "second": {
+            "date": "Oct 1, 2024",
+            "invoice": "#INV-002",
+            "amount": "$0.00"
+          },
+          "third": {
+            "date": "Sep 1, 2024",
+            "invoice": "#INV-003",
+            "amount": "$0.00"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "description": "Choose how you want to be notified about activity",
+      "channels": {
+        "email": "Email",
+        "push": "Push"
+      },
+      "categories": {
+        "activity": "Account Activity",
+        "projects": "Projects & Updates",
+        "marketing": "Marketing"
+      },
+      "items": {
+        "login": "Login from new device",
+        "password": "Password changes",
+        "settings": "Account settings updates",
+        "projectAssigned": "New project assigned",
+        "projectStatus": "Project status changes",
+        "comments": "Comments on your work",
+        "productUpdates": "Product updates and news",
+        "tips": "Tips and tutorials",
+        "offers": "Special offers"
+      }
+    },
+    "security": {
+      "password": {
+        "title": "Change Password",
+        "description": "Update your password regularly to keep your account secure",
+        "fields": {
+          "current": "Current Password",
+          "new": "New Password",
+          "confirm": "Confirm New Password"
+        },
+        "placeholders": {
+          "current": "Enter current password",
+          "new": "Enter new password",
+          "confirm": "Confirm new password"
+        },
+        "update": "Update Password"
+      },
+      "twoFactor": {
+        "title": "Two-Factor Authentication",
+        "description": "Add an extra layer of security to your account",
+        "method": "Authenticator App",
+        "status": "Not enabled",
+        "enable": "Enable"
+      },
+      "sessions": {
+        "title": "Active Sessions",
+        "description": "Manage devices where you're currently logged in",
+        "mac": "Chrome on macOS",
+        "iphone": "Safari on iPhone",
+        "location": "Los Angeles, CA",
+        "active": "Active now",
+        "revoke": "Revoke"
+      },
+      "privacy": {
+        "title": "Privacy Settings",
+        "search": "Show profile in search results",
+        "email": "Allow others to see my email",
+        "status": "Show my activity status"
+      }
+    }
+  },
+  "profile": {
+    "switchProfile": "Switch Profile",
+    "switched": "Profile switched successfully",
+    "switchFailed": "Failed to switch profile",
+    "primary": "Primary"
+  },
+  "portfolio": {
+    "description": "Showcase your best work and projects. Reorder items and sync when ready.",
+    "sync": "Sync Portfolio",
+    "syncing": "Syncing...",
+    "synced": "Portfolio synced",
+    "reset": "Reset",
+    "dragHint": "Drag and drop to reorder your portfolio items",
+    "noItems": "No portfolio items yet. Upload your work above!",
+    "validationErrors": "Validation errors",
+    "syncFailed": "Sync failed",
+    "onlyOneFeatured": "Only one item can be featured",
+    "loadFailed": "Failed to load portfolio"
+  }
+}

@@ -1,7 +1,13 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
-import enTranslations from '@/locales/en/common.json';
-import arTranslations from '@/locales/ar/common.json';
+import enCommon from '@/locales/en/common.json';
+import enHome from '@/locales/en/home.json';
+import enAccount from '@/locales/en/account.json';
+import enJobs from '@/locales/en/jobs.json';
+import arCommon from '@/locales/ar/common.json';
+import arHome from '@/locales/ar/home.json';
+import arAccount from '@/locales/ar/account.json';
+import arJobs from '@/locales/ar/jobs.json';
 
 type Locale = 'en' | 'ar';
 
@@ -12,8 +18,9 @@ interface I18nContextType {
 }
 
 const translations = {
-  en: enTranslations,
-  ar: arTranslations,
+  // Aggregate split locale namespaces so t() stays backward-compatible
+  en: { ...enCommon, ...enHome, ...enAccount, ...enJobs },
+  ar: { ...arCommon, ...arHome, ...arAccount, ...arJobs },
 };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
