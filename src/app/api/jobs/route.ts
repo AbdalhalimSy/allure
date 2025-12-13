@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getApiHeaders } from "@/lib/api/headers";
+import { getAuthApiHeaders } from "@/lib/api/headers";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
 
@@ -13,10 +13,14 @@ export async function GET(request: NextRequest) {
       ? `${BACKEND_URL}/jobs?${queryString}`
       : `${BACKEND_URL}/jobs`;
 
-    // Forward request to backend with API key
+    // Get authorization token from the request
+    const authHeader = request.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "") || "";
+
+    // Forward request to backend with API key and auth token
     const response = await fetch(url, {
       method: "GET",
-      headers: getApiHeaders(request),
+      headers: getAuthApiHeaders(request, token),
     });
 
     const data = await response.json();

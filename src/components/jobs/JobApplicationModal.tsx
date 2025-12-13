@@ -17,6 +17,7 @@ import Button from "@/components/ui/Button";
 import FileUploader from "@/components/ui/FileUploader";
 import CallTimeSelector from "@/components/jobs/CallTimeSelector";
 import { CallTimeSlotGroup } from "@/types/job";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface Condition {
   id: number;
@@ -56,6 +57,7 @@ export default function JobApplicationModal({
   role,
   profileId,
 }: JobApplicationModalProps) {
+  const { t } = useI18n();
   const [responses, setResponses] = useState<Record<number, any>>({});
   const [mediaFiles, setMediaFiles] = useState<Record<number, File>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -112,8 +114,8 @@ export default function JobApplicationModal({
     // Validate call time if enabled
     if (role.call_time_enabled) {
       if (!selectedCallTimeSlotId || !selectedCallTime) {
-        setCallTimeError("Please select a call time slot and time");
-        toast.error("Please select a call time slot and time");
+        setCallTimeError(t("jobApplication.callTimeRequired"));
+        toast.error(t("jobApplication.callTimeRequired"));
         return false;
       }
     }
@@ -123,7 +125,7 @@ export default function JobApplicationModal({
       if (condition.is_required) {
         const response = responses[condition.id];
         if (!response || (Array.isArray(response) && response.length === 0)) {
-          toast.error(`Please answer: ${condition.label}`);
+          toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
           return false;
         }
       }
@@ -135,7 +137,7 @@ export default function JobApplicationModal({
     e.preventDefault();
 
     if (!profileId) {
-      toast.error("Please login to apply for this role");
+      toast.error(t("jobApplication.loginToApply"));
       return;
     }
 
@@ -189,7 +191,7 @@ export default function JobApplicationModal({
       const result = await response.json();
 
       if (response.ok && result.status === "success") {
-        toast.success(result.message || "Application submitted successfully!");
+        toast.success(result.message || t("jobApplication.submitted"));
         onClose();
         setResponses({});
         setMediaFiles({});
@@ -198,7 +200,7 @@ export default function JobApplicationModal({
         setCallTimeError("");
       } else {
         // Handle specific error messages from backend
-        const errorMessage = result.message || "Failed to submit application";
+        const errorMessage = result.message || t("jobApplication.submitFailed");
         
         // Check for call time specific errors
         if (errorMessage.includes("call time") || errorMessage.includes("slot") || errorMessage.includes("time")) {
@@ -209,7 +211,7 @@ export default function JobApplicationModal({
       }
     } catch (error) {
       console.error("Error submitting application:", error);
-      toast.error("An error occurred while submitting your application");
+      toast.error(t("jobApplication.genericError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -387,7 +389,7 @@ export default function JobApplicationModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 dark:border-gray-800">
           <div>
-            <h2 className="text-2xl font-bold text-white">Apply for Role</h2>
+            <h2 className="text-2xl font-bold text-white">{t("jobApplication.applyForRole")}</h2>
             <p className="text-sm text-white/90">{role.name}</p>
           </div>
           <button
@@ -414,7 +416,7 @@ export default function JobApplicationModal({
             {/* Call Time Selection */}
             {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
               <div className="space-y-2">
-                <Label required>Call Time</Label>
+                <Label required>{t("jobApplication.callTime")}</Label>
                 <CallTimeSelector
                   slotGroups={role.call_time_slots}
                   selectedSlotId={selectedCallTimeSlotId}
@@ -436,11 +438,11 @@ export default function JobApplicationModal({
 
             {/* Optional: File upload for portfolio/showreel */}
             <div className="space-y-2">
-              <Label>Additional Documents (Optional)</Label>
+              <Label>{t("jobApplication.additionalDocs")}</Label>
               <FileUploader
                 accept="image/*,video/*,.pdf"
                 maxSize={20 * 1024 * 1024}
-                description="Upload portfolio, showreel, or supporting documents"
+                description={t("jobApplication.uploadDescription")}
                 onChange={(files) => {
                   if (files.length > 0 && files[0] instanceof File) {
                     handleFileChange(999, files[0]);
@@ -454,8 +456,7 @@ export default function JobApplicationModal({
           <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
             <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
             <p className="text-sm text-[#c49a47] dark:text-[#c49a47]">
-              Make sure all required fields are filled before submitting. Your
-              application will be reviewed by the casting team.
+              {t("jobApplication.infoBox")}
             </p>
           </div>
         </form>
@@ -470,7 +471,7 @@ export default function JobApplicationModal({
               variant="secondary"
               className="flex-1"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               type="submit"
@@ -483,7 +484,7 @@ export default function JobApplicationModal({
               {!isSubmitting && (
                 <>
                   <CheckCircle className="h-5 w-5 me-2" />
-                  Submit Application
+                  {t("jobApplication.submit")}
                 </>
               )}
             </Button>

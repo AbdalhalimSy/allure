@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Jest tests",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"test",
+				"--",
+				"JobDetailPage.test.tsx"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Re-run Jest tests",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"test",
+				"--",
+				"JobDetailPage.test.tsx"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Run filter bar tests",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"test",
+				"--",
+				"JobFilterBar.test.tsx"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

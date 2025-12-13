@@ -2,6 +2,7 @@
 
 import { MutableRefObject, forwardRef, useState, useRef, useEffect } from "react";
 import Loader from "./Loader";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface Option {
   id: number;
@@ -20,7 +21,8 @@ interface MultiSelectProps {
 }
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
-  ({ options, value, onChange, placeholder = "Select...", error, className = "", loading = false }, ref) => {
+  ({ options, value, onChange, placeholder, error, className = "", loading = false }, ref) => {
+    const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
@@ -65,7 +67,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     return (
       <div ref={setRefs} className="relative w-full">
         <div
-          className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
+          className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error
               ? "border-red-500"
               : "border-gray-300 dark:border-gray-700"
@@ -75,7 +77,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
           {loading ? (
             <div className="flex items-center gap-2 py-1">
               <Loader size="sm" variant="spinner" color="primary" />
-              <span className="text-sm text-gray-500">Loading...</span>
+              <span className="text-sm text-gray-500">{t("common.loading")}</span>
             </div>
           ) : selectedOptions.length > 0 ? (
             <div className="flex flex-wrap gap-2">
@@ -99,16 +101,16 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               ))}
             </div>
           ) : (
-            <div className="py-1 text-sm text-gray-500">{placeholder}</div>
+            <div className="py-1 text-sm text-gray-500">{placeholder || t("ui.select")}</div>
           )}
         </div>
 
         {isOpen && !loading && (
-          <div className="absolute z-[9999] mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black">
+          <div className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black">
             <div className="border-b border-gray-200 p-2 dark:border-gray-700">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder={t("ui.search")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -142,7 +144,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-center text-sm text-gray-500">No results found</div>
+                <div className="px-4 py-3 text-center text-sm text-gray-500">{t("ui.noResults")}</div>
               )}
             </div>
           </div>

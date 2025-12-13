@@ -23,7 +23,7 @@ export default function ProtectedRoute({ children, requireAuth = true }: Protect
       router.replace("/login");
     } else if (!requireAuth && isAuthenticated) {
       // User must NOT be authenticated but is (guest-only page)
-      router.replace("/dashboard");
+      router.replace("/");
     }
   }, [hydrated, isAuthenticated, requireAuth, router]);
 

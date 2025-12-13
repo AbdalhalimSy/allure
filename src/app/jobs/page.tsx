@@ -1,5 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilterBar from "@/components/jobs/JobFilterBar";
 import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
@@ -9,6 +12,9 @@ import { Job, JobFilters, JobsResponse } from "@/types/job";
 import { Briefcase, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function JobsPage() {
+  const pathname = usePathname();
+  const { isAuthenticated, activeProfileId } = useAuth();
+  const { locale, t } = useI18n();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,9 +22,26 @@ export default function JobsPage() {
   const [meta, setMeta] = useState({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   const abortRef = useRef<AbortController | null>(null);
 
-  useEffect(() => { fetchJobs(); }, [filters]);
+  // Reset jobs and show loading when pathname changes (navigation)
+  useEffect(() => {
+    setJobs([]);
+    setLoading(true);
+  }, [pathname]);
+
+  // Fetch jobs when filters or profile changes
+  useEffect(() => {
+    if (activeProfileId) {
+      fetchJobs();
+    }
+  }, [filters, activeProfileId, locale]);
 
   const fetchJobs = async () => {
+    if (!activeProfileId) {
+      setError(t("jobs.errors.profileNotLoaded"));
+      setLoading(false);
+      return;
+    }
+
     try {
       if (abortRef.current) abortRef.current.abort();
       abortRef.current = new AbortController();
@@ -26,27 +49,49 @@ export default function JobsPage() {
       setError(null);
 
       const params = new URLSearchParams();
+      
+      // Always add profile_id
+      params.append("profile_id", String(activeProfileId));
+      
+      // Add filter parameters
       Object.entries(filters).forEach(([key, value]) => {
         if (value === undefined || value === null || value === "") return;
         if (Array.isArray(value)) {
           if (value.length) params.append(key, value.join(","));
+        } else if (key === "eligible" && typeof value === "boolean") {
+          // Convert boolean to 1/0 for API
+          params.append(key, value ? "1" : "0");
         } else {
           params.append(key, String(value));
         }
       });
+      
+      // Add per_page if not already set
       if (!params.has("per_page")) params.append("per_page", String(meta.per_page));
-      const response = await fetch(`/api/jobs?${params.toString()}`, { signal: abortRef.current.signal });
-      if (!response.ok) throw new Error("Failed to fetch jobs");
+      
+      const response = await fetch(`/api/jobs?${params.toString()}`, { 
+        signal: abortRef.current.signal,
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("auth_token") || ""}`,
+          "Accept-Language": locale,
+        }
+      });
+      
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || data.message || t("jobs.errors.fetchFailed"));
+      }
+      
       const result: JobsResponse = await response.json();
       if (result.status === "success" || result.status === true) {
         setJobs(result.data);
         if (result.meta) setMeta(result.meta);
       } else {
-        throw new Error(result.message || "Failed to load jobs");
+        throw new Error(result.message || t("jobs.errors.loadFailed"));
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : t("jobs.errors.generic"));
       console.error("Error fetching jobs:", err);
     } finally {
       setLoading(false);
@@ -56,8 +101,15 @@ export default function JobsPage() {
   const handleFilterChange = (next: JobFilters) => {
     setFilters({ ...next, page: 1 });
   };
-  const handleReset = () => { setFilters({}); };
-  const handlePageChange = (page: number) => { setFilters({ ...filters, page }); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  
+  const handleReset = () => { 
+    setFilters({}); 
+  };
+  
+  const handlePageChange = (page: number) => { 
+    setFilters({ ...filters, page }); 
+    window.scrollTo({ top: 0, behavior: "smooth" }); 
+  };
 
   return (
     <div className="bg-white dark:bg-black">
@@ -98,7 +150,7 @@ export default function JobsPage() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                 <Loader className="h-4 w-4" />
-                <span>Loading jobs...</span>
+                <span>{t("jobs.loading")}</span>
               </div>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -111,28 +163,28 @@ export default function JobsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-8 text-center">
               <div className="mb-4 flex justify-center"><div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20"><AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" /></div></div>
-              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Failed to Load Jobs</h3>
+              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{t("jobs.failedToLoad")}</h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
-              <button onClick={fetchJobs} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Try Again</button>
+              <button onClick={fetchJobs} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">{t("jobs.tryAgain")}</button>
             </SurfaceCard>
           </div>
         ) : jobs.length === 0 ? (
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-12 text-center">
               <div className="mb-6 flex justify-center"><div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900"><Briefcase className="h-10 w-10 text-gray-400" /></div></div>
-              <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">No Jobs Found</h3>
-              <p className="mb-8 text-gray-600 dark:text-gray-400">No casting calls match your criteria. Try adjusting filters or reset to see all.</p>
-              <button onClick={handleReset} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">Clear All Filters</button>
+              <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">{t("jobs.noJobsFound")}</h3>
+              <p className="mb-8 text-gray-600 dark:text-gray-400">{t("jobs.noJobsHint")}</p>
+              <button onClick={handleReset} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">{t("jobs.clearFilters")}</button>
             </SurfaceCard>
           </div>
         ) : (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{meta.total} {meta.total === 1 ? 'Job' : 'Jobs'} Found</h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Showing {((meta.current_page - 1) * meta.per_page) + 1} - {Math.min(meta.current_page * meta.per_page, meta.total)} of {meta.total}</p>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{meta.total} {meta.total === 1 ? t("jobs.jobSingular") : t("jobs.jobPlural")} {t("jobs.found")}</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("jobs.showing")} {((meta.current_page - 1) * meta.per_page) + 1} - {Math.min(meta.current_page * meta.per_page, meta.total)} {t("jobs.of")} {meta.total}</p>
               </div>
-              {loading && (<div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><Loader className="h-4 w-4" /><span>Updating...</span></div>)}
+              {loading && (<div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><Loader className="h-4 w-4" /><span>{t("jobs.updating")}</span></div>)}
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {jobs.map(job => (<JobCard key={job.id} job={job} />))}
@@ -141,7 +193,7 @@ export default function JobsPage() {
               <div className="mt-12 flex flex-col items-center gap-6">
                 <div className="flex items-center gap-3">
                   <button onClick={() => handlePageChange(meta.current_page - 1)} disabled={meta.current_page === 1} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <ChevronLeft className="h-5 w-5" /><span className="relative z-10">Previous</span><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <ChevronLeft className="h-5 w-5" /><span className="relative z-10">{t("jobs.previous")}</span><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                   <div className="flex items-center gap-2">
                     {Array.from({ length: Math.min(5, meta.last_page) }, (_, i) => {
@@ -153,10 +205,10 @@ export default function JobsPage() {
                     })}
                   </div>
                   <button onClick={() => handlePageChange(meta.current_page + 1)} disabled={meta.current_page === meta.last_page} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <span className="relative z-10">Next</span><ChevronRight className="h-5 w-5" /><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <span className="relative z-10">{t("jobs.next")}</span><ChevronRight className="h-5 w-5" /><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
                   </button>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Page {meta.current_page} of {meta.last_page}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("jobs.page")} {meta.current_page} {t("jobs.of")} {meta.last_page}</p>
               </div>
             )}
           </>

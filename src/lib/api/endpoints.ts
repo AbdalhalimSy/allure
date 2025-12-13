@@ -8,11 +8,9 @@ export const endpoints = {
     profile: '/auth/profile',
   },
   client: {
-    dashboard: '/client/dashboard',
     castings: '/client/castings',
   },
   admin: {
-    dashboard: '/admin/dashboard',
     users: '/admin/users',
     featured: '/admin/featured',
   },

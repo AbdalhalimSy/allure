@@ -11,6 +11,18 @@ const apiClient = axios.create({
   withCredentials: false,
 });
 
+// Resolve the preferred locale for API requests
+function getPreferredLocale(): string {
+  if (typeof window === 'undefined') return 'en';
+  const stored = localStorage.getItem('locale');
+  if (stored === 'ar' || stored === 'en') return stored;
+  const navLang = navigator.language?.startsWith('ar') ? 'ar' : 'en';
+  try {
+    localStorage.setItem('locale', navLang);
+  } catch {}
+  return navLang;
+}
+
 // Get current profile ID from localStorage
 export function getActiveProfileId(): string | null {
   if (typeof window !== 'undefined') {
@@ -37,7 +49,7 @@ apiClient.interceptors.request.use((config) => {
   }
 
   if (typeof window !== 'undefined') {
-    const locale = localStorage.getItem('locale') || 'en';
+    const locale = getPreferredLocale();
     config.headers['Accept-Language'] = locale;
 
     const profileId = getActiveProfileId();

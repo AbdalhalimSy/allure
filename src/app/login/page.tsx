@@ -65,7 +65,7 @@ export default function LoginPage() {
         await fetchProfile();
         
         toast.success(data?.message || "Login successful!");
-        router.push("/dashboard");
+        router.push("/");
       } else {
         toast.error("Login failed: No token returned");
       }
@@ -92,7 +92,7 @@ export default function LoginPage() {
   // If already authenticated (and hydration complete), redirect away
   useEffect(() => {
     if (hydrated && isAuthenticated) {
-      router.replace("/dashboard");
+      router.replace("/");
     }
   }, [hydrated, isAuthenticated, router]);
 

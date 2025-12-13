@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Calendar, MapPin, Users, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { Job } from "@/types/job";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface JobCardProps {
   job: Job;
@@ -27,6 +28,7 @@ const formatDate = (dateString: string) => {
 };
 
 export default function JobCard({ job }: JobCardProps) {
+  const { t } = useI18n();
   const gradient = gradients[job.id % gradients.length];
   const daysUntilExpiry = Math.ceil(
     (new Date(job.expiration_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
@@ -34,15 +36,29 @@ export default function JobCard({ job }: JobCardProps) {
   const isExpiringSoon = daysUntilExpiry <= 7 && daysUntilExpiry > 0;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] dark:border-gray-800 dark:bg-gray-900">
-      {/* Gradient Header */}
-      <div className={`h-2 bg-linear-to-r ${gradient} transition-all duration-300 group-hover:h-3`} />
+    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 dark:border-gray-800 dark:bg-gray-900">
+      {/* Job Image */}
+      <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <img
+          src={job.image || '/logo/logo-black.svg'}
+          alt={job.title}
+          className={`h-full w-full ${job.image ? 'object-cover' : 'p-4 object-contain'}`}
+          onError={(e) => {
+            if (e.currentTarget.src !== '/logo/logo-black.svg') {
+              e.currentTarget.src = '/logo/logo-black.svg';
+              e.currentTarget.className = "p-4 object-contain";
+            } else {
+              e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f3f4f6" width="400" height="300"/%3E%3C/svg%3E';
+            }
+          }}
+        />
+      </div>
       
       {/* Status Badge */}
       {isExpiringSoon && (
         <div className="absolute right-4 top-6 flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
           <Clock className="h-3 w-3" />
-          Expiring Soon
+          {t("jobCard.expiringSoon")}
         </div>
       )}
 
@@ -61,13 +77,13 @@ export default function JobCard({ job }: JobCardProps) {
         <div className="mb-4 space-y-2">
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Calendar className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">Shooting:</span>
+            <span className="font-medium">{t("jobCard.shooting")}</span>
             <span>{formatDate(job.shooting_date)}</span>
           </div>
           
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Clock className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">Expires:</span>
+            <span className="font-medium">{t("jobCard.expires")}</span>
             <span>{formatDate(job.expiration_date)}</span>
           </div>
           
@@ -82,7 +98,7 @@ export default function JobCard({ job }: JobCardProps) {
           
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Users className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">{job.roles_count} Roles Available</span>
+            <span className="font-medium">{job.roles_count} {t("jobCard.rolesAvailable")}</span>
           </div>
         </div>
 
@@ -91,7 +107,7 @@ export default function JobCard({ job }: JobCardProps) {
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="h-4 w-4 text-[#c49a47]" />
-              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Required Skills</span>
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{t("jobCard.requiredSkills")}</span>
             </div>
             <p className="line-clamp-2 text-xs text-gray-600 dark:text-gray-400">
               {job.skills}
@@ -123,7 +139,7 @@ export default function JobCard({ job }: JobCardProps) {
           href={`/jobs/${job.id}`}
           className="flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40 group-hover:gap-3"
         >
-          View Details
+          {t("jobCard.viewDetails")}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

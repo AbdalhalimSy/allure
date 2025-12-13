@@ -5,12 +5,8 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureporta
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const professionId = searchParams.get('profession_id');
-    
-    const url = professionId 
-      ? `${BACKEND_URL}/lookups/sub-professions?profession_id=${professionId}`
-      : `${BACKEND_URL}/lookups/sub-professions`;
+    const search = request.nextUrl.searchParams.toString();
+    const url = `${BACKEND_URL}/lookups/sub-professions${search ? `?${search}` : ""}`;
 
     const response = await fetch(url, {
       method: "GET",

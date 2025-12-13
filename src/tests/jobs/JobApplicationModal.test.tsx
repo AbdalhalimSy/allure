@@ -19,6 +19,15 @@ describe('JobApplicationModal', () => {
     id: 1,
     name: 'Lead Actor',
     description: 'Main character role',
+    gender: 'male',
+    start_age: 18,
+    end_age: 50,
+    ethnicity: ['Asian'],
+    payment_terms_days: 45,
+    can_apply: true,
+    eligibility_score: 100,
+    call_time_enabled: false,
+    meta_conditions: [],
     conditions: [
       {
         id: 1,

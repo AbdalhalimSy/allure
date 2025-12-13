@@ -3,6 +3,7 @@
 import { MutableRefObject, forwardRef, useEffect, useRef, useState, useId } from "react";
 import { ChevronDown } from "lucide-react";
 import Loader from "./Loader";
+import { useI18n } from "@/contexts/I18nContext";
 
 export type SingleSelectOption = {
   value: string | number;
@@ -27,7 +28,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
       options,
       value,
       onChange,
-      placeholder = "Select...",
+      placeholder,
       error,
       className = "",
       loading = false,
@@ -36,6 +37,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     },
     ref
   ) => {
+    const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
@@ -80,7 +82,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     return (
       <div ref={setRefs} className={`relative w-full ${className}`}>
         <div
-          className={`min-h-[3rem] w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
+          className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
             error ? "border-red-500" : "border-gray-300 dark:border-gray-700"
           } ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
           onClick={() => !loading && !disabled && setIsOpen((v) => !v)}
@@ -93,12 +95,12 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
             {loading ? (
               <div className="flex items-center gap-2 py-1">
                 <Loader size="sm" variant="spinner" color="primary" />
-                <span className="text-sm text-gray-500">Loading...</span>
+                <span className="text-sm text-gray-500">{t("common.loading")}</span>
               </div>
             ) : selected ? (
               <div className="py-1 text-sm">{selected.label}</div>
             ) : (
-              <div className="py-1 text-sm text-gray-500">{placeholder}</div>
+              <div className="py-1 text-sm text-gray-500">{placeholder || t("ui.select")}</div>
             )}
             <ChevronDown 
               className={`h-4 w-4 text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -108,7 +110,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
 
         {isOpen && !loading && (
           <div
-            className="absolute z-[9999] mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
+            className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
             id={listboxId}
             role="listbox"
           >
@@ -116,7 +118,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
               <div className="border-b border-gray-200 p-2 dark:border-gray-700">
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder={t("ui.search")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -155,7 +157,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-center text-sm text-gray-500">No results found</div>
+                <div className="px-4 py-3 text-center text-sm text-gray-500">{t("ui.noResults")}</div>
               )}
             </div>
           </div>

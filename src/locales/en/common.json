@@ -9,12 +9,62 @@
     "saveAndContinue": "Save & Continue",
     "download": "Download"
   },
+  "ui": {
+    "select": "Select...",
+    "search": "Search...",
+    "noResults": "No results found",
+    "selectDate": "Select date",
+    "today": "Today",
+    "clear": "Clear"
+  },
+  "appliedJobs": {
+    "title": "My Applications",
+    "subtitle": "Track and manage your job applications",
+    "stats": {
+      "total": "Total",
+      "pending": "Pending Review",
+      "shortlisted": "Shortlisted",
+      "selected": "Selected",
+      "rejected": "Not Selected"
+    },
+    "search": "Search by role name, description, or ethnicity...",
+    "noApplications": "No applications found",
+    "noApplicationsMessage": "Start applying to jobs to see them here",
+    "noSearchResults": "Try adjusting your search",
+    "browseJobs": "Browse Jobs",
+    "details": {
+      "ageRange": "Age Range",
+      "years": "years",
+      "gender": "Gender",
+      "paymentTerms": "Payment Terms",
+      "days": "days",
+      "approved": "Approved",
+      "appliedOn": "Applied On",
+      "ethnicity": "Ethnicity",
+      "callTimeEnabled": "Call Time Enabled",
+      "callTimeMessage": "Specific timing requirements apply for this role",
+      "description": "Description",
+      "status" : "Status"
+    },
+    "actions": {
+      "viewDetails": "View Role Details",
+      "contact": "Contact",
+      "close": "Close"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "errors": {
+      "loadFailed": "Failed to load your applications"
+    }
+  },
   "nav": {
     "castingCalls": "Casting Calls",
     "talents": "Talents",
     "about": "About",
     "contact": "Contact",
-    "dashboard": "Dashboard",
+    "home": "Home",
     "login": "Login",
     "signUp": "Sign Up",
     "editProfile": "Edit Profile",
@@ -776,5 +826,152 @@
         "answer": "Legitimate agencies don't charge upfront fees to join. We earn our commission only when you book paid work. Be cautious of anyone asking for money to register or guarantee work."
       }
     }
+  }
+  ,
+  "jobDetail": {
+    "failedToLoad": "Failed to Load Job",
+    "backToJobs": "Back to Jobs",
+    "errors": {
+      "profileNotLoaded": "Profile not loaded. Please try again.",
+      "fetchFailed": "Failed to fetch job details",
+      "loadFailed": "Failed to load job",
+      "generic": "An error occurred"
+    },
+    "expiresIn": "Expires in",
+    "days": "days",
+    "applicationClosed": "Application Closed",
+    "openToApply": "Open to Apply",
+    "closed": "Closed",
+    "highlights": "Highlights:",
+    "usageTerms": "Usage Terms:",
+    "shootingDate": "Shooting Date",
+    "expiresOn": "Expires On",
+    "openRoles": "Open Roles",
+    "available": "Available",
+    "locations": "Locations",
+    "countries": "Countries",
+    "requiredProfessions": "Required Professions",
+    "subProfessions": "Sub-Professions",
+    "availableRoles": "Available Roles",
+    "gender": "Gender:",
+    "ageRange": "Age Range:",
+    "years": "years",
+    "ethnicity": "Ethnicity:",
+    "paymentTerms": "Payment Terms:",
+    "budget": "Budget:",
+    "meetRequirements": "You meet the requirements for this role",
+    "notMeetRequirements": "You may not fully meet the requirements",
+    "eligibility": "Eligibility",
+    "physicalRequirements": "Physical Requirements",
+    "availableCallTimes": "Available Call Times",
+    "every": "Every",
+    "min": "min",
+    "spot": "spot",
+    "availableLabel": "Available",
+    "slots": "slots",
+    "additionalRequirements": "Additional Requirements",
+    "applyFor": "Apply for",
+    "jobLocations": "Job Locations",
+    "noLocations": "No locations specified",
+    "residenceCountries": "Residence Countries"
+  }
+  ,
+  "jobs": {
+    "loading": "Loading jobs...",
+    "failedToLoad": "Failed to Load Jobs",
+    "tryAgain": "Try Again",
+    "noJobsFound": "No Jobs Found",
+    "noJobsHint": "No casting calls match your criteria. Try adjusting filters or reset to see all.",
+    "clearFilters": "Clear All Filters",
+    "jobSingular": "Job",
+    "jobPlural": "Jobs",
+    "found": "Found",
+    "showing": "Showing",
+    "of": "of",
+    "updating": "Updating...",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "authRequired": "Sign in to View Jobs",
+    "authRequiredDescription": "Create an account or sign in to explore casting calls and apply for opportunities that match your profile.",
+    "errors": {
+      "profileNotLoaded": "Profile not loaded. Please try again.",
+      "fetchFailed": "Failed to fetch jobs",
+      "loadFailed": "Failed to load jobs",
+      "generic": "An error occurred"
+    }
+  }
+  ,
+  "jobCard": {
+    "expiringSoon": "Expiring Soon",
+    "shooting": "Shooting:",
+    "expires": "Expires:",
+    "rolesAvailable": "Roles Available",
+    "requiredSkills": "Required Skills",
+    "viewDetails": "View Details"
+  }
+  ,
+  "jobsFilter": {
+    "searchPlaceholder": "Search jobs...",
+    "filters": "Filters",
+    "reset": "Reset",
+    "resetAllTitle": "Reset All Filters",
+    "section": {
+      "dates": "Dates",
+      "professional": "Professional",
+      "location": "Location & Origin",
+      "appearance": "Appearance"
+    },
+    "shootingFrom": "Shooting From",
+    "shootingTo": "Shooting To",
+    "expirationFrom": "Expiration From",
+    "expirationTo": "Expiration To",
+    "selectStartDate": "Select start date",
+    "selectEndDate": "Select end date",
+    "eligible": "Eligibility",
+    "allJobs": "All Jobs",
+    "eligibleOnly": "Eligible Only",
+    "notEligible": "Not Eligible",
+    "professions": "Professions",
+    "selectProfessions": "Select professions...",
+    "subProfessions": "Sub Professions",
+    "selectSubProfessions": "Select sub professions...",
+    "ethnicities": "Ethnicities",
+    "selectEthnicities": "Select ethnicities...",
+    "jobCountries": "Job Countries",
+    "selectCountries": "Select countries...",
+    "talentResidenceCountries": "Talent Residence Countries",
+    "nationalities": "Nationalities",
+    "selectNationalities": "Select nationalities...",
+    "hairColors": "Hair Colors",
+    "selectHairColors": "Select hair colors...",
+    "eyeColors": "Eye Colors",
+    "selectEyeColors": "Select eye colors..."
+  }
+  ,
+  "jobApplication": {
+    "applyForRole": "Apply for Role",
+    "callTime": "Call Time",
+    "callTimeRequired": "Please select a call time slot and time",
+    "answerRequired": "Please answer",
+    "loginToApply": "Please login to apply for this role",
+    "submitted": "Application submitted successfully!",
+    "submitFailed": "Failed to submit application",
+    "genericError": "An error occurred while submitting your application",
+    "additionalDocs": "Additional Documents (Optional)",
+    "uploadDescription": "Upload portfolio, showreel, or supporting documents",
+    "infoBox": "Make sure all required fields are filled before submitting. Your application will be reviewed by the casting team.",
+    "submit": "Submit Application"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "helpfulLinks": "Helpful Links",
+    "browseJobs": "Browse Jobs",
+    "browseTalents": "Browse Talents",
+    "aboutUs": "About Us",
+    "contactSupport": "Contact Support"
   }
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
+import SingleSelect from "@/components/ui/SingleSelect";
 import Label from "@/components/ui/Label";
 import DatePicker from "@/components/ui/DatePicker";
 import Loader from "@/components/ui/Loader";
@@ -41,7 +42,7 @@ export default function JobFilterBar({
   onReset,
   loadingResults = false,
 }: Props) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [local, setLocal] = useState<JobFilters>(value);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchText, setSearchText] = useState<string>(value.title || "");
@@ -49,47 +50,26 @@ export default function JobFilterBar({
   // Lookups
   const [countries, setCountries] = useState<LookupOption[]>([]);
   const [professions, setProfessions] = useState<LookupOption[]>([]);
-  const [subProfessions, setSubProfessions] = useState<LookupOption[]>([]);
   const [nationalities, setNationalities] = useState<LookupOption[]>([]);
-  const [ethnicities, setEthnicities] = useState<LookupOption[]>([]);
-  const [hairColors, setHairColors] = useState<LookupOption[]>([]);
-  const [eyeColors, setEyeColors] = useState<LookupOption[]>([]);
   const [loadingLookups, setLoadingLookups] = useState(true);
 
   useEffect(() => {
     const fetchLookups = async () => {
       try {
         setLoadingLookups(true);
-        const [
-          countriesRes,
-          professionsRes,
-          subProfessionsRes,
-          nationalitiesRes,
-          ethnicitiesRes,
-          appearanceRes,
-        ] = await Promise.all([
-          apiClient.get(`/lookups/countries?lang=${locale}`),
-          apiClient.get(`/lookups/professions?lang=${locale}`),
-          apiClient.get(`/lookups/sub-professions?lang=${locale}`),
-          apiClient.get(`/lookups/nationalities?lang=${locale}`),
-          apiClient.get(`/lookups/ethnicities?lang=${locale}`),
-          apiClient.get(`/lookups/appearance-options?lang=${locale}`),
-        ]);
+        const [countriesRes, professionsRes, nationalitiesRes] =
+          await Promise.all([
+            apiClient.get(`/lookups/countries?lang=${locale}`),
+            apiClient.get(`/lookups/professions?lang=${locale}`),
+            apiClient.get(`/lookups/nationalities?lang=${locale}`),
+          ]);
 
         if (countriesRes.data.status === "success")
           setCountries(countriesRes.data.data);
         if (professionsRes.data.status === "success")
           setProfessions(professionsRes.data.data);
-        if (subProfessionsRes.data.status === "success")
-          setSubProfessions(subProfessionsRes.data.data);
         if (nationalitiesRes.data.status === "success")
           setNationalities(nationalitiesRes.data.data);
-        if (ethnicitiesRes.data.status === "success")
-          setEthnicities(ethnicitiesRes.data.data);
-        if (appearanceRes.data.status === "success") {
-          setHairColors(appearanceRes.data.data.hair_colors || []);
-          setEyeColors(appearanceRes.data.data.eye_colors || []);
-        }
       } catch (error) {
         console.error("❌ Failed to fetch job lookups", error);
       } finally {
@@ -138,13 +118,13 @@ export default function JobFilterBar({
 
   return (
     <div className="relative space-y-4">
-      <div className="relative z-[70] rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+      <div className="relative z-70 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search */}
           <div className="relative flex-1 min-w-0">
             <Search className="pointer-events-none absolute left-3 sm:left-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
-              placeholder="Search jobs..."
+              placeholder={t("jobsFilter.searchPlaceholder")}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               className="h-10 sm:h-12 pl-10 sm:pl-12 pr-10 sm:pr-12 text-sm sm:text-base"
@@ -172,7 +152,7 @@ export default function JobFilterBar({
             className="flex items-center gap-1 sm:gap-2 shrink-0 px-3 sm:px-4"
           >
             <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="hidden sm:inline">Filters</span>
+            <span className="hidden sm:inline">{t("jobsFilter.filters")}</span>
             {activeFiltersCount > 0 && (
               <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#c49a47] text-[10px] sm:text-xs font-semibold text-white">
                 {activeFiltersCount}
@@ -193,7 +173,7 @@ export default function JobFilterBar({
               className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
             >
               <RotateCcw className="h-4 w-4" />
-              <span>Reset</span>
+              <span>{t("jobsFilter.reset")}</span>
             </Button>
           )}
           {activeFiltersCount > 0 && (
@@ -202,7 +182,7 @@ export default function JobFilterBar({
               variant="secondary"
               onClick={handleReset}
               className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
-              title="Reset All Filters"
+              title={t("jobsFilter.resetAllTitle")}
             >
               <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
@@ -213,23 +193,23 @@ export default function JobFilterBar({
       <div
         className={`relative ${
           showAdvanced
-            ? "z-[60] opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
+            ? "z-60 opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
             : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
         } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95`}
         aria-hidden={!showAdvanced}
       >
-        <div className="space-y-6 p-6">
-          {/* Date Section */}
+        <div className="space-y-6 p-4 sm:p-6">
+          {/* Shooting Dates & Eligibility */}
           <div className="space-y-4">
             <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                Dates
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+                {t("jobsFilter.section.dates")}
               </h3>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
                 <DatePicker
-                  label="Shooting From"
+                  label={t("jobsFilter.shootingFrom")}
                   value={local.shooting_date_from || ""}
                   onChange={(date) =>
                     update({
@@ -237,13 +217,13 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select start date"
+                  placeholder={t("jobsFilter.selectStartDate")}
                   maxDate={local.shooting_date_to}
                 />
               </div>
               <div className="space-y-2">
                 <DatePicker
-                  label="Shooting To"
+                  label={t("jobsFilter.shootingTo")}
                   value={local.shooting_date_to || ""}
                   onChange={(date) =>
                     update({
@@ -251,50 +231,51 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select end date"
+                  placeholder={t("jobsFilter.selectEndDate")}
                   minDate={local.shooting_date_from}
                 />
               </div>
               <div className="space-y-2">
-                <DatePicker
-                  label="Expiration From"
-                  value={local.expiration_date_from || ""}
-                  onChange={(date) =>
+                <Label>{t("jobsFilter.eligible")}</Label>
+                <SingleSelect
+                  options={[
+                    { value: "", label: t("jobsFilter.allJobs") },
+                    { value: "true", label: t("jobsFilter.eligibleOnly") },
+                    { value: "false", label: t("jobsFilter.notEligible") },
+                  ]}
+                  value={
+                    local.eligible === undefined
+                      ? ""
+                      : local.eligible
+                      ? "true"
+                      : "false"
+                  }
+                  onChange={(val) =>
                     update({
-                      expiration_date_from: date || undefined,
+                      eligible:
+                        val === ""
+                          ? undefined
+                          : val === "true",
                       page: 1,
                     })
                   }
-                  placeholder="Select start date"
-                  maxDate={local.expiration_date_to}
-                />
-              </div>
-              <div className="space-y-2">
-                <DatePicker
-                  label="Expiration To"
-                  value={local.expiration_date_to || ""}
-                  onChange={(date) =>
-                    update({
-                      expiration_date_to: date || undefined,
-                      page: 1,
-                    })
-                  }
-                  placeholder="Select end date"
-                  minDate={local.expiration_date_from}
+                  placeholder={t("jobsFilter.allJobs")}
+                  searchable={false}
                 />
               </div>
             </div>
           </div>
-          {/* Professional */}
+
+          {/* Professional & Location */}
           <div className="space-y-4">
             <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                Professional
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+                {t("jobsFilter.section.professional")}
               </h3>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label>Professions</Label>
+                <Label>{t("jobsFilter.professions")}</Label>
                 <MultiSelect
                   options={professions}
                   value={
@@ -310,65 +291,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select professions..."
+                  placeholder={t("jobsFilter.selectProfessions")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Sub Professions</Label>
-                <MultiSelect
-                  options={subProfessions}
-                  value={
-                    Array.isArray(local.sub_profession_ids)
-                      ? local.sub_profession_ids
-                      : local.sub_profession_ids
-                      ? [local.sub_profession_ids]
-                      : []
-                  }
-                  onChange={(ids) =>
-                    update({
-                      sub_profession_ids: ids.length ? ids : undefined,
-                      page: 1,
-                    })
-                  }
-                  placeholder="Select sub professions..."
-                  loading={loadingLookups}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Ethnicities</Label>
-                <MultiSelect
-                  options={ethnicities}
-                  value={
-                    Array.isArray(local.ethnicity_ids)
-                      ? local.ethnicity_ids
-                      : local.ethnicity_ids
-                      ? [local.ethnicity_ids]
-                      : []
-                  }
-                  onChange={(ids) =>
-                    update({
-                      ethnicity_ids: ids.length ? ids : undefined,
-                      page: 1,
-                    })
-                  }
-                  placeholder="Select ethnicities..."
-                  loading={loadingLookups}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Location */}
-          <div className="space-y-4">
-            <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                Location & Origin
-              </h3>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div className="space-y-2">
-                <Label>Job Countries</Label>
+                <Label>{t("jobsFilter.jobCountries")}</Label>
                 <MultiSelect
                   options={countries}
                   value={
@@ -384,12 +312,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select countries..."
+                  placeholder={t("jobsFilter.selectCountries")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Talent Residence Countries</Label>
+                <Label>{t("jobsFilter.talentResidenceCountries")}</Label>
                 <MultiSelect
                   options={countries}
                   value={
@@ -405,12 +333,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select countries..."
+                  placeholder={t("jobsFilter.selectCountries")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Nationalities</Label>
+                <Label>{t("jobsFilter.nationalities")}</Label>
                 <MultiSelect
                   options={nationalities}
                   value={
@@ -426,60 +354,7 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder="Select nationalities..."
-                  loading={loadingLookups}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Appearance */}
-          <div className="space-y-4">
-            <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                Appearance
-              </h3>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div className="space-y-2">
-                <Label>Hair Colors</Label>
-                <MultiSelect
-                  options={hairColors}
-                  value={
-                    Array.isArray(local.hair_color_ids)
-                      ? local.hair_color_ids
-                      : local.hair_color_ids
-                      ? [local.hair_color_ids]
-                      : []
-                  }
-                  onChange={(ids) =>
-                    update({
-                      hair_color_ids: ids.length ? ids : undefined,
-                      page: 1,
-                    })
-                  }
-                  placeholder="Select hair colors..."
-                  loading={loadingLookups}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Eye Colors</Label>
-                <MultiSelect
-                  options={eyeColors}
-                  value={
-                    Array.isArray(local.eye_color_ids)
-                      ? local.eye_color_ids
-                      : local.eye_color_ids
-                      ? [local.eye_color_ids]
-                      : []
-                  }
-                  onChange={(ids) =>
-                    update({
-                      eye_color_ids: ids.length ? ids : undefined,
-                      page: 1,
-                    })
-                  }
-                  placeholder="Select eye colors..."
+                  placeholder={t("jobsFilter.selectNationalities")}
                   loading={loadingLookups}
                 />
               </div>

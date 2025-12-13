@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Calendar, ChevronLeft, ChevronRight, X } from "lucide-react";
+import Label from "./Label";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface DatePickerProps {
   value?: string;
@@ -22,12 +24,13 @@ const MONTHS = [
 export default function DatePicker({
   value,
   onChange,
-  placeholder = "Select date",
+  placeholder,
   label,
   minDate,
   maxDate,
   className = "",
 }: DatePickerProps) {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -179,11 +182,7 @@ export default function DatePicker({
 
   return (
     <div ref={pickerRef} className={`relative ${className}`}>
-      {label && (
-        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-          {label}
-        </label>
-      )}
+      {label && <Label>{label}</Label>}
       
       <div className="relative flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white transition-all duration-200 ease-in-out hover:border-[#c49a47]/50 focus-within:border-[#c49a47] focus-within:ring-2 focus-within:ring-[#c49a47]/20 dark:border-gray-700 dark:bg-black">
         <button
@@ -193,7 +192,7 @@ export default function DatePicker({
         >
           <Calendar className="h-4 w-4 text-[#c49a47]" />
           <span className={value ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400"}>
-            {value ? formatDate(selectedDate) : placeholder}
+            {value ? formatDate(selectedDate) : (placeholder || t("ui.selectDate"))}
           </span>
         </button>
         {value && (
@@ -269,7 +268,7 @@ export default function DatePicker({
             }}
             className="rounded-lg px-3 py-1.5 text-sm font-medium text-[#c49a47] transition-all duration-200 hover:bg-[#c49a47]/10 hover:scale-105 active:scale-100"
           >
-            Today
+            {t("ui.today")}
           </button>
           {value && (
             <button
@@ -277,7 +276,7 @@ export default function DatePicker({
               onClick={handleClear}
               className="rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:scale-105 active:scale-100 dark:text-red-400 dark:hover:bg-red-950/30"
             >
-              Clear
+              {t("ui.clear")}
             </button>
           )}
         </div>

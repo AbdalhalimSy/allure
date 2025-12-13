@@ -44,7 +44,7 @@ export default function RegisterPage() {
   // Redirect authenticated users away from register page
   useEffect(() => {
     if (hydrated && isAuthenticated) {
-      router.replace("/dashboard");
+      router.replace("/");
     }
   }, [hydrated, isAuthenticated, router]);
 
@@ -331,7 +331,7 @@ export default function RegisterPage() {
         <VerifyEmailForm
           email={formData.email}
           password={formData.password}
-          onSuccess={() => router.push("/dashboard")}
+          onSuccess={() => router.push("/")}
         />
       )}
     </AuthShell>

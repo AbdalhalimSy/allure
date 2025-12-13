@@ -5,6 +5,8 @@ export interface Role {
   gender: string;
   start_age: number;
   end_age: number;
+  can_apply?: boolean | null;
+  eligibility_score?: number | null;
 }
 
 // Base Job type for job listings
@@ -12,13 +14,17 @@ export interface Job {
   id: number;
   title: string;
   description: string;
+  image?: string | null;
   highlights?: string | null; // Optional highlights field
+  usage_terms?: string | null;
   skills?: string; // Optional field
   shooting_date: string;
   expiration_date: string;
   is_active: boolean;
+  open_to_apply: boolean;
   roles_count: number;
-  countries?: string[]; // Optional - API returns 'countries' not 'job_countries'
+  countries?: string[]; // For list endpoint
+  job_countries?: string[]; // For detail endpoint
   professions?: string[]; // Optional
   roles: Role[];
 }
@@ -69,8 +75,9 @@ export interface CallTimeSlotGroup {
 
 export interface DetailedRole extends Role {
   description: string;
-  ethnicity: string;
+  ethnicity: string[];
   payment_terms_days: number;
+  budget?: number | null;
   meta_conditions: MetaCondition[];
   conditions: Condition[];
   call_time_enabled: boolean;
@@ -114,6 +121,7 @@ export interface JobFilters {
   ethnicity_ids?: number | number[]; // Talent ethnicities
   hair_color_ids?: number | number[]; // Hair colors
   eye_color_ids?: number | number[]; // Eye colors
+  eligible?: boolean; // Filter by eligibility
   page?: number; // Pagination page index (1-based)
 }
 

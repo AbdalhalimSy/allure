@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useI18n } from "@/contexts/I18nContext";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
 import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
@@ -15,6 +17,8 @@ import {
 } from "lucide-react";
 
 export default function TalentsPage() {
+  const pathname = usePathname();
+  const { locale } = useI18n();
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,9 +31,15 @@ export default function TalentsPage() {
   });
   const abortRef = useRef<AbortController | null>(null);
 
+  // Reset talents and show loading when pathname changes (navigation)
+  useEffect(() => {
+    setTalents([]);
+    setLoading(true);
+  }, [pathname]);
+
   useEffect(() => {
     fetchTalents();
-  }, [filters]);
+  }, [filters, locale]);
 
   const fetchTalents = async () => {
     try {
@@ -57,6 +67,9 @@ export default function TalentsPage() {
 
       const response = await fetch(`/api/talents?${params.toString()}`, {
         signal: abortRef.current.signal,
+        headers: {
+          "Accept-Language": locale,
+        },
       });
 
       if (!response.ok) {

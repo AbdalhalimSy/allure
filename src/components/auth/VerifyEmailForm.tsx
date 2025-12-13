@@ -103,7 +103,7 @@ export default function VerifyEmailForm({
           if (onSuccess) {
             onSuccess();
           } else {
-            router.push("/dashboard");
+            router.push("/");
           }
         } else {
           toast.success(

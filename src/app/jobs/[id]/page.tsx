@@ -19,6 +19,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { DetailedJob, DetailedRole, JobDetailResponse } from "@/types/job";
+import { useI18n } from "@/contexts/I18nContext";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -29,10 +30,19 @@ const formatDate = (dateString: string) => {
   });
 };
 
+const formatTime = (timeString: string) => {
+  if (!timeString) return "";
+  const [hours, minutes] = timeString.split(":");
+  const date = new Date();
+  date.setHours(parseInt(hours), parseInt(minutes));
+  return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+};
+
 export default function JobDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { user, activeProfileId } = useAuth();
+  const { activeProfileId } = useAuth();
+  const { t, locale } = useI18n();
   const [job, setJob] = useState<DetailedJob | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,17 +50,34 @@ export default function JobDetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchJob();
-  }, [params.id]);
+    if (activeProfileId) {
+      fetchJob();
+    }
+  }, [params.id, activeProfileId]);
 
   const fetchJob = async () => {
+    if (!activeProfileId) {
+      setError(t("jobDetail.errors.profileNotLoaded"));
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/jobs/${params.id}`);
+      const response = await fetch(
+        `/api/jobs/${params.id}?profile_id=${activeProfileId}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("auth_token") || ""}`,
+            "Accept-Language": locale,
+          }
+        }
+      );
       
       if (!response.ok) {
-        throw new Error("Failed to fetch job details");
+        const data = await response.json();
+        throw new Error(data.error || data.message || t("jobDetail.errors.fetchFailed"));
       }
       
       const result: JobDetailResponse = await response.json();
@@ -58,10 +85,10 @@ export default function JobDetailPage() {
       if (result.status === "success" || result.status === true) {
         setJob(result.data);
       } else {
-        throw new Error(result.message || "Failed to load job");
+        throw new Error(result.message || t("jobDetail.errors.loadFailed"));
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : t("jobDetail.errors.generic"));
       console.error("Error fetching job:", err);
     } finally {
       setLoading(false);
@@ -82,14 +109,14 @@ export default function JobDetailPage() {
         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center dark:border-red-800 dark:bg-red-950/20">
           <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
           <h3 className="mb-2 text-lg font-semibold text-red-900 dark:text-red-200">
-            Failed to Load Job
+            {t("jobDetail.failedToLoad")}
           </h3>
           <p className="mb-4 text-sm text-red-700 dark:text-red-300">{error}</p>
           <button
             onClick={() => router.push("/jobs")}
             className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
-            Back to Jobs
+            {t("jobDetail.backToJobs")}
           </button>
         </div>
       </div>
@@ -109,12 +136,23 @@ export default function JobDetailPage() {
           className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] dark:text-gray-400"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Jobs
+          {t("jobDetail.backToJobs")}
         </button>
 
         {/* Header Section */}
         <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900">
           <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
+          
+          {/* Job Image */}
+          {job.image && (
+            <div className="relative h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
+              <img 
+                src={job.image} 
+                alt={job.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
           
           <div className="p-8">
             <div className="mb-4 flex items-start justify-between">
@@ -125,13 +163,24 @@ export default function JobDetailPage() {
                 {daysUntilExpiry <= 7 && daysUntilExpiry > 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
                     <Clock className="h-3 w-3" />
-                    Expires in {daysUntilExpiry} days
+                    {t("jobDetail.expiresIn")} {daysUntilExpiry} {t("jobDetail.days")}
+                  </span>
+                )}
+                {daysUntilExpiry <= 0 && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gray-400 px-3 py-1 text-xs font-semibold text-white">
+                    <AlertCircle className="h-3 w-3" />
+                    {t("jobDetail.applicationClosed")}
                   </span>
                 )}
               </div>
-              {job.is_active && (
+              {job.is_active && job.open_to_apply && (
                 <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  Active
+                  {t("jobDetail.openToApply")}
+                </span>
+              )}
+              {!job.open_to_apply && (
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                  {t("jobDetail.closed")}
                 </span>
               )}
             </div>
@@ -140,12 +189,26 @@ export default function JobDetailPage() {
               {job.description}
             </p>
 
+            {job.highlights && (
+              <div className="mb-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+                <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">{t("jobDetail.highlights")}</p>
+                <p className="mt-1 text-sm text-blue-800 dark:text-blue-300">{job.highlights}</p>
+              </div>
+            )}
+
+            {job.usage_terms && (
+              <div className="mb-6 rounded-lg bg-purple-50 p-4 dark:bg-purple-900/20">
+                <p className="text-sm font-semibold text-purple-900 dark:text-purple-200">{t("jobDetail.usageTerms")}</p>
+                <p className="mt-1 text-sm text-purple-800 dark:text-purple-300">{job.usage_terms}</p>
+              </div>
+            )}
+
             {/* Quick Info Grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Calendar className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Shooting Date</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.shootingDate")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.shooting_date)}
                   </p>
@@ -155,7 +218,7 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Clock className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Expires On</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.expiresOn")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.expiration_date)}
                   </p>
@@ -165,9 +228,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Open Roles</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.openRoles")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {job.roles.length} Available
+                    {job.roles.length} {t("jobDetail.available")}
                   </p>
                 </div>
               </div>
@@ -175,9 +238,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Locations</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.locations")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {job.job_countries?.length || 0} Countries
+                    {job.job_countries?.length || 0} {t("jobDetail.countries")}
                   </p>
                 </div>
               </div>
@@ -188,22 +251,44 @@ export default function JobDetailPage() {
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Skills Section */}
-            {job.skills && (
+            {/* Professions Section */}
+            {job.professions && job.professions.length > 0 && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <div className="mb-4 flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-[#c49a47]" />
+                  <Briefcase className="h-5 w-5 text-[#c49a47]" />
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                    Required Skills
+                    {t("jobDetail.requiredProfessions")}
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {job.skills.split(",").map((skill, index) => (
+                  {job.professions.map((profession, index) => (
                     <span
                       key={index}
                       className="rounded-lg bg-[#c49a47]/10 px-4 py-2 text-sm font-medium text-[#c49a47] dark:bg-[#c49a47]/20"
                     >
-                      {skill.trim()}
+                      {profession}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sub Professions Section */}
+            {job.sub_professions && job.sub_professions.length > 0 && (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                <div className="mb-4 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-[#c49a47]" />
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {t("jobDetail.subProfessions")}
+                  </h2>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {job.sub_professions.map((subProf, index) => (
+                    <span
+                      key={index}
+                      className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                    >
+                      {subProf}
                     </span>
                   ))}
                 </div>
@@ -213,7 +298,7 @@ export default function JobDetailPage() {
             {/* Roles Section */}
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Available Roles ({job.roles.length})
+                {t("jobDetail.availableRoles")} ({job.roles.length})
               </h2>
               
               {job.roles.map((role) => (
@@ -235,7 +320,7 @@ export default function JobDetailPage() {
                     <div className="flex items-center gap-2 text-sm">
                       <User className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        Gender:
+                        {t("jobDetail.gender")}
                       </span>
                       <span className="capitalize text-gray-900 dark:text-white">
                         {role.gender}
@@ -245,49 +330,111 @@ export default function JobDetailPage() {
                     <div className="flex items-center gap-2 text-sm">
                       <Calendar className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        Age Range:
+                        {t("jobDetail.ageRange")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
-                        {role.start_age} - {role.end_age} years
+                        {role.start_age} - {role.end_age} {t("jobDetail.years")}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <Briefcase className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        Ethnicity:
+                        {t("jobDetail.ethnicity")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
-                        {role.ethnicity}
+                        {Array.isArray(role.ethnicity) ? role.ethnicity.join(", ") : role.ethnicity}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <DollarSign className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        Payment Terms:
+                        {t("jobDetail.paymentTerms")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
                         {role.payment_terms_days} days
                       </span>
                     </div>
+
+                    {role.budget && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <DollarSign className="h-4 w-4 text-[#c49a47]" />
+                        <span className="font-medium text-gray-700 dark:text-gray-300">
+                          {t("jobDetail.budget")}
+                        </span>
+                        <span className="text-gray-900 dark:text-white">
+                          AED {role.budget.toLocaleString()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Applicability */}
+                  <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#c49a47]/10 p-3 dark:bg-[#c49a47]/20">
+                    {role.can_apply ? (
+                      <>
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                          {t("jobDetail.meetRequirements")}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                        <span className="text-sm font-medium text-orange-700 dark:text-orange-300">
+                          {t("jobDetail.notMeetRequirements")} ({t("jobDetail.eligibility")}: {role.eligibility_score || 0}%)
+                        </span>
+                      </>
+                    )}
                   </div>
 
                   {/* Meta Conditions */}
                   {role.meta_conditions.length > 0 && (
                     <div className="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                       <h4 className="mb-3 font-semibold text-gray-900 dark:text-white">
-                        Physical Requirements
+                        {t("jobDetail.physicalRequirements")}
                       </h4>
                       <div className="grid gap-2 sm:grid-cols-2 text-sm">
                         {Object.entries(role.meta_conditions[0]).map(([key, value]) => (
-                          <div key={key} className="flex justify-between">
-                            <span className="capitalize text-gray-600 dark:text-gray-400">
-                              {key.replace(/_/g, " ")}:
-                            </span>
-                            <span className="font-medium text-gray-900 dark:text-white">
-                              {value}
-                            </span>
+                          value !== null && value !== undefined && (
+                            <div key={key} className="flex justify-between">
+                              <span className="capitalize text-gray-600 dark:text-gray-400">
+                                {key.replace(/_/g, " ")}:
+                              </span>
+                              <span className="font-medium text-gray-900 dark:text-white">
+                                {value}
+                              </span>
+                            </div>
+                          )
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Call Time Information */}
+                  {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
+                    <div className="mb-4 rounded-lg bg-[#c49a47]/10 p-4 dark:bg-[#c49a47]/20">
+                      <h4 className="mb-3 font-semibold text-[#c49a47] dark:text-[#c49a47]">
+                        {t("jobDetail.availableCallTimes")}
+                      </h4>
+                      <div className="space-y-3">
+                        {role.call_time_slots.map((slot, idx) => (
+                          <div key={idx} className="rounded bg-white p-2 dark:bg-gray-900">
+                            <p className="font-medium text-sm text-gray-900 dark:text-white">
+                              {formatDate(slot.date)}
+                            </p>
+                            {slot.slots.map((timeSlot) => (
+                              <div key={timeSlot.id} className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+                                <p className="font-medium">
+                                  {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)} 
+                                  <span className="ml-2 text-gray-500">
+                                    ({t("jobDetail.every")} {timeSlot.interval_minutes} {t("jobDetail.min")}, {timeSlot.max_talents} {t("jobDetail.spot")}{timeSlot.max_talents > 1 ? 's' : ''})
+                                  </span>
+                                </p>
+                                <p className="mt-1 text-gray-500">{t("jobDetail.availableLabel")}: {timeSlot.available_times.length} {t("jobDetail.slots")}</p>
+                              </div>
+                            ))}
                           </div>
                         ))}
                       </div>
@@ -296,9 +443,9 @@ export default function JobDetailPage() {
 
                   {/* Conditions */}
                   {role.conditions.length > 0 && (
-                    <div>
+                    <div className="mb-4">
                       <h4 className="mb-3 font-semibold text-gray-900 dark:text-white">
-                        Additional Requirements
+                        {t("jobDetail.additionalRequirements")}
                       </h4>
                       <div className="space-y-2">
                         {role.conditions.map((condition) => (
@@ -323,15 +470,18 @@ export default function JobDetailPage() {
                     </div>
                   )}
 
-                  <button 
-                    onClick={() => {
-                      setSelectedRole(role);
-                      setIsModalOpen(true);
-                    }}
-                    className="mt-4 w-full rounded-lg bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl"
-                  >
-                    Apply for {role.name}
-                  </button>
+                  {job.open_to_apply && (
+                    <button 
+                      onClick={() => {
+                        setSelectedRole(role);
+                        setIsModalOpen(true);
+                      }}
+                      className="mt-4 w-full rounded-lg bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl disabled:opacity-50"
+                      disabled={!role.can_apply}
+                    >
+                      {t("jobDetail.applyFor")} {role.name}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -344,7 +494,7 @@ export default function JobDetailPage() {
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Locations
+                  {t("jobDetail.jobLocations")}
                 </h3>
               </div>
               <ul className="space-y-2">
@@ -356,46 +506,30 @@ export default function JobDetailPage() {
                     <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                     {country}
                   </li>
-                )) || <li className="text-sm text-gray-500">No locations specified</li>}
+                )) || <li className="text-sm text-gray-500">{t("jobDetail.noLocations")}</li>}
               </ul>
             </div>
 
-            {/* Professions */}
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-              <div className="mb-4 flex items-center gap-2">
-                <Briefcase className="h-5 w-5 text-[#c49a47]" />
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Professions
-                </h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {job.professions?.map((profession, index) => (
-                  <span
-                    key={index}
-                    className="rounded-lg border border-[#c49a47] bg-[#c49a47]/5 px-3 py-1 text-sm font-medium text-[#c49a47]"
-                  >
-                    {profession}
-                  </span>
-                )) || <span className="text-sm text-gray-500">No professions specified</span>}
-              </div>
-            </div>
-
-            {/* Sub Professions */}
-            {job.sub_professions && job.sub_professions.length > 0 && (
+            {/* Residence Countries */}
+            {job.residence_countries && job.residence_countries.length > 0 && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">
-                  Sub-Professions
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {job.sub_professions.map((subProf, index) => (
-                    <span
-                      key={index}
-                      className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                    >
-                      {subProf}
-                    </span>
-                  ))}
+                <div className="mb-4 flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-[#c49a47]" />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    {t("jobDetail.residenceCountries")}
+                  </h3>
                 </div>
+                <ul className="space-y-2">
+                  {job.residence_countries.map((country, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
+                      {country}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>

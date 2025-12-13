@@ -18,6 +18,7 @@ describe('JobCard', () => {
     shooting_date: '2025-12-01',
     expiration_date: '2025-11-30',
     is_active: true,
+    open_to_apply: true,
     roles_count: 3,
     countries: ['Saudi Arabia', 'UAE', 'Egypt'],
     professions: ['Actor', 'Model', 'Voice Artist', 'Dancer'],

@@ -6,7 +6,9 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureporta
 interface LookupErrorResponse { error: string; }
 export async function GET(request: NextRequest) {
   try {
-    const response = await fetch(`${BACKEND_URL}/lookups/countries`, {
+    const search = request.nextUrl.searchParams.toString();
+    const url = `${BACKEND_URL}/lookups/countries${search ? `?${search}` : ""}`;
+    const response = await fetch(url, {
       method: "GET",
       headers: getApiHeaders(request),
     });

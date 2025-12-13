@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -15,7 +15,7 @@ import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import apiClient from "@/lib/api/client";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const { t } = useI18n();
   const { isAuthenticated, hydrated } = useAuth();
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (hydrated && isAuthenticated) {
-      router.replace("/dashboard");
+      router.replace("/");
     }
   }, [hydrated, isAuthenticated, router]);
 
@@ -161,5 +161,13 @@ export default function ResetPasswordPage() {
         </div>
       </form>
     </AuthShell>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

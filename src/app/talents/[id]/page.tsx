@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useI18n } from "@/contexts/I18nContext";
 import Image from "next/image";
 import Loader from "@/components/ui/Loader";
 import AccentTag from "@/components/ui/AccentTag";
@@ -39,6 +40,7 @@ import {
 export default function TalentDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { locale } = useI18n();
   const [talent, setTalent] = useState<Talent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +49,7 @@ export default function TalentDetailPage() {
 
   useEffect(() => {
     fetchTalent();
-  }, [params.id]);
+  }, [params.id, locale]);
 
   // Set selected photo when talent loads
   useEffect(() => {
@@ -67,7 +69,11 @@ export default function TalentDetailPage() {
 
       // Fetch from talents list - the API doesn't have a single talent endpoint
       // We'll get the full list and filter client-side, or we can optimize later
-      const response = await fetch(`/api/talents?per_page=100`);
+      const response = await fetch(`/api/talents?per_page=100`, {
+        headers: {
+          "Accept-Language": locale,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch talent details");
