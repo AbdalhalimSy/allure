@@ -65,6 +65,45 @@
       "rejectedDescription": "Your account application was not approved. Please contact support for details.",
       "ariaLabel": "Approval status: {{status}}"
     },
+    "billing": {
+      "status": {
+        "title": "Subscription Status",
+        "description": "Your current subscription details"
+      },
+      "tabs": {
+        "plans": "Available Plans",
+        "history": "Subscription History",
+        "payments": "Payment History"
+      },
+      "packages": {
+        "title": "Available Packages",
+        "description": "Choose a subscription package that fits your needs",
+        "noPackages": "No packages available at this time. Please check back later."
+      },
+      "order": {
+        "title": "Complete Your Order",
+        "summary": "Order Summary",
+        "package": "Package",
+        "originalPrice": "Original Price",
+        "discount": "Discount",
+        "total": "Total"
+      },
+      "subscribe": "Subscribe Now",
+      "processing": "Processing...",
+      "errors": {
+        "selectProfile": "Please select a profile first",
+        "load": "Failed to load subscription data",
+        "create": "Failed to create subscription"
+      },
+      "history": {
+        "title": "Subscription History",
+        "description": "View all your past and current subscriptions"
+      },
+      "payments": {
+        "title": "Payment History",
+        "description": "View all your payment transactions"
+      }
+    },
     "nav": {
       "profile": "Profile Setup",
       "basic": "Basic Information",
@@ -85,7 +124,8 @@
         "specializations": "specializations selected",
         "search": "Search specializations...",
         "noResults": "No specializations found",
-        "empty": "Select professions above to get started"
+        "empty": "Select professions above to get started",
+        "profession": "Profession"
       },
       "media": {
         "title": "Required Media for Selected Specializations",
@@ -154,6 +194,8 @@
         "uploading": "Uploading...",
         "fileSizeExceeds": "File size exceeds",
         "invalidFileType": "Invalid file type. Please upload a",
+        "dragAndDrop": "Click to upload or drag and drop",
+        "selectFiles": "Click to select or drag & drop files (images/videos up to 100MB)",
         "file": "file"
       },
       "languageManager": {
@@ -450,6 +492,11 @@
     "validationErrors": "Validation errors",
     "syncFailed": "Sync failed",
     "onlyOneFeatured": "Only one item can be featured",
-    "loadFailed": "Failed to load portfolio"
+    "loadFailed": "Failed to load portfolio",
+    "titlePlaceholder": "Title",
+    "descriptionPlaceholder": "Description",
+    "featured": "Featured",
+    "pending": "Pending",
+    "approved": "Approved"
   }
 }

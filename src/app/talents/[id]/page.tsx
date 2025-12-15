@@ -235,13 +235,13 @@ export default function TalentDetailPage() {
                       priority
                     />
                     {selectedPhoto.featured_image && (
-                      <div className="absolute left-3 top-3">
+                      <div className="absolute start-3 top-3">
                         <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>Featured</AccentTag>
                       </div>
                     )}
                     <button
                       onClick={() => setLightboxOpen(true)}
-                      className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/90"
+                      className="absolute bottom-3 end-3 flex items-center gap-2 rounded-lg bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/90"
                     >
                       <Maximize2 className="h-4 w-4" /> View Full
                     </button>
@@ -480,7 +480,7 @@ export default function TalentDetailPage() {
         >
           <button
             onClick={() => setLightboxOpen(false)}
-            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+            className="absolute -end-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
           >
             <X className="h-6 w-6" />
           </button>
@@ -524,7 +524,7 @@ export default function TalentDetailPage() {
             )}
             
             {/* Photo Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
+            <div className="absolute bottom-4 start-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
               {media.photos.findIndex(p => p.id === selectedPhoto.id) + 1} / {media.photos.length}
             </div>
           </div>

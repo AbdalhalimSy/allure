@@ -255,7 +255,7 @@ export default function ContactPage() {
                 key={index}
                 className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
               >
-                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-linear-to-br from-[#c49a47]/10 to-[#d4a855]/10 blur-2xl transition-all group-hover:scale-150"></div>
+                <div className="absolute end-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-linear-to-br from-[#c49a47]/10 to-[#d4a855]/10 blur-2xl transition-all group-hover:scale-150"></div>
 
                 <div className="relative">
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-[#c49a47] to-[#d4a855] shadow-lg">

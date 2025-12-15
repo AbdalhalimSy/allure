@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { TbX, TbMicrophone } from 'react-icons/tb';
-import { useI18n } from '@/contexts/I18nContext';
-import { ProfessionLanguage } from '@/types/profession';
-import MediaUploader from '@/components/ui/MediaUploader';
-import SingleSelect from '@/components/ui/SingleSelect';
+import { useState } from "react";
+import { TbX, TbMicrophone } from "react-icons/tb";
+import { useI18n } from "@/contexts/I18nContext";
+import { ProfessionLanguage } from "@/types/profession";
+import MediaUploader from "@/components/ui/MediaUploader";
+import SingleSelect from "@/components/ui/SingleSelect";
 
 const LANGUAGE_OPTIONS = [
-  { code: 'en', label: 'English' },
-  { code: 'ar', label: 'Arabic' },
-  { code: 'fr', label: 'French' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'de', label: 'German' },
-  { code: 'it', label: 'Italian' },
-  { code: 'pt', label: 'Portuguese' },
-  { code: 'ru', label: 'Russian' },
-  { code: 'zh', label: 'Chinese' },
-  { code: 'ja', label: 'Japanese' },
-  { code: 'ko', label: 'Korean' },
-  { code: 'hi', label: 'Hindi' },
+  { code: "en", label: "English" },
+  { code: "ar", label: "Arabic" },
+  { code: "fr", label: "French" },
+  { code: "es", label: "Spanish" },
+  { code: "de", label: "German" },
+  { code: "it", label: "Italian" },
+  { code: "pt", label: "Portuguese" },
+  { code: "ru", label: "Russian" },
+  { code: "zh", label: "Chinese" },
+  { code: "ja", label: "Japanese" },
+  { code: "ko", label: "Korean" },
+  { code: "hi", label: "Hindi" },
 ];
 
 interface LanguageManagerProps {
@@ -34,15 +34,14 @@ export default function LanguageManager({
   disabled = false,
 }: LanguageManagerProps) {
   const { t, locale } = useI18n();
-  const isRTL = locale === 'ar';
   const [showVoiceUpload, setShowVoiceUpload] = useState<number | null>(null);
 
   const availableLanguages = LANGUAGE_OPTIONS.filter(
-    lang => !languages.some(l => l.code === lang.code)
+    (lang) => !languages.some((l) => l.code === lang.code)
   );
 
   const handleAddLanguage = (code: string) => {
-    if (!languages.some(l => l.code === code)) {
+    if (!languages.some((l) => l.code === code)) {
       onChange([...languages, { code }]);
     }
   };
@@ -68,32 +67,34 @@ export default function LanguageManager({
   };
 
   const getLanguageLabel = (code: string) => {
-    return LANGUAGE_OPTIONS.find(l => l.code === code)?.label || code;
+    return LANGUAGE_OPTIONS.find((l) => l.code === code)?.label || code;
   };
 
   return (
-    <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+    <div className="space-y-4">
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        {t('account.profession.languages.label') || 'Languages'}
+        {t("account.profession.languages.label") || "Languages"}
       </label>
 
       {/* Language Pills */}
       {languages.length > 0 && (
-        <div className={`flex flex-wrap gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className="flex flex-wrap gap-2">
           {languages.map((lang, index) => (
             <div
               key={index}
               className="group relative inline-flex items-center gap-2 px-3 py-2 bg-[#c49a47] text-white rounded-lg text-sm font-medium"
             >
               <span>{getLanguageLabel(lang.code)}</span>
-              
+
               {lang.voice && (
                 <div className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
               )}
-              
+
               <button
                 type="button"
-                onClick={() => setShowVoiceUpload(showVoiceUpload === index ? null : index)}
+                onClick={() =>
+                  setShowVoiceUpload(showVoiceUpload === index ? null : index)
+                }
                 disabled={disabled}
                 className="p-1 hover:bg-white/20 rounded transition-colors disabled:opacity-50"
                 title="Add voice sample"
@@ -111,9 +112,11 @@ export default function LanguageManager({
               </button>
 
               {showVoiceUpload === index && (
-                <div className="absolute top-full left-0 mt-2 w-80 z-10 bg-white dark:bg-black rounded-lg shadow-xl border border-gray-200 dark:border-white/10 p-4">
+                <div className="absolute top-full start-0 mt-2 w-80 z-10 bg-white dark:bg-black rounded-lg shadow-xl border border-gray-200 dark:border-white/10 p-4">
                   <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-                    {t('account.profession.languageManager.voiceSample') || 'Upload voice sample for'} {getLanguageLabel(lang.code)}
+                    {t("account.profession.languageManager.voiceSample") ||
+                      "Upload voice sample for"}{" "}
+                    {getLanguageLabel(lang.code)}
                   </p>
                   <MediaUploader
                     type="audio"
@@ -133,14 +136,16 @@ export default function LanguageManager({
       {availableLanguages.length > 0 && (
         <div className="relative">
           <SingleSelect
-            options={availableLanguages.map(lang => ({
+            options={availableLanguages.map((lang) => ({
               value: lang.code,
               label: lang.label,
             }))}
             value=""
             onChange={(value) => handleAddLanguage(String(value))}
             disabled={disabled}
-            placeholder={t('account.profession.languageManager.add') || '+ Add Language'}
+            placeholder={
+              t("account.profession.languageManager.add") || "+ Add Language"
+            }
             searchable={true}
           />
         </div>
@@ -148,7 +153,8 @@ export default function LanguageManager({
 
       {languages.length === 0 && (
         <p className="text-sm text-gray-500 dark:text-gray-400 italic">
-          {t('account.profession.languageManager.empty') || 'No languages added yet'}
+          {t("account.profession.languageManager.empty") ||
+            "No languages added yet"}
         </p>
       )}
     </div>

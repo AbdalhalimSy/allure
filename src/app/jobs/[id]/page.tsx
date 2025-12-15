@@ -428,7 +428,7 @@ export default function JobDetailPage() {
                               <div key={timeSlot.id} className="mt-2 text-xs text-gray-600 dark:text-gray-400">
                                 <p className="font-medium">
                                   {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)} 
-                                  <span className="ml-2 text-gray-500">
+                                  <span className="ms-2 text-gray-500">
                                     ({t("jobDetail.every")} {timeSlot.interval_minutes} {t("jobDetail.min")}, {timeSlot.max_talents} {t("jobDetail.spot")}{timeSlot.max_talents > 1 ? 's' : ''})
                                   </span>
                                 </p>
@@ -461,7 +461,7 @@ export default function JobDetailPage() {
                             <span className="text-gray-700 dark:text-gray-300">
                               {condition.label}
                               {condition.is_required && (
-                                <span className="ml-1 text-red-500">*</span>
+                                <span className="ms-1 text-red-500">*</span>
                               )}
                             </span>
                           </div>

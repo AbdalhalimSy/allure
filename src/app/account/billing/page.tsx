@@ -7,6 +7,7 @@ import AccountLayout from '@/components/account/AccountLayout';
 import AccountSection from '@/components/account/AccountSection';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useI18n } from '@/contexts/I18nContext';
 import { getAccountNavItems } from '@/lib/utils/accountNavItems';
 import { PackageCard } from '@/components/subscriptions/PackageCard';
 import { CouponInput } from '@/components/subscriptions/CouponInput';
@@ -31,6 +32,7 @@ import { getActiveProfileId } from '@/lib/api/client';
 
 export default function BillingPage() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
   
   const [profileId, setProfileId] = useState<number | null>(null);
@@ -58,7 +60,7 @@ export default function BillingPage() {
       setProfileId(Number(activeProfileId));
       loadData(Number(activeProfileId));
     } else {
-      setError('Please select a profile first');
+      setError(t('account.billing.errors.selectProfile'));
       setLoading(false);
     }
   }, []);
@@ -80,7 +82,7 @@ export default function BillingPage() {
       setPayments(paymentsRes.data.payments);
       setTotalSpent(paymentsRes.data.total_spent);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to load subscription data');
+      setError(err.response?.data?.message || t('account.billing.errors.load'));
     } finally {
       setLoading(false);
     }
@@ -125,7 +127,7 @@ export default function BillingPage() {
       setPricing(null);
       setActiveTab('history');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create subscription');
+      setError(err.response?.data?.message || t('account.billing.errors.create'));
     } finally {
       setProcessing(false);
     }
@@ -158,7 +160,7 @@ export default function BillingPage() {
 
           {/* Current Subscription Status */}
           {profileId && (
-            <AccountSection title="Subscription Status" description="Your current subscription details">
+            <AccountSection title={t('account.billing.status.title')} description={t('account.billing.status.description')}>
               <SubscriptionStatus
                 subscription={currentSubscription}
                 hasSubscription={hasSubscription}
@@ -168,7 +170,7 @@ export default function BillingPage() {
 
           {/* Tab Navigation */}
           <div className="border-b border-gray-200 dark:border-white/10">
-            <nav className="-mb-px flex space-x-8">
+            <nav className="-mb-px flex gap-8">
               <button
                 onClick={() => setActiveTab('subscribe')}
                 className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
@@ -177,7 +179,7 @@ export default function BillingPage() {
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                Available Plans
+                {t('account.billing.tabs.plans')}
               </button>
               <button
                 onClick={() => setActiveTab('history')}
@@ -187,7 +189,7 @@ export default function BillingPage() {
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                Subscription History ({subscriptions?.length || 0})
+                {t('account.billing.tabs.history')} ({subscriptions?.length || 0})
               </button>
               <button
                 onClick={() => setActiveTab('payments')}
@@ -197,7 +199,7 @@ export default function BillingPage() {
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                Payment History ({payments?.length || 0})
+                {t('account.billing.tabs.payments')} ({payments?.length || 0})
               </button>
             </nav>
           </div>
@@ -206,8 +208,8 @@ export default function BillingPage() {
           {activeTab === 'subscribe' && (
             <>
               <AccountSection
-                title="Available Packages"
-                description="Choose a subscription package that fits your needs"
+                title={t('account.billing.packages.title')}
+                description={t('account.billing.packages.description')}
               >
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {packages?.map((pkg) => (
@@ -228,14 +230,14 @@ export default function BillingPage() {
                 {(packages?.length ?? 0) === 0 && (
                   <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center dark:border-white/10 dark:bg-white/5">
                     <p className="text-gray-600 dark:text-gray-400">
-                      No packages available at this time. Please check back later.
+                      {t('account.billing.packages.noPackages')}
                     </p>
                   </div>
                 )}
               </AccountSection>
 
               {selectedPackageId && profileId && (
-                <AccountSection title="Complete Your Order">
+                <AccountSection title={t('account.billing.order.title')}>
                   <div className="space-y-6">
                     <CouponInput
                       profileId={profileId}
@@ -246,10 +248,10 @@ export default function BillingPage() {
 
                     {/* Order Summary */}
                     <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Order Summary</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{t('account.billing.order.summary')}</h3>
                       <div className="mt-4 space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">Package:</span>
+                          <span className="text-gray-600 dark:text-gray-400">{t('account.billing.order.package')}:</span>
                           <span className="font-medium text-gray-900 dark:text-white">
                             {selectedPackage?.name}
                           </span>
@@ -257,20 +259,20 @@ export default function BillingPage() {
                         {pricing && (
                           <>
                             <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">Original Price:</span>
+                              <span className="text-gray-600 dark:text-gray-400">{t('account.billing.order.originalPrice')}:</span>
                               <span className="text-gray-900 line-through dark:text-white">
                                 {pricing.original_price.toFixed(2)} AED
                               </span>
                             </div>
                             <div className="flex justify-between text-sm text-green-600">
-                              <span>Discount:</span>
+                              <span>{t('account.billing.order.discount')}:</span>
                               <span>-{pricing.discount_amount.toFixed(2)} AED</span>
                             </div>
                           </>
                         )}
                         <div className="border-t border-gray-200 pt-2 dark:border-white/10">
                           <div className="flex justify-between">
-                            <span className="text-lg font-bold text-gray-900 dark:text-white">Total:</span>
+                            <span className="text-lg font-bold text-gray-900 dark:text-white">{t('account.billing.order.total')}:</span>
                             <span className="text-2xl font-bold text-[#c49a47]">
                               {finalPrice.toFixed(2)} AED
                             </span>
@@ -287,13 +289,13 @@ export default function BillingPage() {
                     >
                       {processing ? (
                         <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Processing...
+                          <Loader2 className="me-2 h-5 w-5 animate-spin" />
+                          {t('account.billing.processing')}
                         </>
                       ) : (
                         <>
-                          <ShoppingCart className="mr-2 h-5 w-5" />
-                          Subscribe Now
+                          <ShoppingCart className="me-2 h-5 w-5" />
+                          {t('account.billing.subscribe')}
                         </>
                       )}
                     </Button>
@@ -305,8 +307,8 @@ export default function BillingPage() {
 
           {activeTab === 'history' && (
             <AccountSection
-              title="Subscription History"
-              description="View all your past and current subscriptions"
+              title={t('account.billing.history.title')}
+              description={t('account.billing.history.description')}
             >
               <SubscriptionHistoryList subscriptions={subscriptions || []} />
             </AccountSection>
@@ -314,9 +316,9 @@ export default function BillingPage() {
 
           {activeTab === 'payments' && (
             <AccountSection
-              title="Payment History"
-              description="View all your payment transactions"
->
+              title={t('account.billing.payments.title')}
+              description={t('account.billing.payments.description')}
+            >
               <PaymentHistoryTable payments={payments || []} totalSpent={totalSpent} />
             </AccountSection>
           )}

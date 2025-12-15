@@ -5,45 +5,47 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import AccountLayout from "@/components/account/AccountLayout";
 import AccountSection from "@/components/account/AccountSection";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 import { getAccountNavItems } from "@/lib/utils/accountNavItems";
-
-const notificationSettings = [
-  {
-    category: "Account Activity",
-    items: [
-      { label: "Login from new device", email: true, push: true },
-      { label: "Password changes", email: true, push: false },
-      { label: "Account settings updates", email: true, push: false },
-    ],
-  },
-  {
-    category: "Projects & Updates",
-    items: [
-      { label: "New project assigned", email: true, push: true },
-      { label: "Project status changes", email: true, push: true },
-      { label: "Comments on your work", email: false, push: true },
-    ],
-  },
-  {
-    category: "Marketing",
-    items: [
-      { label: "Product updates and news", email: true, push: false },
-      { label: "Tips and tutorials", email: false, push: false },
-      { label: "Special offers", email: false, push: false },
-    ],
-  },
-];
 
 export default function NotificationsPage() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
+
+  const notificationSettings = [
+    {
+      category: t('account.notifications.accountActivity'),
+      items: [
+        { label: t('account.notifications.loginNewDevice'), email: true, push: true },
+        { label: t('account.notifications.passwordChanges'), email: true, push: false },
+        { label: t('account.notifications.accountSettingsUpdates'), email: true, push: false },
+      ],
+    },
+    {
+      category: t('account.notifications.projectsUpdates'),
+      items: [
+        { label: t('account.notifications.projectAssigned'), email: true, push: true },
+        { label: t('account.notifications.projectStatusChanges'), email: true, push: true },
+        { label: t('account.notifications.commentsOnWork'), email: false, push: true },
+      ],
+    },
+    {
+      category: t('account.notifications.marketing'),
+      items: [
+        { label: t('account.notifications.productUpdates'), email: true, push: false },
+        { label: t('account.notifications.tipsAndTutorials'), email: false, push: false },
+        { label: t('account.notifications.specialOffers'), email: false, push: false },
+      ],
+    },
+  ];
 
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
         <AccountSection
-          title="Notification Preferences"
-          description="Choose how you want to be notified about activity"
+          title={t('account.notifications.title')}
+          description={t('account.notifications.description')}
         >
           <div className="space-y-8">
             {notificationSettings.map((section) => (
@@ -65,7 +67,7 @@ export default function NotificationsPage() {
                             defaultChecked={item.email}
                             className="h-4 w-4 rounded border-gray-300 text-[#c49a47] focus:ring-[#c49a47]"
                           />
-                          <span className="text-sm text-gray-600 dark:text-gray-400">Email</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{t('account.notifications.email')}</span>
                         </label>
                         <label className="flex items-center gap-2">
                           <input
@@ -73,7 +75,7 @@ export default function NotificationsPage() {
                             defaultChecked={item.push}
                             className="h-4 w-4 rounded border-gray-300 text-[#c49a47] focus:ring-[#c49a47]"
                           />
-                          <span className="text-sm text-gray-600 dark:text-gray-400">Push</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{t('account.notifications.push')}</span>
                         </label>
                       </div>
                     </div>

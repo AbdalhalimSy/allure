@@ -13,6 +13,7 @@ import {
   TbHanger,
 } from "react-icons/tb";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 import apiClient from "@/lib/api/client";
 import { toast } from "react-hot-toast";
 
@@ -62,6 +63,7 @@ export default function AppearanceContent({
   onBack,
 }: AppearanceContentProps) {
   const { user, fetchProfile } = useAuth();
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [appearanceOptions, setAppearanceOptions] = useState<AppearanceOptions>({
     hair_colors: [],
@@ -209,11 +211,11 @@ export default function AppearanceContent({
       };
       const { data } = await apiClient.post("/profile/appearance", payload);
       if (data.status === "success") {
-        toast.success(data.message || "Appearance updated");
+        toast.success(t('account.appearance.success'));
         await fetchProfile();
         onNext();
       } else {
-        toast.error(data.message || "Failed to update appearance");
+        toast.error(t('account.appearance.errors.save'));
       }
     } catch (error: unknown) {
       const message =
@@ -221,7 +223,7 @@ export default function AppearanceContent({
           ? ((error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.message ??
             (error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.error)
           : null;
-      toast.error(message || "Failed to update appearance");
+      toast.error(message || t('account.appearance.errors.save'));
     } finally {
       setLoading(false);
     }
@@ -230,14 +232,14 @@ export default function AppearanceContent({
   return (
     <form onSubmit={onSubmit}>
       <AccountSection
-        title="Appearance"
-        description="Provide your physical appearance and measurements"
+        title={t('account.appearance.title')}
+        description={t('account.appearance.description')}
       >
         <div className="grid gap-6 md:grid-cols-2">
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbScissors className="mr-2 h-4 w-4" /> Hair Color
+                <TbScissors className="me-2 h-4 w-4" /> {t('account.appearance.fields.hairColor')}
               </span>
             }
             required
@@ -259,7 +261,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbScissors className="mr-2 h-4 w-4" /> Hair Type
+                <TbScissors className="me-2 h-4 w-4" /> {t('account.appearance.fields.hairType')}
               </span>
             }
             required
@@ -281,7 +283,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbScissors className="mr-2 h-4 w-4" /> Hair Length
+                <TbScissors className="me-2 h-4 w-4" /> {t('account.appearance.fields.hairLength')}
               </span>
             }
             required
@@ -304,7 +306,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbEye className="mr-2 h-4 w-4" /> Eye Color
+                <TbEye className="me-2 h-4 w-4" /> {t('account.appearance.fields.eyeColor')}
               </span>
             }
             required
@@ -327,7 +329,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbRulerMeasure className="mr-2 h-4 w-4" /> Height
+                <TbRulerMeasure className="me-2 h-4 w-4" /> {t('account.appearance.fields.height')}
               </span>
             }
             required
@@ -354,7 +356,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbShoe className="mr-2 h-4 w-4" /> Shoe Size
+                <TbShoe className="me-2 h-4 w-4" /> {t('account.appearance.fields.shoeSize')}
               </span>
             }
             required
@@ -384,7 +386,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbShirt className="mr-2 h-4 w-4" /> T‑Shirt Size
+                <TbShirt className="me-2 h-4 w-4" /> {t('account.appearance.fields.tshirtSize')}
               </span>
             }
             required
@@ -408,7 +410,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbHanger className="mr-2 h-4 w-4" /> Pants Size
+                <TbHanger className="me-2 h-4 w-4" /> {t('account.appearance.fields.pantsSize')}
               </span>
             }
             required
@@ -426,7 +428,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbHanger className="mr-2 h-4 w-4" /> Jacket Size
+                <TbHanger className="me-2 h-4 w-4" /> {t('account.appearance.fields.jacketSize')}
               </span>
             }
             required
@@ -444,7 +446,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbRulerMeasure className="mr-2 h-4 w-4" /> Chest
+                <TbRulerMeasure className="me-2 h-4 w-4" /> {t('account.appearance.fields.chest')}
               </span>
             }
             required
@@ -471,7 +473,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbRulerMeasure className="mr-2 h-4 w-4" /> Bust
+                <TbRulerMeasure className="me-2 h-4 w-4" /> {t('account.appearance.fields.bust')}
               </span>
             }
             required
@@ -496,7 +498,7 @@ export default function AppearanceContent({
           <AccountField
             label={
               <span className="inline-flex items-center">
-                <TbRulerMeasure className="mr-2 h-4 w-4" /> Waist
+                <TbRulerMeasure className="me-2 h-4 w-4" /> {t('account.appearance.fields.waist')}
               </span>
             }
             required
@@ -528,10 +530,10 @@ export default function AppearanceContent({
             onClick={onBack}
             disabled={loading}
           >
-            Back
+            {t('common.back')}
           </Button>
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? "Saving..." : "Save & Continue"}
+            {loading ? t('account.buttons.saving') : t('common.saveAndContinue')}
           </Button>
         </div>
       </AccountSection>

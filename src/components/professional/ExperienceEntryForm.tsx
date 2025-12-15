@@ -14,7 +14,6 @@ interface ExperienceEntryFormProps {
 
 export default function ExperienceEntryForm({ entry, onChange, onRemove, disabled = false }: ExperienceEntryFormProps) {
   const { t, locale } = useI18n();
-  const isRTL = locale === 'ar';
 
   const update = (patch: Partial<ExperienceEntry>) => {
     const next = { ...entry, ...patch };
@@ -37,7 +36,7 @@ export default function ExperienceEntryForm({ entry, onChange, onRemove, disable
 
   return (
     <div className="border-2 border-gray-200 dark:border-white/10 rounded-xl p-6 bg-white dark:bg-white/5 space-y-6">
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${isRTL ? 'text-right' : ''}`}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             {t('account.experience.fields.title') || 'Title'} <span className="text-red-500">*</span>

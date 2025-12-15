@@ -48,15 +48,14 @@ export default function TalentCard({ talent }: TalentCardProps) {
             <div className="absolute inset-0 bg-linear-to-br from-[#c49a47]/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             
             {/* Top Badge */}
-            <div className="absolute left-3 top-3">
+            <div className="absolute start-3 top-3">
               <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>
                 {primaryProfession}
               </AccentTag>
             </div>
-
             {/* Social Reach Badge */}
             {totalFollowers > 0 && (
-              <div className="absolute right-3 top-3">
+              <div className="absolute end-3 top-3">
                 <div className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                   <TrendingUp className="h-3 w-3" />
                   {totalFollowers > 1000000 
@@ -69,7 +68,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
             )}
             
             {/* Bottom Info Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="absolute bottom-0 start-0 end-0 p-4">
               <div className="space-y-2">
                 <h3 className="text-xl font-bold text-white drop-shadow-lg">
                   {profile.first_name} {profile.last_name}

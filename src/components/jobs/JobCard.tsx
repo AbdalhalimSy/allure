@@ -56,7 +56,7 @@ export default function JobCard({ job }: JobCardProps) {
       
       {/* Status Badge */}
       {isExpiringSoon && (
-        <div className="absolute right-4 top-6 flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+        <div className="absolute end-4 top-6 flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
           <Clock className="h-3 w-3" />
           {t("jobCard.expiringSoon")}
         </div>

@@ -166,7 +166,7 @@ export default function HeroSection() {
                       className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/5 dark:bg-white/5"
                     >
                       {/* Icon Background Gradient */}
-                      <div className={`absolute -right-4 -top-4 h-20 w-20 rounded-full bg-linear-to-br ${stat.color} opacity-10 blur-2xl transition-opacity group-hover:opacity-20`} />
+                      <div className={`absolute -end-4 -top-4 h-20 w-20 rounded-full bg-linear-to-br ${stat.color} opacity-10 blur-2xl transition-opacity group-hover:opacity-20`} />
                       
                       <div className="relative">
                         <IconComponent className={`mb-3 h-6 w-6 bg-linear-to-br ${stat.color} bg-clip-text text-transparent`} />

@@ -122,23 +122,23 @@ export default function JobFilterBar({
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search */}
           <div className="relative flex-1 min-w-0">
-            <Search className="pointer-events-none absolute left-3 sm:left-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
+            <Search className="pointer-events-none absolute start-3 sm:start-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
               placeholder={t("jobsFilter.searchPlaceholder")}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="h-10 sm:h-12 pl-10 sm:pl-12 pr-10 sm:pr-12 text-sm sm:text-base"
+              className="h-10 sm:h-12 ps-10 sm:ps-12 pe-10 sm:pe-12 text-sm sm:text-base"
             />
             {searchText && (
               <button
                 onClick={() => setSearchText("")}
-                className="absolute right-10 sm:right-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
               >
                 <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
             )}
             {(loadingResults || loadingLookups) && (
-              <div className="pointer-events-none absolute right-3 sm:right-4 top-1/2 -translate-y-1/2">
+              <div className="pointer-events-none absolute end-3 sm:end-4 top-1/2 -translate-y-1/2">
                 <Loader size="sm" variant="spinner" color="primary" />
               </div>
             )}

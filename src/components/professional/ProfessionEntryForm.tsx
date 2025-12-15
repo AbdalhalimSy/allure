@@ -24,7 +24,6 @@ export default function ProfessionEntryForm({
   disabled = false,
 }: ProfessionEntryFormProps) {
   const { t, locale } = useI18n();
-  const isRTL = locale === 'ar';
 
   const selectedProfession = professions.find(p => p.id === entry.professionId);
   const availableSubProfessions = selectedProfession?.sub_professions || [];
@@ -84,7 +83,7 @@ export default function ProfessionEntryForm({
   return (
     <div className="border-2 border-gray-200 dark:border-white/10 rounded-xl p-6 bg-white dark:bg-white/5 space-y-6">
       {/* Header */}
-      <div className={`flex items-start justify-between gap-4 pb-4 border-b border-gray-200 dark:border-gray-700 ${isRTL ? 'flex-row-reverse' : ''}`}>
+      <div className="flex items-start justify-between gap-4 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex-1">
           <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
             {professionLabel}
@@ -92,7 +91,7 @@ export default function ProfessionEntryForm({
           
           {/* Required Badges */}
           {(requiresPhoto || requiresVideo || requiresAudio || requiresLanguages || requiresSizes || requiresSocials) && (
-            <div className={`flex gap-2 flex-wrap mt-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="flex gap-2 flex-wrap mt-2">
               {requiresPhoto && (
                 <span className="inline-flex items-center gap-1.5 text-xs px-2 py-1 bg-[#c49a47]/10 dark:bg-[#c49a47]/20 text-[#c49a47] dark:text-[#e3c37b] rounded-full font-medium">
                   <TbCamera className="w-3.5 h-3.5" />

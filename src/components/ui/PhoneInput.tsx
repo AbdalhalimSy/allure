@@ -135,7 +135,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
     }, [isOpen]);
 
     return (
-      <div className="phone-input-container relative">
+      <div dir= "ltr" className="phone-input-container relative">
         <div className="relative flex">
           {/* Country Selector */}
           <button

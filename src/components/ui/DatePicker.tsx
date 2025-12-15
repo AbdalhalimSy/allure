@@ -30,7 +30,8 @@ export default function DatePicker({
   maxDate,
   className = "",
 }: DatePickerProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -188,7 +189,7 @@ export default function DatePicker({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex flex-1 items-center gap-2 px-4 py-3 text-left text-black dark:text-white"
+          className="flex flex-1 items-center gap-2 px-4 py-3 text-start text-black dark:text-white"
         >
           <Calendar className="h-4 w-4 text-[#c49a47]" />
           <span className={value ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400"}>
@@ -199,7 +200,7 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handleClear}
-            className="mr-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+            className="me-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
           >
             <X className="h-3 w-3" />
           </button>
@@ -208,7 +209,7 @@ export default function DatePicker({
 
       {/* Calendar Dropdown */}
       <div
-        className={`absolute left-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95 ${
+        className={`absolute start-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95 ${
           isOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none -translate-y-4 scale-95 opacity-0"
@@ -221,7 +222,7 @@ export default function DatePicker({
             onClick={handlePrevMonth}
             className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 dark:text-gray-200 dark:hover:bg-gray-800"
           >
-            <ChevronLeft className="h-5 w-5" />
+            {isRTL ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
           </button>
           
           <div className="text-center">
@@ -235,7 +236,7 @@ export default function DatePicker({
             onClick={handleNextMonth}
             className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 dark:text-gray-200 dark:hover:bg-gray-800"
           >
-            <ChevronRight className="h-5 w-5" />
+            {isRTL ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
           </button>
         </div>
 

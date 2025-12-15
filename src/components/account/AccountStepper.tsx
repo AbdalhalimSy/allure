@@ -25,21 +25,20 @@ export default function AccountStepper({
   progressStep,
 }: AccountStepperProps) {
   const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
 
   // Map progress_step to the maximum accessible step index
   const getMaxAccessibleStep = (): number => {
     if (!progressStep) return currentStep;
-    
+
     const stepMap: Record<string, number> = {
-      "basic": 0,
-      "appearance": 1,
-      "profession": 2,
-      "experience": 3,
-      "portfolio": 4,
-      "complete_all": 4,
+      basic: 0,
+      appearance: 1,
+      profession: 2,
+      experience: 3,
+      portfolio: 4,
+      complete_all: 4,
     };
-    
+
     return stepMap[progressStep] ?? currentStep;
   };
 
@@ -61,12 +60,10 @@ export default function AccountStepper({
       <div className="relative">
         {/* Progress Line */}
         <div
-          className={`absolute top-5 ${
-            isRTL ? "right-0" : "left-0"
-          } h-0.5 bg-gray-200 dark:bg-gray-700`}
+          className="absolute top-5 h-0.5 bg-gray-200 dark:bg-gray-700"
           style={{
             width: `calc(100% - ${100 / steps.length}%)`,
-            [isRTL ? "right" : "left"]: `${50 / steps.length}%`,
+            insetInlineStart: `${50 / steps.length}%`,
           }}
         >
           <div
@@ -78,11 +75,7 @@ export default function AccountStepper({
         </div>
 
         {/* Steps */}
-        <div
-          className={`relative flex ${
-            isRTL ? "flex-row-reverse" : ""
-          } justify-between`}
-        >
+        <div className="relative flex  justify-between">
           {steps.map((step, index) => {
             const accessible = isStepAccessible(index);
             const completed = isStepCompleted(index);

@@ -72,21 +72,21 @@ function SortableItem({ item, onChange, onRemove, isFeaturedDisabled }: Sortable
           <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">No preview</div>
         )}
         {item.featured_image && (
-          <div className="absolute top-2 left-2 flex items-center gap-1 bg-[#c49a47] text-white text-xs px-2 py-1 rounded shadow-lg">
+          <div className="absolute top-2 start-2 flex items-center gap-1 bg-[#c49a47] text-white text-xs px-2 py-1 rounded shadow-lg">
             <TbStarFilled size={14} /> <span>{t('portfolio.featured') || 'Featured'}</span>
           </div>
         )}
         {item.approval_status === "pending" && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 bg-yellow-500 text-white text-xs px-2 py-1 rounded shadow-lg">
+          <div className="absolute top-2 end-2 flex items-center gap-1 bg-yellow-500 text-white text-xs px-2 py-1 rounded shadow-lg">
             <TbClock size={14} /> <span>{t('portfolio.pending') || 'Pending'}</span>
           </div>
         )}
         {item.approval_status === "approved" && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 bg-green-600 text-white text-xs px-2 py-1 rounded shadow-lg">
+          <div className="absolute top-2 end-2 flex items-center gap-1 bg-green-600 text-white text-xs px-2 py-1 rounded shadow-lg">
             <TbCheck size={14} /> <span>{t('portfolio.approved') || 'Approved'}</span>
           </div>
         )}
-        <div className="absolute bottom-2 right-2 opacity-80 pointer-events-none">
+        <div className="absolute bottom-2 end-2 opacity-80 pointer-events-none">
           <TbGripVertical size={22} className="text-[#c49a47] drop-shadow" />
         </div>
       </div>
@@ -260,7 +260,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           maxSize={100 * 1024 * 1024} // 100MB limit
           value={selectedFiles}
           onChange={handleFilesChange}
-          description="Click to select or drag & drop files (images/videos up to 100MB)"
+           description={t('account.upload.selectFiles') || 'Click to select or drag & drop files (images/videos up to 100MB)'}
         />
       </div>
       {/* Validation errors */}
@@ -331,7 +331,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             {t("common.back") || "Back"}
           </Button>
           <Button variant="secondary" onClick={loadInitial} disabled={saving}>
-            <TbRefresh className="mr-1" /> {t('portfolio.reset') || 'Reset'}
+            <TbRefresh className="me-1" /> {t('portfolio.reset') || 'Reset'}
           </Button>
         </div>
         <Button variant="primary" disabled={saving || !items.length} onClick={handleSync}>

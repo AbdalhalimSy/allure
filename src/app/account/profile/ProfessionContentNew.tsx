@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
-import { TbPlus } from 'react-icons/tb';
-import AccountSection from '@/components/account/AccountSection';
-import Button from '@/components/ui/Button';
-import Loader from '@/components/ui/Loader';
-import ProfessionEntryForm from '@/components/professional/ProfessionEntryForm';
-import { useAuth } from '@/contexts/AuthContext';
-import { Profession, ProfessionEntry } from '@/types/profession';
-import { useI18n } from '@/contexts/I18nContext';
-import apiClient from '@/lib/api/client';
-import { syncProfessions, fetchSavedProfessions } from '@/lib/api/professions';
+import { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { TbPlus } from "react-icons/tb";
+import AccountSection from "@/components/account/AccountSection";
+import Button from "@/components/ui/Button";
+import Loader from "@/components/ui/Loader";
+import ProfessionEntryForm from "@/components/professional/ProfessionEntryForm";
+import { useAuth } from "@/contexts/AuthContext";
+import { Profession, ProfessionEntry } from "@/types/profession";
+import { useI18n } from "@/contexts/I18nContext";
+import apiClient from "@/lib/api/client";
+import { syncProfessions, fetchSavedProfessions } from "@/lib/api/professions";
 
 interface ProfessionContentProps {
   onNext: () => void;
@@ -24,8 +24,7 @@ export default function ProfessionContent({
 }: ProfessionContentProps) {
   const { fetchProfile } = useAuth();
   const { t, locale } = useI18n();
-  const isRTL = locale === 'ar';
-  
+
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [entries, setEntries] = useState<ProfessionEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +35,7 @@ export default function ProfessionContent({
     const fetchData = async () => {
       try {
         // Fetch profession types
-        const professionsResponse = await apiClient.get('/lookups/professions');
+        const professionsResponse = await apiClient.get("/lookups/professions");
         const professionsData = Array.isArray(professionsResponse.data)
           ? professionsResponse.data
           : professionsResponse.data?.data || [];
@@ -49,12 +48,14 @@ export default function ProfessionContent({
             setEntries(savedEntries);
           }
         } catch (error) {
-          console.error('Failed to fetch saved professions:', error);
+          console.error("Failed to fetch saved professions:", error);
           // Not a critical error, user can still add new professions
         }
       } catch (error) {
-        console.error('Failed to fetch professions:', error);
-        toast.error(t('account.profession.errors.load') || 'Failed to load professions');
+        console.error("Failed to fetch professions:", error);
+        toast.error(
+          t("account.profession.errors.load") || "Failed to load professions"
+        );
       } finally {
         setLoading(false);
       }
@@ -85,31 +86,46 @@ export default function ProfessionContent({
 
   const validateEntries = (): boolean => {
     if (entries.length === 0) {
-      toast.error(t('account.profession.errors.selectProfession') || 'Please add at least one profession');
+      toast.error(
+        t("account.profession.errors.selectProfession") ||
+          "Please add at least one profession"
+      );
       return false;
     }
 
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
-      const profession = professions.find(p => p.id === entry.professionId);
-      
+      const profession = professions.find((p) => p.id === entry.professionId);
+
       if (!profession) {
         toast.error(`Invalid profession selected for entry ${i + 1}`);
         return false;
       }
 
       const subProfession = entry.subProfessionId
-        ? profession.sub_professions.find(sp => sp.id === entry.subProfessionId)
+        ? profession.sub_professions.find(
+            (sp) => sp.id === entry.subProfessionId
+          )
         : null;
 
-      const label = subProfession ? `${profession.name} - ${subProfession.name}` : profession.name;
+      const label = subProfession
+        ? `${profession.name} - ${subProfession.name}`
+        : profession.name;
 
-  // Combine requirements from both profession and sub-profession (additive)
-  const requiresPhoto = Boolean(profession.requires_photo || subProfession?.requires_photo);
-  const requiresVideo = Boolean(profession.requires_video || subProfession?.requires_video);
-  const requiresAudio = Boolean(profession.requires_audio || subProfession?.requires_audio);
-  const requiresLanguages = Boolean(profession.requires_languages || subProfession?.requires_languages);
-  const requiresSizes = Boolean(subProfession?.requires_sizes);
+      // Combine requirements from both profession and sub-profession (additive)
+      const requiresPhoto = Boolean(
+        profession.requires_photo || subProfession?.requires_photo
+      );
+      const requiresVideo = Boolean(
+        profession.requires_video || subProfession?.requires_video
+      );
+      const requiresAudio = Boolean(
+        profession.requires_audio || subProfession?.requires_audio
+      );
+      const requiresLanguages = Boolean(
+        profession.requires_languages || subProfession?.requires_languages
+      );
+      const requiresSizes = Boolean(subProfession?.requires_sizes);
 
       // Validate required media
       if (requiresPhoto && !entry.photo) {
@@ -132,7 +148,7 @@ export default function ProfessionContent({
         return false;
       }
 
-          if (requiresSizes && entry.socials.length === 0) {
+      if (requiresSizes && entry.socials.length === 0) {
         toast.error(`At least one social media link is required for ${label}`);
         return false;
       }
@@ -149,17 +165,20 @@ export default function ProfessionContent({
     setSaving(true);
     try {
       await syncProfessions(entries);
-      toast.success(t('account.profession.success') || 'Professions saved successfully!');
+      toast.success(
+        t("account.profession.success") || "Professions saved successfully!"
+      );
       await fetchProfile();
       onNext();
     } catch (error: unknown) {
-      console.error('Failed to save professions:', error);
+      console.error("Failed to save professions:", error);
       const errorMessage =
         typeof error === "object" && error !== null && "response" in error
-          ? ((error as { response?: { data?: { message?: string } } }).response?.data?.message ||
-            t('account.profession.errors.save') ||
-            'Failed to save professions')
-          : t('account.profession.errors.save') || 'Failed to save professions';
+          ? (error as { response?: { data?: { message?: string } } }).response
+              ?.data?.message ||
+            t("account.profession.errors.save") ||
+            "Failed to save professions"
+          : t("account.profession.errors.save") || "Failed to save professions";
       toast.error(errorMessage);
     } finally {
       setSaving(false);
@@ -172,7 +191,7 @@ export default function ProfessionContent({
         size="xl"
         variant="spinner"
         color="primary"
-        text={t('common.loading') || 'Loading...'}
+        text={t("common.loading") || "Loading..."}
         center
       />
     );
@@ -180,8 +199,11 @@ export default function ProfessionContent({
 
   return (
     <AccountSection
-      title={t('account.profession.title') || 'Professional Information'}
-      description={t('account.profession.description') || 'Add your professions and showcase your talents'}
+      title={t("account.profession.title") || "Professional Information"}
+      description={
+        t("account.profession.description") ||
+        "Add your professions and showcase your talents"
+      }
     >
       <div className="space-y-6">
         {/* Profession Entries */}
@@ -201,7 +223,7 @@ export default function ProfessionContent({
           type="button"
           onClick={handleAddEntry}
           disabled={saving || professions.length === 0}
-          className={`
+          className="
             w-full border-2 border-dashed border-gray-300 dark:border-white/20
             rounded-xl p-6 text-center
             hover:border-[#c49a47] dark:hover:border-[#c49a47]
@@ -209,8 +231,7 @@ export default function ProfessionContent({
             transition-all duration-200
             disabled:opacity-50 disabled:cursor-not-allowed
             group
-            ${isRTL ? 'text-right' : ''}
-          `}
+          "
         >
           <div className="flex flex-col items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-[#c49a47]/10 dark:bg-[#c49a47]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -218,32 +239,33 @@ export default function ProfessionContent({
             </div>
             <div>
               <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {t('account.profession.addEntry') || 'Add Another Profession'}
+                {t("account.profession.addEntry") || "Add Another Profession"}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {t('account.profession.addEntryDesc') || 'Showcase multiple talents and skills'}
+                {t("account.profession.addEntryDesc") ||
+                  "Showcase multiple talents and skills"}
               </p>
             </div>
           </div>
         </button>
 
         {/* Action Buttons */}
-        <div className={`flex justify-between gap-3 border-t border-gray-200 dark:border-white/10 pt-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <Button 
-            type="button" 
-            variant="secondary" 
-            onClick={onBack} 
+        <div className="flex justify-between gap-3 border-t border-gray-200 dark:border-white/10 pt-6">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onBack}
             disabled={saving}
           >
-            {t('common.back') || 'Back'}
+            {t("common.back") || "Back"}
           </Button>
-          <Button 
-            onClick={handleSave} 
+          <Button
+            onClick={handleSave}
             disabled={saving || entries.length === 0}
           >
-            {saving 
-              ? (t('common.saving') || 'Saving...') 
-              : (t('common.saveAndContinue') || 'Save & Continue')}
+            {saving
+              ? t("common.saving") || "Saving..."
+              : t("common.saveAndContinue") || "Save & Continue"}
           </Button>
         </div>
       </div>

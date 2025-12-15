@@ -26,7 +26,7 @@ export function PackageCard({
   return (
     <div
       onClick={() => onSelect(pkg.id)}
-      className={`group relative cursor-pointer rounded-2xl p-[2px] transition-all duration-300 ${
+      className={`group relative cursor-pointer rounded-2xl p-0.5 transition-all duration-300 ${
         isSelected
           ? 'bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#e6c678] shadow-xl'
           : 'bg-linear-to-r from-gray-200 via-gray-100 to-gray-50 hover:from-[#c49a47]/40 hover:via-[#d4a855]/40 hover:to-[#e6c678]/40'
@@ -40,7 +40,7 @@ export function PackageCard({
         }`}
       >
         {isSelected && (
-          <div className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/40">
+          <div className="absolute -end-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/40">
             <Check className="h-5 w-5" />
           </div>
         )}

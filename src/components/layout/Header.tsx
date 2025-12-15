@@ -229,7 +229,7 @@ export default function Header() {
                             key={profile.id}
                             onClick={() => handleSwitchProfile(profile.id)}
                             disabled={isSwitchingProfile}
-                            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-102 dark:hover:bg-white/10 disabled:opacity-50"
+                            className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-start text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-102 dark:hover:bg-white/10 disabled:opacity-50"
                           >
                             <Image
                               src={profile.featured_image_url}
@@ -378,7 +378,7 @@ export default function Header() {
                         setMobileMenuOpen(false);
                       }}
                       disabled={isSwitchingProfile}
-                      className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-[1.02] active:scale-100 dark:hover:bg-white/10 disabled:opacity-50"
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-start text-sm transition-all duration-200 ease-in-out hover:bg-white hover:scale-[1.02] active:scale-100 dark:hover:bg-white/10 disabled:opacity-50"
                     >
                       <Image
                         src={profile.featured_image_url}

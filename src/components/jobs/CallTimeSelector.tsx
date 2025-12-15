@@ -90,7 +90,7 @@ export default function CallTimeSelector({
               {formatDate(group.date)}
             </div>
 
-            <div className="space-y-2 pl-6">
+            <div className="space-y-2 ps-6">
               {group.slots.map((slot) => {
                 const availableCount = getAvailableCount(slot);
                 const totalCount = getTotalCount(slot);
@@ -112,7 +112,7 @@ export default function CallTimeSelector({
                         setExpandedSlotId(isExpanded ? null : slot.id)
                       }
                       disabled={!hasAvailability}
-                      className={`flex w-full items-center justify-between p-4 text-left transition-colors ${
+                      className={`flex w-full items-center justify-between p-4 text-start transition-colors ${
                         !hasAvailability
                           ? "cursor-not-allowed opacity-60"
                           : ""
@@ -125,8 +125,8 @@ export default function CallTimeSelector({
                             {formatTime(slot.start_time)} - {formatTime(slot.end_time)}
                             {/* Show selected time if this slot is selected */}
                             {selectedSlotId === slot.id && selectedTime && (
-                              <span className="ml-2 inline-flex items-center rounded bg-[#c49a47]/10 px-2 py-0.5 text-xs font-semibold text-[#c49a47] border border-[#c49a47]/30">
-                                <Clock className="mr-1 h-3 w-3 text-[#c49a47]" />
+                              <span className="ms-2 inline-flex items-center rounded bg-[#c49a47]/10 px-2 py-0.5 text-xs font-semibold text-[#c49a47] border border-[#c49a47]/30">
+                                <Clock className="me-1 h-3 w-3 text-[#c49a47]" />
                                 {selectedTime}
                               </span>
                             )}

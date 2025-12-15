@@ -16,7 +16,7 @@ function AccordionItem({ question, answer, isOpen, onToggle }: AccordionItemProp
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-start justify-between gap-4 py-6 text-left transition-colors hover:text-[#c49a47] dark:hover:text-[#d4a855]"
+        className="flex w-full items-start justify-between gap-4 py-6 text-start transition-colors hover:text-[#c49a47] dark:hover:text-[#d4a855]"
       >
         <span className="text-lg font-medium text-gray-900 dark:text-white">{question}</span>
         <ChevronDown

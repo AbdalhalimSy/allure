@@ -27,7 +27,6 @@ export default function AccountLayout({
   const pathname = usePathname();
   const { user } = useAuth();
   const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
 
   const isActive = (id: string) => {
     return (
@@ -47,7 +46,7 @@ export default function AccountLayout({
   return (
     <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
       <div className={`mb-8 text-start`}>
-        <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+        <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {t("account.title")}
           </h1>
@@ -92,24 +91,16 @@ export default function AccountLayout({
                     active
                       ? "bg-[#c49a47] text-white"
                       : "text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-white/5"
-                  } ${isRTL ? "flex-row-reverse" : ""}`}
+                  }`}
                 >
-                  <div
-                    className={`flex items-center gap-3 ${
-                      isRTL ? "flex-row-reverse" : ""
-                    }`}
-                  >
+                  <div className="flex items-center gap-3">
                     <span className="flex h-6 w-6 items-center justify-center text-lg">
                       {item.icon}
                     </span>
                     <span>{label}</span>
                   </div>
                   {item.completion !== undefined && (
-                    <div
-                      className={`flex items-center ${
-                        isRTL ? "order-first" : ""
-                      }`}
-                    >
+                    <div className="flex items-center">
                       {item.completion === 100 ? (
                         <div
                           className={`flex h-6 w-6 items-center justify-center rounded-full ${

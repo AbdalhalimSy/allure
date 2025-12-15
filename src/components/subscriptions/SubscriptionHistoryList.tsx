@@ -90,7 +90,7 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
             </div>
 
             {subscription.is_active && subscription.days_remaining !== undefined && (
-              <div className="text-right">
+              <div className="text-end">
                 <div className="rounded-lg bg-white px-4 py-2 shadow-sm">
                   <p className="text-2xl font-bold text-primary">
                     {subscription.days_remaining}

@@ -8,47 +8,49 @@ import AccountField from "@/components/account/AccountField";
 import PasswordInput from "@/components/ui/PasswordInput";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 import { getAccountNavItems } from "@/lib/utils/accountNavItems";
 
 export default function SecurityPage() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
 
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
         <div className="space-y-8">
-          <AccountSection title="Change Password" description="Update your password regularly to keep your account secure">
+          <AccountSection title={t('account.security.password.title')} description={t('account.security.password.description')}>
             <div className="space-y-6">
-              <AccountField label="Current Password" required>
-                <PasswordInput placeholder="Enter current password" />
+              <AccountField label={t('account.security.password.fields.current')} required>
+                <PasswordInput placeholder={t('account.security.password.placeholders.current')} />
               </AccountField>
-              <AccountField label="New Password" required>
-                <PasswordInput placeholder="Enter new password" />
+              <AccountField label={t('account.security.password.fields.new')} required>
+                <PasswordInput placeholder={t('account.security.password.placeholders.new')} />
               </AccountField>
-              <AccountField label="Confirm New Password" required>
-                <PasswordInput placeholder="Confirm new password" />
+              <AccountField label={t('account.security.password.fields.confirm')} required>
+                <PasswordInput placeholder={t('account.security.password.placeholders.confirm')} />
               </AccountField>
               <div className="flex justify-end">
-                <Button variant="primary">Update Password</Button>
+                <Button variant="primary">{t('account.security.password.update')}</Button>
               </div>
             </div>
           </AccountSection>
 
-          <AccountSection title="Two-Factor Authentication" description="Add an extra layer of security to your account">
+          <AccountSection title={t('account.security.twoFactor.title')} description={t('account.security.twoFactor.description')}>
             <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Authenticator App</h3>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Not enabled</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t('account.security.twoFactor.method')}</h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{t('account.security.twoFactor.status')}</p>
               </div>
-              <Button variant="secondary">Enable</Button>
+              <Button variant="secondary">{t('account.security.twoFactor.enable')}</Button>
             </div>
           </AccountSection>
 
-          <AccountSection title="Active Sessions" description="Manage devices where you're currently logged in">
+          <AccountSection title={t('account.security.sessions.title')} description={t('account.security.sessions.description')}>
             {[
-              { device: "Chrome on MacOS", location: "Los Angeles, CA", active: true },
-              { device: "Safari on iPhone", location: "Los Angeles, CA", active: false },
+              { device: t('account.security.sessions.mac'), location: t('account.security.sessions.location'), active: true },
+              { device: t('account.security.sessions.iphone'), location: t('account.security.sessions.location'), active: false },
             ].map((session, idx) => (
               <div key={idx} className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
                 <div className="flex items-center gap-4">
@@ -60,20 +62,20 @@ export default function SecurityPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white">{session.device}</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{session.location}</p>
-                    {session.active && <span className="mt-1 inline-block text-xs font-medium text-emerald-600">Active now</span>}
+                    {session.active && <span className="mt-1 inline-block text-xs font-medium text-emerald-600">{t('account.security.sessions.active')}</span>}
                   </div>
                 </div>
-                <Button variant="secondary" className="text-sm">Revoke</Button>
+                <Button variant="secondary" className="text-sm">{t('account.security.sessions.revoke')}</Button>
               </div>
             ))}
           </AccountSection>
 
-          <AccountSection title="Privacy Settings">
+          <AccountSection title={t('account.security.privacy.title')}>
             <div className="space-y-4">
               {[
-                { label: "Show profile in search results", checked: true },
-                { label: "Allow others to see my email", checked: false },
-                { label: "Show my activity status", checked: true },
+                { label: t('account.security.privacy.search'), checked: true },
+                { label: t('account.security.privacy.email'), checked: false },
+                { label: t('account.security.privacy.status'), checked: true },
               ].map((setting, idx) => (
                 <label key={idx} className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
                   <span className="text-sm font-medium text-gray-900 dark:text-white">{setting.label}</span>
