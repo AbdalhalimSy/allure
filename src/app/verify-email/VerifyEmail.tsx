@@ -29,7 +29,6 @@ export default function VerifyEmail() {
 
   return (
     <AuthShell
-      badge={t("auth.accountVerification") || "Account Verification"}
       title={t("auth.verifyEmail") || "Verify your email"}
       description={
         t("auth.verifyEmailDescription") ||

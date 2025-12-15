@@ -9,15 +9,17 @@ import AuthShell from "@/components/layout/AuthShell";
 import { useI18n } from "@/contexts/I18nContext";
 import apiClient, { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { toast } from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { isAxiosError } from "axios";
+import { getErrorMessage, isEmailVerificationError } from "@/lib/utils/errorHandling";
+import { useAuthRedirect } from "@/hooks/useAuthPatterns";
 
 export default function LoginPage() {
   const { t } = useI18n();
   const router = useRouter();
-  const { setUser, isAuthenticated, hydrated, fetchProfile } = useAuth();
+  const { setUser, fetchProfile } = useAuth();
+  const { hydrated, isAuthenticated } = useAuthRedirect();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +31,7 @@ export default function LoginPage() {
       const { data } = await apiClient.post("/auth/login", { email, password });
       
       // Check if email verification is required
-      if (data?.status === "error" && data?.message?.toLowerCase().includes("verify your email")) {
+      if (data?.status === "error" && isEmailVerificationError(data?.message)) {
         toast.error(data.message || "Please verify your email before logging in.");
         // Redirect to verify-email page with email and password
         router.push(`/verify-email?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
@@ -71,14 +73,10 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.error("Login failed", err);
-      const errData = isAxiosError(err) ? err.response?.data : null;
-      const message =
-        (errData as { message?: string; error?: string } | null)?.message ||
-        (errData as { message?: string; error?: string } | null)?.error ||
-        "Unauthorized";
+      const message = getErrorMessage(err, "Unauthorized");
       
       // Check if the error is about email verification
-      if (message?.toLowerCase().includes("verify your email")) {
+      if (isEmailVerificationError(err)) {
         toast.error(message);
         router.push(`/verify-email?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
       } else {
@@ -88,13 +86,6 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
-
-  // If already authenticated (and hydration complete), redirect away
-  useEffect(() => {
-    if (hydrated && isAuthenticated) {
-      router.replace("/");
-    }
-  }, [hydrated, isAuthenticated, router]);
 
   if (!hydrated) {
     return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
@@ -107,7 +98,6 @@ export default function LoginPage() {
 
   return (
     <AuthShell
-      badge={t("auth.login")}
       title={t("auth.login")}
       description={t("hero.subtitle")}
       icon="↻"
@@ -122,7 +112,7 @@ export default function LoginPage() {
           <Input
             id="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder={t('forms.youExampleCom') || "you@example.com"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -135,7 +125,7 @@ export default function LoginPage() {
           </Label>
           <PasswordInput
             id="password"
-            placeholder="••••••••"
+            placeholder={t('forms.password') || "••••••••"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

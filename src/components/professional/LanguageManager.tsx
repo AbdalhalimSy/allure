@@ -97,7 +97,7 @@ export default function LanguageManager({
                 }
                 disabled={disabled}
                 className="p-1 hover:bg-white/20 rounded transition-colors disabled:opacity-50"
-                title="Add voice sample"
+                title={t('forms.addVoiceSample') || "Add voice sample"}
               >
                 <TbMicrophone className="w-3.5 h-3.5" />
               </button>

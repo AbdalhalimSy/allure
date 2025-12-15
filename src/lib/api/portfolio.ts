@@ -37,10 +37,6 @@ const buildSyncFormData = (profileId: number | string, items: PortfolioItem[]): 
   items.forEach((item, index) => {
     const priority = Math.min(Math.max(index, 0), 100); // clamp 0-100
     formData.append(`portfolio[${index}][priority]`, priority.toString());
-    formData.append(`portfolio[${index}][featured_image]`, item.featured_image ? '1' : '0');
-    formData.append(`portfolio[${index}][media_type]`, item.media_type);
-    formData.append(`portfolio[${index}][title]`, item.title || '');
-    formData.append(`portfolio[${index}][description]`, item.description || '');
     if (item.id) {
       formData.append(`portfolio[${index}][id]`, item.id.toString());
     }
@@ -59,22 +55,12 @@ const buildSyncFormData = (profileId: number | string, items: PortfolioItem[]): 
  */
 export const validatePortfolioItems = (items: PortfolioItem[]): string[] => {
   const errors: string[] = [];
-  const featuredCount = items.filter(i => i.featured_image).length;
-  if (featuredCount > 1) {
-    errors.push('Only one item can be marked as featured.');
-  }
   items.forEach((item, idx) => {
     if (!item.id && !item.file) {
       errors.push(`New item at position ${idx + 1} is missing file.`);
     }
     if (item.file && item.file.size > 100 * 1024 * 1024) {
       errors.push(`File ${item.file.name} exceeds 100MB limit.`);
-    }
-    if (item.title.length > 200) {
-      errors.push(`Title too long (max 200 chars) at item ${idx + 1}.`);
-    }
-    if (item.description.length > 2000) {
-      errors.push(`Description too long (max 2000 chars) at item ${idx + 1}.`);
     }
   });
   return errors;

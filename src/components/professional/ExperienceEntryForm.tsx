@@ -1,6 +1,7 @@
 "use client";
 
 import Input from '@/components/ui/Input';
+import TextArea from '@/components/ui/TextArea';
 import FileUploader from '@/components/ui/FileUploader';
 import { useI18n } from '@/contexts/I18nContext';
 import { ExperienceEntry } from '@/types/experience';
@@ -53,7 +54,7 @@ export default function ExperienceEntryForm({ entry, onChange, onRemove, disable
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             {t('account.experience.fields.startYear') || 'Start Year'}
           </label>
-          <Input type="number" value={entry.start_year ?? ''} onChange={handleStartYearChange} disabled={disabled} placeholder="YYYY" />
+          <Input type="number" value={entry.start_year ?? ''} onChange={handleStartYearChange} disabled={disabled} placeholder={t('forms.yyyy') || "YYYY"} />
         </div>
         <div>
           <div className="flex items-center justify-between mb-2">
@@ -65,14 +66,13 @@ export default function ExperienceEntryForm({ entry, onChange, onRemove, disable
               <span>{t('account.experience.fields.current') || 'Current'}</span>
             </label>
           </div>
-          <Input type="number" value={entry.is_current ? '' : (entry.end_year ?? '')} onChange={handleEndYearChange} disabled={disabled || entry.is_current} placeholder="YYYY" />
+          <Input type="number" value={entry.is_current ? '' : (entry.end_year ?? '')} onChange={handleEndYearChange} disabled={disabled || entry.is_current} placeholder={t('forms.yyyy') || "YYYY"} />
         </div>
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             {t('account.experience.fields.description') || 'Description'}
           </label>
-          <textarea
-            className="w-full rounded-lg border bg-white px-4 py-3 text-black transition-all focus:outline-none focus:ring-0 focus:ring-opacity-40 dark:bg-black dark:text-white border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47] dark:border-gray-700"
+          <TextArea
             rows={4}
             value={entry.description || ''}
             onChange={(e) => update({ description: e.target.value })}

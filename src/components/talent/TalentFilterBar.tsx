@@ -36,7 +36,7 @@ interface LookupOption {
 }
 
 export default function TalentFilterBar({ value, onChange, onReset, loadingResults = false }: Props) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [local, setLocal] = useState<TalentFilters>(value);
   const [showAdvanced, setShowAdvanced] = useState(false);
   // Debounced search text separate from filters to avoid refetch on every keystroke
@@ -151,7 +151,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           <div className="relative flex-1 min-w-0">
             <Search className="pointer-events-none absolute start-3 sm:start-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
-              placeholder="Search talents..."
+              placeholder={t('filters.searchTalents') || "Search talents..."}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               className="h-10 sm:h-12 ps-10 sm:ps-12 pe-10 sm:pe-12 text-sm sm:text-base"
@@ -196,7 +196,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             className="flex items-center gap-1 sm:gap-2 shrink-0 px-3 sm:px-4"
           >
             <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="hidden sm:inline">Filters</span>
+            <span className="hidden sm:inline">{t('filters.filters') || 'Filters'}</span>
             {activeFiltersCount > 0 && (
               <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#c49a47] text-[10px] sm:text-xs font-semibold text-white">
                 {activeFiltersCount}
@@ -220,7 +220,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                 className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>Reset</span>
+                <span>{t('filters.reset') || 'Reset'}</span>
               </Button>
               {/* Mobile Reset Icon Only */}
               <Button
@@ -250,63 +250,59 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             {/* Demographics Section */}
             <div className="relative z-40 space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Demographics</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.demographics') || 'Demographics'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {/* Age Range */}
                 <div className="space-y-2">
-                  <Label>Age Range</Label>
+                  <Label>{t('filters.ageRange') || 'Age Range'}</Label>
                   <div className="flex gap-2">
-                    <input
+                    <Input
                       type="number"
-                      placeholder="Min"
+                      placeholder={t('filters.min') || 'Min'}
                       value={local.min_age || ""}
                       onChange={(e) => update({ min_age: e.target.value ? Number(e.target.value) : undefined })}
                       min="0"
                       max="100"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
                     />
-                    <input
+                    <Input
                       type="number"
-                      placeholder="Max"
+                      placeholder={t('filters.max') || 'Max'}
                       value={local.max_age || ""}
                       onChange={(e) => update({ max_age: e.target.value ? Number(e.target.value) : undefined })}
                       min="0"
                       max="100"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
                     />
                   </div>
                 </div>
 
                 {/* Height Range */}
                 <div className="space-y-2">
-                  <Label>Height (cm)</Label>
+                  <Label>{t('filters.heightCm') || 'Height (cm)'}</Label>
                   <div className="flex gap-2">
-                    <input
+                    <Input
                       type="number"
-                      placeholder="Min"
+                      placeholder={t('filters.min') || 'Min'}
                       value={local.min_height || ""}
                       onChange={(e) => update({ min_height: e.target.value ? Number(e.target.value) : undefined })}
                       min="0"
                       max="250"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
                     />
-                    <input
+                    <Input
                       type="number"
-                      placeholder="Max"
+                      placeholder={t('filters.max') || 'Max'}
                       value={local.max_height || ""}
                       onChange={(e) => update({ max_height: e.target.value ? Number(e.target.value) : undefined })}
                       min="0"
                       max="250"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black transition-all focus:outline-none focus:border-[#c49a47] focus:ring-0 dark:bg-black dark:text-white dark:border-gray-700"
                     />
                   </div>
                 </div>
 
                 {/* Sort */}
                 <div className="space-y-2">
-                  <Label>Sort By</Label>
+                  <Label>{t('filters.sortBy') || 'Sort By'}</Label>
                   <div className="flex gap-2">
                     <SingleSelect
                       searchable={false}
@@ -340,13 +336,13 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             {/* Professional Section */}
             <div className="relative z-30 space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Professional</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.professional') || 'Professional'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
                 {/* Professions */}
                 <div className="space-y-2">
-                  <Label>Professions</Label>
+                  <Label>{t('filters.professions') || 'Professions'}</Label>
                   <MultiSelect
                     options={professions}
                     value={
@@ -355,14 +351,14 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ profession_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select professions..."
+                    placeholder={t('filters.selectProfessions') || "Select professions..."}
                     loading={loadingLookups}
                   />
                 </div>
 
                 {/* Ethnicities */}
                 <div className="space-y-2">
-                  <Label>Ethnicities</Label>
+                  <Label>{t('filters.ethnicities') || 'Ethnicities'}</Label>
                   <MultiSelect
                     options={ethnicities}
                     value={
@@ -371,7 +367,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ ethnicity_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select ethnicities..."
+                    placeholder={t('filters.selectEthnicities') || "Select ethnicities..."}
                     loading={loadingLookups}
                   />
                 </div>
@@ -381,13 +377,13 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             {/* Location Section */}
             <div className="relative z-20 space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Location & Origin</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.locationOrigin') || 'Location & Origin'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
                 {/* Countries */}
                 <div className="space-y-2">
-                  <Label>Countries</Label>
+                  <Label>{t('filters.countries') || 'Countries'}</Label>
                   <MultiSelect
                     options={countries}
                     value={
@@ -396,14 +392,14 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ country_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select countries..."
+                    placeholder={t('filters.selectCountries') || "Select countries..."}
                     loading={loadingLookups}
                   />
                 </div>
 
                 {/* Nationalities */}
                 <div className="space-y-2">
-                  <Label>Nationalities</Label>
+                  <Label>{t('filters.nationalities') || 'Nationalities'}</Label>
                   <MultiSelect
                     options={nationalities}
                     value={
@@ -412,7 +408,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ nationality_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select nationalities..."
+                    placeholder={t('filters.selectNationalities') || "Select nationalities..."}
                     loading={loadingLookups}
                   />
                 </div>
@@ -422,13 +418,13 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             {/* Appearance Section */}
             <div className="relative z-10 space-y-4">
               <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Appearance</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.appearance') || 'Appearance'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
                 {/* Hair Colors */}
                 <div className="space-y-2">
-                  <Label>Hair Colors</Label>
+                  <Label>{t('filters.hairColors') || 'Hair Colors'}</Label>
                   <MultiSelect
                     options={hairColors}
                     value={
@@ -437,14 +433,14 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ hair_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select hair colors..."
+                    placeholder={t('filters.selectHairColors') || "Select hair colors..."}
                     loading={loadingLookups}
                   />
                 </div>
 
                 {/* Eye Colors */}
                 <div className="space-y-2">
-                  <Label>Eye Colors</Label>
+                  <Label>{t('filters.eyeColors') || 'Eye Colors'}</Label>
                   <MultiSelect
                     options={eyeColors}
                     value={
@@ -453,7 +449,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         : []
                     }
                     onChange={(ids) => update({ eye_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder="Select eye colors..."
+                    placeholder={t('filters.selectEyeColors') || "Select eye colors..."}
                     loading={loadingLookups}
                   />
                 </div>

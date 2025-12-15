@@ -270,7 +270,7 @@ export default function JobApplicationModal({
             type="text"
             value={responses[condition.id] || ""}
             onChange={(e) => handleInputChange(condition.id, e.target.value)}
-            placeholder="Enter your answer"
+            placeholder={t('forms.enterYourAnswer') || "Enter your answer"}
           />
         );
 
@@ -280,7 +280,7 @@ export default function JobApplicationModal({
             value={responses[condition.id] || ""}
             onChange={(e) => handleInputChange(condition.id, e.target.value)}
             rows={4}
-            placeholder="Enter your answer"
+            placeholder={t('forms.enterYourAnswer') || "Enter your answer"}
           />
         );
 

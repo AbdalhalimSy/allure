@@ -12,7 +12,7 @@ import { PortfolioItem } from "@/types/portfolio";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, rectSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { TbStarFilled, TbClock, TbCheck, TbGripVertical, TbTrash, TbUpload, TbRefresh } from "react-icons/tb";
+import { TbClock, TbCheck, TbGripVertical, TbTrash, TbUpload, TbRefresh } from "react-icons/tb";
 import Image from "next/image";
 
 interface PortfolioContentProps {
@@ -21,12 +21,11 @@ interface PortfolioContentProps {
 
 interface SortableItemProps {
   item: PortfolioItem;
-  onChange: (item: PortfolioItem) => void;
+  index: number;
   onRemove: (id?: number, tempKey?: string) => void;
-  isFeaturedDisabled: boolean;
 }
 
-function SortableItem({ item, onChange, onRemove, isFeaturedDisabled }: SortableItemProps) {
+function SortableItem({ item, index, onRemove }: SortableItemProps) {
   const { t } = useI18n();
   const {
     attributes,
@@ -42,17 +41,15 @@ function SortableItem({ item, onChange, onRemove, isFeaturedDisabled }: Sortable
     transition,
     opacity: isDragging ? 0.5 : 1,
   };
-
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="group relative overflow-hidden rounded-lg border border-gray-200 bg-linear-to-br from-gray-100 to-gray-200 dark:border-white/10 dark:from-white/5 dark:to-white/10"
+      className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-white/10 dark:bg-white/5"
     >
-      <div {...attributes} {...listeners} className="relative aspect-4/3 overflow-hidden cursor-move">
+      <div className="relative aspect-4/3 overflow-hidden">
         {item.file_url ? (
-          // Existing or preview image/video
-          item.media_type.startsWith("video") ? (
+          item.media_type?.startsWith("video") ? (
             <video src={item.file_url} className="h-full w-full object-cover" controls />
           ) : (
             <div className="relative h-full w-full">
@@ -67,69 +64,36 @@ function SortableItem({ item, onChange, onRemove, isFeaturedDisabled }: Sortable
             </div>
           )
         ) : item.file ? (
-          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">New file pending upload</div>
+              <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">{t('forms.newFilePendingUpload') || 'New file pending upload'}</div>
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">No preview</div>
+          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">{t('forms.noPreview') || 'No preview'}</div>
         )}
-        {item.featured_image && (
-          <div className="absolute top-2 start-2 flex items-center gap-1 bg-[#c49a47] text-white text-xs px-2 py-1 rounded shadow-lg">
-            <TbStarFilled size={14} /> <span>{t('portfolio.featured') || 'Featured'}</span>
-          </div>
-        )}
+
+        {/* Status badge */}
         {item.approval_status === "pending" && (
-          <div className="absolute top-2 end-2 flex items-center gap-1 bg-yellow-500 text-white text-xs px-2 py-1 rounded shadow-lg">
+          <div className="absolute top-2 start-2 flex items-center gap-1 bg-yellow-500/90 text-white text-xs px-2 py-1 rounded shadow">
             <TbClock size={14} /> <span>{t('portfolio.pending') || 'Pending'}</span>
           </div>
         )}
         {item.approval_status === "approved" && (
-          <div className="absolute top-2 end-2 flex items-center gap-1 bg-green-600 text-white text-xs px-2 py-1 rounded shadow-lg">
+          <div className="absolute top-2 start-2 flex items-center gap-1 bg-green-600/90 text-white text-xs px-2 py-1 rounded shadow">
             <TbCheck size={14} /> <span>{t('portfolio.approved') || 'Approved'}</span>
           </div>
         )}
-        <div className="absolute bottom-2 end-2 opacity-80 pointer-events-none">
+
+        {/* Order indicator */}
+        <div className="absolute top-2 end-2 rounded bg-black/60 px-2 py-0.5 text-xs text-white">#{index + 1}</div>
+
+        {/* Drag handle and remove button */}
+        <button
+          type="button"
+          onClick={() => onRemove(item.id, item.tempKey)}
+          className="absolute bottom-2 start-2 inline-flex items-center gap-1 rounded bg-rose-600/90 px-2 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100"
+        >
+          <TbTrash size={14} /> {t('common.remove') || 'Remove'}
+        </button>
+        <div {...attributes} {...listeners} className="absolute bottom-2 end-2 cursor-move opacity-80">
           <TbGripVertical size={22} className="text-[#c49a47] drop-shadow" />
-        </div>
-      </div>
-      {/* Inline editing controls */}
-      <div className="space-y-2 p-3 bg-white dark:bg-black border-t border-gray-200 dark:border-white/10">
-        <input
-          type="text"
-          placeholder={t('portfolio.titlePlaceholder') || 'Title'}
-          value={item.title}
-          onChange={(e) => onChange({ ...item, title: e.target.value })}
-          className="w-full rounded border border-gray-300 dark:border-white/20 bg-white/90 dark:bg-white/5 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#c49a47]"
-        />
-        <textarea
-          placeholder={t('portfolio.descriptionPlaceholder') || 'Description'}
-          value={item.description}
-          onChange={(e) => onChange({ ...item, description: e.target.value })}
-          rows={2}
-          className="w-full rounded border border-gray-300 dark:border-white/20 bg-white/90 dark:bg-white/5 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#c49a47] resize-none"
-        />
-        <div className="flex items-center justify-between gap-2">
-          <label className="flex items-center gap-2 text-xs font-medium text-gray-700 dark:text-gray-300">
-            <input
-              type="checkbox"
-              checked={item.featured_image}
-              onChange={() => {
-                if (item.featured_image) {
-                  onChange({ ...item, featured_image: false });
-                } else if (!isFeaturedDisabled) {
-                  onChange({ ...item, featured_image: true });
-                } else {
-                  toast.error(t('portfolio.onlyOneFeatured') || 'Only one item can be featured');
-                }
-              }}
-            />
-            <span>{t('portfolio.featured') || 'Featured'}</span>
-          </label>
-          <button
-            type="button"
-            onClick={() => onRemove(item.id, item.tempKey)}
-            className="inline-flex items-center gap-1 rounded bg-rose-50 px-2 py-1 text-xs font-medium text-rose-600 hover:bg-rose-100 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50"
-          >
-            <TbTrash size={14} /> {t('common.remove') || 'Remove'}
-          </button>
         </div>
       </div>
     </div>
@@ -153,15 +117,9 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     setLoading(true);
     try {
       const data = await fetchPortfolio();
-      // Ensure each existing item has editing defaults
-      setItems(
-        data.map((d) => ({
-          ...d,
-          title: d.title || "",
-          description: d.description || "",
-          priority: d.priority ?? 0,
-        }))
-      );
+      // Sort by priority ascending to maintain expected order
+      const sorted = [...data].sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
+      setItems(sorted.map(d => ({ ...d, priority: d.priority ?? 0 })));
     } catch {
       toast.error(t('portfolio.loadFailed') || 'Failed to load portfolio');
     } finally {
@@ -207,15 +165,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     setItems(prev => prev.filter(i => (i.id ?? i.tempKey) !== (id ?? tempKey)));
   };
 
-  const updateItem = (updated: PortfolioItem) => {
-    setItems(prev => prev.map(i => (i.id === updated.id ? updated : i.tempKey && i.tempKey === updated.tempKey ? updated : i)));
-  };
-
-  const enforceSingleFeatured = (newItems: PortfolioItem[]) => {
-    const firstFeaturedIndex = newItems.findIndex(i => i.featured_image);
-    if (firstFeaturedIndex === -1) return newItems;
-    return newItems.map((i, idx) => ({ ...i, featured_image: idx === firstFeaturedIndex }));
-  };
+  // Simplified UI: no inline editing or featured flag
 
   const handleSync = async () => {
     setSaving(true);
@@ -227,8 +177,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
   toast.error(t('portfolio.validationErrors') || 'Validation errors');
       return;
     }
-    // Enforce single featured before send
-    const normalized = enforceSingleFeatured(items).map((i, idx) => ({ ...i, priority: idx }));
+    const normalized = items.map((i, idx) => ({ ...i, priority: idx }));
     const result = await syncPortfolio(normalized);
     setSaving(false);
     if (result.success) {
@@ -289,13 +238,12 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             strategy={rectSortingStrategy}
           >
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((item) => (
+              {items.map((item, idx) => (
                 <SortableItem
                   key={item.id ?? item.tempKey!}
                   item={item}
-                  onChange={updateItem}
+                  index={idx}
                   onRemove={removeItem}
-                  isFeaturedDisabled={!item.featured_image && items.some(i => i.featured_image)}
                 />
               ))}
             </div>

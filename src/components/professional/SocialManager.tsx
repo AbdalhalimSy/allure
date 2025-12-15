@@ -140,7 +140,7 @@ export default function SocialManager({
                 <div className="flex-1">
                   <Input
                     type="url"
-                    placeholder="https://..."
+                    placeholder={t('forms.https') || "https://..."}
                     value={social.url}
                     onChange={(e) => handleUpdate(index, "url", e.target.value)}
                     disabled={disabled}

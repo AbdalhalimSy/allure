@@ -170,7 +170,7 @@ export default function CallTimeSelector({
 
                     {isExpanded && hasAvailability && (
                       <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-                        <Label>Select Time</Label>
+                        <Label>{t('forms.selectTime') || "Select Time"}</Label>
                         <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
                           {slot.available_times?.map((availableTime) => {
                             const isSelected =

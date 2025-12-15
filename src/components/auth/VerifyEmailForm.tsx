@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 import OTPInput from "@/components/ui/OTPInput";
 import apiClient, { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { getErrorMessage } from "@/lib/utils/errorHandling";
 
 interface VerifyEmailFormProps {
   email: string;
@@ -31,14 +32,6 @@ export default function VerifyEmailForm({
   const [otp, setOtp] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
-
-  const getErrorMessage = (error: unknown, fallback: string) => {
-    if (typeof error === "object" && error !== null && "response" in error) {
-      const responseData = (error as { response?: { data?: { message?: string } } }).response?.data;
-      if (responseData?.message) return responseData.message;
-    }
-    return error instanceof Error ? error.message : fallback;
-  };
 
   const handleResendOtp = async (): Promise<void> => {
     if (!email) {

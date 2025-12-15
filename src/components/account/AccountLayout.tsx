@@ -116,7 +116,7 @@ export default function AccountLayout({
                         </div>
                       ) : (
                         <div
-                          className={`flex h-6 min-w-[2.5rem] items-center justify-center rounded-full px-2 text-xs font-semibold ${
+                          className={`flex h-6 min-w-10 items-center justify-center rounded-full px-2 text-xs font-semibold ${
                             active
                               ? "bg-white/20 text-white"
                               : "bg-[#c49a47]/10 text-[#c49a47] dark:bg-[#c49a47]/20"

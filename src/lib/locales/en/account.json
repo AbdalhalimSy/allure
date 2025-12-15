@@ -498,5 +498,15 @@
     "featured": "Featured",
     "pending": "Pending",
     "approved": "Approved"
+  },
+  "basicInformation": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "johnExample": "John",
+    "doeExample": "Doe",
+    "emailExample": "john.doe@example.com",
+    "phoneExample": "123-4567"
   }
 }

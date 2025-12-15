@@ -1,22 +1,19 @@
 import { ReactNode } from "react";
 import SurfaceCard, { SurfaceCardAccent } from "@/components/ui/SurfaceCard";
-import AccentTag from "@/components/ui/AccentTag";
 
 type AuthShellProps = {
   title: string;
   description?: ReactNode;
   children: ReactNode;
-  badge?: string;
   footer?: ReactNode;
   accent?: SurfaceCardAccent;
   icon?: ReactNode;
-};
 
+};
 export default function AuthShell({
   title,
   description,
   children,
-  badge,
   footer,
   accent = "gold",
   icon,
@@ -35,11 +32,6 @@ export default function AuthShell({
           className="text-center"
         >
           <div className="space-y-6">
-            {badge && (
-              <div className="flex justify-center">
-                <AccentTag>{badge}</AccentTag>
-              </div>
-            )}
             {icon && (
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-[#c49a47]/15 text-3xl text-[#c49a47] shadow-inner">
                 {icon}

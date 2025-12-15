@@ -13,25 +13,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import apiClient from "@/lib/api/client";
 import { toast } from "react-hot-toast";
-
-interface Nationality {
-  id: number;
-  code: string;
-  name: string;
-}
-
-interface Ethnicity {
-  id: number;
-  code: string;
-  name: string;
-}
-
-interface Country {
-  id: number;
-  name: string;
-  iso_alpha_2: string;
-  iso_alpha_3: string;
-}
+import { useLookupData } from "@/hooks/useLookupData";
+import { getErrorMessage } from "@/lib/utils/errorHandling";
 
 interface BasicInformationContentProps {
   onNext: () => void;
@@ -55,12 +38,14 @@ export default function BasicInformationContent({
   onNext,
 }: BasicInformationContentProps) {
   const { user, fetchProfile } = useAuth();
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
+  const { data: lookupData, loading: loadingLookups } = useLookupData({
+    fetchNationalities: true,
+    fetchEthnicities: true,
+    fetchCountries: true,
+    showError: true,
+  });
   const [loading, setLoading] = useState(false);
-  const [nationalities, setNationalities] = useState<Nationality[]>([]);
-  const [ethnicities, setEthnicities] = useState<Ethnicity[]>([]);
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [loadingLookups, setLoadingLookups] = useState(true);
   const [formData, setFormData] = useState<BasicInfoFormState>({
     profile_id: 0,
     first_name: "",
@@ -75,36 +60,10 @@ export default function BasicInformationContent({
     differentWhatsApp: false,
   });
 
-  useEffect(() => {
-    const fetchLookups = async () => {
-      try {
-        setLoadingLookups(true);
-        const [nationalitiesRes, ethnicitiesRes, countriesRes] =
-          await Promise.all([
-            apiClient.get(`/lookups/nationalities?lang=${locale}`),
-            apiClient.get(`/lookups/ethnicities?lang=${locale}`),
-            apiClient.get(`/lookups/countries?lang=${locale}`),
-          ]);
-
-        if (nationalitiesRes.data.status === "success") {
-          setNationalities(nationalitiesRes.data.data);
-        }
-        if (ethnicitiesRes.data.status === "success") {
-          setEthnicities(ethnicitiesRes.data.data);
-        }
-        if (countriesRes.data.status === "success") {
-          setCountries(countriesRes.data.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch lookups:", error);
-        toast.error("Failed to load form options");
-      } finally {
-        setLoadingLookups(false);
-      }
-    };
-
-    fetchLookups();
-  }, [locale]);
+  // Extract countries from lookupData
+  const nationalities = lookupData.nationalities || [];
+  const ethnicities = lookupData.ethnicities || [];
+  const countries = lookupData.countries || [];
 
   useEffect(() => {
     const profile = user?.profile;
@@ -231,11 +190,7 @@ export default function BasicInformationContent({
         onNext();
       }
     } catch (error: unknown) {
-      const message =
-        typeof error === "object" && error !== null && "response" in error
-          ? ((error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.message ??
-            (error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.error)
-          : null;
+      const message = getErrorMessage(error, t('account.basic.errors.saveFailed'));
       toast.error(message || t('account.basic.errors.saveFailed'));
     } finally {
       setLoading(false);
@@ -252,7 +207,7 @@ export default function BasicInformationContent({
           <AccountField label={t('account.basic.fields.firstName')} required>
             <Input
               name="first_name"
-              placeholder="John"
+              placeholder={t('basicInformation.johnExample') || "John"}
               value={formData.first_name}
               onChange={handleChange}
               required
@@ -262,7 +217,7 @@ export default function BasicInformationContent({
           <AccountField label={t('account.basic.fields.lastName')} required>
             <Input
               name="last_name"
-              placeholder="Doe"
+              placeholder={t('basicInformation.doeExample') || "Doe"}
               value={formData.last_name}
               onChange={handleChange}
               required
@@ -276,7 +231,7 @@ export default function BasicInformationContent({
           >
             <Input
               type="email"
-              placeholder="john.doe@example.com"
+              placeholder={t('basicInformation.emailExample') || "john.doe@example.com"}
               value={user?.email || ""}
               disabled
             />
@@ -285,7 +240,7 @@ export default function BasicInformationContent({
           <AccountField label={t('account.basic.fields.mobile')} required>
             <PhoneInput
               name="mobile"
-              placeholder="123-4567"
+              placeholder={t('basicInformation.phoneExample') || "123-4567"}
               value={formData.mobile}
               onChange={(value) => handlePhoneChange(value, "mobile")}
               required

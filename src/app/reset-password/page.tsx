@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { isAxiosError } from "axios";
 import { KeyRound } from "lucide-react";
 import Input from "@/components/ui/Input";
 import PasswordInput from "@/components/ui/PasswordInput";
@@ -12,13 +11,14 @@ import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
 import { useI18n } from "@/contexts/I18nContext";
-import { useAuth } from "@/contexts/AuthContext";
 import apiClient from "@/lib/api/client";
+import { getErrorMessage } from "@/lib/utils/errorHandling";
+import { useAuthRedirect } from "@/hooks/useAuthPatterns";
 
 function ResetPasswordContent() {
   const { t } = useI18n();
-  const { isAuthenticated, hydrated } = useAuth();
   const router = useRouter();
+  useAuthRedirect(); // Hook handles auth redirect internally
   const searchParams = useSearchParams();
   const emailParam = searchParams?.get("email") || "";
 
@@ -27,17 +27,6 @@ function ResetPasswordContent() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (hydrated && isAuthenticated) {
-      router.replace("/");
-    }
-  }, [hydrated, isAuthenticated, router]);
-
-  if (!hydrated) {
-    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
-  }
-  if (isAuthenticated) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,11 +56,7 @@ function ResetPasswordContent() {
       }
     } catch (err) {
       console.error("Reset password failed", err);
-      const errData = isAxiosError(err) ? err.response?.data : null;
-      const message =
-        (errData as { message?: string; error?: string } | null)?.message ||
-        (errData as { message?: string; error?: string } | null)?.error ||
-        "Failed to reset password";
+      const message = getErrorMessage(err, "Failed to reset password");
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -80,7 +65,6 @@ function ResetPasswordContent() {
 
   return (
     <AuthShell
-      badge={t("auth.accountRecovery")}
       title={t("auth.resetPassword") || "Reset Password"}
       description="Enter the code sent to your email and your new password"
       icon={<KeyRound className="h-8 w-8" />}
@@ -101,7 +85,7 @@ function ResetPasswordContent() {
           <Input
             id="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder={t('forms.youExampleCom') || "you@example.com"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -115,7 +99,7 @@ function ResetPasswordContent() {
           <Input
             id="code"
             type="text"
-            placeholder="Enter 6-digit code"
+            placeholder={t('forms.enter6DigitCode') || "Enter 6-digit code"}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             maxLength={6}
@@ -129,7 +113,7 @@ function ResetPasswordContent() {
           </Label>
           <PasswordInput
             id="password"
-            placeholder="••••••••"
+            placeholder={t('forms.password') || "••••••••"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -142,7 +126,7 @@ function ResetPasswordContent() {
           </Label>
           <PasswordInput
             id="password_confirmation"
-            placeholder="••••••••"
+            placeholder={t('forms.password') || "••••••••"}
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             required

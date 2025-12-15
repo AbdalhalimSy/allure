@@ -1,37 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { isAxiosError } from "axios";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
 import { useI18n } from "@/contexts/I18nContext";
-import { useAuth } from "@/contexts/AuthContext";
 import apiClient from "@/lib/api/client";
+import { getErrorMessage } from "@/lib/utils/errorHandling";
+import { useAuthRedirect } from "@/hooks/useAuthPatterns";
 
 export default function ForgotPasswordPage() {
   const { t } = useI18n();
-  const { isAuthenticated, hydrated } = useAuth();
   const router = useRouter();
+  const { hydrated, isAuthenticated } = useAuthRedirect();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<"form" | "success">("form");
   const isSuccess = mode === "success";
-
-  useEffect(() => {
-    if (hydrated && isAuthenticated) {
-      router.replace("/");
-    }
-  }, [hydrated, isAuthenticated, router]);
-
-  if (!hydrated) {
-    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
-  }
-  if (isAuthenticated) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,11 +41,7 @@ export default function ForgotPasswordPage() {
       }
     } catch (err) {
       console.error("Forgot password failed", err);
-      const errData = isAxiosError(err) ? err.response?.data : null;
-      const message =
-        (errData as { message?: string; error?: string } | null)?.message ||
-        (errData as { message?: string; error?: string } | null)?.error ||
-        "Failed to send reset code";
+      const message = getErrorMessage(err, "Failed to send reset code");
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -87,9 +72,13 @@ export default function ForgotPasswordPage() {
     </>
   );
 
+  if (!hydrated) {
+    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
+  }
+  if (isAuthenticated) return null;
+
   return (
     <AuthShell
-      badge={t("auth.accountRecovery")}
       title={isSuccess ? t("auth.checkYourInbox") : t("auth.forgotPassword")}
       description={description}
       icon={isSuccess ? "✓" : "?"}

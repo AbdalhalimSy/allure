@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { Tag, Loader2, CheckCircle, XCircle } from 'lucide-react';
+import Input from '@/components/ui/Input';
 import { validateCoupon } from '@/lib/api/subscriptions';
 import type { PricingDetails, Coupon } from '@/types/subscription';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface CouponInputProps {
   profileId: number;
@@ -18,6 +20,7 @@ export function CouponInput({
   onCouponApplied,
   onCouponRemoved,
 }: CouponInputProps) {
+  const { t } = useI18n();
   const [code, setCode] = useState('');
   const [isValidating, setIsValidating] = useState(false);
   const [error, setError] = useState('');
@@ -66,7 +69,7 @@ export function CouponInput({
           <div className="flex items-start gap-3">
             <CheckCircle className="mt-0.5 h-5 w-5 text-green-600" />
             <div>
-              <p className="font-semibold text-green-900">Coupon Applied!</p>
+              <p className="font-semibold text-green-900">{t('forms.couponApplied') || 'Coupon Applied!'}</p>
               <p className="mt-1 text-sm text-green-700">
                 Code: <span className="font-mono font-bold">{appliedCoupon.code}</span>
               </p>
@@ -98,17 +101,15 @@ export function CouponInput({
       </label>
       
       <div className="flex gap-2">
-        <div className="relative flex-1">
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            onKeyDown={(e) => e.key === 'Enter' && handleValidate()}
-            placeholder="Enter coupon code"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 font-mono text-sm uppercase focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            disabled={isValidating}
-          />
-        </div>
+        <Input
+          type="text"
+          value={code}
+          onChange={(e) => setCode(e.target.value.toUpperCase())}
+          onKeyDown={(e) => e.key === 'Enter' && handleValidate()}
+          placeholder={t('forms.enterCouponCode') || "Enter coupon code"}
+          disabled={isValidating}
+          className="font-mono text-sm uppercase"
+        />
         
         <button
           onClick={handleValidate}

@@ -156,7 +156,7 @@ export default function ProfessionEntryForm({
             value={entry.professionId || null}
             onChange={(value) => handleProfessionChange(Number(value))}
             disabled={disabled}
-            placeholder="Select profession..."
+            placeholder={t('forms.selectProfession') || "Select profession..."}
             searchable={true}
           />
         </div>
@@ -177,7 +177,7 @@ export default function ProfessionEntryForm({
               value={entry.subProfessionId || ''}
               onChange={(value) => handleSubProfessionChange(value ? Number(value) : null)}
               disabled={disabled}
-              placeholder="Select sub-profession..."
+              placeholder={t('forms.selectSubProfession') || "Select sub-profession..."}
               searchable={true}
             />
           </div>

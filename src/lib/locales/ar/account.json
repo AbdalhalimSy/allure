@@ -498,5 +498,15 @@
     "featured": "مميزة",
     "pending": "قيد الانتظار",
     "approved": "موافق عليه"
+  },
+  "basicInformation": {
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "johnExample": "جون",
+    "doeExample": "دو",
+    "emailExample": "john.doe@example.com",
+    "phoneExample": "123-4567"
   }
 }

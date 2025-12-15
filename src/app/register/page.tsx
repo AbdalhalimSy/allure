@@ -150,7 +150,6 @@ export default function RegisterPage() {
 
   return (
     <AuthShell
-      badge={t("auth.register")}
       title={step === 1 ? (t("auth.register") || "Create account") : (t("auth.verifyEmail") || "Verify your email")}
       description={
         step === 1

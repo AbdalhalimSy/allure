@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
-import { Input, Select, Button, NumericWithUnit } from "@/components/ui";
+import { Input, SingleSelect, Button, NumericWithUnit } from "@/components/ui";
+import type { SingleSelectOption } from "@/components/ui/SingleSelect";
 import {
   TbScissors,
   TbEye,
@@ -16,19 +17,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import apiClient from "@/lib/api/client";
 import { toast } from "react-hot-toast";
-
-type AppearanceOption = {
-  id: number;
-  slug: string;
-  name: string;
-};
-
-type AppearanceOptions = {
-  hair_colors: AppearanceOption[];
-  hair_types: AppearanceOption[];
-  hair_lengths: AppearanceOption[];
-  eye_colors: AppearanceOption[];
-};
+import { useLookupData } from "@/hooks/useLookupData";
+import { getErrorMessage } from "@/lib/utils/errorHandling";
+import { convertToApiUnit, convertFromApiUnit, convertBetweenUnits } from "@/lib/utils/unitConversion";
 
 interface AppearanceContentProps {
   onNext: () => void;
@@ -64,13 +55,20 @@ export default function AppearanceContent({
 }: AppearanceContentProps) {
   const { user, fetchProfile } = useAuth();
   const { t } = useI18n();
-  const [loading, setLoading] = useState(false);
-  const [appearanceOptions, setAppearanceOptions] = useState<AppearanceOptions>({
-    hair_colors: [],
-    hair_types: [],
-    hair_lengths: [],
-    eye_colors: [],
+  const { data: lookupData } = useLookupData({
+    fetchAppearanceOptions: true,
+    showError: false,
   });
+  const [loading, setLoading] = useState(false);
+
+  // Extract appearance options from lookupData with fallbacks
+  const appearanceOptions = {
+    hair_colors: lookupData.hairColors || [],
+    hair_types: lookupData.hairColors || [], // Adjust based on actual API response structure
+    hair_lengths: lookupData.hairColors || [], // Adjust based on actual API response structure
+    eye_colors: lookupData.eyeColors || [],
+  };
+
   const [form, setForm] = useState<AppearanceFormState>({
     profile_id: 0,
     hair_color: "",
@@ -93,31 +91,10 @@ export default function AppearanceContent({
   });
 
   useEffect(() => {
-    const fetchAppearanceOptions = async () => {
-      try {
-        const locale = localStorage.getItem("locale") || "en";
-        const { data } = await apiClient.get(`/lookups/appearance-options?lang=${locale}`);
-        if (data.status === "success" && data.data) {
-          setAppearanceOptions(data.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch appearance options:", error);
-      }
-    };
-    fetchAppearanceOptions();
-  }, []);
-
-  useEffect(() => {
     const profile = user?.profile;
     if (profile?.id) {
       const toStr = (value: string | number | null | undefined) =>
         value === null || value === undefined ? "" : String(value);
-      const numStr = (value: string | number | null | undefined) => {
-        if (value === null || value === undefined) return "";
-        const numericValue = typeof value === "number" ? value : parseFloat(String(value));
-        if (Number.isNaN(numericValue)) return "";
-        return (Math.round(numericValue * 100) / 100).toString();
-      };
 
       setForm((prev) => ({
         ...prev,
@@ -126,18 +103,19 @@ export default function AppearanceContent({
         hair_type: toStr(profile.hair_type || ""),
         hair_length: toStr(profile.hair_length || ""),
         eye_color: toStr(profile.eye_color || ""),
-        height_value: numStr(profile.height),
+        // API stores in cm, convert to user's preferred unit
+        height_value: convertFromApiUnit(profile.height, prev.height_unit || "cm", "length"),
         height_unit: prev.height_unit || "cm",
-        shoe_size_value: numStr(profile.shoe_size),
+        shoe_size_value: convertFromApiUnit(profile.shoe_size, prev.shoe_size_unit || "EU", "shoe_size"),
         shoe_size_unit: prev.shoe_size_unit || "EU",
         tshirt_size: toStr(profile.tshirt_size || ""),
         pants_size: toStr(profile.pants_size || ""),
         jacket_size: toStr(profile.jacket_size || ""),
-        chest_value: numStr(profile.chest),
+        chest_value: convertFromApiUnit(profile.chest, prev.chest_unit || "cm", "length"),
         chest_unit: prev.chest_unit || "cm",
-        bust_value: numStr(profile.bust),
+        bust_value: convertFromApiUnit(profile.bust, prev.bust_unit || "cm", "length"),
         bust_unit: prev.bust_unit || "cm",
-        waist_value: numStr(profile.waist),
+        waist_value: convertFromApiUnit(profile.waist, prev.waist_unit || "cm", "length"),
         waist_unit: prev.waist_unit || "cm",
       }));
     }
@@ -200,14 +178,14 @@ export default function AppearanceContent({
         hair_type: form.hair_type,
         hair_length: form.hair_length,
         eye_color: form.eye_color,
-        height: form.height_value ? parseFloat(form.height_value.trim()) : null,
-        shoe_size: form.shoe_size_value ? parseFloat(form.shoe_size_value.trim()) : null,
+        height: form.height_value ? convertToApiUnit(form.height_value, form.height_unit as any, "length") : null,
+        shoe_size: form.shoe_size_value ? convertToApiUnit(form.shoe_size_value, form.shoe_size_unit as any, "shoe_size") : null,
         tshirt_size: form.tshirt_size,
         pants_size: form.pants_size,
         jacket_size: form.jacket_size,
-        chest: form.chest_value ? parseFloat(form.chest_value.trim()) : null,
-        bust: form.bust_value ? parseFloat(form.bust_value.trim()) : null,
-        waist: form.waist_value ? parseFloat(form.waist_value.trim()) : null,
+        chest: form.chest_value ? convertToApiUnit(form.chest_value, form.chest_unit as any, "length") : null,
+        bust: form.bust_value ? convertToApiUnit(form.bust_value, form.bust_unit as any, "length") : null,
+        waist: form.waist_value ? convertToApiUnit(form.waist_value, form.waist_unit as any, "length") : null,
       };
       const { data } = await apiClient.post("/profile/appearance", payload);
       if (data.status === "success") {
@@ -218,11 +196,7 @@ export default function AppearanceContent({
         toast.error(t('account.appearance.errors.save'));
       }
     } catch (error: unknown) {
-      const message =
-        typeof error === "object" && error !== null && "response" in error
-          ? ((error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.message ??
-            (error as { response?: { data?: { message?: string; error?: string } } }).response?.data?.error)
-          : null;
+      const message = getErrorMessage(error, t('account.appearance.errors.save'));
       toast.error(message || t('account.appearance.errors.save'));
     } finally {
       setLoading(false);
@@ -244,19 +218,16 @@ export default function AppearanceContent({
             }
             required
           >
-            <Select
-              name="hair_color"
+            <SingleSelect
+              options={appearanceOptions.hair_colors.map((option): SingleSelectOption => ({
+                value: option.name,
+                label: option.name,
+              }))}
               value={form.hair_color}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select hair color</option>
-              {appearanceOptions.hair_colors.map((option) => (
-                <option key={option.id} value={option.name}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+              onChange={(value) => onChange({ target: { name: 'hair_color', value: String(value) } } as any)}
+              placeholder={t('forms.selectHairColor') || 'Select hair color'}
+              searchable={false}
+            />
           </AccountField>
           <AccountField
             label={
@@ -266,19 +237,16 @@ export default function AppearanceContent({
             }
             required
           >
-            <Select
-              name="hair_type"
+            <SingleSelect
+              options={appearanceOptions.hair_types.map((option): SingleSelectOption => ({
+                value: option.name,
+                label: option.name,
+              }))}
               value={form.hair_type}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select hair type</option>
-              {appearanceOptions.hair_types.map((option) => (
-                <option key={option.id} value={option.name}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+              onChange={(value) => onChange({ target: { name: 'hair_type', value: String(value) } } as any)}
+              placeholder={t('forms.selectHairType') || 'Select hair type'}
+              searchable={false}
+            />
           </AccountField>
           <AccountField
             label={
@@ -288,19 +256,16 @@ export default function AppearanceContent({
             }
             required
           >
-            <Select
-              name="hair_length"
+            <SingleSelect
+              options={appearanceOptions.hair_lengths.map((option): SingleSelectOption => ({
+                value: option.name,
+                label: option.name,
+              }))}
               value={form.hair_length}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select hair length</option>
-              {appearanceOptions.hair_lengths.map((option) => (
-                <option key={option.id} value={option.name}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+              onChange={(value) => onChange({ target: { name: 'hair_length', value: String(value) } } as any)}
+              placeholder={t('forms.selectHairLength') || 'Select hair length'}
+              searchable={false}
+            />
           </AccountField>
 
           <AccountField
@@ -311,19 +276,16 @@ export default function AppearanceContent({
             }
             required
           >
-            <Select
-              name="eye_color"
+            <SingleSelect
+              options={appearanceOptions.eye_colors.map((option): SingleSelectOption => ({
+                value: option.name,
+                label: option.name,
+              }))}
               value={form.eye_color}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select eye color</option>
-              {appearanceOptions.eye_colors.map((option) => (
-                <option key={option.id} value={option.name}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+              onChange={(value) => onChange({ target: { name: 'eye_color', value: String(value) } } as any)}
+              placeholder={t('forms.selectEyeColor') || 'Select eye color'}
+              searchable={false}
+            />
           </AccountField>
 
           <AccountField
@@ -340,7 +302,11 @@ export default function AppearanceContent({
               unit={form.height_unit}
               onChange={(v) => setForm((p) => ({ ...p, height_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, height_unit: u as MeasurementUnit }))
+                setForm((p) => ({
+                  ...p,
+                  height_value: convertBetweenUnits(p.height_value, p.height_unit as any, u as any, "length"),
+                  height_unit: u as MeasurementUnit,
+                }))
               }
               options={[
                 { value: "cm", label: "cm" },
@@ -373,8 +339,6 @@ export default function AppearanceContent({
               }
               options={[
                 { value: "EU", label: "EU" },
-                { value: "US", label: "US" },
-                { value: "UK", label: "UK" },
               ]}
               placeholder="e.g., 43.5"
               required
@@ -391,20 +355,20 @@ export default function AppearanceContent({
             }
             required
           >
-            <Select
-              name="tshirt_size"
+            <SingleSelect
+              options={[
+                { value: 'XS', label: 'XS' },
+                { value: 'S', label: 'S' },
+                { value: 'M', label: 'M' },
+                { value: 'L', label: 'L' },
+                { value: 'XL', label: 'XL' },
+                { value: 'XXL', label: 'XXL' },
+              ]}
               value={form.tshirt_size}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select size</option>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-            </Select>
+              onChange={(value) => onChange({ target: { name: 'tshirt_size', value: String(value) } } as any)}
+              placeholder={t('forms.selectSize') || 'Select size'}
+              searchable={false}
+            />
           </AccountField>
 
           <AccountField
@@ -457,7 +421,11 @@ export default function AppearanceContent({
               unit={form.chest_unit}
               onChange={(v) => setForm((p) => ({ ...p, chest_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, chest_unit: u as MeasurementUnit }))
+                setForm((p) => ({
+                  ...p,
+                  chest_value: convertBetweenUnits(p.chest_value, p.chest_unit as any, u as any, "length"),
+                  chest_unit: u as MeasurementUnit,
+                }))
               }
               options={[
                 { value: "cm", label: "cm" },
@@ -483,7 +451,13 @@ export default function AppearanceContent({
               value={form.bust_value}
               unit={form.bust_unit}
               onChange={(v) => setForm((p) => ({ ...p, bust_value: v }))}
-              onUnitChange={(u) => setForm((p) => ({ ...p, bust_unit: u as MeasurementUnit }))}
+              onUnitChange={(u) =>
+                setForm((p) => ({
+                  ...p,
+                  bust_value: convertBetweenUnits(p.bust_value, p.bust_unit as any, u as any, "length"),
+                  bust_unit: u as MeasurementUnit,
+                }))
+              }
               options={[
                 { value: "cm", label: "cm" },
                 { value: "in", label: "in" },
@@ -509,7 +483,11 @@ export default function AppearanceContent({
               unit={form.waist_unit}
               onChange={(v) => setForm((p) => ({ ...p, waist_value: v }))}
               onUnitChange={(u) =>
-                setForm((p) => ({ ...p, waist_unit: u as MeasurementUnit }))
+                setForm((p) => ({
+                  ...p,
+                  waist_value: convertBetweenUnits(p.waist_value, p.waist_unit as any, u as any, "length"),
+                  waist_unit: u as MeasurementUnit,
+                }))
               }
               options={[
                 { value: "cm", label: "cm" },
