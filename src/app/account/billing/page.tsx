@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Loader2, ShoppingCart, Tag } from 'lucide-react';
+import { Loader2, ShoppingCart } from 'lucide-react';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import AccountLayout from '@/components/account/AccountLayout';
 import AccountSection from '@/components/account/AccountSection';

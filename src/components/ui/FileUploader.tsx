@@ -72,7 +72,7 @@ export default function FileUploader({
     return null;
   }, [accept, maxSize]);
 
-  const simulateUpload = useCallback((fileItem: FileItem, index: number) => {
+  const simulateUpload = useCallback((_fileItem: FileItem, index: number) => {
     // Simulate upload progress
     const interval = setInterval(() => {
       setFileItems(prev => {

@@ -25,7 +25,7 @@ export default function MediaUploader({
   disabled = false,
   maxSize = 50 * 1024 * 1024, // 50MB default
 }: MediaUploaderProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);

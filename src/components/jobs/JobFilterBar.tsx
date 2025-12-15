@@ -10,17 +10,14 @@ import Loader from "@/components/ui/Loader";
 import { JobFilters } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
 import apiClient from "@/lib/api/client";
+import { logger } from "@/lib/utils/logger";
 import {
   Search,
   SlidersHorizontal,
   X,
   ChevronDown,
   ChevronUp,
-  Briefcase,
   RotateCcw,
-  MapPin,
-  Palette,
-  Eye,
 } from "lucide-react";
 
 interface LookupOption {
@@ -71,7 +68,7 @@ export default function JobFilterBar({
         if (nationalitiesRes.data.status === "success")
           setNationalities(nationalitiesRes.data.data);
       } catch (error) {
-        console.error("❌ Failed to fetch job lookups", error);
+        logger.error("Failed to fetch job lookups", error);
       } finally {
         setLoadingLookups(false);
       }

@@ -33,7 +33,7 @@ export default function LanguageManager({
   onChange,
   disabled = false,
 }: LanguageManagerProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [showVoiceUpload, setShowVoiceUpload] = useState<number | null>(null);
 
   const availableLanguages = LANGUAGE_OPTIONS.filter(

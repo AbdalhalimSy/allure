@@ -5,17 +5,19 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import TalentCard from "@/components/talent/TalentCard";
 import Link from "next/link";
 import apiClient from "@/lib/api/client";
+import { logger } from "@/lib/utils/logger";
+import type { Talent } from "@/types/talent";
 
 export default function TalentsPreview() {
-  const [talents, setTalents] = useState<any[]>([]);
+  const [talents, setTalents] = useState<Talent[]>([]);
 
   useEffect(() => {
     const load = async () => {
       try {
         const res = await apiClient.get("/talents?per_page=8");
         if (res.data?.status === "success") setTalents(res.data.data || []);
-      } catch (e) {
-        console.error("Failed to load talents", e);
+      } catch (error) {
+        logger.error("Failed to load talents", error);
       }
     };
     load();

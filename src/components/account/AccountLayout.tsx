@@ -26,7 +26,7 @@ export default function AccountLayout({
 }: AccountLayoutProps) {
   const pathname = usePathname();
   const { user } = useAuth();
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const isActive = (id: string) => {
     return (

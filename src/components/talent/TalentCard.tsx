@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Talent } from "@/types/talent";
-import { MapPin, Ruler, Instagram, Sparkles, TrendingUp } from "lucide-react";
+import { MapPin, Ruler, Sparkles, TrendingUp } from "lucide-react";
 import AccentTag from "@/components/ui/AccentTag";
 
 // Re-export Talent type for convenience

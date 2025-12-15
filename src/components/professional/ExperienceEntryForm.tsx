@@ -13,7 +13,7 @@ interface ExperienceEntryFormProps {
 }
 
 export default function ExperienceEntryForm({ entry, onChange, onRemove, disabled = false }: ExperienceEntryFormProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const update = (patch: Partial<ExperienceEntry>) => {
     const next = { ...entry, ...patch };

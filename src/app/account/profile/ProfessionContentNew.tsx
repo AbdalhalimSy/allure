@@ -23,7 +23,7 @@ export default function ProfessionContent({
   onBack,
 }: ProfessionContentProps) {
   const { fetchProfile } = useAuth();
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [entries, setEntries] = useState<ProfessionEntry[]>([]);

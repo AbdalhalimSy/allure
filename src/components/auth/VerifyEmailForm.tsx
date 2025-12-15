@@ -40,9 +40,10 @@ export default function VerifyEmailForm({
     return error instanceof Error ? error.message : fallback;
   };
 
-  const handleResendOtp = async () => {
+  const handleResendOtp = async (): Promise<void> => {
     if (!email) {
-      return toast.error("Email is required");
+      toast.error("Email is required");
+      return;
     }
     try {
       setIsResending(true);
@@ -56,18 +57,20 @@ export default function VerifyEmailForm({
     }
   };
 
-  const submitOtp = async (code: string) => {
+  const submitOtp = async (code: string): Promise<void> => {
     // Prevent multiple simultaneous calls
     if (otpLoading) return;
 
     if (!code || code.length < 4) {
-      return toast.error(
+      toast.error(
         t("auth.enterValidOtp") ||
           "Enter the verification code from your email"
       );
+      return;
     }
     if (!email) {
-      return toast.error("Email is required");
+      toast.error("Email is required");
+      return;
     }
     try {
       setOtpLoading(true);

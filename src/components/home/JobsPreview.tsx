@@ -2,20 +2,11 @@
 
 import { useEffect, useState } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
-import SurfaceCard from "@/components/ui/SurfaceCard";
 import JobCard from "@/components/jobs/JobCard";
 import Link from "next/link";
 import apiClient from "@/lib/api/client";
-
-interface Job {
-  id: number;
-  title: string;
-  description: string;
-  roles_count?: number | null;
-  countries: string[];
-  professions: { name: string }[] | string[];
-  roles: any[];
-}
+import { logger } from "@/lib/utils/logger";
+import type { Job } from "@/types/job";
 
 export default function JobsPreview() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -25,8 +16,8 @@ export default function JobsPreview() {
       try {
         const res = await apiClient.get("/jobs?per_page=6");
         if (res.data?.status === "success") setJobs(res.data.data || []);
-      } catch (e) {
-        console.error("Failed to load jobs", e);
+      } catch (error) {
+        logger.error("Failed to load jobs", error);
       }
     };
     load();
@@ -41,7 +32,7 @@ export default function JobsPreview() {
       />
       <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
-          <JobCard key={job.id} job={job as any} />
+          <JobCard key={job.id} job={job} />
         ))}
       </div>
       <div className="mt-8 text-center">

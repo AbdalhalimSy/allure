@@ -6,7 +6,6 @@ import { useI18n } from "@/contexts/I18nContext";
 import Image from "next/image";
 import Loader from "@/components/ui/Loader";
 import AccentTag from "@/components/ui/AccentTag";
-import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Talent, TalentsResponse } from "@/types/talent";
 import {
   ArrowLeft,
@@ -18,17 +17,11 @@ import {
   Youtube,
   Facebook,
   Music2,
-  Phone,
-  Mail,
   Briefcase,
-  Award,
   Palette,
-  Eye,
   AlertCircle,
   Globe,
   Sparkles,
-  TrendingUp,
-  Hash,
   PlayCircle,
   Users,
   X,

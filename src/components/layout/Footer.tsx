@@ -7,7 +7,7 @@ const CURRENT_YEAR = new Intl.DateTimeFormat("en", {
 }).format(new Date());
 
 export default function Footer() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const socialLinks = [
     {
       name: "Instagram",

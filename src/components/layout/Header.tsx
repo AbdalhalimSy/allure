@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "react-hot-toast";
 import { ChevronRight, Check, Menu, X } from "lucide-react";
+import { logger } from "@/lib/utils/logger";
 
 export default function Header() {
   const { t } = useI18n();
@@ -80,7 +81,7 @@ export default function Header() {
       setOpen(false);
       router.refresh();
     } catch (error) {
-      console.error("Failed to switch profile:", error);
+      logger.error("Failed to switch profile", error);
       toast.error(t("profile.switchFailed") || "Failed to switch profile");
     } finally {
       setIsSwitchingProfile(false);

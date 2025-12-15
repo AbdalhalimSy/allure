@@ -66,7 +66,7 @@ export default function SocialManager({
   disabled = false,
   required = false,
 }: SocialManagerProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const handleAdd = () => {
     onChange([

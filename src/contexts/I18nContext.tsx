@@ -1,13 +1,13 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
-import enCommon from '@/locales/en/common.json';
-import enHome from '@/locales/en/home.json';
-import enAccount from '@/locales/en/account.json';
-import enJobs from '@/locales/en/jobs.json';
-import arCommon from '@/locales/ar/common.json';
-import arHome from '@/locales/ar/home.json';
-import arAccount from '@/locales/ar/account.json';
-import arJobs from '@/locales/ar/jobs.json';
+import enCommon from '@/lib/locales/en/common.json';
+import enHome from '@/lib/locales/en/home.json';
+import enAccount from '@/lib/locales/en/account.json';
+import enJobs from '@/lib/locales/en/jobs.json';
+import arCommon from '@/lib/locales/ar/common.json';
+import arHome from '@/lib/locales/ar/home.json';
+import arAccount from '@/lib/locales/ar/account.json';
+import arJobs from '@/lib/locales/ar/jobs.json';
 
 type Locale = 'en' | 'ar';
 

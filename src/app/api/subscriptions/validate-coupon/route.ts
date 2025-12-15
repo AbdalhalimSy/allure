@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthApiHeaders } from '@/lib/api/headers';
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://allureportal.sawatech.ae/api';
+import { env } from '@/lib/config/env';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const token = authHeader.replace('Bearer ', '');
     const body = await request.json();
 
-    const res = await fetch(`${BACKEND_URL}/subscriptions/validate-coupon`, {
+    const res = await fetch(`${env.apiBaseUrl}/subscriptions/validate-coupon`, {
       method: 'POST',
       headers: getAuthApiHeaders(request, token),
       body: JSON.stringify(body),
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const data = await res.json();
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
-    console.error('Error validating coupon:', error);
+    logger.error('Error validating coupon', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

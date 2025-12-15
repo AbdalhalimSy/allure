@@ -9,15 +9,6 @@ interface JobCardProps {
   job: Job;
 }
 
-const gradients = [
-  "from-rose-500 via-pink-500 to-fuchsia-500",
-  "from-cyan-500 via-blue-500 to-indigo-500",
-  "from-emerald-500 via-teal-500 to-cyan-500",
-  "from-orange-500 via-amber-500 to-yellow-500",
-  "from-violet-500 via-purple-500 to-fuchsia-500",
-  "from-red-500 via-rose-500 to-pink-500",
-];
-
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", { 
@@ -29,7 +20,6 @@ const formatDate = (dateString: string) => {
 
 export default function JobCard({ job }: JobCardProps) {
   const { t } = useI18n();
-  const gradient = gradients[job.id % gradients.length];
   const daysUntilExpiry = Math.ceil(
     (new Date(job.expiration_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
   );

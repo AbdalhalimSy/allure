@@ -10,7 +10,7 @@ interface PaymentHistoryTableProps {
 }
 
 export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTableProps) {
-  const getPaymentMethodIcon = (method: string) => {
+  const getPaymentMethodIcon = () => {
     return <CreditCard className="h-4 w-4" />;
   };
 
@@ -83,7 +83,7 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
-                      {getPaymentMethodIcon(payment.payment_method)}
+                      {getPaymentMethodIcon()}
                       {getPaymentMethodLabel(payment.payment_method)}
                     </div>
                   </td>

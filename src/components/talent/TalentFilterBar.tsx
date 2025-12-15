@@ -1,6 +1,5 @@
 "use client";
 import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
 import SingleSelect from "@/components/ui/SingleSelect";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
@@ -14,15 +13,10 @@ import {
   X, 
   ChevronDown,
   ChevronUp,
-  Users,
-  Ruler,
-  MapPin,
-  Briefcase,
-  Palette,
-  Eye,
   RotateCcw
 } from "lucide-react";
 import apiClient from "@/lib/api/client";
+import { logger } from "@/lib/utils/logger";
 import { useI18n } from "@/contexts/I18nContext";
 
 // Re-export TalentFilters for convenience
@@ -99,7 +93,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           setEyeColors(eyeColorsData);
         }
       } catch (error) {
-        console.error("❌ Failed to fetch lookups:", error);
+        logger.error("Failed to fetch lookups", error);
       } finally {
         setLoadingLookups(false);
       }
@@ -187,7 +181,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
               { value: "other", label: "Other" },
             ]}
             value={local.gender ?? ""}
-            onChange={(val) => update({ gender: val ? (val as any) : undefined })}
+            onChange={(val) => update({ gender: val && val !== "" ? (val as "male" | "female" | "other") : undefined })}
             className="w-28 sm:w-32 lg:w-36 shrink-0"
           />
 
@@ -324,7 +318,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         { value: "instagram_followers", label: "Followers" },
                       ]}
                       value={local.sort_by || ""}
-                      onChange={(val) => update({ sort_by: (val as any) || undefined })}
+                      onChange={(val) => update({ sort_by: val && val !== "" ? (val as "age" | "height" | "created_at" | "instagram_followers" | "first_name") : undefined })}
                       className="flex-1"
                     />
                     <SingleSelect
@@ -334,7 +328,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                         { value: "desc", label: "↓ Desc" },
                       ]}
                       value={local.sort_order || "asc"}
-                      onChange={(val) => update({ sort_order: (val as any) || "asc" })}
+                      onChange={(val) => update({ sort_order: val ? (val as "asc" | "desc") : "asc" })}
                       disabled={!local.sort_by}
                       className="w-32"
                     />

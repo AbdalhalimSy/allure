@@ -23,7 +23,7 @@ export default function ProfessionEntryForm({
   onRemove,
   disabled = false,
 }: ProfessionEntryFormProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const selectedProfession = professions.find(p => p.id === entry.professionId);
   const availableSubProfessions = selectedProfession?.sub_professions || [];

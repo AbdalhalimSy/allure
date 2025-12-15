@@ -24,7 +24,7 @@ export default function AccountStepper({
   onStepClick,
   progressStep,
 }: AccountStepperProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   // Map progress_step to the maximum accessible step index
   const getMaxAccessibleStep = (): number => {

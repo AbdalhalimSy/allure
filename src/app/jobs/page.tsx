@@ -13,7 +13,7 @@ import { Briefcase, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function JobsPage() {
   const pathname = usePathname();
-  const { isAuthenticated, activeProfileId } = useAuth();
+  const { activeProfileId } = useAuth();
   const { locale, t } = useI18n();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);

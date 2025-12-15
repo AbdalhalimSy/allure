@@ -3,10 +3,18 @@
 import { useEffect, useState } from "react";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import apiClient from "@/lib/api/client";
+import { logger } from "@/lib/utils/logger";
 import { Users, Briefcase, BadgeCheck, Clock } from "lucide-react";
 
+interface Stats {
+  talents: number;
+  jobs: number;
+  booking: number;
+  response: string;
+}
+
 export default function Numbers() {
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<Stats>({
     talents: 0,
     jobs: 0,
     booking: 96,
@@ -23,8 +31,8 @@ export default function Numbers() {
         const talentsTotal = talentsRes.data?.meta?.total ?? 0;
         const jobsTotal = jobsRes.data?.meta?.total ?? 0;
         setStats((s) => ({ ...s, talents: talentsTotal, jobs: jobsTotal }));
-      } catch (e) {
-        console.error("Failed to load stats", e);
+      } catch (error) {
+        logger.error("Failed to load stats", error);
       }
     };
     load();

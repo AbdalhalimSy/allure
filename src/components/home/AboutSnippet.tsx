@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import SurfaceCard from "@/components/ui/SurfaceCard";
 
 export default function AboutSnippet() {
   return (

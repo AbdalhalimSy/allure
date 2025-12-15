@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthApiHeaders } from "@/lib/api/headers";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
+import { env } from "@/lib/config/env";
+import { logger } from "@/lib/utils/logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,8 +10,8 @@ export async function GET(request: NextRequest) {
     const queryString = searchParams.toString();
 
     const url = queryString
-      ? `${BACKEND_URL}/jobs?${queryString}`
-      : `${BACKEND_URL}/jobs`;
+      ? `${env.apiBaseUrl}/jobs?${queryString}`
+      : `${env.apiBaseUrl}/jobs`;
 
     // Get authorization token from the request
     const authHeader = request.headers.get("authorization");
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(data);
   } catch (error: unknown) {
-    console.error("Error fetching jobs:", error);
+    logger.error("Error fetching jobs", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
