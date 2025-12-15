@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Loader from "@/components/ui/Loader";
 import JobApplicationModal from "@/components/jobs/JobApplicationModal";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   Calendar, 
@@ -126,6 +127,8 @@ export default function JobDetailPage() {
   const daysUntilExpiry = Math.ceil(
     (new Date(job.expiration_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
   );
+  const roles = Array.isArray(job.roles) ? job.roles : [];
+  const roleCount = roles.length;
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-950 dark:to-black">
@@ -146,10 +149,14 @@ export default function JobDetailPage() {
           {/* Job Image */}
           {job.image && (
             <div className="relative h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
-              <img 
-                src={job.image} 
+              {/* Optimized image with responsive sizes and compression */}
+              <OptimizedImage
+                src={job.image}
                 alt={job.title}
-                className="h-full w-full object-cover"
+                fill
+                quality={70}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               />
             </div>
           )}
@@ -230,7 +237,7 @@ export default function JobDetailPage() {
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.openRoles")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {job.roles.length} {t("jobDetail.available")}
+                    {roleCount} {t("jobDetail.available")}
                   </p>
                 </div>
               </div>
@@ -298,10 +305,10 @@ export default function JobDetailPage() {
             {/* Roles Section */}
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("jobDetail.availableRoles")} ({job.roles.length})
+                {t("jobDetail.availableRoles")} ({roleCount})
               </h2>
               
-              {job.roles.map((role) => (
+              {roles.map((role) => (
                 <div
                   key={role.id}
                   className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900"
@@ -322,8 +329,8 @@ export default function JobDetailPage() {
                       <span className="font-medium text-gray-700 dark:text-gray-300">
                         {t("jobDetail.gender")}
                       </span>
-                      <span className="capitalize text-gray-900 dark:text-white">
-                        {role.gender}
+                      <span className="text-gray-900 dark:text-white">
+                        {t(`filters.${role.gender}`)}
                       </span>
                     </div>
 
@@ -391,23 +398,38 @@ export default function JobDetailPage() {
 
                   {/* Meta Conditions */}
                   {role.meta_conditions.length > 0 && (
-                    <div className="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                    <div className="mb-4 rounded-lg border border-gray-200 p-4 dark:bg-gray-800">
                       <h4 className="mb-3 font-semibold text-gray-900 dark:text-white">
                         {t("jobDetail.physicalRequirements")}
                       </h4>
-                      <div className="grid gap-2 sm:grid-cols-2 text-sm">
-                        {Object.entries(role.meta_conditions[0]).map(([key, value]) => (
-                          value !== null && value !== undefined && (
-                            <div key={key} className="flex justify-between">
-                              <span className="capitalize text-gray-600 dark:text-gray-400">
-                                {key.replace(/_/g, " ")}:
+                      <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2 text-sm">
+                        {Object.entries(role.meta_conditions[0]).map(([key, value]) => {
+                          // Map attribute keys to translation keys
+                          const attrKeyMap: Record<string, string> = {
+                            hair_color: "content.hairColor",
+                            hair_length: "content.hairLength",
+                            hair_type: "content.hairType",
+                            eye_color: "content.eyeColor",
+                            height: "content.height",
+                            weight: "content.weight",
+                            shoe_size: "content.shoeSize",
+                            pants_size: "content.pantsSize",
+                            tshirt_size: "content.tshirtSize",
+                            tattoos: "content.tattoos",
+                            piercings: "content.piercings",
+                          };
+                          const translationKey = attrKeyMap[key as keyof typeof attrKeyMap];
+                          return value !== null && value !== undefined && (
+                            <div key={key} className="flex justify-between px-4 py-2 bg-gray-100 rounded-lg dark:bg-gray-800">
+                              <span className="text-gray-600 dark:text-gray-400">
+                                {translationKey ? t(translationKey) : key.replace(/_/g, " ")}:
                               </span>
                               <span className="font-medium text-gray-900 dark:text-white">
                                 {value}
                               </span>
                             </div>
-                          )
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -419,22 +441,60 @@ export default function JobDetailPage() {
                         {t("jobDetail.availableCallTimes")}
                       </h4>
                       <div className="space-y-3">
-                        {role.call_time_slots.map((slot, idx) => (
-                          <div key={idx} className="rounded bg-white p-2 dark:bg-gray-900">
+                        {role.call_time_slots.map((slotGroup, idx) => (
+                          <div key={idx} className="rounded bg-white p-3 shadow-sm dark:bg-gray-900">
                             <p className="font-medium text-sm text-gray-900 dark:text-white">
-                              {formatDate(slot.date)}
+                              {formatDate(slotGroup.date)}
                             </p>
-                            {slot.slots.map((timeSlot) => (
-                              <div key={timeSlot.id} className="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                                <p className="font-medium">
-                                  {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)} 
-                                  <span className="ms-2 text-gray-500">
-                                    ({t("jobDetail.every")} {timeSlot.interval_minutes} {t("jobDetail.min")}, {timeSlot.max_talents} {t("jobDetail.spot")}{timeSlot.max_talents > 1 ? 's' : ''})
-                                  </span>
-                                </p>
-                                <p className="mt-1 text-gray-500">{t("jobDetail.availableLabel")}: {timeSlot.available_times.length} {t("jobDetail.slots")}</p>
-                              </div>
-                            ))}
+                            {slotGroup.slots.map((timeSlot) => {
+                              const availableCount = timeSlot.available_times?.filter((t) => !t.is_fully_booked).length || 0;
+                              const totalCount = timeSlot.available_times?.length || 0;
+
+                              return (
+                                <div key={timeSlot.id} className="mt-3 rounded-lg border border-gray-200 p-3 dark:border-gray-800">
+                                  <div className="flex flex-col gap-1 text-xs text-gray-600 dark:text-gray-400">
+                                    <p className="font-medium text-gray-900 dark:text-white">
+                                      {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)}
+                                      <span className="ms-2 text-gray-500">
+                                        ({t("jobDetail.every")} {timeSlot.interval_minutes} {t("jobDetail.min")}, {timeSlot.max_talents} {t("jobDetail.spot")}{timeSlot.max_talents > 1 ? 's' : ''} {t("jobDetail.perTime") || ''})
+                                      </span>
+                                    </p>
+                                    <p className="text-gray-500">
+                                      {t("jobDetail.availableLabel")}: {availableCount}/{totalCount} {t("jobDetail.slots")}
+                                    </p>
+                                  </div>
+
+                                  <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                                    {timeSlot.available_times?.map((availableTime) => {
+                                      const isBooked = availableTime.is_fully_booked;
+                                      const availabilityText = isBooked
+                                        ? t("jobDetail.fullyBooked")
+                                        : `${availableTime.available_spots} ${availableTime.available_spots === 1 ? t("jobDetail.spotLeft") : t("jobDetail.spotsLeft")}`;
+
+                                      return (
+                                        <div
+                                          key={availableTime.time}
+                                          className={`rounded-lg border px-3 py-2 text-sm ${
+                                            isBooked
+                                              ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-900/10 dark:text-red-200"
+                                              : "border-gray-200 bg-gray-50 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+                                          }`}
+                                        >
+                                          <div className="flex items-center justify-between gap-2">
+                                            <span className="font-semibold">{formatTime(availableTime.time)}</span>
+                                            <span className={`text-xs font-medium ${
+                                              isBooked ? "text-red-700 dark:text-red-300" : "text-green-700 dark:text-green-300"
+                                            }`}>
+                                              {availabilityText}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })}
                           </div>
                         ))}
                       </div>

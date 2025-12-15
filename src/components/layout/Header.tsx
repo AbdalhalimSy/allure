@@ -12,7 +12,8 @@ import { ChevronRight, Check, Menu, X } from "lucide-react";
 import { logger } from "@/lib/utils/logger";
 
 export default function Header() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const { isAuthenticated, user, logout, switchProfile, activeProfileId } = useAuth();
   const [open, setOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -108,6 +109,7 @@ export default function Header() {
     { href: "/about", label: t("nav.about") },
     { href: "/talents", label: t("nav.talents") },
     { href: "/jobs", label: t("nav.jobs") || "Jobs" },
+    ...(isAuthenticated ? [{ href: "/jobs/applied", label: t("nav.appliedJobs") || "Applied Jobs" }] : []),
     ...(!isAuthenticated ? [{ href: "/packages", label: "Packages" }] : []),
     { href: "/faq", label: t("nav.faq") || "FAQ" },
     { href: "/contact", label: t("nav.contact") },
@@ -294,7 +296,7 @@ export default function Header() {
       {/* Side Drawer */}
       <div
         className={`fixed top-0 start-0 z-50 h-full w-80 bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-black md:hidden ${
-          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          mobileMenuOpen ? "translate-x-0" : isRTL ? "translate-x-full" : "-translate-x-full"
         }`}
       >
         <div className="flex h-full flex-col">

@@ -26,19 +26,8 @@ const translations = {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  // Initialize locale from localStorage / browser language (no effect needed)
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('locale') as Locale | null;
-      if (stored && (stored === 'en' || stored === 'ar')) {
-        return stored;
-      }
-      const navLang = navigator.language?.startsWith('ar') ? 'ar' : 'en';
-      // side-effect localStorage write deferred to changeLocale
-      return navLang as Locale;
-    }
-    return 'en';
-  });
+  // Start with a deterministic locale on the server; read user preference after hydration
+  const [locale, setLocale] = useState<Locale>('en');
 
   const changeLocale = useCallback((next: Locale) => {
     setLocale(next);
@@ -46,6 +35,26 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('locale', next);
     } catch {}
   }, []);
+
+  // Hydrate user preference without causing SSR/client markup divergence
+  useEffect(() => {
+    const readPreferredLocale = (): Locale => {
+      try {
+        const stored = localStorage.getItem('locale') as Locale | null;
+        if (stored && (stored === 'en' || stored === 'ar')) {
+          return stored;
+        }
+        return navigator.language?.startsWith('ar') ? 'ar' : 'en';
+      } catch {
+        return 'en';
+      }
+    };
+
+    const preferred = readPreferredLocale();
+    if (preferred !== locale) {
+      setLocale(preferred);
+    }
+  }, [locale]);
 
   // Sync <html> attributes so global styles and fonts react correctly
   useEffect(() => {

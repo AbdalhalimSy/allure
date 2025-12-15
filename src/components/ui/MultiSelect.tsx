@@ -18,13 +18,16 @@ interface MultiSelectProps {
   error?: string;
   className?: string;
   loading?: boolean;
+  maxSelected?: number;
+  limitMessage?: string;
 }
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
-  ({ options, value, onChange, placeholder, error, className = "", loading = false }, ref) => {
+  ({ options, value, onChange, placeholder, error, className = "", loading = false, maxSelected, limitMessage }, ref) => {
     const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [limitWarning, setLimitWarning] = useState<string>("");
     const containerRef = useRef<HTMLDivElement>(null);
     const setRefs = (node: HTMLDivElement | null) => {
       containerRef.current = node;
@@ -54,14 +57,22 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     const toggleOption = (optionId: number) => {
       if (value.includes(optionId)) {
+        setLimitWarning("");
         onChange(value.filter((id) => id !== optionId));
       } else {
+        if (maxSelected && value.length >= maxSelected) {
+          const maxMsg = t("ui.maxSelected");
+          const warningMsg = limitMessage || (maxMsg.includes("{{count}}") ? maxMsg.replace("{{count}}", maxSelected.toString()) : `You can select up to ${maxSelected}`);
+          setLimitWarning(warningMsg);
+          return;
+        }
         onChange([...value, optionId]);
       }
     };
 
     const removeOption = (optionId: number) => {
       onChange(value.filter((id) => id !== optionId));
+      setLimitWarning("");
     };
 
     return (
@@ -149,7 +160,9 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             </div>
           </div>
         )}
-
+        {limitWarning && !error && (
+          <p className="mt-1 text-xs text-amber-600">{limitWarning}</p>
+        )}
         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
       </div>
     );

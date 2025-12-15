@@ -4,47 +4,63 @@ import CastingOpportunityCard from "./CastingOpportunityCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useI18n } from "@/contexts/I18nContext";
 
-const castings = [
-  {
-    title: "Luxury Resort SS25 Campaign",
-    brand: "AMAARI Resorts",
-    location: "Abu Dhabi, UAE",
-    timeline: "Feb 02 – Feb 08",
-    budget: "25,000 AED",
-    requirements: ["Mixed gender cast of 6", "Swim + Resort wear", "Comfort with underwater stills"],
-    accent: "midnight" as const,
-  },
-  {
-    title: "Beauty Editorial x Global Gloss",
-    brand: "Global Gloss",
-    location: "Jeddah, KSA",
-    timeline: "Jan 15 – Jan 18",
-    budget: "16,500 SAR",
-    requirements: ["Female-presenting talent", "Expressive eyes + freckles", "Comfortable with closeups"],
-    accent: "rose" as const,
-  },
-  {
-    title: "Immersive Fashion Presentation",
-    brand: "FutureLab Studios",
-    location: "Dubai Design District",
-    timeline: "Mar 01 – Mar 12",
-    budget: "30,000 AED",
-    requirements: ["Movement / choreography background", "Experience with interactive shows", "Multi-lingual bonus"],
-    accent: "emerald" as const,
-  },
-  {
-    title: "Hospitality Lifestyle Series",
-    brand: "Kafara Collection",
-    location: "Doha, Qatar",
-    timeline: "Feb 18 – Feb 22",
-    budget: "18,000 QAR",
-    requirements: ["Couple dynamic", "Comfort with dialog", "Natural chemistry"],
-    accent: "gold" as const,
-  },
-];
-
 export default function FeaturedCastings() {
   const { t } = useI18n();
+  
+  const castings = [
+    {
+      title: t("castingOpportunities.luxuryResort.title"),
+      brand: t("castingOpportunities.luxuryResort.brand"),
+      location: t("castingOpportunities.luxuryResort.location"),
+      timeline: t("castingOpportunities.luxuryResort.timeline"),
+      budget: t("castingOpportunities.luxuryResort.budget"),
+      requirements: [
+        t("castingOpportunities.luxuryResort.requirements.req1"),
+        t("castingOpportunities.luxuryResort.requirements.req2"),
+        t("castingOpportunities.luxuryResort.requirements.req3")
+      ],
+      accent: "midnight" as const,
+    },
+    {
+      title: t("castingOpportunities.beautyEditorial.title"),
+      brand: t("castingOpportunities.beautyEditorial.brand"),
+      location: t("castingOpportunities.beautyEditorial.location"),
+      timeline: t("castingOpportunities.beautyEditorial.timeline"),
+      budget: t("castingOpportunities.beautyEditorial.budget"),
+      requirements: [
+        t("castingOpportunities.beautyEditorial.requirements.req1"),
+        t("castingOpportunities.beautyEditorial.requirements.req2"),
+        t("castingOpportunities.beautyEditorial.requirements.req3")
+      ],
+      accent: "rose" as const,
+    },
+    {
+      title: t("castingOpportunities.immersiveFashion.title"),
+      brand: t("castingOpportunities.immersiveFashion.brand"),
+      location: t("castingOpportunities.immersiveFashion.location"),
+      timeline: t("castingOpportunities.immersiveFashion.timeline"),
+      budget: t("castingOpportunities.immersiveFashion.budget"),
+      requirements: [
+        t("castingOpportunities.immersiveFashion.requirements.req1"),
+        t("castingOpportunities.immersiveFashion.requirements.req2"),
+        t("castingOpportunities.immersiveFashion.requirements.req3")
+      ],
+      accent: "emerald" as const,
+    },
+    {
+      title: t("castingOpportunities.hospitalityLifestyle.title"),
+      brand: t("castingOpportunities.hospitalityLifestyle.brand"),
+      location: t("castingOpportunities.hospitalityLifestyle.location"),
+      timeline: t("castingOpportunities.hospitalityLifestyle.timeline"),
+      budget: t("castingOpportunities.hospitalityLifestyle.budget"),
+      requirements: [
+        t("castingOpportunities.hospitalityLifestyle.requirements.req1"),
+        t("castingOpportunities.hospitalityLifestyle.requirements.req2"),
+        t("castingOpportunities.hospitalityLifestyle.requirements.req3")
+      ],
+      accent: "gold" as const,
+    },
+  ];
   return (
     <section className="space-y-10">
       <SectionHeader

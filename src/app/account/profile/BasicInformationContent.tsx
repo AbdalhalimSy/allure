@@ -160,8 +160,18 @@ export default function BasicInformationContent({
         setLoading(false);
         return;
       }
+      if (formData.nationality_ids.length > 2) {
+        toast.error(t('account.basic.errors.nationalityLimit'));
+        setLoading(false);
+        return;
+      }
       if (formData.ethnicity_ids.length === 0) {
         toast.error(t('account.basic.errors.ethnicityRequired'));
+        setLoading(false);
+        return;
+      }
+      if (formData.ethnicity_ids.length > 2) {
+        toast.error(t('account.basic.errors.ethnicityLimit'));
         setLoading(false);
         return;
       }
@@ -332,6 +342,8 @@ export default function BasicInformationContent({
               }
               placeholder={t('account.basic.fields.nationality')}
               loading={loadingLookups}
+              maxSelected={2}
+              limitMessage={t('account.basic.errors.nationalityLimit')}
             />
           </AccountField>
 
@@ -348,6 +360,8 @@ export default function BasicInformationContent({
               }
               placeholder={t('account.basic.fields.ethnicity')}
               loading={loadingLookups}
+              maxSelected={2}
+              limitMessage={t('account.basic.errors.ethnicityLimit')}
             />
           </AccountField>
         </div>

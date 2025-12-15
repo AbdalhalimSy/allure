@@ -13,6 +13,7 @@
     "select": "Select...",
     "search": "Search...",
     "noResults": "No results found",
+    "maxSelected": "You can select up to {{count}}",
     "selectDate": "Select date",
     "today": "Today",
     "clear": "Clear"
@@ -29,6 +30,7 @@
     "manageAccount": "Manage Account",
     "logout": "Logout",
     "jobs": "Jobs",
+    "appliedJobs": "Applied Jobs",
     "findTalent": "Find Talent",
     "faq": "FAQ"
   },
@@ -79,7 +81,11 @@
     "searchTalents": "Search talents...",
     "resetAllFilters": "Reset All Filters",
     "min": "Min",
-    "max": "Max"
+    "max": "Max",
+    "allGenders": "All Genders",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other"
   },
   "forms": {
     "selectHairColor": "Select hair color",
@@ -131,6 +137,12 @@
     "pants": "Pants",
     "gender": "Gender",
     "height": "Height",
+    "weight": "Weight",
+    "hairLength": "Hair Length",
+    "pantsSize": "Pants Size",
+    "tshirtSize": "T-Shirt Size",
+    "tattoos": "Tattoos",
+    "piercings": "Piercings",
     "background": "Background",
     "location": "Location",
     "professions": "Professions",

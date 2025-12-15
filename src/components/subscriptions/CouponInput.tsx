@@ -28,7 +28,7 @@ export function CouponInput({
 
   const handleValidate = async () => {
     if (!code.trim()) {
-      setError('Please enter a coupon code');
+      setError(t('account.billing.coupon.errors.required'));
       return;
     }
 
@@ -47,7 +47,7 @@ export function CouponInput({
       setError('');
     } catch (err: any) {
       const message =
-        err.response?.data?.message || 'Invalid or expired coupon code';
+        err.response?.data?.message || t('account.billing.coupon.errors.invalid');
       setError(message);
       setAppliedCoupon(null);
     } finally {
@@ -69,16 +69,16 @@ export function CouponInput({
           <div className="flex items-start gap-3">
             <CheckCircle className="mt-0.5 h-5 w-5 text-green-600" />
             <div>
-              <p className="font-semibold text-green-900">{t('forms.couponApplied') || 'Coupon Applied!'}</p>
+              <p className="font-semibold text-green-900">{t('account.billing.coupon.applied')}</p>
               <p className="mt-1 text-sm text-green-700">
                 Code: <span className="font-mono font-bold">{appliedCoupon.code}</span>
               </p>
               <p className="mt-1 text-xs text-green-600">
                 {appliedCoupon.type === '%'
-                  ? `${appliedCoupon.discount}% discount`
-                  : `${appliedCoupon.discount} AED discount`}
+                  ? `${appliedCoupon.discount}% ${t('account.billing.coupon.discount')}`
+                  : `${appliedCoupon.discount} AED ${t('account.billing.coupon.discount')}`}
                 {' • '}
-                {appliedCoupon.is_public ? 'Public coupon' : 'Private coupon'}
+                {appliedCoupon.is_public ? t('account.billing.coupon.publicCoupon') : t('account.billing.coupon.privateCoupon')}
               </p>
             </div>
           </div>
@@ -86,7 +86,7 @@ export function CouponInput({
             onClick={handleRemove}
             className="text-sm text-green-700 hover:text-green-900 underline"
           >
-            Remove
+            {t('account.billing.coupon.remove')}
           </button>
         </div>
       </div>
@@ -97,7 +97,7 @@ export function CouponInput({
     <div className="space-y-2">
       <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
         <Tag className="h-4 w-4" />
-        Have a coupon code?
+        {t('account.billing.coupon.label')}
       </label>
       
       <div className="flex gap-2">
@@ -106,7 +106,7 @@ export function CouponInput({
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           onKeyDown={(e) => e.key === 'Enter' && handleValidate()}
-          placeholder={t('forms.enterCouponCode') || "Enter coupon code"}
+          placeholder={t('account.billing.coupon.placeholder')}
           disabled={isValidating}
           className="font-mono text-sm uppercase"
         />
@@ -119,7 +119,7 @@ export function CouponInput({
           {isValidating ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            'Apply'
+            t('account.billing.coupon.apply')
           )}
         </button>
       </div>

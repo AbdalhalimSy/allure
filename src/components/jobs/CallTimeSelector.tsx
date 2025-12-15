@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Calendar, Clock, Users, AlertCircle } from "lucide-react";
 import { CallTimeSlotGroup } from "@/types/job";
 import Label from "@/components/ui/Label";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface CallTimeSelectorProps {
   slotGroups: CallTimeSlotGroup[];
@@ -20,15 +21,15 @@ export default function CallTimeSelector({
   onSlotChange,
   error,
 }: CallTimeSelectorProps) {
+  const { t, locale } = useI18n();
   const [expandedSlotId, setExpandedSlotId] = useState<number | null>(
     selectedSlotId
   );
 
   const formatDate = (dateString: string) => {
-    // Extract just the date part from "YYYY-MM-DD HH:MM:SS"
     const datePart = dateString.split(" ")[0];
     const date = new Date(datePart);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString(locale || "en-US", {
       weekday: "short",
       month: "short",
       day: "numeric",
@@ -39,10 +40,14 @@ export default function CallTimeSelector({
   const formatTime = (time: string | undefined) => {
     if (!time) return "";
     const [hours, minutes] = time.split(":");
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    const displayHour = hour % 12 || 12;
-    return `${displayHour}:${minutes} ${ampm}`;
+    const hour = parseInt(hours, 10);
+    const date = new Date();
+    date.setHours(hour, parseInt(minutes || "0", 10));
+    return date.toLocaleTimeString(locale || "en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
   };
 
   const getAvailableCount = (slot: { available_times?: Array<{ is_fully_booked: boolean }> }) => {
@@ -58,12 +63,20 @@ export default function CallTimeSelector({
     setExpandedSlotId(slotId);
   };
 
+  const renderAvailability = (availableSpotsRaw: number | string | undefined, isBooked: boolean) => {
+    const parsedSpots = typeof availableSpotsRaw === "string" ? parseInt(availableSpotsRaw, 10) : availableSpotsRaw;
+    const availableSpots = Number.isFinite(parsedSpots) ? Number(parsedSpots) : 0;
+    if (isBooked) return t("jobDetail.fullyBooked") || "Fully Booked";
+    const label = availableSpots === 1 ? t("jobDetail.spotLeft") : t("jobDetail.spotsLeft");
+    return `${availableSpots} ${label || "spots left"}`;
+  };
+
   if (slotGroups.length === 0) {
     return (
       <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800/50">
         <Calendar className="mx-auto mb-2 h-8 w-8 text-gray-400" />
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          No call time slots available for this role
+          {t("jobDetail.noCallTimes") || "No call time slots available for this role"}
         </p>
       </div>
     );
@@ -74,10 +87,9 @@ export default function CallTimeSelector({
       <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] p-4 dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
         <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
         <div className="text-sm text-[#c49a47] dark:text-[#c49a47]">
-          <p className="font-semibold mb-1">Call Time Required</p>
+          <p className="font-semibold mb-1">{t("common.callTimeRequired") || "Call Time Required"}</p>
           <p>
-            This role requires you to select a call time slot. Please choose an
-            available date and time below.
+            {t("jobApplication.callTimeRequired") || "Please choose an available date and time below."}
           </p>
         </div>
       </div>
@@ -95,7 +107,7 @@ export default function CallTimeSelector({
                 const availableCount = getAvailableCount(slot);
                 const totalCount = getTotalCount(slot);
                 const isExpanded = expandedSlotId === slot.id;
-                const hasAvailability = availableCount > 0;
+                const hasAnyTimes = totalCount > 0;
 
                 return (
                   <div
@@ -111,11 +123,9 @@ export default function CallTimeSelector({
                       onClick={() =>
                         setExpandedSlotId(isExpanded ? null : slot.id)
                       }
-                      disabled={!hasAvailability}
+                      disabled={!hasAnyTimes}
                       className={`flex w-full items-center justify-between p-4 text-start transition-colors ${
-                        !hasAvailability
-                          ? "cursor-not-allowed opacity-60"
-                          : ""
+                        !hasAnyTimes ? "cursor-not-allowed opacity-60" : ""
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -123,16 +133,15 @@ export default function CallTimeSelector({
                         <div>
                           <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
                             {formatTime(slot.start_time)} - {formatTime(slot.end_time)}
-                            {/* Show selected time if this slot is selected */}
                             {selectedSlotId === slot.id && selectedTime && (
                               <span className="ms-2 inline-flex items-center rounded bg-[#c49a47]/10 px-2 py-0.5 text-xs font-semibold text-[#c49a47] border border-[#c49a47]/30">
                                 <Clock className="me-1 h-3 w-3 text-[#c49a47]" />
-                                {selectedTime}
+                                {formatTime(selectedTime)}
                               </span>
                             )}
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400">
-                            {slot.interval_minutes} min intervals
+                            {slot.interval_minutes} {t("jobDetail.min") || "min"} intervals
                           </div>
                         </div>
                       </div>
@@ -140,14 +149,8 @@ export default function CallTimeSelector({
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1 text-sm">
                           <Users className="h-4 w-4" />
-                          <span
-                            className={
-                              hasAvailability
-                                ? "text-[#c49a47] dark:text-[#c49a47]"
-                                : "text-red-600 dark:text-red-400"
-                            }
-                          >
-                            {availableCount}/{totalCount}
+                          <span className={availableCount > 0 ? "text-[#c49a47] dark:text-[#c49a47]" : "text-red-600 dark:text-red-400"}>
+                            {availableCount}/{totalCount || 0}
                           </span>
                         </div>
                         <svg
@@ -168,36 +171,45 @@ export default function CallTimeSelector({
                       </div>
                     </button>
 
-                    {isExpanded && hasAvailability && (
+                    {isExpanded && (
                       <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-                        <Label>{t('forms.selectTime') || "Select Time"}</Label>
-                        <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
-                          {slot.available_times?.map((availableTime) => {
-                            const isSelected =
-                              selectedSlotId === slot.id &&
-                              selectedTime === availableTime.time;
-                            const isBooked = availableTime.is_fully_booked;
+                        <Label>{t("forms.selectTime") || "Select Time"}</Label>
+                        <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                          {slot.available_times?.length ? (
+                            slot.available_times.map((availableTime) => {
+                              const isSelected =
+                                selectedSlotId === slot.id &&
+                                selectedTime === availableTime.time;
+                              const isBooked = availableTime.is_fully_booked;
 
-                            return (
-                              <button
-                                key={availableTime.time}
-                                type="button"
-                                onClick={() =>
-                                  handleTimeSelect(slot.id, availableTime.time)
-                                }
-                                disabled={isBooked}
-                                className={`rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
-                                  isBooked
-                                    ? "cursor-not-allowed bg-gray-200 text-gray-400 line-through dark:bg-gray-700 dark:text-gray-600"
-                                    : isSelected
-                                    ? "bg-[#c49a47] text-white shadow-lg ring-2 ring-[#c49a47]/40"
-                                    : "bg-white text-gray-700 hover:bg-[#c49a47]/10 hover:text-[#c49a47] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#c49a47]/20"
-                                }`}
-                              >
-                                {formatTime(availableTime.time)}
-                              </button>
-                            );
-                          })}
+                              return (
+                                <button
+                                  key={availableTime.time}
+                                  type="button"
+                                  onClick={() =>
+                                    handleTimeSelect(slot.id, availableTime.time)
+                                  }
+                                  disabled={isBooked}
+                                  className={`flex flex-col items-start gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                                    isBooked
+                                      ? "cursor-not-allowed bg-gray-200 text-gray-400 line-through dark:bg-gray-700 dark:text-gray-600"
+                                      : isSelected
+                                      ? "bg-[#c49a47] text-white shadow-lg ring-2 ring-[#c49a47]/40"
+                                      : "bg-white text-gray-700 hover:bg-[#c49a47]/10 hover:text-[#c49a47] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#c49a47]/20"
+                                  }`}
+                                >
+                                  <span>{formatTime(availableTime.time)}</span>
+                                  <span className={`text-xs ${isBooked ? "text-red-600 dark:text-red-400" : "text-gray-600 dark:text-gray-300"}`}>
+                                    {renderAvailability(availableTime.available_spots, isBooked)}
+                                  </span>
+                                </button>
+                              );
+                            })
+                          ) : (
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                              {t("jobDetail.fullyBooked") || "No available times"}
+                            </p>
+                          )}
                         </div>
                       </div>
                     )}

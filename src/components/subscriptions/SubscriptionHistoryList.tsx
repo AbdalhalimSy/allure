@@ -3,21 +3,24 @@
 import { Subscription } from '@/types/subscription';
 import { History, Calendar, Tag } from 'lucide-react';
 import { format } from 'date-fns';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface SubscriptionHistoryListProps {
   subscriptions: Subscription[];
 }
 
 export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryListProps) {
+  const { t } = useI18n();
+  
   if (subscriptions.length === 0) {
     return (
       <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">
         <History className="mx-auto h-12 w-12 text-gray-400" />
         <h3 className="mt-4 text-lg font-semibold text-gray-900">
-          No Subscription History
+          {t('account.billing.history.noHistory')}
         </h3>
         <p className="mt-2 text-sm text-gray-600">
-          Your subscription history will appear here
+          {t('account.billing.history.noHistoryDesc')}
         </p>
       </div>
     );
@@ -47,7 +50,7 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
                       : 'bg-gray-100 text-gray-700'
                   }`}
                 >
-                  {subscription.is_active ? 'Active' : 'Expired'}
+                  {subscription.is_active ? t('account.billing.history.active') : t('account.billing.history.expired')}
                 </span>
               </div>
 
@@ -74,8 +77,8 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
                     </span>
                     <span className="text-gray-500">
                       ({subscription.coupon_used.type === '%'
-                        ? `${subscription.coupon_used.discount}% off`
-                        : `${subscription.coupon_used.discount} AED off`}
+                        ? `${subscription.coupon_used.discount}% ${t('account.billing.coupon.off')}`
+                        : `${subscription.coupon_used.discount} AED ${t('account.billing.coupon.off')}`}
                       )
                     </span>
                   </div>
@@ -83,7 +86,7 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
 
                 {subscription.created_at && (
                   <div className="text-xs text-gray-500">
-                    Purchased on {format(new Date(subscription.created_at), 'MMM dd, yyyy HH:mm')}
+                    {t('account.billing.history.purchased')} {format(new Date(subscription.created_at), 'MMM dd, yyyy HH:mm')}
                   </div>
                 )}
               </div>
@@ -95,7 +98,7 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
                   <p className="text-2xl font-bold text-primary">
                     {subscription.days_remaining}
                   </p>
-                  <p className="text-xs text-gray-600">days left</p>
+                  <p className="text-xs text-gray-600">{t('account.billing.status.daysRemaining')}</p>
                 </div>
               </div>
             )}

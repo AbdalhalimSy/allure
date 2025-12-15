@@ -69,7 +69,7 @@ export interface CallTimeSlot {
 }
 
 export interface CallTimeSlotGroup {
-  date: string; // "YYYY-MM-DD HH:MM:SS" format
+  date: string; // "YYYY-MM-DD" (date-only)
   slots: CallTimeSlot[];
 }
 
@@ -129,4 +129,31 @@ export interface JobDetailResponse {
   status: string | boolean; // Can be 'success' string or boolean
   message: string;
   data: DetailedJob;
+}
+
+// Applied jobs
+export interface AppliedJobRole extends Omit<DetailedRole, 'call_time_slots'> {
+  call_time_enabled: boolean;
+}
+
+export interface AppliedJob {
+  id: number;
+  status: string;
+  approved_payment_terms: boolean;
+  job_role_id: number;
+  profile_id: number;
+  role: AppliedJobRole;
+  created_at: string;
+}
+
+export interface AppliedJobsResponse {
+  status: string | boolean;
+  message: string;
+  data: AppliedJob[];
+  meta: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
 }

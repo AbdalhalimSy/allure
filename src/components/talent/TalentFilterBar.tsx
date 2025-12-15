@@ -16,6 +16,7 @@ import {
   RotateCcw
 } from "lucide-react";
 import apiClient from "@/lib/api/client";
+import { fetchWithRetry, cachedGet } from "@/lib/utils/fetchWithRetry";
 import { logger } from "@/lib/utils/logger";
 import { useI18n } from "@/contexts/I18nContext";
 
@@ -56,19 +57,27 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
     const fetchLookups = async () => {
       try {
         setLoadingLookups(true);
-        const [
-          countriesRes,
-          nationalitiesRes,
-          ethnicitiesRes,
-          professionsRes,
-          appearanceRes,
-        ] = await Promise.all([
-          apiClient.get(`/lookups/countries?lang=${locale}`),
-          apiClient.get(`/lookups/nationalities?lang=${locale}`),
-          apiClient.get(`/lookups/ethnicities?lang=${locale}`),
-          apiClient.get(`/lookups/professions?lang=${locale}`),
-          apiClient.get(`/lookups/appearance-options?lang=${locale}`),
-        ]);
+        // Avoid hammering the API; cache responses and retry on 429
+        const countriesRes = await fetchWithRetry(() => cachedGet(
+          `countries:${locale}`,
+          () => apiClient.get(`/lookups/countries?lang=${locale}`)
+        ));
+        const nationalitiesRes = await fetchWithRetry(() => cachedGet(
+          `nationalities:${locale}`,
+          () => apiClient.get(`/lookups/nationalities?lang=${locale}`)
+        ));
+        const ethnicitiesRes = await fetchWithRetry(() => cachedGet(
+          `ethnicities:${locale}`,
+          () => apiClient.get(`/lookups/ethnicities?lang=${locale}`)
+        ));
+        const professionsRes = await fetchWithRetry(() => cachedGet(
+          `professions:${locale}`,
+          () => apiClient.get(`/lookups/professions?lang=${locale}`)
+        ));
+        const appearanceRes = await fetchWithRetry(() => cachedGet(
+          `appearance:${locale}`,
+          () => apiClient.get(`/lookups/appearance-options?lang=${locale}`)
+        ));
 
         if (countriesRes.data.status === "success") {
           const countriesData = countriesRes.data.data;
@@ -175,10 +184,10 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           <SingleSelect
             searchable={false}
             options={[
-              { value: "", label: "All Genders" },
-              { value: "male", label: "Male" },
-              { value: "female", label: "Female" },
-              { value: "other", label: "Other" },
+              { value: "", label: t('filters.allGenders') },
+              { value: "male", label: t('filters.male') },
+              { value: "female", label: t('filters.female') },
+              { value: "other", label: t('filters.other') },
             ]}
             value={local.gender ?? ""}
             onChange={(val) => update({ gender: val && val !== "" ? (val as "male" | "female" | "other") : undefined })}

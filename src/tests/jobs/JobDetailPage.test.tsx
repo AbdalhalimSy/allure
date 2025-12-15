@@ -49,8 +49,20 @@ const mockJobResponse = {
         call_time_enabled: true,
         call_time_slots: [
           {
-            date: new Date().toISOString(),
-            slots: [ { id: 'a', start_time: '10:00', end_time: '10:30', interval_minutes: 30, max_talents: 2, available_times: ['10:00','10:30'] } ]
+            date: new Date().toISOString().split("T")[0],
+            slots: [
+              {
+                id: 1,
+                start_time: '10:00:00',
+                end_time: '10:30:00',
+                interval_minutes: 30,
+                max_talents: 2,
+                available_times: [
+                  { time: '10:00:00', available_spots: 2, is_fully_booked: false },
+                  { time: '10:30:00', available_spots: 0, is_fully_booked: true }
+                ]
+              }
+            ]
           }
         ],
         conditions: [ { id: 'c1', label: 'Must be available', is_required: true } ]

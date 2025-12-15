@@ -188,8 +188,9 @@ export default function JobApplicationModal({
       );
 
       const result = await response.json();
+      const isSuccess = response.ok && (result.status === "success" || result.status === true || result.success === true);
 
-      if (response.ok && result.status === "success") {
+      if (isSuccess) {
         toast.success(result.message || t("jobApplication.submitted"));
         onClose();
         setResponses({});
@@ -197,17 +198,26 @@ export default function JobApplicationModal({
         setSelectedCallTimeSlotId(null);
         setSelectedCallTime(null);
         setCallTimeError("");
-      } else {
-        // Handle specific error messages from backend
-        const errorMessage = result.message || t("jobApplication.submitFailed");
-        
-        // Check for call time specific errors
-        if (errorMessage.includes("call time") || errorMessage.includes("slot") || errorMessage.includes("time")) {
-          setCallTimeError(errorMessage);
-        }
-        
-        toast.error(errorMessage);
+        return;
       }
+
+      const callTimeErrorMessage =
+        result?.errors?.selected_time?.[0] ||
+        result?.errors?.call_time_slot_id?.[0] ||
+        (typeof result.message === "string" ? result.message : "");
+
+      if (callTimeErrorMessage) {
+        setCallTimeError(callTimeErrorMessage);
+      }
+
+      const errorMessage =
+        callTimeErrorMessage ||
+        result?.errors?.message ||
+        result?.error ||
+        result?.message ||
+        t("jobApplication.submitFailed");
+
+      toast.error(errorMessage);
     } catch (error) {
       console.error("Error submitting application:", error);
       toast.error(t("jobApplication.genericError"));

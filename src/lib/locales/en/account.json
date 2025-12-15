@@ -68,7 +68,16 @@
     "billing": {
       "status": {
         "title": "Subscription Status",
-        "description": "Your current subscription details"
+        "description": "Your current subscription details",
+        "noActive": "No Active Subscription",
+        "noActiveDesc": "Subscribe to a package to unlock all features",
+        "expired": "Subscription Expired",
+        "renewDesc": "Renew your subscription to continue accessing premium features",
+        "active": "Active Subscription",
+        "started": "Started",
+        "expires": "Expires",
+        "daysRemaining": "days remaining",
+        "expiringSoon": "⚠️ Your subscription is expiring soon! Renew now to avoid interruption."
       },
       "tabs": {
         "plans": "Available Plans",
@@ -79,6 +88,23 @@
         "title": "Available Packages",
         "description": "Choose a subscription package that fits your needs",
         "noPackages": "No packages available at this time. Please check back later."
+      },
+      "coupon": {
+        "label": "Have a coupon code?",
+        "placeholder": "Enter coupon code",
+        "apply": "Apply",
+        "applied": "Coupon Applied",
+        "discount": "discount",
+        "off": "off",
+        "publicCoupon": "Public coupon",
+        "privateCoupon": "Private coupon",
+        "remove": "Remove",
+        "validating": "Validating...",
+        "invalid": "Invalid coupon code",
+        "errors": {
+          "required": "Coupon code is required",
+          "invalid": "This coupon code is not valid"
+        }
       },
       "order": {
         "title": "Complete Your Order",
@@ -97,11 +123,30 @@
       },
       "history": {
         "title": "Subscription History",
-        "description": "View all your past and current subscriptions"
+        "description": "View all your past and current subscriptions",
+        "noHistory": "No Subscription History",
+        "noHistoryDesc": "Your subscription history will appear here once you subscribe",
+        "active": "Active",
+        "expired": "Expired",
+        "purchased": "Purchased on"
       },
       "payments": {
         "title": "Payment History",
-        "description": "View all your payment transactions"
+        "description": "View all your payment transactions",
+        "totalSpent": "Total Spent",
+        "noPayments": "No Payment History",
+        "noPaymentsDesc": "Your payment history will appear here once you make a purchase",
+        "date": "Date",
+        "package": "Package",
+        "method": "Method",
+        "reference": "Reference",
+        "amount": "Amount",
+        "status": "Status",
+        "creditCard": "Credit Card",
+        "debitCard": "Debit Card",
+        "bankTransfer": "Bank Transfer",
+        "cash": "Cash",
+        "paid": "Paid"
       }
     },
     "nav": {
@@ -263,7 +308,9 @@
         "dobRequired": "Date of birth is required",
         "countryRequired": "Country of residence is required",
         "nationalityRequired": "Select at least one nationality",
+        "nationalityLimit": "You can select up to 2 nationalities",
         "ethnicityRequired": "Select at least one ethnicity",
+        "ethnicityLimit": "You can select up to 2 ethnicities",
         "saveFailed": "Failed to update profile"
       },
       "fields": {
@@ -278,9 +325,11 @@
         "gender": "Gender",
         "country": "Country of Residence",
         "nationalities": "Nationalities",
-        "nationalitiesDescription": "Select one or more nationalities",
+        "nationalitiesDescription": "Select up to 2 nationalities",
+        "nationality": "Select nationality",
         "ethnicities": "Ethnicities",
-        "ethnicitiesDescription": "Select one or more ethnicities"
+        "ethnicitiesDescription": "Select up to 2 ethnicities",
+        "ethnicity": "Select ethnicity"
       },
       "placeholders": {
         "firstName": "John",
@@ -337,79 +386,6 @@
         "saveFailed": "Failed to update appearance"
       },
       "success": "Appearance updated"
-    },
-    "billing": {
-      "currentPlanTitle": "Current Plan",
-      "currentPlanDescription": "Manage your subscription and billing",
-      "badge": "Current Plan",
-      "actions": {
-        "current": "Current Plan",
-        "upgrade": "Upgrade"
-      },
-      "plans": {
-        "free": {
-          "name": "Free",
-          "period": "forever",
-          "features": {
-            "basicProfile": "Basic profile",
-            "projects": "5 projects",
-            "support": "Community support",
-            "storage": "1GB storage"
-          }
-        },
-        "pro": {
-          "name": "Pro",
-          "period": "per month",
-          "features": {
-            "advancedProfile": "Advanced profile",
-            "projects": "Unlimited projects",
-            "support": "Priority support",
-            "storage": "50GB storage",
-            "analytics": "Analytics"
-          }
-        },
-        "enterprise": {
-          "name": "Enterprise",
-          "period": "per month",
-          "features": {
-            "everything": "Everything in Pro",
-            "branding": "Custom branding",
-            "support": "Dedicated support",
-            "storage": "500GB storage",
-            "api": "API access",
-            "collaboration": "Team collaboration"
-          }
-        }
-      },
-      "paymentMethod": {
-        "title": "Payment Method",
-        "cardLabel": "Visa ending in 4242",
-        "expires": "Expires 12/2025",
-        "update": "Update"
-      },
-      "history": {
-        "title": "Billing History",
-        "status": {
-          "paid": "Paid"
-        },
-        "entries": {
-          "first": {
-            "date": "Nov 1, 2024",
-            "invoice": "#INV-001",
-            "amount": "$0.00"
-          },
-          "second": {
-            "date": "Oct 1, 2024",
-            "invoice": "#INV-002",
-            "amount": "$0.00"
-          },
-          "third": {
-            "date": "Sep 1, 2024",
-            "invoice": "#INV-003",
-            "amount": "$0.00"
-          }
-        }
-      }
     },
     "notifications": {
       "title": "Notification Preferences",

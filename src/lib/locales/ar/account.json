@@ -5,70 +5,33 @@
     "forgotPassword": "نسيت كلمة المرور",
     "rememberMe": "تذكرني",
     "dontHaveAccount": "ليس لديك حساب؟",
-    "alreadyHaveAccount": "لديك حساب بالفعل؟",
-    "password": "كلمة المرور",
-    "confirmPassword": "تأكيد كلمة المرور",
-    "signIn": "تسجيل الدخول",
-    "createAccount": "إنشاء حساب",
-    "role": "أنا",
-    "roleTalent": "موهبة / عارض",
-    "roleClient": "عميل / علامة تجارية",
-    "agreePrefix": "أوافق على",
-    "terms": "الشروط والأحكام",
-    "privacy": "سياسة الخصوصية",
-    "and": "و",
-    "registerDescription": "أنشئ ملفك الشخصي، وقدّم إلى إعلانات الكاستينج المختارة، وتعاون مع أفضل العملاء في المنطقة.",
-    "accountRecovery": "استعادة الحساب",
-    "checkYourInbox": "تحقق من بريدك",
-    "noWorries": "لا تقلق، سنرسل لك تعليمات إعادة التعيين.",
-    "differentInboxQuestion": "تحتاج بريداً مختلفاً؟",
-    "tryAnotherEmail": "جرّب بريداً آخر",
-    "rememberedPasswordQuestion": "تذكرت كلمة المرور؟",
-    "backToLogin": "العودة لتسجيل الدخول",
-    "sendResetLink": "إرسال رابط إعادة التعيين",
-    "didntReceiveEmail": "لم يصلك البريد؟ تحقق من مجلد الرسائل غير المرغوب فيها",
-    "or": "أو",
-    "resetLinkSentPrefix": "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى",
-    "followInstructions": "اتبع التعليمات لإنشاء كلمة مرور جديدة.",
-    "yourInbox": "بريدك الوارد",
-    "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
-    "loggedOut": "تم تسجيل الخروج بنجاح",
-    "logoutFailed": "فشل تسجيل الخروج",
-    "loading": "جارٍ التحميل...",
-    "verifyEmail": "تحقق من بريدك الإلكتروني",
-    "verifyEmailDescription": "أرسلنا رابطاً ورمز تحقق (OTP) إلى بريدك الإلكتروني.",
-    "verifyEmailInfo": "لقد أرسلنا رابط تحقق إلى بريدك. يمكنك الضغط على الرابط أو إدخال رمز OTP أدناه.",
-    "enterOtp": "رمز التحقق",
-    "otpHint": "أدخل الرمز المكون من 4 إلى 6 أرقام الذي أرسلناه إلى",
-    "resendOtp": "إعادة إرسال الرمز",
-    "otpResent": "تمت إعادة إرسال الرمز",
-    "verify": "تحقق",
-    "emailVerified": "تم التحقق من البريد الإلكتروني بنجاح.",
-    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
-    "acceptTermsError": "يرجى قبول الشروط",
-    "missingNames": "يرجى إدخال أسماء التوأم والاسم الأخير",
-    "singleRegistration": "تسجيل فردي",
-    "twinsRegistration": "تسجيل توأم",
-    "continue": "متابعة",
-    "enterValidOtp": "أدخل رمز التحقق من بريدك الإلكتروني",
-    "loginFailed": "فشل تسجيل الدخول بعد التحقق"
+    "alreadyHaveAccount": "لديك حساب بالفعل؟"
   },
   "account": {
     "title": "إعدادات الحساب",
-    "subtitle": "قم بإدارة إعدادات وتفضيلات حسابك",
+    "subtitle": "إدارة إعدادات وتفضيلات حسابك",
     "status": {
-      "approvedTitle": "مقبول",
-      "approvedDescription": "تمت الموافقة على حسابك وهو نشط الآن.",
-      "pendingTitle": "قيد المراجعة",
-      "pendingDescription": "حسابك قيد المراجعة. سنخطرك بمجرد الموافقة عليه.",
+      "approvedTitle": "موافق عليه",
+      "approvedDescription": "تمت الموافقة على حسابك وهو نشط.",
+      "pendingTitle": "قيد الانتظار",
+      "pendingDescription": "حسابك قيد المراجعة. سنخطرك عند الموافقة.",
       "rejectedTitle": "مرفوض",
-      "rejectedDescription": "لم تتم الموافقة على طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل.",
+      "rejectedDescription": "لم يتم قبول طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل.",
       "ariaLabel": "حالة الموافقة: {{status}}"
     },
     "billing": {
       "status": {
         "title": "حالة الاشتراك",
-        "description": "تفاصيل اشتراكك الحالية"
+        "description": "تفاصيل اشتراكك الحالية",
+        "noActive": "لا يوجد اشتراك نشط",
+        "noActiveDesc": "اشترك في باقة لفتح جميع الميزات",
+        "expired": "انتهى الاشتراك",
+        "renewDesc": "جدد اشتراكك لمتابعة الوصول إلى الميزات المميزة",
+        "active": "اشتراك نشط",
+        "started": "بدأ في",
+        "expires": "ينتهي في",
+        "daysRemaining": "أيام متبقية",
+        "expiringSoon": "⚠️ اشتراكك سينتهي قريباً! جدده الآن لتجنب الانقطاع."
       },
       "tabs": {
         "plans": "الباقات المتاحة",
@@ -79,6 +42,23 @@
         "title": "الباقات المتاحة",
         "description": "اختر باقة اشتراك تناسب احتياجاتك",
         "noPackages": "لا توجد باقات متاحة حالياً. يرجى المحاولة لاحقاً."
+      },
+      "coupon": {
+        "label": "هل لديك رمز خصم؟",
+        "placeholder": "أدخل رمز الخصم",
+        "apply": "تطبيق",
+        "applied": "تم تطبيق الخصم",
+        "discount": "خصم",
+        "off": "من",
+        "publicCoupon": "رمز عام",
+        "privateCoupon": "رمز خاص",
+        "remove": "إزالة",
+        "validating": "جاري التحقق...",
+        "invalid": "رمز خصم غير صحيح",
+        "errors": {
+          "required": "رمز الخصم مطلوب",
+          "invalid": "هذا رمز الخصم غير صحيح"
+        }
       },
       "order": {
         "title": "أكمل طلبك",
@@ -97,11 +77,30 @@
       },
       "history": {
         "title": "سجل الاشتراك",
-        "description": "عرض كل اشتراكاتك الحالية والسابقة"
+        "description": "عرض كل اشتراكاتك الحالية والسابقة",
+        "noHistory": "لا يوجد سجل اشتراك",
+        "noHistoryDesc": "سيظهر سجل اشتراكك هنا بعد قيامك بالاشتراك",
+        "active": "نشط",
+        "expired": "منتهي الصلاحية",
+        "purchased": "تم الشراء في"
       },
       "payments": {
         "title": "سجل المدفوعات",
-        "description": "عرض جميع معاملات الدفع"
+        "description": "عرض جميع معاملات الدفع",
+        "totalSpent": "إجمالي المصروفات",
+        "noPayments": "لا يوجد سجل مدفوعات",
+        "noPaymentsDesc": "سيظهر سجل مدفوعاتك هنا بعد قيام بعملية شراء",
+        "date": "التاريخ",
+        "package": "الباقة",
+        "method": "الطريقة",
+        "reference": "المرجع",
+        "amount": "المبلغ",
+        "status": "الحالة",
+        "creditCard": "بطاقة ائتمان",
+        "debitCard": "بطاقة خصم",
+        "bankTransfer": "تحويل بنكي",
+        "cash": "نقداً",
+        "paid": "مدفوع"
       }
     },
     "nav": {
@@ -263,7 +262,9 @@
         "dobRequired": "تاريخ الميلاد مطلوب",
         "countryRequired": "بلد الإقامة مطلوب",
         "nationalityRequired": "يرجى اختيار جنسية واحدة على الأقل",
+        "nationalityLimit": "يمكنك اختيار حتى جنسيتين",
         "ethnicityRequired": "يرجى اختيار أصل واحد على الأقل",
+        "ethnicityLimit": "يمكنك اختيار حتى أصلين",
         "saveFailed": "تعذر تحديث الملف"
       },
       "fields": {
@@ -278,9 +279,11 @@
         "gender": "النوع",
         "country": "بلد الإقامة",
         "nationalities": "الجنسيات",
-        "nationalitiesDescription": "اختر جنسية أو أكثر",
+        "nationalitiesDescription": "يمكنك اختيار حتى جنسيتين",
+        "nationality": "اختر الجنسية",
         "ethnicities": "الأصول",
-        "ethnicitiesDescription": "اختر أصلاً أو أكثر"
+        "ethnicitiesDescription": "يمكنك اختيار حتى أصلين",
+        "ethnicity": "اختر الأصل"
       },
       "placeholders": {
         "firstName": "أحمد",
@@ -337,79 +340,6 @@
         "saveFailed": "تعذر تحديث بيانات المظهر"
       },
       "success": "تم تحديث بيانات المظهر"
-    },
-    "billing": {
-      "currentPlanTitle": "الخطة الحالية",
-      "currentPlanDescription": "إدارة الاشتراك والفوترة",
-      "badge": "الخطة الحالية",
-      "actions": {
-        "current": "الخطة الحالية",
-        "upgrade": "ترقية"
-      },
-      "plans": {
-        "free": {
-          "name": "مجانية",
-          "period": "مدى الحياة",
-          "features": {
-            "basicProfile": "ملف أساسي",
-            "projects": "5 مشاريع",
-            "support": "دعم مجتمعي",
-            "storage": "1 غيغابايت مساحة"
-          }
-        },
-        "pro": {
-          "name": "احترافية",
-          "period": "شهرياً",
-          "features": {
-            "advancedProfile": "ملف متقدم",
-            "projects": "مشاريع غير محدودة",
-            "support": "دعم أولوية",
-            "storage": "50 غيغابايت مساحة",
-            "analytics": "تحليلات"
-          }
-        },
-        "enterprise": {
-          "name": "مؤسسات",
-          "period": "شهرياً",
-          "features": {
-            "everything": "كل ما في الاحترافية",
-            "branding": "هوية مخصصة",
-            "support": "دعم مخصص",
-            "storage": "500 غيغابايت مساحة",
-            "api": "وصول API",
-            "collaboration": "تعاون الفرق"
-          }
-        }
-      },
-      "paymentMethod": {
-        "title": "طريقة الدفع",
-        "cardLabel": "Visa منتهية بـ 4242",
-        "expires": "تنتهي في 12/2025",
-        "update": "تحديث"
-      },
-      "history": {
-        "title": "سجل الفواتير",
-        "status": {
-          "paid": "مدفوع"
-        },
-        "entries": {
-          "first": {
-            "date": "1 نوفمبر 2024",
-            "invoice": "#INV-001",
-            "amount": "$0.00"
-          },
-          "second": {
-            "date": "1 أكتوبر 2024",
-            "invoice": "#INV-002",
-            "amount": "$0.00"
-          },
-          "third": {
-            "date": "1 سبتمبر 2024",
-            "invoice": "#INV-003",
-            "amount": "$0.00"
-          }
-        }
-      }
     },
     "notifications": {
       "title": "تفضيلات الإشعارات",

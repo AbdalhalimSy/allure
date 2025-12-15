@@ -3,6 +3,7 @@
 import { Payment } from '@/types/subscription';
 import { Receipt, CreditCard } from 'lucide-react';
 import { format } from 'date-fns';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface PaymentHistoryTableProps {
   payments: Payment[];
@@ -10,16 +11,18 @@ interface PaymentHistoryTableProps {
 }
 
 export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTableProps) {
+  const { t } = useI18n();
+  
   const getPaymentMethodIcon = () => {
     return <CreditCard className="h-4 w-4" />;
   };
 
   const getPaymentMethodLabel = (method: string) => {
     const labels: Record<string, string> = {
-      credit_card: 'Credit Card',
-      debit_card: 'Debit Card',
-      bank_transfer: 'Bank Transfer',
-      cash: 'Cash',
+      credit_card: t('account.billing.payments.creditCard'),
+      debit_card: t('account.billing.payments.debitCard'),
+      bank_transfer: t('account.billing.payments.bankTransfer'),
+      cash: t('account.billing.payments.cash'),
       other: 'Other',
     };
     return labels[method] || method;
@@ -29,9 +32,9 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
     return (
       <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">
         <Receipt className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-4 text-lg font-semibold text-gray-900">No Payment History</h3>
+        <h3 className="mt-4 text-lg font-semibold text-gray-900">{t('account.billing.payments.noPayments')}</h3>
         <p className="mt-2 text-sm text-gray-600">
-          Your payment history will appear here once you make a purchase
+          {t('account.billing.payments.noPaymentsDesc')}
         </p>
       </div>
     );
@@ -40,7 +43,7 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
   return (
     <div className="space-y-4">
       <div className="rounded-lg bg-linear-to-br from-primary to-primary/80 p-6 text-white">
-        <p className="text-sm font-medium opacity-90">Total Spent</p>
+        <p className="text-sm font-medium opacity-90">{t('account.billing.payments.totalSpent')}</p>
         <p className="mt-2 text-3xl font-bold">{totalSpent.toFixed(2)} AED</p>
       </div>
 
@@ -50,19 +53,19 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-700">
-                  Date
+                  {t('account.billing.payments.date')}
                 </th>
                 <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-700">
-                  Package
+                  {t('account.billing.payments.package')}
                 </th>
                 <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-700">
-                  Method
+                  {t('account.billing.payments.method')}
                 </th>
                 <th className="px-6 py-3 text-start text-xs font-semibold uppercase tracking-wider text-gray-700">
-                  Reference
+                  {t('account.billing.payments.reference')}
                 </th>
                 <th className="px-6 py-3 text-end text-xs font-semibold uppercase tracking-wider text-gray-700">
-                  Amount
+                  {t('account.billing.payments.amount')}
                 </th>
                 <th className="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-700">
                   Status
@@ -95,7 +98,7 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
-                      {payment.status}
+                      {t('account.billing.payments.paid')}
                     </span>
                   </td>
                 </tr>

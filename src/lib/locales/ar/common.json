@@ -13,6 +13,7 @@
     "select": "اختر...",
     "search": "بحث...",
     "noResults": "لا توجد نتائج",
+    "maxSelected": "يمكنك اختيار حتى {{count}}",
     "selectDate": "اختر التاريخ",
     "today": "اليوم",
     "clear": "مسح"
@@ -29,6 +30,7 @@
     "manageAccount": "إدارة الحساب",
     "logout": "تسجيل الخروج",
     "jobs": "الوظائف",
+    "appliedJobs": "الوظائف المتقدمة",
     "findTalent": "العثور على المواهب",
     "faq": "الأسئلة الشائعة"
   },
@@ -79,7 +81,11 @@
     "searchTalents": "ابحث عن المواهب...",
     "resetAllFilters": "إعادة تعيين جميع المرشحات",
     "min": "الحد الأدنى",
-    "max": "الحد الأقصى"
+    "max": "الحد الأقصى",
+    "allGenders": "جميع الأجناس",
+    "male": "ذكر",
+    "female": "أنثى",
+    "other": "آخر"
   },
   "forms": {
     "selectHairColor": "اختر لون الشعر",
@@ -131,6 +137,12 @@
     "pants": "بنطال",
     "gender": "الجنس",
     "height": "الارتفاع",
+    "weight": "الوزن",
+    "hairLength": "طول الشعر",
+    "pantsSize": "حجم البنطال",
+    "tshirtSize": "حجم قميص T",
+    "tattoos": "الوشوم",
+    "piercings": "الثقوب",
     "background": "الخلفية",
     "location": "الموقع",
     "professions": "المهن",

@@ -28,10 +28,34 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const profileIdNum = Number(profileId);
+    if (!Number.isInteger(profileIdNum) || profileIdNum < 1) {
+      return NextResponse.json(
+        { status: "error", message: "profile_id must be a positive integer", data: null },
+        { status: 422 }
+      );
+    }
+
+    const perPageNum = Number(perPage);
+    if (!Number.isInteger(perPageNum) || perPageNum < 1 || perPageNum > 100) {
+      return NextResponse.json(
+        { status: "error", message: "per_page must be an integer between 1 and 100", data: null },
+        { status: 422 }
+      );
+    }
+
+    const validStatuses = ["pending", "shortlisted", "rejected", "selected"];
+    if (applicationStatus && !validStatuses.includes(applicationStatus)) {
+      return NextResponse.json(
+        { status: "error", message: "application_status must be one of pending, shortlisted, rejected, selected", data: null },
+        { status: 422 }
+      );
+    }
+
     // Build query parameters
     const queryParams = new URLSearchParams({
-      profile_id: profileId,
-      per_page: perPage,
+      profile_id: profileIdNum.toString(),
+      per_page: perPageNum.toString(),
       page: page,
     });
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Talent } from "@/types/talent";
 import { MapPin, Ruler, Sparkles, TrendingUp } from "lucide-react";
 import AccentTag from "@/components/ui/AccentTag";
+import { useI18n } from "@/contexts/I18nContext";
 
 // Re-export Talent type for convenience
 export type { Talent };
@@ -12,6 +13,7 @@ interface TalentCardProps {
 }
 
 export default function TalentCard({ talent }: TalentCardProps) {
+  const { t } = useI18n();
   const { profile, professions, media } = talent;
   
   // Get featured image or first photo
@@ -76,7 +78,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
                 
                 <div className="flex flex-wrap items-center gap-2 text-xs text-white/90">
                   <div className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 backdrop-blur-sm">
-                    <span className="capitalize">{profile.gender}</span>
+                    <span>{t(`filters.${profile.gender}`)}</span>
                     <span>•</span>
                     <span>{profile.age}</span>
                   </div>
