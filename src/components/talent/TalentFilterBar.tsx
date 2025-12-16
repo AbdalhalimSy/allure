@@ -316,11 +316,11 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                     <SingleSelect
                       searchable={false}
                       options={[
-                        { value: "", label: "Default" },
-                        { value: "age", label: "Age" },
-                        { value: "height", label: "Height" },
-                        { value: "created_at", label: "Newest" },
-                        { value: "instagram_followers", label: "Followers" },
+                        { value: "", label: t('filters.sortDefault') || 'Default' },
+                        { value: "age", label: t('filters.sortAge') || 'Age' },
+                        { value: "height", label: t('filters.sortHeight') || 'Height' },
+                        { value: "created_at", label: t('filters.sortNewest') || 'Newest' },
+                        { value: "instagram_followers", label: t('filters.sortFollowers') || 'Followers' },
                       ]}
                       value={local.sort_by || ""}
                       onChange={(val) => update({ sort_by: val && val !== "" ? (val as "age" | "height" | "created_at" | "instagram_followers" | "first_name") : undefined })}
@@ -329,8 +329,8 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                     <SingleSelect
                       searchable={false}
                       options={[
-                        { value: "asc", label: "↑ Asc" },
-                        { value: "desc", label: "↓ Desc" },
+                        { value: "asc", label: t('filters.sortAsc') || '↑ Asc' },
+                        { value: "desc", label: t('filters.sortDesc') || '↓ Desc' },
                       ]}
                       value={local.sort_order || "asc"}
                       onChange={(val) => update({ sort_order: val ? (val as "asc" | "desc") : "asc" })}

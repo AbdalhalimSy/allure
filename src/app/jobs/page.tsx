@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
@@ -9,7 +9,7 @@ import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
 import Loader from "@/components/ui/Loader";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Job, JobFilters, JobsResponse } from "@/types/job";
-import { Briefcase, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { Briefcase, AlertCircle } from "lucide-react";
 
 export default function JobsPage() {
   const pathname = usePathname();
@@ -17,36 +17,47 @@ export default function JobsPage() {
   const { locale, t } = useI18n();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<JobFilters>({});
   const [meta, setMeta] = useState({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
+  const [hasMore, setHasMore] = useState(true);
   const abortRef = useRef<AbortController | null>(null);
+  const observerTargetRef = useRef<HTMLDivElement>(null);
 
   // Reset jobs and show loading when pathname changes (navigation)
   useEffect(() => {
     setJobs([]);
     setLoading(true);
+    setHasMore(true);
+    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   }, [pathname]);
 
-  // Fetch jobs when filters or profile changes
+  // Fetch jobs when filters or profile changes (first page)
   useEffect(() => {
     if (activeProfileId) {
-      fetchJobs();
+      fetchJobs(1, true);
     }
   }, [filters, activeProfileId, locale]);
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async (page: number = 1, reset: boolean = false) => {
     if (!activeProfileId) {
       setError(t("jobs.errors.profileNotLoaded"));
-      setLoading(false);
+      if (reset) setLoading(false);
       return;
     }
 
     try {
       if (abortRef.current) abortRef.current.abort();
       abortRef.current = new AbortController();
-      setLoading(true);
-      setError(null);
+      
+      if (reset) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+      
+      if (page === 1) setError(null);
 
       const params = new URLSearchParams();
       
@@ -66,8 +77,9 @@ export default function JobsPage() {
         }
       });
       
-      // Add per_page if not already set
-      if (!params.has("per_page")) params.append("per_page", String(meta.per_page));
+      // Add page and per_page
+      params.append("page", String(page));
+      params.append("per_page", String(meta.per_page));
       
       const response = await fetch(`/api/jobs?${params.toString()}`, { 
         signal: abortRef.current.signal,
@@ -84,31 +96,58 @@ export default function JobsPage() {
       
       const result: JobsResponse = await response.json();
       if (result.status === "success" || result.status === true) {
-        setJobs(result.data);
-        if (result.meta) setMeta(result.meta);
+        if (reset) {
+          setJobs(result.data);
+          setMeta(result.meta || { current_page: 1, per_page: 12, total: 0, last_page: 1 });
+          setHasMore((result.meta?.current_page || 1) < (result.meta?.last_page || 1));
+        } else {
+          setJobs(prev => [...prev, ...result.data]);
+          setMeta(result.meta || { current_page: page, per_page: 12, total: 0, last_page: 1 });
+          setHasMore((result.meta?.current_page || page) < (result.meta?.last_page || 1));
+        }
       } else {
         throw new Error(result.message || t("jobs.errors.loadFailed"));
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
-      setError(err instanceof Error ? err.message : t("jobs.errors.generic"));
+      if (reset) {
+        setError(err instanceof Error ? err.message : t("jobs.errors.generic"));
+      }
       console.error("Error fetching jobs:", err);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
-  };
+  }, [activeProfileId, filters, locale, meta.per_page, t]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading && jobs.length > 0) {
+          fetchJobs(meta.current_page + 1, false);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    if (observerTargetRef.current) {
+      observer.observe(observerTargetRef.current);
+    }
+
+    return () => {
+      if (observerTargetRef.current) {
+        observer.unobserve(observerTargetRef.current);
+      }
+    };
+  }, [hasMore, loadingMore, loading, fetchJobs, meta.current_page, jobs.length]);
 
   const handleFilterChange = (next: JobFilters) => {
-    setFilters({ ...next, page: 1 });
+    setFilters(next);
   };
   
   const handleReset = () => { 
     setFilters({}); 
-  };
-  
-  const handlePageChange = (page: number) => { 
-    setFilters({ ...filters, page }); 
-    window.scrollTo({ top: 0, behavior: "smooth" }); 
   };
 
   return (
@@ -165,7 +204,7 @@ export default function JobsPage() {
               <div className="mb-4 flex justify-center"><div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20"><AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" /></div></div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{t("jobs.failedToLoad")}</h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
-              <button onClick={fetchJobs} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">{t("jobs.tryAgain")}</button>
+              <button onClick={() => fetchJobs(1, true)} className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">{t("jobs.tryAgain")}</button>
             </SurfaceCard>
           </div>
         ) : jobs.length === 0 ? (
@@ -182,33 +221,28 @@ export default function JobsPage() {
             <div className="mb-6 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{meta.total} {meta.total === 1 ? t("jobs.jobSingular") : t("jobs.jobPlural")} {t("jobs.found")}</h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t("jobs.showing")} {((meta.current_page - 1) * meta.per_page) + 1} - {Math.min(meta.current_page * meta.per_page, meta.total)} {t("jobs.of")} {meta.total}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t("jobs.showing")} {jobs.length} {t("jobs.of")} {meta.total}</p>
               </div>
-              {loading && (<div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><Loader className="h-4 w-4" /><span>{t("jobs.updating")}</span></div>)}
+              {loadingMore && (<div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"><Loader className="h-4 w-4" /><span>{t("jobs.updating")}</span></div>)}
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {jobs.map(job => (<JobCard key={job.id} job={job} />))}
             </div>
-            {meta.last_page > 1 && (
-              <div className="mt-12 flex flex-col items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <button onClick={() => handlePageChange(meta.current_page - 1)} disabled={meta.current_page === 1} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <ChevronLeft className="h-5 w-5" /><span className="relative z-10">{t("jobs.previous")}</span><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </button>
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: Math.min(5, meta.last_page) }, (_, i) => {
-                      let pageNum;
-                      if (meta.last_page <= 5) pageNum = i + 1; else if (meta.current_page <= 3) pageNum = i + 1; else if (meta.current_page >= meta.last_page - 2) pageNum = meta.last_page - 4 + i; else pageNum = meta.current_page - 2 + i;
-                      return (
-                        <button key={pageNum} onClick={() => handlePageChange(pageNum)} className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${pageNum === meta.current_page ? 'border-[#c49a47] bg-linear-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg' : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'}`}>{pageNum}</button>
-                      );
-                    })}
-                  </div>
-                  <button onClick={() => handlePageChange(meta.current_page + 1)} disabled={meta.current_page === meta.last_page} className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300">
-                    <span className="relative z-10">{t("jobs.next")}</span><ChevronRight className="h-5 w-5" /><div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </button>
+            
+            {/* Infinite scroll trigger point */}
+            {hasMore && (
+              <div ref={observerTargetRef} className="mt-12 flex justify-center py-8">
+                <div className="flex items-center gap-2">
+                  <Loader className="h-5 w-5 animate-spin text-[#c49a47]" />
+                  <span className="text-gray-600 dark:text-gray-400">{t("jobs.loading")}</span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t("jobs.page")} {meta.current_page} {t("jobs.of")} {meta.last_page}</p>
+              </div>
+            )}
+            
+            {/* End of results message */}
+            {!hasMore && jobs.length > 0 && (
+              <div className="mt-12 py-8 text-center">
+                <p className="text-gray-600 dark:text-gray-400">{t("jobs.noMoreJobs")}</p>
               </div>
             )}
           </>

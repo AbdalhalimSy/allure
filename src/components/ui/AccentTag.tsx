@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 const variantClasses = {
   primary:
-    "bg-[#c49a47]/10 border-[#c49a47]/30 text-[#c49a47] shadow-[0_0_1px_rgba(196,154,71,0.6)]",
+    "bg-[#c49a47]/10 border-[#c49a47]/30 text-white shadow-[0_0_1px_rgba(196,154,71,0.6)]",
   neutral:
     "bg-white/10 border-white/20 text-gray-800 dark:text-gray-200 shadow-none",
 };
@@ -23,7 +23,7 @@ export default function AccentTag({
   return (
     <span
       className={[
-        "inline-flex items-center gap-2 rounded-full border px-4 py-1 text-sm font-medium tracking-tight uppercase backdrop-blur-md transition-all duration-200 ease-in-out hover:scale-105",
+        "inline-flex items-center gap-2 bg-[#c49a47]/40 rounded-full border px-4 py-1 text-sm font-medium tracking-tight uppercase backdrop-blur-md transition-all duration-200 ease-in-out hover:scale-105",
         variantClasses[variant],
         className,
       ]

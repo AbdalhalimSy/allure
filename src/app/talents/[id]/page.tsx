@@ -105,13 +105,13 @@ export default function TalentDetailPage() {
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center dark:border-red-800 dark:bg-red-950/20">
           <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
-          <h3 className="mb-2 text-lg font-semibold text-red-900 dark:text-red-200">Failed to Load Talent</h3>
+          <h3 className="mb-2 text-lg font-semibold text-red-900 dark:text-red-200">{t("talents.failedToLoad")}</h3>
           <p className="mb-4 text-sm text-red-700 dark:text-red-300">{error}</p>
           <button
             onClick={() => router.push("/talents")}
             className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
-            Back to Talents
+            {t("talents.backToTalents")}
           </button>
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function TalentDetailPage() {
           className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] dark:text-gray-400"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Talents
+          {t("talents.backToTalents")}
         </button>
 
         {/* Header Section (mirrors Job header card) */}
@@ -144,7 +144,7 @@ export default function TalentDetailPage() {
                 <div className="flex flex-wrap items-center gap-3 text-gray-600 dark:text-gray-400">
                   <span className="flex items-center gap-1.5 text-sm">
                     <Calendar className="h-4 w-4" />
-                    {profile.age} years
+                    {profile.age} {t("talents.years")}
                   </span>
                   <span className="hidden text-gray-400 sm:inline">•</span>
                   <span className="flex items-center gap-1.5 text-sm">
@@ -184,21 +184,21 @@ export default function TalentDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Ruler className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Height</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("talents.height")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">{profile.height} cm</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Globe className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Nationalities</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("talents.nationalities")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">{profile.nationalities.length}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Professions</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("talents.professions")}</p>
                   <p className="font-semibold text-gray-900 dark:text-white">{professions.length}</p>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function TalentDetailPage() {
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-4 flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-[#c49a47]" />
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Portfolio</h2>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("talents.portfolio")}</h2>
               </div>
               <div className="grid gap-4 lg:grid-cols-2">
                 {/* Main Photo */}
@@ -229,14 +229,14 @@ export default function TalentDetailPage() {
                     />
                     {selectedPhoto.featured_image && (
                       <div className="absolute start-3 top-3">
-                        <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>Featured</AccentTag>
+                        <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>{t("talents.featured")}</AccentTag>
                       </div>
                     )}
                     <button
                       onClick={() => setLightboxOpen(true)}
                       className="absolute bottom-3 end-3 flex items-center gap-2 rounded-lg bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/90"
                     >
-                      <Maximize2 className="h-4 w-4" /> View Full
+                      <Maximize2 className="h-4 w-4" /> {t("talents.viewFull")}
                     </button>
                   </div>
                 )}
@@ -317,11 +317,11 @@ export default function TalentDetailPage() {
             {/* Background */}
             {(profile.nationalities.length > 0 || profile.ethnicities.length > 0) && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Background</h2>
+                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">{t("talents.background")}</h2>
                 <div className="space-y-6">
                   {profile.nationalities.length > 0 && (
                     <div>
-                      <div className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Nationalities</div>
+                      <div className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">{t("talents.nationalities")}</div>
                       <div className="flex flex-wrap gap-2">
                         {profile.nationalities.map((nat) => (
                           <AccentTag key={nat.id}>{nat.name}</AccentTag>
@@ -331,7 +331,7 @@ export default function TalentDetailPage() {
                   )}
                   {profile.ethnicities.length > 0 && (
                     <div>
-                      <div className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Ethnicities</div>
+                      <div className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">{t("talents.ethnicities")}</div>
                       <div className="flex flex-wrap gap-2">
                         {profile.ethnicities.map((eth) => (
                           <AccentTag key={eth.id}>{eth.name}</AccentTag>
@@ -348,7 +348,7 @@ export default function TalentDetailPage() {
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <div className="mb-4 flex items-center gap-2">
                   <PlayCircle className="h-5 w-5 text-[#c49a47]" />
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Videos</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("talents.videos")}</h2>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                   {media.videos.map((video) => (
@@ -367,7 +367,7 @@ export default function TalentDetailPage() {
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Location</h3>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t("talents.location")}</h3>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
@@ -380,7 +380,7 @@ export default function TalentDetailPage() {
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <div className="mb-4 flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-[#c49a47]" />
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">Professions</h3>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t("talents.professions")}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {professions.map((profession) => (
@@ -398,7 +398,7 @@ export default function TalentDetailPage() {
             {/* Specializations */}
             {sub_professions.length > 0 && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Specializations</h3>
+                <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">{t("talents.specializations")}</h3>
                 <div className="flex flex-wrap gap-2">
                   {sub_professions.map((subProf) => (
                     <span key={subProf.id} className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
@@ -412,7 +412,7 @@ export default function TalentDetailPage() {
             {/* Social Summary */}
             {(profile.instagram_followers || profile.youtube_followers || profile.tiktok_followers || profile.facebook_followers) && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Social Media</h3>
+                <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">{t("talents.socialMedia")}</h3>
                 <div className="space-y-4">
                   {profile.instagram_followers && profile.instagram_followers > 0 && (
                     <div className="flex items-center justify-between">

@@ -21,7 +21,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
   const photoUrl = featuredPhoto?.url || "/placeholder-avatar.jpg";
   
   // Get first profession name
-  const primaryProfession = professions[0]?.name || "Talent";
+  const primaryProfession = professions[0]?.name || t("talents.talentSingular");
   
   // Calculate social reach
   const totalFollowers = (profile.instagram_followers || 0) + 

@@ -389,3 +389,111 @@ curl: (28) Operation timeout
 - The test card is only for development/staging
 - Payment processing may take a few seconds
 - Order IDs are unique per transaction
+
+---
+
+# Talents API Testing with cURL
+
+These examples hit the frontend proxy (Next.js) so the API key is handled server-side. You only need to send `Accept-Language` and, if required, `Authorization`.
+
+## Base
+
+```
+Frontend Base: http://127.0.0.1:3000/api
+Language: en or ar via Accept-Language header
+```
+
+## 1) List Talents (basic)
+
+```bash
+curl -X GET "http://127.0.0.1:3000/api/talents?page=1&per_page=2" \
+  -H "Accept: application/json" \
+  -H "Accept-Language: en" | jq .
+```
+
+Expected shape:
+
+```json
+{
+  "status": "success",
+  "data": [ ... ],
+  "meta": {
+    "current_page": 1,
+    "per_page": 2,
+    "total": 12,
+    "last_page": 6
+  }
+}
+```
+
+## 2) Filters (gender, age, height, location, appearance)
+
+All filters are optional. Common parameters:
+
+- `gender`: male | female | other
+- `min_age` / `max_age`: number
+- `min_height` / `max_height`: number (cm)
+- `profession_ids`, `country_ids`, `nationality_ids`, `ethnicity_ids`, `hair_color_ids`, `eye_color_ids`: comma-separated IDs
+- `search`: free text
+- `sort_by`: first_name | age | height | created_at | instagram_followers
+- `sort_order`: asc | desc
+
+Examples:
+
+```bash
+# Gender + age range + sorting
+curl -s "http://127.0.0.1:3000/api/talents?page=1&per_page=2&gender=female&min_age=18&max_age=40&sort_by=age&sort_order=desc" \
+  -H "Accept-Language: en" | jq '.meta, (.data | length)'
+
+# By professions and countries
+curl -s "http://127.0.0.1:3000/api/talents?page=1&per_page=12&profession_ids=1,3&country_ids=784" \
+  -H "Accept-Language: en" | jq '.status, .meta'
+
+# Text search
+curl -s "http://127.0.0.1:3000/api/talents?search=layla&per_page=5" \
+  -H "Accept-Language: en" | jq '.data[0].profile.first_name'
+```
+
+## 3) Authenticated Requests (optional)
+
+If the backend personalizes results when authenticated, include the bearer token. First login via the frontend route:
+
+```bash
+TOKEN=$(curl -s -X POST "http://127.0.0.1:3000/api/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"layla.hassan@example.com","password":"password"}' | jq -r '.data.token')
+
+echo "Token: ${TOKEN:0:12}..."
+```
+
+Then call with `Authorization`:
+
+```bash
+curl -s "http://127.0.0.1:3000/api/talents?page=1&per_page=2" \
+  -H "Accept-Language: en" \
+  -H "Authorization: Bearer $TOKEN" | jq '.status, .meta'
+```
+
+## 4) Talent Detail
+
+The backend currently does not expose a dedicated `GET /api/talents/:id` endpoint (direct calls return "route not found"). The frontend detail page resolves a profile by listing talents and selecting by `profile.id`.
+
+Example using `jq` to find a specific profile:
+
+```bash
+ID=291
+curl -s "http://127.0.0.1:3000/api/talents?per_page=100" -H "Accept-Language: en" \
+  | jq ".data[] | select(.profile.id == $ID)" --argjson ID $ID
+```
+
+## 5) Direct Backend Calls (optional)
+
+If you must hit the backend directly (bypassing Next.js), include the API key header:
+
+```bash
+curl -X GET "http://127.0.0.1:8000/api/talents?page=1&per_page=2" \
+  -H "Accept: application/json" \
+  -H "V-API-KEY: 51ccefd30487aef513344d7dff64c6422be3ad7b32c4516efd067eaef17b617d" | jq .
+```
+
+Note: `/api/talents/:id` is not available on the backend; use listing + filter-by-id as shown above.

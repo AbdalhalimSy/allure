@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import TalentCard from "@/components/talent/TalentCard";
@@ -9,18 +9,14 @@ import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
 import Loader from "@/components/ui/Loader";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import { Talent, TalentFilters, TalentsResponse } from "@/types/talent";
-import { 
-  Users, 
-  AlertCircle, 
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
+import { Users, AlertCircle } from "lucide-react";
 
 export default function TalentsPage() {
   const pathname = usePathname();
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<TalentFilters>({});
   const [meta, setMeta] = useState({
@@ -29,27 +25,39 @@ export default function TalentsPage() {
     total: 0,
     last_page: 1,
   });
+  const [hasMore, setHasMore] = useState(true);
   const abortRef = useRef<AbortController | null>(null);
+  const observerTargetRef = useRef<HTMLDivElement>(null);
 
   // Reset talents and show loading when pathname changes (navigation)
   useEffect(() => {
     setTalents([]);
     setLoading(true);
+    setHasMore(true);
+    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   }, [pathname]);
 
   useEffect(() => {
-    fetchTalents();
+    if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
+      fetchTalents(1, true);
+    }
   }, [filters, locale]);
 
-  const fetchTalents = async () => {
+  const fetchTalents = useCallback(async (page: number = 1, reset: boolean = false) => {
     try {
       // Abort any in-flight request to avoid race conditions
       if (abortRef.current) {
         abortRef.current.abort();
       }
       abortRef.current = new AbortController();
-      setLoading(true);
-      setError(null);
+
+      if (reset) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+
+      if (page === 1) setError(null);
 
       // Build query string from filters
       const params = new URLSearchParams();
@@ -60,10 +68,9 @@ export default function TalentsPage() {
         }
       });
 
-      // Set default per_page if not specified
-      if (!params.has("per_page")) {
-        params.append("per_page", "12");
-      }
+      // Add page and per_page
+      params.append("page", String(page));
+      params.append("per_page", "12");
 
       const response = await fetch(`/api/talents?${params.toString()}`, {
         signal: abortRef.current.signal,
@@ -79,8 +86,15 @@ export default function TalentsPage() {
       const result: TalentsResponse = await response.json();
 
       if (result.status === "success") {
-        setTalents(result.data);
-        setMeta(result.meta);
+        if (reset) {
+          setTalents(result.data);
+          setMeta(result.meta || { current_page: 1, per_page: 12, total: 0, last_page: 1 });
+          setHasMore((result.meta?.current_page || 1) < (result.meta?.last_page || 1));
+        } else {
+          setTalents(prev => [...prev, ...result.data]);
+          setMeta(result.meta || { current_page: page, per_page: 12, total: 0, last_page: 1 });
+          setHasMore((result.meta?.current_page || page) < (result.meta?.last_page || 1));
+        }
       } else {
         throw new Error(result.message || "Failed to load talents");
       }
@@ -89,24 +103,44 @@ export default function TalentsPage() {
       if (err instanceof DOMException && err.name === "AbortError") {
         return;
       }
-      setError(err instanceof Error ? err.message : "An error occurred");
+      if (reset) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      }
       console.error("Error fetching talents:", err);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
-  };
+  }, [filters, locale]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading && talents.length > 0) {
+          fetchTalents(meta.current_page + 1, false);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    if (observerTargetRef.current) {
+      observer.observe(observerTargetRef.current);
+    }
+
+    return () => {
+      if (observerTargetRef.current) {
+        observer.unobserve(observerTargetRef.current);
+      }
+    };
+  }, [hasMore, loadingMore, loading, fetchTalents, meta.current_page, talents.length]);
 
   const handleFilterChange = (newFilters: TalentFilters) => {
-    setFilters({ ...newFilters, page: 1 }); // Reset to page 1 on filter change
+    setFilters(newFilters);
   };
 
   const handleReset = () => {
     setFilters({});
-  };
-
-  const handlePageChange = (page: number) => {
-    setFilters({ ...filters, page });
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -125,11 +159,13 @@ export default function TalentsPage() {
               </div>
             </div>
             <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white md:text-6xl">
-              Discover Our <span className="text-[#c49a47]">Talents</span>
+              {t("talents.heroTitlePrefix")}
+              <span className="text-[#c49a47]">{t("talents.heroTitleHighlight")}</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-              Explore our curated roster of exceptional professionals ready to bring your vision to life.
-              From models to actors, find the perfect talent for your next project.
+              {t("talents.heroSubtitleLine1")}
+              <br />
+              {t("talents.heroSubtitleLine2")}
             </p>
           </div>
         </div>
@@ -157,7 +193,7 @@ export default function TalentsPage() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                 <Loader className="h-4 w-4" />
-                <span>Loading talents...</span>
+                <span>{t("talents.loading")}</span>
               </div>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -176,14 +212,14 @@ export default function TalentsPage() {
                 </div>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                Failed to Load Talents
+                {t("talents.failedToLoad")}
               </h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
               <button
-                onClick={fetchTalents}
+                onClick={() => fetchTalents(1, true)}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
-                Try Again
+                {t("talents.tryAgain")}
               </button>
             </SurfaceCard>
           </div>
@@ -197,16 +233,16 @@ export default function TalentsPage() {
                 </div>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-                No Talents Found
+                {t("talents.noTalentsFound")}
               </h3>
               <p className="mb-8 text-gray-600 dark:text-gray-400">
-                We couldn't find any talents matching your criteria. Try adjusting your filters to see more results.
+                {t("talents.noTalentsHint")}
               </p>
               <button
                 onClick={handleReset}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
-                Clear All Filters
+                {t("talents.clearFilters")}
               </button>
             </SurfaceCard>
           </div>
@@ -217,16 +253,16 @@ export default function TalentsPage() {
             <div className="mb-6 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {meta.total} {meta.total === 1 ? 'Talent' : 'Talents'} Found
+                  {meta.total} {meta.total === 1 ? t("talents.talentSingular") : t("talents.talentPlural")} {t("talents.found")}
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Showing {((meta.current_page - 1) * meta.per_page) + 1} - {Math.min(meta.current_page * meta.per_page, meta.total)} of {meta.total}
+                  {t("talents.showing")} {talents.length} {t("talents.of")} {meta.total}
                 </p>
               </div>
-              {loading && (
+              {loadingMore && (
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                   <Loader className="h-4 w-4" />
-                  <span>Updating...</span>
+                  <span>{t("talents.updating")}</span>
                 </div>
               )}
             </div>
@@ -238,65 +274,20 @@ export default function TalentsPage() {
               ))}
             </div>
 
-            {/* Pagination */}
-            {meta.last_page > 1 && (
-              <div className="mt-12 flex flex-col items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => handlePageChange(meta.current_page - 1)}
-                    disabled={meta.current_page === 1}
-                    className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                    <span className="relative z-10">Previous</span>
-                    <div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/0 to-[#c49a47]/10 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </button>
-                  
-                  <div className="flex items-center gap-2">
-                    {/* Page Numbers */}
-                    {Array.from({ length: Math.min(5, meta.last_page) }, (_, i) => {
-                      let pageNum;
-                      if (meta.last_page <= 5) {
-                        pageNum = i + 1;
-                      } else if (meta.current_page <= 3) {
-                        pageNum = i + 1;
-                      } else if (meta.current_page >= meta.last_page - 2) {
-                        pageNum = meta.last_page - 4 + i;
-                      } else {
-                        pageNum = meta.current_page - 2 + i;
-                      }
-                      
-                      return (
-                        <button
-                          key={pageNum}
-                          onClick={() => handlePageChange(pageNum)}
-                          className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all hover:scale-105 ${
-                            pageNum === meta.current_page
-                              ? 'border-[#c49a47] bg-linear-to-br from-[#c49a47] to-[#d4af69] font-bold text-white shadow-lg'
-                              : 'border-gray-200/50 bg-white/90 text-gray-700 backdrop-blur-xl hover:border-[#c49a47]/50 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300'
-                          }`}
-                        >
-                          {pageNum}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <button
-                    onClick={() => handlePageChange(meta.current_page + 1)}
-                    disabled={meta.current_page === meta.last_page}
-                    className="group relative flex items-center gap-2 overflow-hidden rounded-xl border border-gray-200/50 bg-white/90 px-5 py-3 font-medium text-gray-700 backdrop-blur-xl transition-all hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 dark:border-white/10 dark:bg-gray-900/80 dark:text-gray-300"
-                  >
-                    <span className="relative z-10">Next</span>
-                    <ChevronRight className="h-5 w-5" />
-                    <div className="absolute inset-0 bg-linear-to-r from-[#c49a47]/10 to-[#c49a47]/0 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </button>
+            {/* Infinite scroll trigger point */}
+            {hasMore && (
+              <div ref={observerTargetRef} className="mt-12 flex justify-center py-8">
+                <div className="flex items-center gap-2">
+                  <Loader className="h-5 w-5 animate-spin text-[#c49a47]" />
+                  <span className="text-gray-600 dark:text-gray-400">{t("talents.loading")}</span>
                 </div>
-
-                {/* Page Info Text */}
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Page {meta.current_page} of {meta.last_page}
-                </p>
+              </div>
+            )}
+            
+            {/* End of results message */}
+            {!hasMore && talents.length > 0 && (
+              <div className="mt-12 py-8 text-center">
+                <p className="text-gray-600 dark:text-gray-400">{t("talents.noMoreTalents")}</p>
               </div>
             )}
           </>

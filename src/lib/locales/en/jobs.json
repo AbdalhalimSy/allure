@@ -109,6 +109,7 @@
     "previous": "Previous",
     "next": "Next",
     "page": "Page",
+    "noMoreJobs": "No more jobs to load",
     "authRequired": "Sign in to View Jobs",
     "authRequiredDescription": "Create an account or sign in to explore casting calls and apply for opportunities that match your profile.",
     "errors": {
