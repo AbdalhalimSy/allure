@@ -36,7 +36,7 @@ export default function AccountStepper({
       profession: 2,
       experience: 3,
       portfolio: 4,
-      complete_all: 4,
+      complete: 4,
     };
 
     return stepMap[progressStep] ?? currentStep;

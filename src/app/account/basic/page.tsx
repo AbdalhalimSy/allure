@@ -15,7 +15,7 @@ export default function BasicInformationPage() {
 
   // Redirect to profile setup if profile is not complete
   useEffect(() => {
-    if (user?.profile && user.profile.progress_step !== "complete_all") {
+    if (user?.profile && user.profile.progress_step !== "complete") {
       router.replace("/account/profile");
     }
   }, [user?.profile, router]);

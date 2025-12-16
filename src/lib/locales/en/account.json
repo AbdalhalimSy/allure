@@ -103,7 +103,8 @@
         "invalid": "Invalid coupon code",
         "errors": {
           "required": "Coupon code is required",
-          "invalid": "This coupon code is not valid"
+          "invalid": "This coupon code is not valid",
+          "invalidForPackageOrProfile": "Invalid coupon code for this package or profile"
         }
       },
       "order": {
@@ -112,7 +113,8 @@
         "package": "Package",
         "originalPrice": "Original Price",
         "discount": "Discount",
-        "total": "Total"
+        "total": "Total",
+        "youSave": "You save"
       },
       "subscribe": "Subscribe Now",
       "processing": "Processing...",

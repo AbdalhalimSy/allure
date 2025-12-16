@@ -4,33 +4,16 @@ import type {
   ValidateCouponRequest,
   ValidateCouponResponse,
   SubscriptionStatusResponse,
-  CreateSubscriptionRequest,
-  CreateSubscriptionResponse,
   SubscriptionHistoryResponse,
   PaymentHistoryResponse,
 } from '@/types/subscription';
 
 /**
- * Get all available subscription packages (public endpoint)
+ * Get all available subscription packages
  */
 export async function getSubscriptionPackages(): Promise<PackagesResponse> {
-  // Backend currently returns { status: 'success', message: string, data: SubscriptionPackage[] }
-  // Normalize to PackagesResponse { success: boolean, data: { packages: SubscriptionPackage[] } }
-  const response = await apiClient.get('/subscriptions/packages');
-  const raw = response.data;
-  const rawPackages = Array.isArray(raw?.data) ? raw.data : raw?.data?.packages;
-  const packages = (rawPackages || []).map((p: any) => ({
-    id: p.id,
-    name: p.title ?? p.name ?? `Package ${p.id}`,
-    description: p.description ?? '',
-    price: Number(p.price) || 0,
-    duration_in_days: p.duration_in_days ?? p.duration ?? 30,
-    is_active: p.is_active !== undefined ? p.is_active : true,
-  }));
-  return {
-    success: raw?.status ? raw.status === 'success' : !!raw?.success,
-    data: { packages },
-  };
+  const response = await apiClient.get<PackagesResponse>('/subscriptions/packages');
+  return response.data;
 }
 
 /**
@@ -57,19 +40,6 @@ export async function getSubscriptionStatus(
     {
       params: { profile_id: profileId },
     }
-  );
-  return response.data;
-}
-
-/**
- * Create a new subscription after payment is completed
- */
-export async function createSubscription(
-  data: CreateSubscriptionRequest
-): Promise<CreateSubscriptionResponse> {
-  const response = await apiClient.post<CreateSubscriptionResponse>(
-    '/subscriptions/create',
-    data
   );
   return response.data;
 }

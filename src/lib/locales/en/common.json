@@ -7,7 +7,8 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "saveAndContinue": "Save & Continue",
-    "download": "Download"
+    "download": "Download",
+    "code": "Code"
   },
   "ui": {
     "select": "Select...",

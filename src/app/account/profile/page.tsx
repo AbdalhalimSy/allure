@@ -50,7 +50,7 @@ export default function ProfilePage() {
 
   // Redirect to individual tab if profile is complete
   useEffect(() => {
-    if (profileStep === "complete_all") {
+    if (profileStep === "complete") {
       router.replace("/account/basic");
     }
   }, [profileStep, router]);

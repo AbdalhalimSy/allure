@@ -47,7 +47,7 @@ export function PackageCard({
 
         <div className="mb-5">
           <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-            {pkg.name}
+            {pkg.title || pkg.name}
           </h3>
           <div className="mt-2 flex flex-wrap gap-2">
             <span className="inline-flex items-center rounded-full border border-[#c49a47]/30 bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold text-[#c49a47]">

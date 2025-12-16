@@ -42,8 +42,8 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t border-[#c49a47]/30 bg-gray-50 py-12 shadow-inner dark:border-[#c49a47]/20 dark:bg-gray-950">
-      <div className="container mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex flex-col items-center gap-8">
+      <div className="container mx-auto max-w-7xl px-6 lg:px-8" suppressHydrationWarning>
+        <div className="flex flex-col items-center gap-8" suppressHydrationWarning>
           {/* Quick Links */}
           <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {quickLinks.map((link) => (
@@ -58,7 +58,7 @@ export default function Footer() {
           </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6" suppressHydrationWarning>
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (

@@ -7,7 +7,8 @@
     "cancel": "إلغاء",
     "confirm": "تأكيد",
     "saveAndContinue": "احفظ وتابع",
-    "download": "تحميل"
+    "download": "تحميل",
+    "code": "الرمز"
   },
   "ui": {
     "select": "اختر...",

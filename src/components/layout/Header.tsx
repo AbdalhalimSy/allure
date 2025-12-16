@@ -118,8 +118,8 @@ export default function Header() {
   return (
     <>
     <header className="sticky top-0 z-50 border-b border-[#c49a47]/30 bg-white/90 shadow-sm backdrop-blur dark:border-[#c49a47]/20 dark:bg-black/80">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <div className="flex items-center gap-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" suppressHydrationWarning>
+        <div className="flex items-center gap-4" suppressHydrationWarning>
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
@@ -151,7 +151,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4" suppressHydrationWarning>
           <LanguageSwitcher />
           {!isAuthenticated ? (
             <>
@@ -291,6 +291,7 @@ export default function Header() {
           mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMobileMenuOpen(false)}
+        suppressHydrationWarning
       />
 
       {/* Side Drawer */}
@@ -298,10 +299,11 @@ export default function Header() {
         className={`fixed top-0 start-0 z-50 h-full w-80 bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-black md:hidden ${
           mobileMenuOpen ? "translate-x-0" : isRTL ? "translate-x-full" : "-translate-x-full"
         }`}
+        suppressHydrationWarning
       >
-        <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col" suppressHydrationWarning>
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-white/10">
+          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-white/10" suppressHydrationWarning>
             <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
               <Image
                 src="/logo/logo-black.svg"
@@ -323,7 +325,7 @@ export default function Header() {
 
           {/* User Info (if authenticated) */}
           {isAuthenticated && (
-            <div className="border-b border-gray-200 p-6 dark:border-white/10">
+            <div className="border-b border-gray-200 p-6 dark:border-white/10" suppressHydrationWarning>
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-gray-100 dark:border-white/20 dark:bg-white/10">
                   {avatarSrc && !avatarError ? (
@@ -412,7 +414,7 @@ export default function Header() {
 
           {/* Navigation Links */}
           <nav className="flex-1 overflow-y-auto px-6 py-4">
-            <div className="space-y-1">
+            <div className="space-y-1" suppressHydrationWarning>
               {navItems.map((item, index) => (
                 <Link
                   key={item.href}
@@ -431,13 +433,13 @@ export default function Header() {
           </nav>
 
           {/* Footer Actions */}
-          <div className="border-t border-gray-200 p-6 dark:border-white/10">
-            <div className="mb-4 flex items-center justify-center">
+          <div className="border-t border-gray-200 p-6 dark:border-white/10" suppressHydrationWarning>
+            <div className="mb-4 flex items-center justify-center" suppressHydrationWarning>
               <LanguageSwitcher />
             </div>
             
             {!isAuthenticated ? (
-              <div className="space-y-3">
+              <div className="space-y-3" suppressHydrationWarning>
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}

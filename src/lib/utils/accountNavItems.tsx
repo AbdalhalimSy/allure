@@ -17,7 +17,7 @@ import {
 } from "./profileCompletion";
 
 export const getAccountNavItems = (profile: ProfileData | undefined) => {
-  const isProfileComplete = profile?.progress_step === "complete_all";
+  const isProfileComplete = profile?.progress_step === "complete";
 
   if (isProfileComplete) {
     // Show individual profile steps as tabs when profile is complete

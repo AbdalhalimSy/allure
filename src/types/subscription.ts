@@ -2,19 +2,33 @@
 
 export interface SubscriptionPackage {
   id: number;
-  name: string;
+  title: string;
+  title_en?: string;
+  title_ar?: string;
+  name?: string; // Deprecated, use title
   description: string;
   price: number;
   duration_in_days: number;
-  is_active: boolean;
+  is_active?: boolean;
+}
+
+export interface PackageInfo {
+  id: number;
+  name: string;
+  title: string;
+  title_en?: string;
+  title_ar?: string;
+  price: number;
 }
 
 export interface Coupon {
   id: number;
   code: string;
-  type: "%" | "fixed";
-  discount: number;
-  is_public: boolean;
+  discount_type: "percentage" | "fixed";
+  discount_value: number;
+  final_price: number;
+  original_price: number;
+  savings: number;
 }
 
 export interface PricingDetails {
@@ -26,28 +40,22 @@ export interface PricingDetails {
 
 export interface Subscription {
   id: number;
+  package?: PackageInfo;
   package_name: string;
-  package_price?: number;
+  package_price: number;
   starts_at: string;
   end_at: string;
   is_active: boolean;
-  days_remaining?: number;
-  coupon_used?: {
-    code: string;
-    type: "%" | "fixed";
-    discount: number;
-  } | null;
-  created_at?: string;
+  days_remaining: number;
+  created_at: string;
 }
 
 export interface Payment {
   id: number;
   amount: number;
-  payment_method: "credit_card" | "debit_card" | "bank_transfer" | "cash" | "other";
+  payment_method: string;
   payment_reference: string;
-  payment_date: string;
-  status: string;
-  package_name?: string;
+  paid_at: string;
   created_at: string;
 }
 
@@ -58,46 +66,92 @@ export interface ValidateCouponRequest {
   package_id: number;
 }
 
+export interface InitiatePaymentRequest {
+  profile_id: number;
+  package_id: number;
+  coupon_code?: string;
+}
+
 export interface CreateSubscriptionRequest {
   profile_id: number;
   package_id: number;
   coupon_code?: string;
   payment_reference: string;
-  payment_method: "credit_card" | "debit_card" | "bank_transfer" | "cash" | "other";
+  payment_method: string;
   amount_paid: number;
   starts_at?: string;
 }
 
 // API Response types
+export interface ApiResponse<T = any> {
+  status: string;
+  message: string;
+  data: T;
+}
+
 export interface PackagesResponse {
-  success: boolean;
-  data: {
-    packages: SubscriptionPackage[];
-  };
+  status: string;
+  message: string;
+  data: SubscriptionPackage[];
 }
 
 export interface ValidateCouponResponse {
-  success: boolean;
+  status: string;
+  message: string;
   data: {
     coupon: Coupon;
+  } | null;
+}
+
+export interface PaymentFormData {
+  action: string;
+  method: string;
+  fields: {
+    encRequest: string;
+    access_code: string;
+  };
+}
+
+export interface InitiatePaymentResponse {
+  status: string;
+  message: string;
+  data: {
+    order_id: string;
+    gateway_url: string;
+    encrypted_data: string;
+    access_code: string;
+    payment_mode: string;
+    payment_form: PaymentFormData;
     pricing: PricingDetails;
   };
 }
 
+export interface PaymentStatusResponse {
+  status: string;
+  message: string;
+  data: {
+    status: "pending" | "success" | "failed" | "cancelled";
+    order_id: string;
+    subscription_id?: number;
+    tracking_id?: string;
+    bank_ref_no?: string;
+    amount: number;
+    currency?: string;
+    created_at?: string;
+  };
+}
+
 export interface SubscriptionStatusResponse {
-  success: boolean;
+  status: string;
+  message: string;
   data: {
     has_subscription: boolean;
     subscription?: Subscription;
-    last_subscription?: {
-      package_name: string;
-      expired_at: string;
-    };
   };
 }
 
 export interface CreateSubscriptionResponse {
-  success: boolean;
+  status: string;
   message: string;
   data: {
     subscription: Subscription;
@@ -106,22 +160,16 @@ export interface CreateSubscriptionResponse {
 }
 
 export interface SubscriptionHistoryResponse {
-  success: boolean;
-  data: {
-    subscriptions: Subscription[];
-  };
+  status: string;
+  message: string;
+  data: Subscription[];
 }
 
 export interface PaymentHistoryResponse {
-  success: boolean;
+  status: string;
+  message: string;
   data: {
     payments: Payment[];
     total_spent: number;
   };
-}
-
-export interface ApiError {
-  success: false;
-  message: string;
-  errors?: Record<string, string[]>;
 }

@@ -19,12 +19,10 @@ import {
   getSubscriptionStatus,
   getSubscriptionHistory,
   getPaymentHistory,
-  createSubscription,
 } from '@/lib/api/subscriptions';
+import { initiatePayment, redirectToPaymentGateway } from '@/lib/api/payments';
 import type {
   SubscriptionPackage,
-  PricingDetails,
-  Coupon,
   Subscription,
   Payment,
 } from '@/types/subscription';
@@ -51,8 +49,8 @@ export default function BillingPage() {
   const [totalSpent, setTotalSpent] = useState(0);
 
   // Coupon state
-  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
-  const [pricing, setPricing] = useState<PricingDetails | null>(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
 
   useEffect(() => {
     const activeProfileId = getActiveProfileId();
@@ -75,10 +73,17 @@ export default function BillingPage() {
         getPaymentHistory(profId),
       ]);
 
-      setPackages(packagesRes.data.packages);
+      // Handle packages response
+      const pkgs = Array.isArray(packagesRes.data) ? packagesRes.data : packagesRes.data.packages || [];
+      setPackages(pkgs);
+      
       setHasSubscription(statusRes.data.has_subscription);
       setCurrentSubscription(statusRes.data.subscription || null);
-      setSubscriptions(historyRes.data.subscriptions);
+      
+      // Handle history response
+      const subs = Array.isArray(historyRes.data) ? historyRes.data : historyRes.data.subscriptions || [];
+      setSubscriptions(subs);
+      
       setPayments(paymentsRes.data.payments);
       setTotalSpent(paymentsRes.data.total_spent);
     } catch (err: any) {
@@ -88,15 +93,7 @@ export default function BillingPage() {
     }
   };
 
-  const handleCouponApplied = (newPricing: PricingDetails, coupon: Coupon) => {
-    setPricing(newPricing);
-    setAppliedCoupon(coupon);
-  };
 
-  const handleCouponRemoved = () => {
-    setPricing(null);
-    setAppliedCoupon(null);
-  };
 
   const handleSubscribe = async () => {
     if (!selectedPackageId || !profileId) return;
@@ -105,27 +102,28 @@ export default function BillingPage() {
     setError('');
 
     try {
-      const paymentRef = `PAY_${Date.now()}_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-      const selectedPackage = packages.find((p) => p.id === selectedPackageId);
-      if (!selectedPackage) throw new Error('Selected package not found');
-
-      const finalPrice = pricing?.final_price || selectedPackage.price;
-
-      await createSubscription({
+      // Initiate payment with backend
+      const response = await initiatePayment({
         profile_id: profileId,
         package_id: selectedPackageId,
-        coupon_code: appliedCoupon?.code,
-        payment_reference: paymentRef,
-        payment_method: 'credit_card',
-        amount_paid: finalPrice,
+        ...(couponCode && { coupon_code: couponCode }),
       });
 
-      // Reload data and switch to history tab
-      await loadData(profileId);
-      setSelectedPackageId(null);
-      setAppliedCoupon(null);
-      setPricing(null);
-      setActiveTab('history');
+      if (response.status === 'success' && response.data) {
+        // Store order ID for later verification
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('pending_order_id', response.data.order_id);
+        }
+
+        // Redirect to payment gateway
+        redirectToPaymentGateway(
+          response.data.gateway_url,
+          response.data.encrypted_data,
+          response.data.access_code
+        );
+      } else {
+        setError(response.message || t('account.billing.errors.create'));
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || t('account.billing.errors.create'));
     } finally {
@@ -146,7 +144,7 @@ export default function BillingPage() {
   }
 
   const selectedPackage = packages?.find((p) => p.id === selectedPackageId);
-  const finalPrice = pricing?.final_price || selectedPackage?.price || 0;
+  const finalPrice = selectedPackage ? selectedPackage.price - couponDiscount : 0;
 
   return (
     <ProtectedRoute requireAuth={true}>
@@ -219,8 +217,8 @@ export default function BillingPage() {
                       isSelected={selectedPackageId === pkg.id}
                       onSelect={setSelectedPackageId}
                       discountedPrice={
-                        selectedPackageId === pkg.id && pricing
-                          ? pricing.final_price
+                        selectedPackageId === pkg.id && couponDiscount > 0
+                          ? pkg.price - couponDiscount
                           : undefined
                       }
                     />
@@ -242,8 +240,8 @@ export default function BillingPage() {
                     <CouponInput
                       profileId={profileId}
                       packageId={selectedPackageId}
-                      onCouponApplied={handleCouponApplied}
-                      onCouponRemoved={handleCouponRemoved}
+                      onCouponApplied={setCouponDiscount}
+                      onCouponCodeChange={setCouponCode}
                     />
 
                     {/* Order Summary */}
@@ -253,22 +251,20 @@ export default function BillingPage() {
                         <div className="flex justify-between text-sm">
                           <span className="text-gray-600 dark:text-gray-400">{t('account.billing.order.package')}:</span>
                           <span className="font-medium text-gray-900 dark:text-white">
-                            {selectedPackage?.name}
+                            {selectedPackage?.title || selectedPackage?.name}
                           </span>
                         </div>
-                        {pricing && (
-                          <>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">{t('account.billing.order.originalPrice')}:</span>
-                              <span className="text-gray-900 line-through dark:text-white">
-                                {pricing.original_price.toFixed(2)} AED
-                              </span>
-                            </div>
-                            <div className="flex justify-between text-sm text-green-600">
-                              <span>{t('account.billing.order.discount')}:</span>
-                              <span>-{pricing.discount_amount.toFixed(2)} AED</span>
-                            </div>
-                          </>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600 dark:text-gray-400">{t('account.billing.order.originalPrice')}:</span>
+                          <span className={couponDiscount > 0 ? "text-gray-900 line-through dark:text-white" : "text-gray-900 dark:text-white"}>
+                            {selectedPackage?.price.toFixed(2)} AED
+                          </span>
+                        </div>
+                        {couponDiscount > 0 && (
+                          <div className="flex justify-between text-sm text-green-600">
+                            <span>{t('account.billing.order.discount')}:</span>
+                            <span>-{couponDiscount.toFixed(2)} AED</span>
+                          </div>
                         )}
                         <div className="border-t border-gray-200 pt-2 dark:border-white/10">
                           <div className="flex justify-between">

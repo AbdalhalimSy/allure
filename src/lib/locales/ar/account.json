@@ -57,7 +57,8 @@
         "invalid": "رمز خصم غير صحيح",
         "errors": {
           "required": "رمز الخصم مطلوب",
-          "invalid": "هذا رمز الخصم غير صحيح"
+          "invalid": "هذا رمز الخصم غير صحيح",
+          "invalidForPackageOrProfile": "رمز الخصم غير صالح لهذه الباقة أو الملف الشخصي"
         }
       },
       "order": {
@@ -66,7 +67,8 @@
         "package": "الباقة",
         "originalPrice": "السعر الأصلي",
         "discount": "الخصم",
-        "total": "الإجمالي"
+        "total": "المجموع",
+        "youSave": "توفر"
       },
       "subscribe": "اشترك الآن",
       "processing": "جارٍ المعالجة...",
