@@ -28,6 +28,28 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
     return labels[method] || method;
   };
 
+  const formatDate = (dateString: string | null | undefined): string => {
+    if (!dateString) return 'N/A';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'N/A';
+      return format(date, 'MMM dd, yyyy');
+    } catch {
+      return 'N/A';
+    }
+  };
+
+  const formatTime = (dateString: string | null | undefined): string => {
+    if (!dateString) return '';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return '';
+      return format(date, 'HH:mm');
+    } catch {
+      return '';
+    }
+  };
+
   if (payments.length === 0) {
     return (
       <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center">
@@ -76,10 +98,12 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
               {payments.map((payment) => (
                 <tr key={payment.id} className="hover:bg-gray-50">
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                    {format(new Date(payment.payment_date), 'MMM dd, yyyy')}
-                    <div className="text-xs text-gray-500">
-                      {format(new Date(payment.payment_date), 'HH:mm')}
-                    </div>
+                    {formatDate(payment.payment_date)}
+                    {formatTime(payment.payment_date) && (
+                      <div className="text-xs text-gray-500">
+                        {formatTime(payment.payment_date)}
+                      </div>
+                    )}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">
                     {payment.package_name || 'N/A'}
