@@ -4,6 +4,7 @@
 
 import { useCallback, useState } from "react";
 import { Upload, X, FileIcon, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface FileItem {
   file: File;
@@ -29,9 +30,12 @@ export default function FileUploader({
   maxSize = 10 * 1024 * 1024, // 10MB default
   value = [],
   onChange,
-  description = "Click to upload or drag and drop",
+  description,
   className = "",
 }: FileUploaderProps) {
+  const { t } = useI18n();
+  const dragDropLabel = t("content.dragAndDrop") || "Click to upload or drag and drop";
+  const resolvedDescription = description ?? "";
   const [isDragging, setIsDragging] = useState(false);
   const [fileItems, setFileItems] = useState<FileItem[]>([]);
 
@@ -210,10 +214,11 @@ export default function FileUploader({
             </div>
             <div className="text-center">
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Click to upload{" "}
-                <span className="text-gray-500 dark:text-gray-400 font-normal">or drag and drop</span>
+                {dragDropLabel}
               </span>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{description}</p>
+              {resolvedDescription && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{resolvedDescription}</p>
+              )}
             </div>
             <input
               id="file-upload"

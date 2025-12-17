@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
@@ -13,6 +13,7 @@ import { Users, AlertCircle } from "lucide-react";
 
 export default function TalentsPage() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { locale, t } = useI18n();
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ export default function TalentsPage() {
   const [hasMore, setHasMore] = useState(true);
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
+  const queryHydratedRef = useRef(false);
 
   // Reset talents and show loading when pathname changes (navigation)
   useEffect(() => {
@@ -36,6 +38,15 @@ export default function TalentsPage() {
     setHasMore(true);
     setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   }, [pathname]);
+
+  useEffect(() => {
+    if (queryHydratedRef.current) return;
+    const professionParam = searchParams.get("profession_ids");
+    if (professionParam) {
+      setFilters(prev => ({ ...prev, profession_ids: professionParam }));
+    }
+    queryHydratedRef.current = true;
+  }, [searchParams]);
 
   useEffect(() => {
     if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {

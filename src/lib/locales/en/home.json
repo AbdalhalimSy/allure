@@ -277,5 +277,110 @@
         "answer": "Legitimate agencies don't charge upfront fees to join. We earn our commission only when you book paid work. Be cautious of anyone asking for money to register or guarantee work."
       }
     }
+  },
+  "homeNew": {
+    "hero": {
+      "kicker": "Modern Casting OS",
+      "badgeCampaigns": "Campaign Acceleration",
+      "badgeProduction": "On-Set Support",
+      "badgePlatform": "Platform Precision",
+      "slides": [
+        {
+          "title": "Cast globally. Confirm locally.",
+          "subtitle": "A bilingual, production-safe casting runway so clients, creatives, and talent move in sync.",
+          "pulse": "Live campaigns in motion"
+        },
+        {
+          "title": "From treatment to call sheet in days.",
+          "subtitle": "Allure bridges creative intent with vetted faces, rehearsals, and approvals in one place.",
+          "pulse": "Producers love our calm"
+        },
+        {
+          "title": "One roster. Infinite stories.",
+          "subtitle": "Segment talents, co-manage profiles, and preview looks with instant, production-ready reels.",
+          "pulse": "Signal, not noise"
+        }
+      ],
+      "ctaRegister": "Register as talent",
+      "ctaLogin": "Login",
+      "ctaDashboard": "Go to your jobs",
+      "ctaBrowse": "Preview roster",
+      "metrics": {
+        "speed": "From brief to shortlist",
+        "profiles": "Profiles curated by humans",
+        "success": "Booking confidence"
+      }
+    },
+    "professions": {
+      "kicker": "Disciplines",
+      "title": "Explore professions ready for immediate casting.",
+      "subtitle": "Swipe through the roles we source daily. Tap to land on a pre-filtered roster.",
+      "helper": "Tap any card to filter talents by that profession",
+      "hint": "Instant filter",
+      "label": "Profession",
+      "card": "Curated shortlists built for speed",
+      "cta": "Open filtered roster",
+      "loading": "Loading professions…",
+      "empty": "No professions found right now."
+    },
+    "jobs": {
+      "kicker": "Upcoming Jobs",
+      "title": "Your next bookings are lining up.",
+      "subtitle": "Stay ahead of callbacks, fittings, and deadlines with a calm, visual queue.",
+      "viewAll": "Open jobs dashboard",
+      "loading": "Loading your upcoming jobs…",
+      "empty": "No upcoming jobs yet. We’ll surface them here once you’re shortlisted.",
+      "badge": "Priority",
+      "timeline": "This week",
+      "defaultLocation": "Remote"
+    },
+    "welcome": {
+      "kicker": "Welcome to Allure Agency",
+      "title": "Boutique care meets platform-grade control.",
+      "subtitle": "We were born in Beirut and refined in Dubai. Today we run a casting OS trusted by global brands across MENA.",
+      "pillars": {
+        "craft": { "title": "Creative craft", "desc": "Bookers that translate treatments into human-centered shortlists." },
+        "data": { "title": "Data clarity", "desc": "Availability, reels, and usage in one transparent layer." },
+        "support": { "title": "Production support", "desc": "On-set and remote support from briefing to wrap." },
+        "network": { "title": "Regional network", "desc": "Tri-city presence across Beirut, Dubai, and Abu Dhabi." }
+      },
+      "badges": {
+        "casting": "Casting rooms and digitals",
+        "production": "Production-safe approvals",
+        "delivery": "Delivery without friction"
+      },
+      "ribbon": "Since 2009",
+      "ribbonTitle": "Regional casting with global standards.",
+      "ribbonTag": "Trusted by producers"
+    },
+    "talents": {
+      "kicker": "Allure Talents",
+      "title": "Signature faces. Real availability.",
+      "subtitle": "Profiles prepped with digitals, reels, and ready-to-book availability.",
+      "viewAll": "Browse all talents",
+      "book": "View profile",
+      "tags": {
+        "height": "178cm stature",
+        "languages": "Arabic + English",
+        "availability": "SS25 ready",
+        "camera": "Camera confident",
+        "voice": "Voice trained",
+        "motion": "Movement ready",
+        "hosting": "Hosting & live",
+        "bilingual": "Bilingual",
+        "ready": "On-hold friendly"
+      },
+      "cards": [
+        { "focus": "Runway & editorial" },
+        { "focus": "Commercial & lifestyle" },
+        { "focus": "Hosts & presenters" }
+      ]
+    },
+    "partners": {
+      "kicker": "Partners",
+      "title": "Trusted by producers and brands across MENA.",
+      "subtitle": "We pair boutique attention with enterprise-grade delivery.",
+      "cta": "Always in good company"
+    }
   }
 }

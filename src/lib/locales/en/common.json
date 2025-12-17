@@ -170,6 +170,7 @@
     "previous": "Previous",
     "next": "Next",
     "pageLoadingFailed": "Page loading failed",
+    "dragAndDrop": "Click to upload or drag and drop",
     "orDragAndDrop": "or drag and drop",
     "uploading": "Uploading...",
     "previouslyUploaded": "Previously uploaded",

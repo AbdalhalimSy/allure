@@ -2,41 +2,34 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 import Loader from "@/components/ui/Loader";
 import JobApplicationModal from "@/components/jobs/JobApplicationModal";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import { useAuth } from "@/contexts/AuthContext";
-import { 
-  Calendar, 
-  MapPin, 
-  Users, 
-  Clock, 
-  ArrowLeft, 
-  Briefcase, 
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Clock,
+  ArrowLeft,
+  Briefcase,
   Sparkles,
   User,
   DollarSign,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 import { DetailedJob, DetailedRole, JobDetailResponse } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { 
-    year: "numeric", 
-    month: "long", 
-    day: "numeric" 
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
-};
-
-const formatTime = (timeString: string) => {
-  if (!timeString) return "";
-  const [hours, minutes] = timeString.split(":");
-  const date = new Date();
-  date.setHours(parseInt(hours), parseInt(minutes));
-  return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 };
 
 export default function JobDetailPage() {
@@ -49,6 +42,7 @@ export default function JobDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<DetailedRole | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isJobOpen = job?.open_to_apply ?? true;
 
   useEffect(() => {
     if (activeProfileId) {
@@ -70,26 +64,30 @@ export default function JobDetailPage() {
         `/api/jobs/${params.id}?profile_id=${activeProfileId}`,
         {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("auth_token") || ""}`,
+            Authorization: `Bearer ${localStorage.getItem("auth_token") || ""}`,
             "Accept-Language": locale,
-          }
+          },
         }
       );
-      
+
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || data.message || t("jobDetail.errors.fetchFailed"));
+        throw new Error(
+          data.error || data.message || t("jobDetail.errors.fetchFailed")
+        );
       }
-      
+
       const result: JobDetailResponse = await response.json();
-      
+
       if (result.status === "success" || result.status === true) {
         setJob(result.data);
       } else {
         throw new Error(result.message || t("jobDetail.errors.loadFailed"));
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("jobDetail.errors.generic"));
+      setError(
+        err instanceof Error ? err.message : t("jobDetail.errors.generic")
+      );
       console.error("Error fetching job:", err);
     } finally {
       setLoading(false);
@@ -125,7 +123,8 @@ export default function JobDetailPage() {
   }
 
   const daysUntilExpiry = Math.ceil(
-    (new Date(job.expiration_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+    (new Date(job.expiration_date).getTime() - new Date().getTime()) /
+      (1000 * 60 * 60 * 24)
   );
   const roles = Array.isArray(job.roles) ? job.roles : [];
   const roleCount = roles.length;
@@ -145,7 +144,7 @@ export default function JobDetailPage() {
         {/* Header Section */}
         <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900">
           <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
-          
+
           {/* Job Image */}
           {job.image && (
             <div className="relative h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
@@ -160,7 +159,7 @@ export default function JobDetailPage() {
               />
             </div>
           )}
-          
+
           <div className="p-8">
             <div className="mb-4 flex items-start justify-between">
               <div>
@@ -170,7 +169,8 @@ export default function JobDetailPage() {
                 {daysUntilExpiry <= 7 && daysUntilExpiry > 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
                     <Clock className="h-3 w-3" />
-                    {t("jobDetail.expiresIn")} {daysUntilExpiry} {t("jobDetail.days")}
+                    {t("jobDetail.expiresIn")} {daysUntilExpiry}{" "}
+                    {t("jobDetail.days")}
                   </span>
                 )}
                 {daysUntilExpiry <= 0 && (
@@ -198,15 +198,23 @@ export default function JobDetailPage() {
 
             {job.highlights && (
               <div className="mb-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
-                <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">{t("jobDetail.highlights")}</p>
-                <p className="mt-1 text-sm text-blue-800 dark:text-blue-300">{job.highlights}</p>
+                <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
+                  {t("jobDetail.highlights")}
+                </p>
+                <p className="mt-1 text-sm text-blue-800 dark:text-blue-300">
+                  {job.highlights}
+                </p>
               </div>
             )}
 
             {job.usage_terms && (
               <div className="mb-6 rounded-lg bg-purple-50 p-4 dark:bg-purple-900/20">
-                <p className="text-sm font-semibold text-purple-900 dark:text-purple-200">{t("jobDetail.usageTerms")}</p>
-                <p className="mt-1 text-sm text-purple-800 dark:text-purple-300">{job.usage_terms}</p>
+                <p className="text-sm font-semibold text-purple-900 dark:text-purple-200">
+                  {t("jobDetail.usageTerms")}
+                </p>
+                <p className="mt-1 text-sm text-purple-800 dark:text-purple-300">
+                  {job.usage_terms}
+                </p>
               </div>
             )}
 
@@ -215,7 +223,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Calendar className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.shootingDate")}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {t("jobDetail.shootingDate")}
+                  </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.shooting_date)}
                   </p>
@@ -225,7 +235,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Clock className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.expiresOn")}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {t("jobDetail.expiresOn")}
+                  </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.expiration_date)}
                   </p>
@@ -235,7 +247,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.openRoles")}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {t("jobDetail.openRoles")}
+                  </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {roleCount} {t("jobDetail.available")}
                   </p>
@@ -245,7 +259,9 @@ export default function JobDetailPage() {
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">{t("jobDetail.locations")}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {t("jobDetail.locations")}
+                  </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {job.job_countries?.length || 0} {t("jobDetail.countries")}
                   </p>
@@ -307,7 +323,7 @@ export default function JobDetailPage() {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t("jobDetail.availableRoles")} ({roleCount})
               </h2>
-              
+
               {roles.map((role) => (
                 <div
                   key={role.id}
@@ -350,7 +366,9 @@ export default function JobDetailPage() {
                         {t("jobDetail.ethnicity")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
-                        {Array.isArray(role.ethnicity) ? role.ethnicity.join(", ") : role.ethnicity}
+                        {Array.isArray(role.ethnicity)
+                          ? role.ethnicity.join(", ")
+                          : role.ethnicity}
                       </span>
                     </div>
 
@@ -378,23 +396,23 @@ export default function JobDetailPage() {
                   </div>
 
                   {/* Applicability */}
-                  <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#c49a47]/10 p-3 dark:bg-[#c49a47]/20">
-                    {role.can_apply ? (
-                      <>
-                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                        <span className="text-sm font-medium text-green-700 dark:text-green-300">
-                          {t("jobDetail.meetRequirements")}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                        <span className="text-sm font-medium text-orange-700 dark:text-orange-300">
-                          {t("jobDetail.notMeetRequirements")} ({t("jobDetail.eligibility")}: {role.eligibility_score || 0}%)
-                        </span>
-                      </>
-                    )}
-                  </div>
+                  {role.can_apply ? (
+                    <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 dark:bg-[#00ff00]/20">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                        {t("jobDetail.meetRequirements")}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 dark:bg-[#ff0000]/20">
+                      <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                      <span className="text-sm font-medium text-red-700 dark:text-red-300">
+                        {t("jobDetail.notMeetRequirements")} (
+                        {t("jobDetail.eligibility")}:{" "}
+                        {role.eligibility_score || 0}%)
+                      </span>
+                    </div>
+                  )}
 
                   {/* Meta Conditions */}
                   {role.meta_conditions.length > 0 && (
@@ -403,100 +421,45 @@ export default function JobDetailPage() {
                         {t("jobDetail.physicalRequirements")}
                       </h4>
                       <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2 text-sm">
-                        {Object.entries(role.meta_conditions[0]).map(([key, value]) => {
-                          // Map attribute keys to translation keys
-                          const attrKeyMap: Record<string, string> = {
-                            hair_color: "content.hairColor",
-                            hair_length: "content.hairLength",
-                            hair_type: "content.hairType",
-                            eye_color: "content.eyeColor",
-                            height: "content.height",
-                            weight: "content.weight",
-                            shoe_size: "content.shoeSize",
-                            pants_size: "content.pantsSize",
-                            tshirt_size: "content.tshirtSize",
-                            tattoos: "content.tattoos",
-                            piercings: "content.piercings",
-                          };
-                          const translationKey = attrKeyMap[key as keyof typeof attrKeyMap];
-                          return value !== null && value !== undefined && (
-                            <div key={key} className="flex justify-between px-4 py-2 bg-gray-100 rounded-lg dark:bg-gray-800">
-                              <span className="text-gray-600 dark:text-gray-400">
-                                {translationKey ? t(translationKey) : key.replace(/_/g, " ")}:
-                              </span>
-                              <span className="font-medium text-gray-900 dark:text-white">
-                                {value}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Call Time Information */}
-                  {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
-                    <div className="mb-4 rounded-lg bg-[#c49a47]/10 p-4 dark:bg-[#c49a47]/20">
-                      <h4 className="mb-3 font-semibold text-[#c49a47] dark:text-[#c49a47]">
-                        {t("jobDetail.availableCallTimes")}
-                      </h4>
-                      <div className="space-y-3">
-                        {role.call_time_slots.map((slotGroup, idx) => (
-                          <div key={idx} className="rounded bg-white p-3 shadow-sm dark:bg-gray-900">
-                            <p className="font-medium text-sm text-gray-900 dark:text-white">
-                              {formatDate(slotGroup.date)}
-                            </p>
-                            {slotGroup.slots.map((timeSlot) => {
-                              const availableCount = timeSlot.available_times?.filter((t) => !t.is_fully_booked).length || 0;
-                              const totalCount = timeSlot.available_times?.length || 0;
-
-                              return (
-                                <div key={timeSlot.id} className="mt-3 rounded-lg border border-gray-200 p-3 dark:border-gray-800">
-                                  <div className="flex flex-col gap-1 text-xs text-gray-600 dark:text-gray-400">
-                                    <p className="font-medium text-gray-900 dark:text-white">
-                                      {formatTime(timeSlot.start_time)} - {formatTime(timeSlot.end_time)}
-                                      <span className="ms-2 text-gray-500">
-                                        ({t("jobDetail.every")} {timeSlot.interval_minutes} {t("jobDetail.min")}, {timeSlot.max_talents} {t("jobDetail.spot")}{timeSlot.max_talents > 1 ? 's' : ''} {t("jobDetail.perTime") || ''})
-                                      </span>
-                                    </p>
-                                    <p className="text-gray-500">
-                                      {t("jobDetail.availableLabel")}: {availableCount}/{totalCount} {t("jobDetail.slots")}
-                                    </p>
-                                  </div>
-
-                                  <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
-                                    {timeSlot.available_times?.map((availableTime) => {
-                                      const isBooked = availableTime.is_fully_booked;
-                                      const availabilityText = isBooked
-                                        ? t("jobDetail.fullyBooked")
-                                        : `${availableTime.available_spots} ${availableTime.available_spots === 1 ? t("jobDetail.spotLeft") : t("jobDetail.spotsLeft")}`;
-
-                                      return (
-                                        <div
-                                          key={availableTime.time}
-                                          className={`rounded-lg border px-3 py-2 text-sm ${
-                                            isBooked
-                                              ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-900/10 dark:text-red-200"
-                                              : "border-gray-200 bg-gray-50 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
-                                          }`}
-                                        >
-                                          <div className="flex items-center justify-between gap-2">
-                                            <span className="font-semibold">{formatTime(availableTime.time)}</span>
-                                            <span className={`text-xs font-medium ${
-                                              isBooked ? "text-red-700 dark:text-red-300" : "text-green-700 dark:text-green-300"
-                                            }`}>
-                                              {availabilityText}
-                                            </span>
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
+                        {Object.entries(role.meta_conditions[0]).map(
+                          ([key, value]) => {
+                            // Map attribute keys to translation keys
+                            const attrKeyMap: Record<string, string> = {
+                              hair_color: "content.hairColor",
+                              hair_length: "content.hairLength",
+                              hair_type: "content.hairType",
+                              eye_color: "content.eyeColor",
+                              height: "content.height",
+                              weight: "content.weight",
+                              shoe_size: "content.shoeSize",
+                              pants_size: "content.pantsSize",
+                              tshirt_size: "content.tshirtSize",
+                              tattoos: "content.tattoos",
+                              piercings: "content.piercings",
+                            };
+                            const translationKey =
+                              attrKeyMap[key as keyof typeof attrKeyMap];
+                            return (
+                              value !== null &&
+                              value !== undefined && (
+                                <div
+                                  key={key}
+                                  className="flex justify-between px-4 py-2 bg-gray-100 rounded-lg dark:bg-gray-800"
+                                >
+                                  <span className="text-gray-600 dark:text-gray-400">
+                                    {translationKey
+                                      ? t(translationKey)
+                                      : key.replace(/_/g, " ")}
+                                    :
+                                  </span>
+                                  <span className="font-medium text-gray-900 dark:text-white">
+                                    {value}
+                                  </span>
                                 </div>
-                              );
-                            })}
-                          </div>
-                        ))}
+                              )
+                            );
+                          }
+                        )}
                       </div>
                     </div>
                   )}
@@ -530,18 +493,40 @@ export default function JobDetailPage() {
                     </div>
                   )}
 
-                  {job.open_to_apply && (
-                    <button 
+                  {/* Apply Button */}
+                  <div className="mt-6 space-y-2">
+                    <button
                       onClick={() => {
-                        setSelectedRole(role);
-                        setIsModalOpen(true);
+                        if (role.can_apply) {
+                          setSelectedRole(role);
+                          setIsModalOpen(true);
+                        } else {
+                          toast.error(
+                            t("jobDetail.notEligibleToApply") ||
+                              "You don't meet the requirements for this role"
+                          );
+                        }
                       }}
-                      className="mt-4 w-full rounded-lg bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg transition hover:shadow-xl disabled:opacity-50"
                       disabled={!role.can_apply}
+                      className={`w-full rounded-lg px-6 py-3 font-semibold shadow-lg transition hover:shadow-xl ${
+                        role.can_apply
+                          ? "bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white hover:from-[#b8963f] hover:to-[#c89a4a]"
+                          : "bg-gray-300 text-gray-600 cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
+                      }`}
                     >
-                      {t("jobDetail.applyFor")} {role.name}
+                      {role.can_apply
+                        ? (t("jobDetail.applyFor") || "Apply for") +
+                          " " +
+                          role.name
+                        : t("jobDetail.canNotApply") || "Can not apply"}
                     </button>
-                  )}
+                    {!role.can_apply && (
+                      <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+                        {t("jobDetail.eligibilityScoreNote") ||
+                          "You don't fully meet the requirements but can still apply"}
+                      </p>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -566,7 +551,11 @@ export default function JobDetailPage() {
                     <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                     {country}
                   </li>
-                )) || <li className="text-sm text-gray-500">{t("jobDetail.noLocations")}</li>}
+                )) || (
+                  <li className="text-sm text-gray-500">
+                    {t("jobDetail.noLocations")}
+                  </li>
+                )}
               </ul>
             </div>
 

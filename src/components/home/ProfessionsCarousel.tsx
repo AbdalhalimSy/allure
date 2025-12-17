@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useI18n } from "@/hooks/useI18n";
+import { useI18n } from "@/contexts/I18nContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Profession {
@@ -14,48 +14,48 @@ interface Profession {
 }
 
 export default function ProfessionsCarousel() {
-  const { t } = useI18n("home");
+  const { t } = useI18n();
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const professions: Profession[] = [
     {
       id: "actors",
-      name: t("professions.actors", "Actors"),
+      name: t("professions.actors"),
       icon: "🎭",
       count: 248,
       color: "from-red-500 to-pink-500",
     },
     {
       id: "models",
-      name: t("professions.models", "Models"),
+      name: t("professions.models"),
       icon: "👗",
       count: 512,
       color: "from-purple-500 to-indigo-500",
     },
     {
       id: "creators",
-      name: t("professions.creators", "Content Creators"),
+      name: t("professions.creators"),
       icon: "🎬",
       count: 381,
       color: "from-blue-500 to-cyan-500",
     },
     {
       id: "hosts",
-      name: t("professions.hosts", "Hosts & MCs"),
+      name: t("professions.hosts"),
       icon: "🎤",
       count: 156,
       color: "from-yellow-500 to-orange-500",
     },
     {
       id: "dancers",
-      name: t("professions.dancers", "Dancers"),
+      name: t("professions.dancers"),
       icon: "💃",
       count: 203,
       color: "from-pink-500 to-red-500",
     },
     {
       id: "voiceover",
-      name: t("professions.voiceover", "Voice Actors"),
+      name: t("professions.voiceover"),
       icon: "🎙️",
       count: 89,
       color: "from-green-500 to-emerald-500",
@@ -80,18 +80,18 @@ export default function ProfessionsCarousel() {
   };
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-950">
+    <section className="py-20 px-6 bg-linear-to-b from-white to-gray-50 dark:from-black dark:to-gray-950">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
           <p className="text-amber-600 dark:text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">
-            {t("professions.eyebrow", "Talent Categories")}
+            {t("professions.eyebrow")}
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            {t("professions.title", "Explore Our Talent")}
+            {t("professions.title")}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-            {t("professions.subtitle", "Browse through our diverse roster of talented professionals")}
+            {t("professions.subtitle")}
           </p>
         </div>
 
@@ -107,9 +107,9 @@ export default function ProfessionsCarousel() {
               <Link
                 key={profession.id}
                 href={`/talents?profession=${profession.id}`}
-                className="flex-shrink-0 w-72 group"
+                className="shrink-0 w-72 group"
               >
-                <div className={`h-64 rounded-2xl bg-gradient-to-br ${profession.color} p-8 flex flex-col justify-between relative overflow-hidden transition-all duration-300 transform group-hover:scale-105 group-hover:shadow-2xl cursor-pointer`}>
+                <div className={`h-64 rounded-2xl bg-linear-to-br ${profession.color} p-8 flex flex-col justify-between relative overflow-hidden transition-all duration-300 transform group-hover:scale-105 group-hover:shadow-2xl cursor-pointer`}>
                   {/* Background animation */}
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -124,7 +124,7 @@ export default function ProfessionsCarousel() {
                   <div className="relative z-10 flex items-end justify-between">
                     <p className="text-white/90 text-sm font-medium">
                       {profession.count}{" "}
-                      {t("professions.talents", "talents")}
+                      {t("professions.talents")}
                     </p>
                     <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
                       <svg
@@ -153,7 +153,7 @@ export default function ProfessionsCarousel() {
           {/* Navigation Arrows */}
           <button
             onClick={() => scroll("left")}
-            className="absolute -left-16 top-1/3 z-10 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-black p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
+            className="absolute -left-16 top-1/3 z-10 bg-linear-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-black p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
             aria-label="Scroll left"
           >
             <ChevronLeft size={24} />
@@ -161,7 +161,7 @@ export default function ProfessionsCarousel() {
 
           <button
             onClick={() => scroll("right")}
-            className="absolute -right-16 top-1/3 z-10 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-black p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
+            className="absolute -right-16 top-1/3 z-10 bg-linear-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-black p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
             aria-label="Scroll right"
           >
             <ChevronRight size={24} />

@@ -35,7 +35,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
           >
             <Home className="w-5 h-5" />
             {t("notFound.goHome")}

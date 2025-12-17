@@ -33,7 +33,7 @@ export interface Job {
 export interface Condition {
   id: number;
   label: string;
-  input_type: "yes_no" | "textarea" | "checkbox" | "radio" | "text";
+  input_type: "yes_no" | "textarea" | "checkbox" | "radio" | "text" | "media_upload";
   options: Array<{ value: string; label: string }>;
   is_required: boolean;
 }

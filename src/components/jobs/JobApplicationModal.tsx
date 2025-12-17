@@ -21,7 +21,7 @@ import { useI18n } from "@/contexts/I18nContext";
 interface Condition {
   id: number;
   label: string;
-  input_type: "yes_no" | "textarea" | "checkbox" | "radio" | "text";
+  input_type: "yes_no" | "textarea" | "checkbox" | "radio" | "text" | "media_upload";
   options: Array<{ value: string; label: string }>;
   is_required: boolean;
 }
@@ -122,10 +122,18 @@ export default function JobApplicationModal({
     // Validate conditions
     for (const condition of role.conditions) {
       if (condition.is_required) {
-        const response = responses[condition.id];
-        if (!response || (Array.isArray(response) && response.length === 0)) {
-          toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
-          return false;
+        if (condition.input_type === "media_upload") {
+          // For media upload, check mediaFiles
+          if (!mediaFiles[condition.id]) {
+            toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
+            return false;
+          }
+        } else {
+          const response = responses[condition.id];
+          if (!response || (Array.isArray(response) && response.length === 0)) {
+            toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
+            return false;
+          }
         }
       }
     }
@@ -159,17 +167,17 @@ export default function JobApplicationModal({
 
       // Build responses array
       const responsesArray = role.conditions.map((condition) => {
-        const response: ResponseData = {
+        if (condition.input_type === "media_upload") {
+          // For media upload, only include condition_id
+          return {
+            condition_id: condition.id,
+            value: "", // Media handled separately
+          };
+        }
+        return {
           condition_id: condition.id,
           value: responses[condition.id] || "",
         };
-
-        // Add media if exists
-        if (mediaFiles[condition.id]) {
-          response.media = mediaFiles[condition.id];
-        }
-
-        return response;
       });
 
       formData.append("responses", JSON.stringify(responsesArray));
@@ -385,6 +393,20 @@ export default function JobApplicationModal({
               );
             })}
           </div>
+        );
+
+      case "media_upload":
+        return (
+          <FileUploader
+            accept="image/*,video/*,.pdf"
+            maxSize={20 * 1024 * 1024}
+            description={t("jobApplication.uploadDescription") || "Upload images, videos, or PDF (max 20MB)"}
+            onChange={(files) => {
+              if (files.length > 0 && files[0] instanceof File) {
+                handleFileChange(condition.id, files[0]);
+              }
+            }}
+          />
         );
 
       default:

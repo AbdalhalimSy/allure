@@ -75,6 +75,9 @@
     "meetRequirements": "أنت تستوفي متطلبات هذا الدور",
     "notMeetRequirements": "قد لا تستوفي المتطلبات بالكامل",
     "eligibility": "الأهلية",
+    "eligibilityScoreNote": "يتم حساب درجة الأهلية بناءً على تفاصيل ملفك الشخصي.",
+    "notEligibleToApply": "لست مؤهلاً للتقديم على هذا الدور.",
+    "canNotApply": "لا يمكن التقديم",
     "physicalRequirements": "المتطلبات الجسدية",
     "availableCallTimes": "أوقات الاتصال المتاحة",
     "noCallTimes": "لا توجد أوقات اتصال متاحة لهذا الدور",
@@ -167,7 +170,7 @@
   "jobApplication": {
     "applyForRole": "التقديم على الدور",
     "callTime": "وقت الاتصال",
-    "callTimeRequired": "يرجى اختيار فتحة وقت الاتصال والوقت",
+    "callTimeRequired": "يرجى اختيار وقت الاتصال وتاريخه",
     "answerRequired": "يرجى الإجابة",
     "loginToApply": "يرجى تسجيل الدخول للتقديم على هذا الدور",
     "submitted": "تم إرسال الطلب بنجاح!",
