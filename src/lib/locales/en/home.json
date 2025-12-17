@@ -236,48 +236,6 @@
     "placeholderCountry": "UAE",
     "placeholderDeadline": "2025-12-01"
   },
-  "faq": {
-    "eyebrow": "FAQs",
-    "title": "Frequently Asked Questions",
-    "subtitle": "If you have any further questions don't hesitate to",
-    "contactUs": "contact us",
-    "stillHaveQuestions": "Still have questions?",
-    "weAreHereToHelp": "Our team is here to help. Reach out to us and we'll get back to you as soon as possible.",
-    "questions": {
-      "q1": {
-        "question": "How can I become a model or talent represented by your agency?",
-        "answer": "To become a part of our agency, you can start by submitting an online application through our website. We review applications regularly and will contact you if we believe you're a good fit for our agency."
-      },
-      "q2": {
-        "question": "Do I need professional modeling or acting experience to apply?",
-        "answer": "No prior experience is required to apply to our agency. We welcome individuals of all experience levels and backgrounds. Our team will assess your potential and guide you accordingly."
-      },
-      "q3": {
-        "question": "What services does your casting/modeling agency offer?",
-        "answer": "We offer a wide range of services including model representation, talent casting, and more. Our goal is to connect talented individuals with exciting opportunities in the entertainment and fashion industries."
-      },
-      "q4": {
-        "question": "How long does it typically take to hear back after applying?",
-        "answer": "We understand the importance of timely communication. After applying or attending a casting session, we strive to get back to you as soon as possible. However, the response time may vary depending on the volume of applications or the specific casting process. Rest assured, we do our best to keep you informed about the status of your application or casting session within a reasonable time frame."
-      },
-      "q5": {
-        "question": "What are the age requirements to join your agency?",
-        "answer": "We represent talents of various age groups, from children to mature adults. The specific age requirements may vary depending on the type of work and the client's needs. We encourage individuals of all ages to apply, and we'll guide you on the best opportunities that match your profile."
-      },
-      "q6": {
-        "question": "How do you select talents for specific casting calls?",
-        "answer": "Our selection process is based on matching client requirements with our talent roster. We consider factors such as physical attributes, experience, personality, and availability. When a suitable opportunity arises, we'll reach out to you with all the details."
-      },
-      "q7": {
-        "question": "What should I include in my application portfolio?",
-        "answer": "Your portfolio should include high-quality photos showcasing different looks and expressions, your measurements, experience (if any), and any special skills or talents. Natural, well-lit photos work best, and you don't need professional photos to start - we can guide you on developing your portfolio once you join."
-      },
-      "q8": {
-        "question": "Do you charge any fees to join the agency?",
-        "answer": "Legitimate agencies don't charge upfront fees to join. We earn our commission only when you book paid work. Be cautious of anyone asking for money to register or guarantee work."
-      }
-    }
-  },
   "homeNew": {
     "hero": {
       "kicker": "Modern Casting OS",

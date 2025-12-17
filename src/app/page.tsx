@@ -31,9 +31,9 @@ type Partner = {
 };
 
 const heroArtwork = [
-  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1920&q=90",
-  "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=1920&q=90",
-  "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1920&q=90",
+  "https://images.unsplash.com/photo-1539782993767-cd2b2804c3d6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?q=80&w=2001&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1622839238991-d5a092234365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
 export default function HomePage() {
@@ -93,19 +93,23 @@ export default function HomePage() {
             "from-[rgba(196,154,71,0.85)] to-[var(--primary)]",
             "from-slate-400 to-slate-600",
           ];
-          const curated = (res.data.data as Array<{ 
-            id: number; 
-            name: string; 
-            description: string | null;
-            image: string | null;
-          }>)
+          const curated = (
+            res.data.data as Array<{
+              id: number;
+              name: string;
+              description: string | null;
+              image: string | null;
+            }>
+          )
             .slice(0, 8)
             .map((p, idx) => ({
               id: p.id,
               name: p.name,
               description: p.description || t("homeNew.professions.card"),
               accent: accents[idx % accents.length],
-              image: p.image || `https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=70&sig=${idx}`,
+              image:
+                p.image ||
+                `https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=70&sig=${idx}`,
             }));
           setProfessions(curated);
         }

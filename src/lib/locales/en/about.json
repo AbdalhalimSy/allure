@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "badge": "About Allure",
+    "title": "Crafting Excellence in Talent Representation",
+    "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East since 2009.",
+    "cta": "Explore Our Story"
+  },
+  "stats": {
+    "established": {
+      "value": "2009",
+      "label": "Established"
+    },
+    "branches": {
+      "value": "3",
+      "label": "Branches"
+    },
+    "talents": {
+      "value": "500+",
+      "label": "Talents"
+    },
+    "projects": {
+      "value": "1000+",
+      "label": "Projects"
+    }
+  },
+  "story": {
+    "badge": "Our Story",
+    "title": "Welcome to Allure Media Agency",
+    "subtitle": "From humble beginnings to regional excellence",
+    "paragraph1": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
+    "paragraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
+    "paragraph3": "We understand the dynamic nature of the entertainment and advertising industries. That's why we're committed to staying ahead of trends, continuously updating our talent pool, and providing innovative solutions that exceed expectations."
+  },
+  "expansion": {
+    "badge": "Our Growth",
+    "title": "Expanding Across the Region",
+    "subtitle": "Building bridges between talent and opportunity",
+    "paragraph1": "Responding to growing regional demand we expanded to Dubai and later Abu Dhabi—forming a tri-city presence that gives productions diverse talent pools with on-the-ground support.",
+    "paragraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow that reduces friction from first brief to final usage.",
+    "paragraph3": "Our strategic locations enable us to serve clients across the GCC with unmatched efficiency and local expertise."
+  },
+  "values": {
+    "badge": "Our Values",
+    "title": "What Drives Us Forward",
+    "subtitle": "The principles that guide every decision we make",
+    "excellence": {
+      "title": "Excellence",
+      "description": "We maintain the highest standards in every aspect of our work, from talent selection to client service."
+    },
+    "creativity": {
+      "title": "Creativity",
+      "description": "Innovation is at our core. We bring fresh perspectives and creative solutions to every project."
+    },
+    "integrity": {
+      "title": "Integrity",
+      "description": "Transparency and honesty guide our relationships with both talents and clients."
+    },
+    "diversity": {
+      "title": "Diversity",
+      "description": "We celebrate diverse talents from all backgrounds, creating inclusive opportunities for everyone."
+    }
+  },
+  "services": {
+    "badge": "What We Do",
+    "title": "Comprehensive Talent Solutions",
+    "subtitle": "End-to-end services for productions of all sizes",
+    "casting": {
+      "title": "Casting Services",
+      "description": "Professional casting directors who understand your vision and deliver the perfect talent for every role."
+    },
+    "management": {
+      "title": "Talent Management",
+      "description": "Comprehensive career support for our talents, from portfolio development to contract negotiation."
+    },
+    "production": {
+      "title": "Production Support",
+      "description": "Full production crew including photographers, videographers, and editors for your creative needs."
+    },
+    "consultation": {
+      "title": "Creative Consultation",
+      "description": "Expert guidance on talent selection, creative direction, and campaign strategy."
+    }
+  },
+  "team": {
+    "badge": "Our Team",
+    "title": "Meet the People Behind Allure",
+    "subtitle": "Experienced professionals dedicated to your success"
+  },
+  "partners": {
+    "badge": "Trusted By",
+    "title": "Partners & Clients",
+    "subtitle": "We have worked with some of the best names in the market. Be one of them!",
+    "noPartners": "Loading our partners..."
+  },
+  "cta": {
+    "title": "Ready to Work With Us?",
+    "subtitle": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
+    "talentButton": "Become a Talent",
+    "clientButton": "Find Talent",
+    "contactButton": "Get in Touch"
+  }
+}
