@@ -159,7 +159,7 @@ export default function HorizontalCarousel<T = unknown>({
       )}
       <div
         ref={scrollRef}
-        className="no-scrollbar flex overflow-x-auto scroll-px-6 py-2 cursor-grab active:cursor-grabbing" // Ensures no native scrollbar is visible
+        className="no-scrollbar flex overflow-x-auto scroll-px-6 pt-2 pb-10 cursor-grab active:cursor-grabbing" // Ensures no native scrollbar is visible
         style={{ gap: itemGap, userSelect: isDragging ? "none" : "auto" }}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}

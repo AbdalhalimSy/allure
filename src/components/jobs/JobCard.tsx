@@ -19,7 +19,8 @@ const formatDate = (dateString: string) => {
 };
 
 export default function JobCard({ job }: JobCardProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isRTL = locale === "ar";
   const daysUntilExpiry = Math.ceil(
     (new Date(job.expiration_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
   );
@@ -130,7 +131,7 @@ export default function JobCard({ job }: JobCardProps) {
           className="flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40 group-hover:gap-3"
         >
           {t("jobCard.viewDetails")}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
         </Link>
       </div>
     </div>
