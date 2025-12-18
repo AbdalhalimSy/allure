@@ -1,6 +1,7 @@
 {
   "common": {
     "loading": "Loading...",
+    "saving": "Saving...",
     "back": "Back",
     "remove": "Remove",
     "finish": "Finish",

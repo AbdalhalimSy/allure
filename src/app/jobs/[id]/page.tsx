@@ -42,7 +42,7 @@ export default function JobDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<DetailedRole | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isJobOpen = job?.open_to_apply ?? true;
+  const isRTL = locale === "ar";
 
   useEffect(() => {
     if (activeProfileId) {
@@ -137,7 +137,7 @@ export default function JobDetailPage() {
           onClick={() => router.push("/jobs")}
           className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] dark:text-gray-400"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
           {t("jobDetail.backToJobs")}
         </button>
 

@@ -212,7 +212,7 @@ export default function AppliedJobsPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8">
       <div className="mb-8 flex flex-col gap-3">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-[#c49a47]">
               {t("appliedJobs.title")}
@@ -229,7 +229,7 @@ export default function AppliedJobsPage() {
             </span>
           </div>
         </div>
-        <div className="grid gap-3 md:grid-cols-5">
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {stats.map((stat) => (
             <div
               key={stat.key}

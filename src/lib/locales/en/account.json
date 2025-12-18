@@ -63,7 +63,10 @@
       "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
       "rejectedTitle": "rejected",
       "rejectedDescription": "Your account application was not approved. Please contact support for details.",
-      "ariaLabel": "Approval status: {{status}}"
+      "ariaLabel": "Approval status: {{status}}",
+      "approved": "approved",
+      "pending": "pending",
+      "rejected": "rejected"
     },
     "billing": {
       "status": {
@@ -172,10 +175,15 @@
         "search": "Search specializations...",
         "noResults": "No specializations found",
         "empty": "Select professions above to get started",
-        "profession": "Profession"
+        "profession": "Profession",
+        "subProfession": "Sub-Profession",
+        "noneGeneral": "None (General)",
+        "placeholder": "Select profession",
+        "noSub": "No sub-professions required for this role."
       },
       "media": {
-        "title": "Required Media for Selected Specializations",
+        "title": "Media Uploads",
+        "hint": "Keep files under 50MB; use clear, recent media.",
         "photo": "Photo",
         "video": "Video",
         "audio": "Audio",
@@ -190,7 +198,10 @@
         "videoSubtitle": "MP4, MOV up to 50MB",
         "audioLabel": "Audio",
         "audioTitle": "Click to upload audio",
-        "audioSubtitle": "MP3, WAV up to 20MB"
+        "audioSubtitle": "MP3, WAV up to 20MB",
+        "photo": "Photo",
+        "video": "Video",
+        "audio": "Audio"
       },
       "languages": {
         "label": "Language",
@@ -209,6 +220,9 @@
           "korean": "Korean",
           "hindi": "Hindi"
         }
+      },
+      "sizes": {
+        "label": "Sizes in Appearance"
       },
       "errors": {
         "load": "Failed to load professions",
@@ -230,7 +244,22 @@
         "save": "Save Professional Information",
         "saving": "Saving..."
       },
-      "addEntry": "Add Another Profession",
+      "sectionLabel": "Professional Profile",
+      "mediaHint": "Use JPG/PNG images and MP4 videos",
+      "footerHint": "You can update your professional information at any time.",
+      "helper": "Requirements adapt based on each profession and sub-profession.",
+      "validation": {
+        "incomplete": "Complete required fields"
+      },
+      "cardTitle": "Profession {{index}}",
+      "emptyTitle": "Add your first profession",
+      "emptyDesc": "Start with your main role, then add supporting roles or specialties.",
+      "empty": "No professions added yet",
+      "count": {
+        "one": "1 profession added",
+        "other": "{{count}} professions added"
+      },
+      "addEntry": "Add Profession",
       "addEntryDesc": "Showcase multiple talents and skills",
       "upload": {
         "photo": "Photo",
@@ -270,11 +299,16 @@
     "experience": {
       "title": "Work Experience",
       "description": "Add your professional experience entries",
+      "cardTitle": "Experience {{index}}",
+      "empty": "No experiences added yet",
+      "count": {
+        "one": "1 experience added",
+        "other": "{{count}} experiences added"
+      },
       "fields": {
         "title": "Title",
-        "company": "Company",
-        "startYear": "Start Year",
-        "endYear": "End Year",
+        "startDate": "Start Date",
+        "endDate": "End Date",
         "current": "Current",
         "description": "Description",
         "attachment": "Attachment (optional)"
@@ -282,13 +316,17 @@
       "success": "Experiences saved successfully",
       "placeholders": {
         "title": "e.g., Photographer",
-        "company": "e.g., Allure Media",
         "description": "Brief description of your role"
+      },
+      "validation": {
+        "incomplete": "Complete required fields"
       },
       "errors": {
         "titleRequired": "Title is required",
-        "endYearRequired": "End year is required unless current",
-        "yearOrder": "Start year must be less than or equal to end year",
+        "endDateRequired": "End date is required for past experiences",
+        "dateOrder": "Start date must be before or equal to end date",
+        "yearLimit": "Year must not be greater than 2025",
+        "futureDate": "Date cannot be in the future",
         "load": "Failed to load experiences",
         "save": "Failed to save experiences"
       },
@@ -457,7 +495,8 @@
     "switchProfile": "Switch Profile",
     "switched": "Profile switched successfully",
     "switchFailed": "Failed to switch profile",
-    "primary": "Primary"
+    "primary": "Primary",
+    "switchTo": "Switch to"
   },
   "portfolio": {
     "description": "Showcase your best work and projects. Reorder items and sync when ready.",

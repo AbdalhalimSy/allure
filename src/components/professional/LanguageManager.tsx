@@ -7,20 +7,35 @@ import { ProfessionLanguage } from "@/types/profession";
 import MediaUploader from "@/components/ui/MediaUploader";
 import SingleSelect from "@/components/ui/SingleSelect";
 
-const LANGUAGE_OPTIONS = [
-  { code: "en", label: "English" },
-  { code: "ar", label: "Arabic" },
-  { code: "fr", label: "French" },
-  { code: "es", label: "Spanish" },
-  { code: "de", label: "German" },
-  { code: "it", label: "Italian" },
-  { code: "pt", label: "Portuguese" },
-  { code: "ru", label: "Russian" },
-  { code: "zh", label: "Chinese" },
-  { code: "ja", label: "Japanese" },
-  { code: "ko", label: "Korean" },
-  { code: "hi", label: "Hindi" },
+const LANGUAGE_CODES = [
+  "en",
+  "ar",
+  "fr",
+  "es",
+  "de",
+  "it",
+  "pt",
+  "ru",
+  "zh",
+  "ja",
+  "ko",
+  "hi",
 ];
+
+const CODE_TO_NAME_KEY: Record<string, string> = {
+  en: "english",
+  ar: "arabic",
+  fr: "french",
+  es: "spanish",
+  de: "german",
+  it: "italian",
+  pt: "portuguese",
+  ru: "russian",
+  zh: "chinese",
+  ja: "japanese",
+  ko: "korean",
+  hi: "hindi",
+};
 
 interface LanguageManagerProps {
   languages: ProfessionLanguage[];
@@ -36,8 +51,8 @@ export default function LanguageManager({
   const { t } = useI18n();
   const [showVoiceUpload, setShowVoiceUpload] = useState<number | null>(null);
 
-  const availableLanguages = LANGUAGE_OPTIONS.filter(
-    (lang) => !languages.some((l) => l.code === lang.code)
+  const availableLanguages = LANGUAGE_CODES.filter(
+    (code) => !languages.some((l) => l.code === code)
   );
 
   const handleAddLanguage = (code: string) => {
@@ -67,7 +82,8 @@ export default function LanguageManager({
   };
 
   const getLanguageLabel = (code: string) => {
-    return LANGUAGE_OPTIONS.find((l) => l.code === code)?.label || code;
+    const key = CODE_TO_NAME_KEY[code];
+    return (key && t(`account.profession.languages.options.${key}`)) || code.toUpperCase();
   };
 
   return (
@@ -136,9 +152,9 @@ export default function LanguageManager({
       {availableLanguages.length > 0 && (
         <div className="relative">
           <SingleSelect
-            options={availableLanguages.map((lang) => ({
-              value: lang.code,
-              label: lang.label,
+            options={availableLanguages.map((code) => ({
+              value: code,
+              label: getLanguageLabel(code),
             }))}
             value=""
             onChange={(value) => handleAddLanguage(String(value))}

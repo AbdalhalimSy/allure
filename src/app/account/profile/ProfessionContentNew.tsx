@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "react-hot-toast";
-import { TbPlus } from "react-icons/tb";
+import { TbPlus, TbInfoCircle } from "react-icons/tb";
 import AccountSection from "@/components/account/AccountSection";
 import Button from "@/components/ui/Button";
 import Loader from "@/components/ui/Loader";
@@ -25,10 +25,42 @@ export default function ProfessionContent({
   const { fetchProfile } = useAuth();
   const { t } = useI18n();
 
+  const translate = (
+    key: string,
+    fallback: string,
+    options?: Record<string, string | number>
+  ) => {
+    let value = t(key);
+    if (!value || value === key) value = fallback;
+    
+    // Interpolate variables like {{index}}, {{count}}, etc.
+    if (options) {
+      Object.keys(options).forEach((optionKey) => {
+        const regex = new RegExp(`\\{\\{${optionKey}\\}\\}`, 'g');
+        value = value.replace(regex, String(options[optionKey]));
+      });
+    }
+    
+    return value;
+  };
+
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [entries, setEntries] = useState<ProfessionEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [openStates, setOpenStates] = useState<boolean[]>([]);
+
+  const entryCountLabel = useMemo(() => {
+    if (entries.length === 0)
+      return translate("account.profession.empty", "No professions added yet");
+    if (entries.length === 1)
+      return translate("account.profession.count.one", "1 profession added");
+    return translate(
+      "account.profession.count.other",
+      `${entries.length} professions added`,
+      { count: entries.length }
+    );
+  }, [entries.length, t]);
 
   // Fetch professions and saved data
   useEffect(() => {
@@ -46,6 +78,7 @@ export default function ProfessionContent({
           const savedEntries = await fetchSavedProfessions();
           if (savedEntries.length > 0) {
             setEntries(savedEntries);
+            setOpenStates(new Array(savedEntries.length).fill(true));
           }
         } catch (error) {
           console.error("Failed to fetch saved professions:", error);
@@ -54,7 +87,10 @@ export default function ProfessionContent({
       } catch (error) {
         console.error("Failed to fetch professions:", error);
         toast.error(
-          t("account.profession.errors.load") || "Failed to load professions"
+          translate(
+            "account.profession.errors.load",
+            "Failed to load professions"
+          )
         );
       } finally {
         setLoading(false);
@@ -72,10 +108,12 @@ export default function ProfessionContent({
       socials: [],
     };
     setEntries([...entries, newEntry]);
+    setOpenStates([...openStates, true]);
   };
 
   const handleRemoveEntry = (index: number) => {
     setEntries(entries.filter((_, i) => i !== index));
+    setOpenStates(openStates.filter((_, i) => i !== index));
   };
 
   const handleUpdateEntry = (index: number, updated: ProfessionEntry) => {
@@ -84,11 +122,21 @@ export default function ProfessionContent({
     setEntries(newEntries);
   };
 
+  const handleToggleOpen = (index: number) => {
+    setOpenStates((prev) => {
+      const next = [...prev];
+      next[index] = !next[index];
+      return next;
+    });
+  };
+
   const validateEntries = (): boolean => {
     if (entries.length === 0) {
       toast.error(
-        t("account.profession.errors.selectProfession") ||
+        translate(
+          "account.profession.errors.selectProfession",
           "Please add at least one profession"
+        )
       );
       return false;
     }
@@ -98,7 +146,12 @@ export default function ProfessionContent({
       const profession = professions.find((p) => p.id === entry.professionId);
 
       if (!profession) {
-        toast.error(`Invalid profession selected for entry ${i + 1}`);
+        toast.error(
+          translate(
+            "account.profession.errors.invalidProfession",
+            `Invalid profession selected for entry ${i + 1}`
+          )
+        );
         return false;
       }
 
@@ -125,31 +178,45 @@ export default function ProfessionContent({
       const requiresLanguages = Boolean(
         profession.requires_languages || subProfession?.requires_languages
       );
-      const requiresSizes = Boolean(subProfession?.requires_sizes);
 
       // Validate required media
       if (requiresPhoto && !entry.photo) {
-        toast.error(`Photo is required for ${label}`);
+        toast.error(
+          translate(
+            "account.profession.errors.photoRequired",
+            `Photo is required for ${label}`
+          )
+        );
         return false;
       }
 
       if (requiresVideo && !entry.video) {
-        toast.error(`Video is required for ${label}`);
+        toast.error(
+          translate(
+            "account.profession.errors.videoRequired",
+            `Video is required for ${label}`
+          )
+        );
         return false;
       }
 
       if (requiresAudio && !entry.audio) {
-        toast.error(`Audio is required for ${label}`);
+        toast.error(
+          translate(
+            "account.profession.errors.audioRequired",
+            `Audio is required for ${label}`
+          )
+        );
         return false;
       }
 
       if (requiresLanguages && entry.languages.length === 0) {
-        toast.error(`At least one language is required for ${label}`);
-        return false;
-      }
-
-      if (requiresSizes && entry.socials.length === 0) {
-        toast.error(`At least one social media link is required for ${label}`);
+        toast.error(
+          translate(
+            "account.profession.errors.languageRequired",
+            `At least one language is required for ${label}`
+          )
+        );
         return false;
       }
     }
@@ -166,7 +233,10 @@ export default function ProfessionContent({
     try {
       await syncProfessions(entries);
       toast.success(
-        t("account.profession.success") || "Professions saved successfully!"
+        translate(
+          "account.profession.success",
+          "Professions saved successfully!"
+        )
       );
       await fetchProfile();
       onNext();
@@ -176,9 +246,14 @@ export default function ProfessionContent({
         typeof error === "object" && error !== null && "response" in error
           ? (error as { response?: { data?: { message?: string } } }).response
               ?.data?.message ||
-            t("account.profession.errors.save") ||
-            "Failed to save professions"
-          : t("account.profession.errors.save") || "Failed to save professions";
+            translate(
+              "account.profession.errors.save",
+              "Failed to save professions"
+            )
+          : translate(
+              "account.profession.errors.save",
+              "Failed to save professions"
+            );
       toast.error(errorMessage);
     } finally {
       setSaving(false);
@@ -191,7 +266,7 @@ export default function ProfessionContent({
         size="xl"
         variant="spinner"
         color="primary"
-        text={t("common.loading") || "Loading..."}
+        text={translate("common.loading", "Loading...")}
         center
       />
     );
@@ -199,74 +274,131 @@ export default function ProfessionContent({
 
   return (
     <AccountSection
-      title={t("account.profession.title") || "Professional Information"}
-      description={
-        t("account.profession.description") ||
+      title={translate("account.profession.title", "Professional Information")}
+      description={translate(
+        "account.profession.description",
         "Add your professions and showcase your talents"
-      }
+      )}
     >
       <div className="space-y-6">
-        {/* Profession Entries */}
-        {entries.map((entry, index) => (
-          <ProfessionEntryForm
-            key={index}
-            professions={professions}
-            entry={entry}
-            onChange={(updated) => handleUpdateEntry(index, updated)}
-            onRemove={() => handleRemoveEntry(index)}
-            disabled={saving}
-          />
-        ))}
-
-        {/* Add Entry Button */}
-        <button
-          type="button"
-          onClick={handleAddEntry}
-          disabled={saving || professions.length === 0}
-          className="
-            w-full border-2 border-dashed border-gray-300 dark:border-white/20
-            rounded-xl p-6 text-center
-            hover:border-[#c49a47] dark:hover:border-[#c49a47]
-            hover:bg-[#c49a47]/10 dark:hover:bg-[#c49a47]/20
-            transition-all duration-200
-            disabled:opacity-50 disabled:cursor-not-allowed
-            group
-          "
-        >
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-[#c49a47]/10 dark:bg-[#c49a47]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <TbPlus className="w-6 h-6 text-[#c49a47] dark:text-[#e3c37b]" />
+        <div className="rounded-2xl border border-[#c49a47]/30 bg-linear-to-r from-white via-[#fefaf3] to-white dark:from-white/5 dark:via-white/0 dark:to-white/5 p-5 shadow-sm">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-[#c49a47] dark:text-[#e3c37b] uppercase tracking-wide">
+                {translate(
+                  "account.profession.sectionLabel",
+                  "Professional Profile"
+                )}
+              </p>
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                {entryCountLabel}
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                {translate(
+                  "account.profession.helper",
+                  "Requirements adapt based on each profession and sub-profession."
+                )}
+              </p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {t("account.profession.addEntry") || "Add Another Profession"}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {t("account.profession.addEntryDesc") ||
-                  "Showcase multiple talents and skills"}
-              </p>
+            <div className="flex flex-wrap gap-2 text-xs text-gray-700 dark:text-gray-300">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#c49a47]/40 bg-white px-3 py-2 dark:bg-white/5">
+                <TbInfoCircle className="h-4 w-4 text-[#c49a47]" />
+                {translate(
+                  "account.profession.mediaHint",
+                  "Use JPG/PNG images and MP4 videos"
+                )}
+              </span>
             </div>
           </div>
-        </button>
+        </div>
 
-        {/* Action Buttons */}
-        <div className="flex justify-between gap-3 border-t border-gray-200 dark:border-white/10 pt-6">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onBack}
-            disabled={saving}
-          >
-            {t("common.back") || "Back"}
-          </Button>
-          <Button
-            onClick={handleSave}
-            disabled={saving || entries.length === 0}
-          >
-            {saving
-              ? t("common.saving") || "Saving..."
-              : t("common.saveAndContinue") || "Save & Continue"}
-          </Button>
+        {entries.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center dark:border-white/20 dark:bg-white/5">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c49a47]/10 text-[#c49a47] dark:bg-[#c49a47]/20">
+              <TbPlus className="h-7 w-7" />
+            </div>
+            <p className="text-lg font-semibold text-gray-900 dark:text-white">
+              {translate(
+                "account.profession.emptyTitle",
+                "Add your first profession"
+              )}
+            </p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              {translate(
+                "account.profession.emptyDesc",
+                "Start with your main role, then add supporting roles or specialties."
+              )}
+            </p>
+            <div className="mt-5 flex justify-center">
+              <Button
+                onClick={handleAddEntry}
+                disabled={saving || professions.length === 0}
+              >
+                <div className="flex items-center gap-2">
+                  <TbPlus className="h-4 w-4" />
+                  {translate("account.profession.addEntry", "Add Profession")}
+                </div>
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {entries.map((entry, index) => (
+              <ProfessionEntryForm
+                key={index}
+                index={index + 1}
+                professions={professions}
+                entry={entry}
+                isOpen={openStates[index] ?? true}
+                onChange={(updated) => handleUpdateEntry(index, updated)}
+                onRemove={() => handleRemoveEntry(index)}
+                onToggle={() => handleToggleOpen(index)}
+                disabled={saving}
+              />
+            ))}
+
+            <div className="flex items-center justify-center">
+              <button
+                type="button"
+                onClick={handleAddEntry}
+                disabled={saving || professions.length === 0}
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:border-[#c49a47]"
+              >
+                <TbPlus className="h-4 w-4" />
+                {translate(
+                  "account.profession.addEntry",
+                  "Add Another Profession"
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/5 md:flex-row md:items-center md:justify-between">
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            {translate(
+              "account.profession.footerHint",
+              "You can update your professional information at any time."
+            )}
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={onBack}
+              disabled={saving}
+            >
+              {translate("common.back", "Back")}
+            </Button>
+            <Button
+              onClick={handleSave}
+              disabled={saving || entries.length === 0}
+            >
+              {saving
+                ? translate("common.saving", "Saving...")
+                : translate("common.saveAndContinue", "Save & Continue")}
+            </Button>
+          </div>
         </div>
       </div>
     </AccountSection>

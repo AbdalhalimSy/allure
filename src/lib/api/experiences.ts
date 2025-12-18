@@ -13,14 +13,17 @@ export function buildSyncExperiencesPayload(
     const prefix = `experiences[${index}]`;
     if (exp.id) formData.append(`${prefix}[id]`, String(exp.id));
     formData.append(`${prefix}[title]`, exp.title);
-    if (exp.company) formData.append(`${prefix}[company]`, exp.company);
     if (typeof exp.is_current === 'boolean') formData.append(`${prefix}[is_current]`, exp.is_current ? '1' : '0');
 
-    // Year rules: if is_current => end_year must be null; if not current, end_year required
-    const isCurrent = !!exp.is_current;
-    if (exp.start_year != null) formData.append(`${prefix}[start_year]`, String(exp.start_year));
-    if (!isCurrent && exp.end_year != null) formData.append(`${prefix}[end_year]`, String(exp.end_year));
-    if (isCurrent) formData.append(`${prefix}[end_year]`, '');
+    // Only send dates if they have values
+    if (exp.start_date) {
+      console.log(`[Experience ${index}] Sending start_date:`, exp.start_date);
+      formData.append(`${prefix}[start_date]`, exp.start_date);
+    }
+    if (exp.end_date) {
+      console.log(`[Experience ${index}] Sending end_date:`, exp.end_date);
+      formData.append(`${prefix}[end_date]`, exp.end_date);
+    }
 
     if (exp.description) formData.append(`${prefix}[description]`, exp.description);
 
@@ -58,11 +61,10 @@ export function mapApiResponseToEntries(apiData: ExperienceResponseItem[]): Expe
   return (apiData || []).map((item) => ({
     id: item.id,
     title: item.title,
-    company: item.company,
-    start_year: item.start_year ?? null,
-    end_year: item.end_year ?? null,
+    start_date: item.start_date ?? null,
+    end_date: item.end_date ?? null,
     is_current: !!item.is_current,
     description: item.description,
-    attachment: item.attachment ? getMediaUrl(item.attachment) : undefined,
+    attachment: item.attachment_url || (item.attachment ? getMediaUrl(item.attachment) : undefined),
   }));
 }
