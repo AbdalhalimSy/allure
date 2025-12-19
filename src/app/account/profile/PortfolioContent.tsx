@@ -7,12 +7,37 @@ import Button from "@/components/ui/Button";
 import Loader from "@/components/ui/Loader";
 import FileUploader from "@/components/ui/FileUploader";
 import { toast } from "react-hot-toast";
-import { fetchPortfolio, syncPortfolio, validatePortfolioItems } from "@/lib/api/portfolio";
+import {
+  fetchPortfolio,
+  syncPortfolio,
+  validatePortfolioItems,
+} from "@/lib/api/portfolio";
 import { PortfolioItem } from "@/types/portfolio";
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, rectSortingStrategy } from "@dnd-kit/sortable";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { TbClock, TbCheck, TbGripVertical, TbTrash, TbUpload, TbRefresh } from "react-icons/tb";
+import {
+  TbClock,
+  TbCheck,
+  TbGripVertical,
+  TbTrash,
+  TbUpload,
+  TbRefresh,
+} from "react-icons/tb";
 import Image from "next/image";
 
 interface PortfolioContentProps {
@@ -50,7 +75,11 @@ function SortableItem({ item, index, onRemove }: SortableItemProps) {
       <div className="relative aspect-4/3 overflow-hidden">
         {item.file_url ? (
           item.media_type?.startsWith("video") ? (
-            <video src={item.file_url} className="h-full w-full object-cover" controls />
+            <video
+              src={item.file_url}
+              className="h-full w-full object-cover"
+              controls
+            />
           ) : (
             <div className="relative h-full w-full">
               <Image
@@ -64,25 +93,33 @@ function SortableItem({ item, index, onRemove }: SortableItemProps) {
             </div>
           )
         ) : item.file ? (
-              <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">{t('forms.newFilePendingUpload') || 'New file pending upload'}</div>
+          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">
+            {t("forms.newFilePendingUpload") || "New file pending upload"}
+          </div>
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">{t('forms.noPreview') || 'No preview'}</div>
+          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">
+            {t("forms.noPreview") || "No preview"}
+          </div>
         )}
 
         {/* Status badge */}
         {item.approval_status === "pending" && (
           <div className="absolute top-2 start-2 flex items-center gap-1 bg-yellow-500/90 text-white text-xs px-2 py-1 rounded shadow">
-            <TbClock size={14} /> <span>{t('portfolio.pending') || 'Pending'}</span>
+            <TbClock size={14} />{" "}
+            <span>{t("portfolio.pending") || "Pending"}</span>
           </div>
         )}
         {item.approval_status === "approved" && (
           <div className="absolute top-2 start-2 flex items-center gap-1 bg-green-600/90 text-white text-xs px-2 py-1 rounded shadow">
-            <TbCheck size={14} /> <span>{t('portfolio.approved') || 'Approved'}</span>
+            <TbCheck size={14} />{" "}
+            <span>{t("portfolio.approved") || "Approved"}</span>
           </div>
         )}
 
         {/* Order indicator */}
-        <div className="absolute top-2 end-2 rounded bg-black/60 px-2 py-0.5 text-xs text-white">#{index + 1}</div>
+        <div className="absolute top-2 end-2 rounded bg-black/60 px-2 py-0.5 text-xs text-white">
+          #{index + 1}
+        </div>
 
         {/* Drag handle and remove button */}
         <button
@@ -90,9 +127,13 @@ function SortableItem({ item, index, onRemove }: SortableItemProps) {
           onClick={() => onRemove(item.id, item.tempKey)}
           className="absolute bottom-2 start-2 inline-flex items-center gap-1 rounded bg-rose-600/90 px-2 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100"
         >
-          <TbTrash size={14} /> {t('common.remove') || 'Remove'}
+          <TbTrash size={14} /> {t("common.remove") || "Remove"}
         </button>
-        <div {...attributes} {...listeners} className="absolute bottom-2 end-2 cursor-move opacity-80">
+        <div
+          {...attributes}
+          {...listeners}
+          className="absolute bottom-2 end-2 cursor-move opacity-80"
+        >
           <TbGripVertical size={22} className="text-[#c49a47] drop-shadow" />
         </div>
       </div>
@@ -118,10 +159,12 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     try {
       const data = await fetchPortfolio();
       // Sort by priority ascending to maintain expected order
-      const sorted = [...data].sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
-      setItems(sorted.map(d => ({ ...d, priority: d.priority ?? 0 })));
+      const sorted = [...data].sort(
+        (a, b) => (a.priority ?? 0) - (b.priority ?? 0)
+      );
+      setItems(sorted.map((d) => ({ ...d, priority: d.priority ?? 0 })));
     } catch {
-      toast.error(t('portfolio.loadFailed') || 'Failed to load portfolio');
+      toast.error(t("portfolio.loadFailed") || "Failed to load portfolio");
     } finally {
       setLoading(false);
     }
@@ -145,24 +188,26 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     const newFiles = files.filter((f): f is File => f instanceof File);
     if (!newFiles.length) return;
     const newItems: PortfolioItem[] = newFiles.map((file, idx) => {
-      const mediaType = file.type.startsWith('video') ? 'video' : 'image';
+      const mediaType = file.type.startsWith("video") ? "video" : "image";
       return {
         tempKey: `new-${Date.now()}-${idx}`,
         media_type: mediaType,
         featured_image: false,
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         priority: items.length + idx,
         file,
         file_url: URL.createObjectURL(file),
       };
     });
-    setItems(prev => [...prev, ...newItems]);
+    setItems((prev) => [...prev, ...newItems]);
     setSelectedFiles([]);
   };
 
   const removeItem = (id?: number, tempKey?: string) => {
-    setItems(prev => prev.filter(i => (i.id ?? i.tempKey) !== (id ?? tempKey)));
+    setItems((prev) =>
+      prev.filter((i) => (i.id ?? i.tempKey) !== (id ?? tempKey))
+    );
   };
 
   // Simplified UI: no inline editing or featured flag
@@ -174,19 +219,28 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     if (validation.length) {
       setErrors(validation);
       setSaving(false);
-  toast.error(t('portfolio.validationErrors') || 'Validation errors');
+      toast.error(t("portfolio.validationErrors") || "Validation errors");
       return;
     }
     const normalized = items.map((i, idx) => ({ ...i, priority: idx }));
     const result = await syncPortfolio(normalized);
     setSaving(false);
     if (result.success) {
-  toast.success(result.message || t('portfolio.synced') || 'Portfolio synced');
+      toast.success(
+        result.message || t("portfolio.synced") || "Portfolio synced"
+      );
       loadInitial();
     } else {
-      const backendErrors = result.errors ? Object.values(result.errors).flat() : [];
-  setErrors(prev => [...prev, ...(backendErrors.length ? backendErrors : [result.message || t('portfolio.syncFailed') || 'Sync failed'])]);
-  toast.error(result.message || t('portfolio.syncFailed') || 'Sync failed');
+      const backendErrors = result.errors
+        ? Object.values(result.errors).flat()
+        : [];
+      setErrors((prev) => [
+        ...prev,
+        ...(backendErrors.length
+          ? backendErrors
+          : [result.message || t("portfolio.syncFailed") || "Sync failed"]),
+      ]);
+      toast.error(result.message || t("portfolio.syncFailed") || "Sync failed");
     }
   };
 
@@ -199,7 +253,10 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
   return (
     <AccountSection
       title={t("account.nav.portfolio") || "Portfolio"}
-  description={t('portfolio.description') || 'Showcase your best work and projects. Reorder items and sync when ready.'}
+      description={
+        t("portfolio.description") ||
+        "Showcase your best work and projects. Reorder items and sync when ready."
+      }
     >
       {/* File Uploader */}
       <div className="mb-6">
@@ -209,7 +266,10 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           maxSize={100 * 1024 * 1024} // 100MB limit
           value={selectedFiles}
           onChange={handleFilesChange}
-           description={t('account.upload.selectFiles') || 'Click to select or drag & drop files (images/videos up to 100MB)'}
+          description={
+            t("account.profession.upload.selectFiles") ||
+            "Click to select or drag & drop files (images/videos up to 100MB)"
+          }
         />
       </div>
       {/* Validation errors */}
@@ -223,7 +283,9 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       {/* Drag-and-drop hint */}
       {items.length > 1 && (
         <div className="mb-2 flex items-center gap-2 text-sm text-[#c49a47] font-medium">
-          <TbGripVertical size={18} /> {t('portfolio.dragHint') || 'Drag and drop to reorder your portfolio items'}
+          <TbGripVertical size={18} />{" "}
+          {t("portfolio.dragHint") ||
+            "Drag and drop to reorder your portfolio items"}
         </div>
       )}
       {/* Portfolio Grid with Drag and Drop */}
@@ -268,7 +330,8 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             />
           </svg>
           <p className="mt-4 text-gray-600 dark:text-gray-400">
-            {t('portfolio.noItems') || 'No portfolio items yet. Upload your work above!'}
+            {t("portfolio.noItems") ||
+              "No portfolio items yet. Upload your work above!"}
           </p>
         </div>
       )}
@@ -279,14 +342,23 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             {t("common.back") || "Back"}
           </Button>
           <Button variant="secondary" onClick={loadInitial} disabled={saving}>
-            <TbRefresh className="me-1" /> {t('portfolio.reset') || 'Reset'}
+            <TbRefresh className="me-1" /> {t("portfolio.reset") || "Reset"}
           </Button>
         </div>
-        <Button variant="primary" disabled={saving || !items.length} onClick={handleSync}>
+        <Button
+          variant="primary"
+          disabled={saving || !items.length}
+          onClick={handleSync}
+        >
           {saving ? (
-            <span className="flex items-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> {t('portfolio.syncing') || 'Syncing...'}</span>
+            <span className="flex items-center gap-2">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{" "}
+              {t("portfolio.syncing") || "Syncing..."}
+            </span>
           ) : (
-            <span className="flex items-center gap-2"><TbUpload /> {t('portfolio.sync') || 'Sync Portfolio'}</span>
+            <span className="flex items-center gap-2">
+              <TbUpload /> {t("portfolio.sync") || "Sync Portfolio"}
+            </span>
           )}
         </Button>
       </div>
