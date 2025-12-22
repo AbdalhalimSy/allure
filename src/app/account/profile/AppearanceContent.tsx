@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
+import AccountPageLoader from "@/components/account/AccountPageLoader";
 import { Input, SingleSelect, Button, NumericWithUnit } from "@/components/ui";
 import type { SingleSelectOption } from "@/components/ui/SingleSelect";
 import {
@@ -55,7 +56,7 @@ export default function AppearanceContent({
 }: AppearanceContentProps) {
   const { user, fetchProfile } = useAuth();
   const { t } = useI18n();
-  const { data: lookupData } = useLookupData({
+  const { data: lookupData, loading: loadingLookups } = useLookupData({
     fetchAppearanceOptions: true,
     showError: false,
   });
@@ -202,6 +203,10 @@ export default function AppearanceContent({
       setLoading(false);
     }
   };
+
+  if (loadingLookups) {
+    return <AccountPageLoader message={t('account.appearance.loading') || 'Loading appearance options...'} />;
+  }
 
   return (
     <form onSubmit={onSubmit}>

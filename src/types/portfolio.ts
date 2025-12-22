@@ -8,6 +8,7 @@ export interface PortfolioMedia {
   thumbnail_url: string | null;
   approval_status: string; // pending|approved|rejected
   featured_image: boolean;
+  request_featured_image?: boolean;
   created_at: string;
   updated_at: string;
   // New optional textual metadata (may be provided by future backend updates)
@@ -27,6 +28,7 @@ export interface PortfolioItem {
   thumbnail_url?: string | null;
   approval_status?: string;
   featured_image: boolean;
+  request_featured_image?: boolean;
   created_at?: string;
   updated_at?: string;
   title: string;
@@ -40,3 +42,4 @@ export interface SyncPortfolioResult {
   message?: string;
   errors?: Record<string, string[]>; // field level errors from backend
 }
+

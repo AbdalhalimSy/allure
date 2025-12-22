@@ -47,7 +47,15 @@ const DEFAULT_OPTIONS: LookupOptions = {
  */
 export function useLookupData(options: LookupOptions = {}) {
   const { locale } = useI18n();
-  const mergedOptions = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [options]);
+  
+  // Stabilize options to prevent unnecessary re-fetches
+  const mergedOptions = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [
+    options.fetchNationalities,
+    options.fetchEthnicities,
+    options.fetchCountries,
+    options.fetchAppearanceOptions,
+    options.showError,
+  ]);
 
   const [data, setData] = useState<Partial<LookupData>>({
     nationalities: [],

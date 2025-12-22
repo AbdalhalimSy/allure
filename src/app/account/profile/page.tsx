@@ -69,7 +69,7 @@ export default function ProfilePage() {
   }, [profileStep, currentStep, user]);
 
   // Get nav items
-  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
+  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile?.progress_step]);
 
   // Define the 5 steps for the stepper
   const steps: StepConfig[] = useMemo(() => {

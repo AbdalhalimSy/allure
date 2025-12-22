@@ -3,8 +3,8 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { TbPlus } from 'react-icons/tb';
 import AccountSection from "@/components/account/AccountSection";
+import AccountPageLoader from "@/components/account/AccountPageLoader";
 import Button from "@/components/ui/Button";
-import Loader from "@/components/ui/Loader";
 import { useI18n } from "@/contexts/I18nContext";
 import { toast } from 'react-hot-toast';
 import { useAuth } from "@/contexts/AuthContext";
@@ -185,14 +185,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
 
   if (loading) {
     return (
-      <AccountSection
-        title={translate('account.experience.title', 'Work Experience')}
-        description={translate('account.experience.description', 'Add your professional experience entries')}
-      >
-        <div className="flex items-center justify-center py-12">
-          <Loader />
-        </div>
-      </AccountSection>
+      <AccountPageLoader message={translate('account.experience.loading', 'Loading experiences...')} />
     );
   }
 

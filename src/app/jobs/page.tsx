@@ -29,23 +29,6 @@ export default function JobsPage() {
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
 
-  // Reset jobs and show loading when pathname changes (navigation)
-  useEffect(() => {
-    setJobs([]);
-    setLoading(true);
-    setHasMore(true);
-    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
-  }, [pathname]);
-
-  // Fetch jobs when filters, profile, or eligible toggle changes (first page)
-  useEffect(() => {
-    if (activeProfileId) {
-      // Show switching animation when toggle changes
-      setSwitching(true);
-      fetchJobs(1, true);
-    }
-  }, [filters, activeProfileId, locale, showEligibleOnly, fetchJobs]);
-
   const fetchJobs = useCallback(async (page: number = 1, reset: boolean = false) => {
     const requestId = ++requestIdRef.current;
     if (!activeProfileId) {
@@ -162,6 +145,24 @@ export default function JobsPage() {
       }
     }
   }, [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly]);
+
+  // Reset jobs and show loading when pathname changes (navigation)
+  useEffect(() => {
+    setJobs([]);
+    setLoading(true);
+    setHasMore(true);
+    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
+  }, [pathname]);
+
+  // Fetch jobs when filters, profile, or eligible toggle changes (first page)
+  useEffect(() => {
+    if (activeProfileId) {
+      // Show switching animation when toggle changes
+      setSwitching(true);
+      fetchJobs(1, true);
+    }
+  }, [filters, activeProfileId, locale, showEligibleOnly, fetchJobs]);
+
 
   // Intersection Observer for infinite scroll
   useEffect(() => {

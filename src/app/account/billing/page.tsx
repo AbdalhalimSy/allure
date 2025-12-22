@@ -33,7 +33,7 @@ export default function BillingPage() {
   const { t } = useI18n();
   const navItems = useMemo(
     () => getAccountNavItems(user?.profile),
-    [user?.profile]
+    [user?.profile?.progress_step]
   );
 
   const [profileId, setProfileId] = useState<number | null>(null);
@@ -69,7 +69,7 @@ export default function BillingPage() {
       setError(t("account.billing.errors.selectProfile"));
       setLoading(false);
     }
-  }, [loadData, t]);
+  }, [t]);
 
   useEffect(() => {
     if (hasSubscription) {
@@ -78,40 +78,45 @@ export default function BillingPage() {
     }
   }, [hasSubscription]);
 
-  const loadData = useCallback(async (profId: number) => {
-    try {
-      setLoading(true);
-      const [packagesRes, statusRes, historyRes, paymentsRes] =
-        await Promise.all([
-          getSubscriptionPackages(),
-          getSubscriptionStatus(profId),
-          getSubscriptionHistory(profId),
-          getPaymentHistory(profId),
-        ]);
+  const loadData = useCallback(
+    async (profId: number) => {
+      try {
+        setLoading(true);
+        const [packagesRes, statusRes, historyRes, paymentsRes] =
+          await Promise.all([
+            getSubscriptionPackages(),
+            getSubscriptionStatus(profId),
+            getSubscriptionHistory(profId),
+            getPaymentHistory(profId),
+          ]);
 
-      // Handle packages response
-      const pkgs = Array.isArray(packagesRes.data)
-        ? packagesRes.data
-        : (packagesRes.data as any).packages || [];
-      setPackages(pkgs);
+        // Handle packages response
+        const pkgs = Array.isArray(packagesRes.data)
+          ? packagesRes.data
+          : (packagesRes.data as any).packages || [];
+        setPackages(pkgs);
 
-      setHasSubscription(statusRes.data.has_subscription);
-      setCurrentSubscription(statusRes.data.subscription || null);
+        setHasSubscription(statusRes.data.has_subscription);
+        setCurrentSubscription(statusRes.data.subscription || null);
 
-      // Handle history response
-      const subs = Array.isArray(historyRes.data)
-        ? historyRes.data
-        : (historyRes.data as any).subscriptions || [];
-      setSubscriptions(subs);
+        // Handle history response
+        const subs = Array.isArray(historyRes.data)
+          ? historyRes.data
+          : (historyRes.data as any).subscriptions || [];
+        setSubscriptions(subs);
 
-      setPayments(paymentsRes.data.payments);
-      setTotalSpent(paymentsRes.data.total_spent);
-    } catch (err: any) {
-      setError(err.response?.data?.message || t("account.billing.errors.load"));
-    } finally {
-      setLoading(false);
-    }
-  }, [t]);
+        setPayments(paymentsRes.data.payments);
+        setTotalSpent(paymentsRes.data.total_spent);
+      } catch (err: any) {
+        setError(
+          err.response?.data?.message || t("account.billing.errors.load")
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [t]
+  );
 
   const handleSubscribe = async () => {
     if (!selectedPackageId || !profileId) return;
@@ -360,7 +365,7 @@ export default function BillingPage() {
               <PaymentHistoryTable
                 payments={payments || []}
                 totalSpent={totalSpent}
-                  subscriptions={subscriptions}
+                subscriptions={subscriptions}
               />
             </AccountSection>
           )}

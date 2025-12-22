@@ -11,7 +11,7 @@ import { getAccountNavItems } from "@/lib/utils/accountNavItems";
 export default function NotificationsPage() {
   const { user } = useAuth();
   const { t } = useI18n();
-  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
+  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile?.progress_step]);
 
   const notificationSettings = [
     {

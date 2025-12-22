@@ -4,8 +4,8 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { TbPlus, TbInfoCircle } from "react-icons/tb";
 import AccountSection from "@/components/account/AccountSection";
+import AccountPageLoader from "@/components/account/AccountPageLoader";
 import Button from "@/components/ui/Button";
-import Loader from "@/components/ui/Loader";
 import ProfessionEntryForm from "@/components/professional/ProfessionEntryForm";
 import { useAuth } from "@/contexts/AuthContext";
 import { Profession, ProfessionEntry } from "@/types/profession";
@@ -262,13 +262,7 @@ export default function ProfessionContent({
 
   if (loading) {
     return (
-      <Loader
-        size="xl"
-        variant="spinner"
-        color="primary"
-        text={translate("common.loading", "Loading...")}
-        center
-      />
+      <AccountPageLoader message={translate("account.profession.loading", "Loading professions...")} />
     );
   }
 
