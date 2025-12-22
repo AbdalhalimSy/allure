@@ -20,6 +20,7 @@ interface PartnersSectionProps {
   subtitle: string;
   cta: string;
   noPartnersText: string;
+  hideArrows?: boolean;
 }
 
 export default function PartnersSection({
@@ -30,6 +31,7 @@ export default function PartnersSection({
   subtitle,
   cta,
   noPartnersText,
+  hideArrows = false,
 }: PartnersSectionProps) {
   return (
     <section className="px-6 pb-20 lg:px-12">
@@ -74,7 +76,7 @@ export default function PartnersSection({
               )}
               autoScroll
               autoScrollPxPerSecond={50}
-              arrows
+              arrows={!hideArrows}
               loop
               itemGap={24}
             />

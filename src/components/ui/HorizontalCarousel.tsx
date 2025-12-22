@@ -36,6 +36,13 @@ export default function HorizontalCarousel<T = unknown>({
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isRTL, setIsRTL] = useState(false);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      setIsRTL(document.documentElement.dir === "rtl");
+    }
+  }, []);
 
   // Prepare loop items if needed
   const displayItems = loop ? [...items, ...items] : items;
@@ -146,14 +153,14 @@ export default function HorizontalCarousel<T = unknown>({
             onClick={() => scrollBy(-480)}
             className="absolute start-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block dark:bg-black/50 dark:hover:bg-black/70"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5 rtl:rotate-180" />
           </button>
           <button
             aria-label="Scroll right"
             onClick={() => scrollBy(480)}
             className="absolute end-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block dark:bg-black/50 dark:hover:bg-black/70"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-5 w-5 rtl:rotate-180" />
           </button>
         </>
       )}
@@ -161,6 +168,7 @@ export default function HorizontalCarousel<T = unknown>({
         ref={scrollRef}
         className="no-scrollbar flex overflow-x-auto scroll-px-6 pt-2 pb-10 cursor-grab active:cursor-grabbing" // Ensures no native scrollbar is visible
         style={{ gap: itemGap, userSelect: isDragging ? "none" : "auto" }}
+        dir={isRTL ? "ltr" : undefined}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

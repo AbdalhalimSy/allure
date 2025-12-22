@@ -5,20 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "@/contexts/I18nContext";
 import apiClient from "@/lib/api/client";
-import { 
-  Award, 
-  Users, 
-  Globe, 
-  Heart, 
-  Sparkles, 
-  Target, 
-  Shield, 
+import { PartnersSection } from "@/components/home";
+import {
+  Award,
+  Users,
+  Globe,
+  Heart,
+  Sparkles,
+  Target,
+  Shield,
   Palette,
   Camera,
   UserCheck,
   Megaphone,
   Lightbulb,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 
 type Partner = {
@@ -52,25 +53,25 @@ export default function AboutPage() {
   }, []);
 
   const stats = [
-    { 
-      value: t("about.stats.established.value"), 
+    {
+      value: t("about.stats.established.value"),
       label: t("about.stats.established.label"),
-      icon: Award
+      icon: Award,
     },
-    { 
-      value: t("about.stats.branches.value"), 
+    {
+      value: t("about.stats.branches.value"),
       label: t("about.stats.branches.label"),
-      icon: Globe
+      icon: Globe,
     },
-    { 
-      value: t("about.stats.talents.value"), 
+    {
+      value: t("about.stats.talents.value"),
       label: t("about.stats.talents.label"),
-      icon: Users
+      icon: Users,
     },
-    { 
-      value: t("about.stats.projects.value"), 
+    {
+      value: t("about.stats.projects.value"),
       label: t("about.stats.projects.label"),
-      icon: Target
+      icon: Target,
     },
   ];
 
@@ -79,25 +80,25 @@ export default function AboutPage() {
       icon: Sparkles,
       title: t("about.values.excellence.title"),
       description: t("about.values.excellence.description"),
-      color: "from-[var(--primary)] to-[#a57b30]"
+      color: "from-[var(--primary)] to-[#a57b30]",
     },
     {
       icon: Palette,
       title: t("about.values.creativity.title"),
       description: t("about.values.creativity.description"),
-      color: "from-emerald-400 to-teal-500"
+      color: "from-emerald-400 to-teal-500",
     },
     {
       icon: Shield,
       title: t("about.values.integrity.title"),
       description: t("about.values.integrity.description"),
-      color: "from-sky-400 to-blue-600"
+      color: "from-sky-400 to-blue-600",
     },
     {
       icon: Heart,
       title: t("about.values.diversity.title"),
       description: t("about.values.diversity.description"),
-      color: "from-fuchsia-400 to-purple-500"
+      color: "from-fuchsia-400 to-purple-500",
     },
   ];
 
@@ -106,25 +107,25 @@ export default function AboutPage() {
       icon: Camera,
       title: t("about.services.casting.title"),
       description: t("about.services.casting.description"),
-      color: "from-rose-400 to-red-500"
+      color: "from-rose-400 to-red-500",
     },
     {
       icon: UserCheck,
       title: t("about.services.management.title"),
       description: t("about.services.management.description"),
-      color: "from-cyan-400 to-indigo-500"
+      color: "from-cyan-400 to-indigo-500",
     },
     {
       icon: Megaphone,
       title: t("about.services.production.title"),
       description: t("about.services.production.description"),
-      color: "from-[rgba(196,154,71,0.85)] to-[var(--primary)]"
+      color: "from-[rgba(196,154,71,0.85)] to-[var(--primary)]",
     },
     {
       icon: Lightbulb,
       title: t("about.services.consultation.title"),
       description: t("about.services.consultation.description"),
-      color: "from-amber-400 to-orange-500"
+      color: "from-amber-400 to-orange-500",
     },
   ];
 
@@ -157,7 +158,7 @@ export default function AboutPage() {
           </div>
 
           {/* Stats Grid */}
-          <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-16 grid max-w-5xl gap-6 grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (
@@ -217,6 +218,24 @@ export default function AboutPage() {
                 <p>{t("about.story.paragraph2")}</p>
                 <p>{t("about.story.paragraph3")}</p>
               </div>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Link href="/talents">
+                  <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
+                    {t("about.story.ctaPrimary")}
+                    <ArrowRight
+                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
+                    />
+                  </button>
+                </Link>
+                <Link href="/contact">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/5">
+                    {t("about.story.ctaSecondary")}
+                    <ArrowRight
+                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
+                    />
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -227,7 +246,7 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Content */}
-            <div className="flex flex-col justify-center space-y-6 lg:order-2">
+            <div className="flex flex-col justify-center space-y-6 order-2 lg:order-1">
               <div>
                 <span className="inline-block rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400">
                   {t("about.expansion.badge")}
@@ -244,10 +263,28 @@ export default function AboutPage() {
                 <p>{t("about.expansion.paragraph2")}</p>
                 <p>{t("about.expansion.paragraph3")}</p>
               </div>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Link href="/talents">
+                  <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
+                    {t("about.expansion.ctaPrimary")}
+                    <ArrowRight
+                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
+                    />
+                  </button>
+                </Link>
+                <Link href="/about">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/5">
+                    {t("about.expansion.ctaSecondary")}
+                    <ArrowRight
+                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
+                    />
+                  </button>
+                </Link>
+              </div>
             </div>
 
             {/* Image */}
-            <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-2xl lg:order-1">
+            <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-2xl order-1 lg:order-2">
               <Image
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
                 alt="Allure Expansion"
@@ -291,7 +328,9 @@ export default function AboutPage() {
                   />
 
                   <div className="relative space-y-4">
-                    <div className={`inline-flex rounded-2xl bg-linear-to-br ${value.color} p-3 text-white`}>
+                    <div
+                      className={`inline-flex rounded-2xl bg-linear-to-br ${value.color} p-3 text-white`}
+                    >
                       <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -354,87 +393,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section className="px-6 py-16 lg:px-12 lg:py-24">
-        <div className="container mx-auto max-w-7xl">
-          {/* Header */}
-          <div className="mx-auto max-w-3xl space-y-4 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
-              {t("about.partners.badge")}
-            </p>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white lg:text-4xl">
-              {t("about.partners.title")}
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              {t("about.partners.subtitle")}
-            </p>
-          </div>
+      {/* Partners Section (reuse home component) */}
+      <PartnersSection
+        partners={partners}
+        loading={partnersLoading}
+        kicker={t("about.partners.badge")}
+        title={t("homeNew.partners.title")}
+        subtitle={t("homeNew.partners.subtitle")}
+        cta={t("homeNew.partners.cta")}
+        noPartnersText={t("about.partners.noPartners")}
+        hideArrows
+      />
 
-          {/* Partners Grid */}
-          {partnersLoading && (
-            <div className="mt-12 flex items-center justify-center rounded-2xl border border-dashed border-[rgba(196,154,71,0.35)] px-6 py-12 text-sm text-primary dark:border-[rgba(196,154,71,0.35)] dark:text-primary">
-              {t("about.partners.noPartners")}
-            </div>
-          )}
-
-          {!partnersLoading && partners.length > 0 && (
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-              {partners.map((partner) => (
-                <div
-                  key={partner.id}
-                  className="flex h-32 items-center justify-center rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:border-[rgba(196,154,71,0.5)] hover:shadow-md dark:border-white/10 dark:bg-gray-900 dark:hover:border-[rgba(196,154,71,0.5)]"
-                >
-                  <Image
-                    src={partner.logo}
-                    alt={partner.title}
-                    width={120}
-                    height={60}
-                    className="max-h-16 w-auto object-contain opacity-70 transition group-hover:opacity-100"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-primary to-[#a57b30] px-6 py-16 lg:px-12 lg:py-24">
-        {/* Background decorations */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -end-20 -top-20 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -start-20 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-        </div>
-
-        <div className="container relative mx-auto max-w-5xl text-center">
-          <h2 className="mb-6 text-3xl font-bold text-white lg:text-4xl">
-            {t("about.cta.title")}
-          </h2>
-          <p className="mb-10 text-lg text-white/90">
-            {t("about.cta.subtitle")}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/register">
-              <button className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-primary shadow-xl transition hover:scale-105 hover:shadow-2xl">
-                {t("about.cta.talentButton")}
-                <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
-              </button>
-            </Link>
-            <Link href="/talents">
-              <button className="group inline-flex items-center gap-2 rounded-full border-2 border-white/30 bg-white/10 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/20">
-                {t("about.cta.clientButton")}
-                <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
-              </button>
-            </Link>
-            <Link href="/contact">
-              <button className="inline-flex items-center gap-2 rounded-full border-2 border-white px-8 py-4 text-base font-semibold text-white transition hover:bg-white hover:text-primary">
-                {t("about.cta.contactButton")}
-              </button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* CTA Section removed per request */}
     </div>
   );
 }
-

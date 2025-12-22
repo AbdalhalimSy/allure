@@ -13,10 +13,6 @@ export default function PaymentResultPage() {
   const [message, setMessage] = useState('Verifying your payment...');
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
-  useEffect(() => {
-    checkPaymentStatus();
-  }, []);
-
   const checkPaymentStatus = async () => {
     try {
       // Get order ID from URL params or localStorage
@@ -70,6 +66,10 @@ export default function PaymentResultPage() {
       setMessage('An error occurred while verifying your payment. Please contact support.');
     }
   };
+
+  useEffect(() => {
+    checkPaymentStatus();
+  }, []);
 
   return (
     <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">

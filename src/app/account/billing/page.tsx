@@ -71,6 +71,13 @@ export default function BillingPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (hasSubscription) {
+      setActiveTab((prev) => (prev === "subscribe" ? "history" : prev));
+      setSelectedPackageId(null);
+    }
+  }, [hasSubscription]);
+
   const loadData = async (profId: number) => {
     try {
       setLoading(true);
@@ -187,16 +194,18 @@ export default function BillingPage() {
           {/* Tab Navigation */}
           <div className="border-b border-gray-200 dark:border-white/10">
             <nav className="-mb-px flex gap-8">
-              <button
-                onClick={() => setActiveTab("subscribe")}
-                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
-                  activeTab === "subscribe"
-                    ? "border-[#c49a47] text-[#c49a47]"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                }`}
-              >
-                {t("account.billing.tabs.plans")}
-              </button>
+              {!hasSubscription && (
+                <button
+                  onClick={() => setActiveTab("subscribe")}
+                  className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                    activeTab === "subscribe"
+                      ? "border-[#c49a47] text-[#c49a47]"
+                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  }`}
+                >
+                  {t("account.billing.tabs.plans")}
+                </button>
+              )}
               <button
                 onClick={() => setActiveTab("history")}
                 className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
@@ -222,7 +231,7 @@ export default function BillingPage() {
           </div>
 
           {/* Tab Content */}
-          {activeTab === "subscribe" && (
+          {activeTab === "subscribe" && !hasSubscription && (
             <>
               <AccountSection
                 title={t("account.billing.packages.title")}
@@ -351,6 +360,7 @@ export default function BillingPage() {
               <PaymentHistoryTable
                 payments={payments || []}
                 totalSpent={totalSpent}
+                  subscriptions={subscriptions}
               />
             </AccountSection>
           )}

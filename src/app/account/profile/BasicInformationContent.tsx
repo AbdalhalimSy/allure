@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
+import AccountFormSkeleton from "@/components/account/AccountFormSkeleton";
 import Input from "@/components/ui/Input";
 import SingleSelect from "@/components/ui/SingleSelect";
 import MultiSelect from "@/components/ui/MultiSelect";
@@ -208,7 +209,12 @@ export default function BasicInformationContent({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+      {/* Show skeleton while loading lookups or user data */}
+      {loadingLookups || !user ? (
+        <AccountFormSkeleton />
+      ) : (
+        <form onSubmit={handleSubmit}>
       <AccountSection
         title={t('account.basic.title')}
         description={t('account.basic.description')}
@@ -372,6 +378,8 @@ export default function BasicInformationContent({
           </Button>
         </div>
       </AccountSection>
-    </form>
+        </form>
+      )}
+    </>
   );
 }

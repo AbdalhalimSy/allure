@@ -134,9 +134,9 @@ export default function AccountLayout({
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 rounded-xl border border-gray-200 bg-white p-6 dark:border-white/10 dark:bg-black lg:p-8">
+        <div className="flex-1 rounded-xl border border-gray-200 bg-white p-6 dark:border-white/10 dark:bg-black lg:p-8">
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );

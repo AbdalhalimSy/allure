@@ -1,7 +1,7 @@
 'use client';
 
 import { Subscription } from '@/types/subscription';
-import { History, Calendar, Tag } from 'lucide-react';
+import { History, Calendar, Tag, Clock, CheckCircle2, XCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useI18n } from '@/contexts/I18nContext';
 
@@ -28,83 +28,92 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
 
   return (
     <div className="space-y-4">
-      {subscriptions.map((subscription) => (
-        <div
-          key={subscription.id}
-          className={`rounded-xl border-2 p-6 transition-all ${
-            subscription.is_active
-              ? 'border-green-200 bg-green-50'
-              : 'border-gray-200 bg-white'
-          }`}
-        >
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-3">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {subscription.package_name}
-                </h3>
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    subscription.is_active
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  {subscription.is_active ? t('account.billing.history.active') : t('account.billing.history.expired')}
-                </span>
-              </div>
+      {subscriptions.map((subscription) => {
+        const active = subscription.is_active;
+        const statusColor = active
+          ? 'text-[#8a6a1f] bg-[#c49a47]/15 ring-[#c49a47]/30'
+          : 'text-gray-700 bg-gray-100 ring-gray-200';
+        const accent = active
+          ? 'from-[#c49a47]/40 via-[#c49a47]/15 to-transparent'
+          : 'from-gray-500/10 via-gray-500/5 to-transparent';
+        const statusIcon = active ? (
+          <CheckCircle2 className="h-4 w-4 text-[#c49a47]" />
+        ) : (
+          <XCircle className="h-4 w-4 text-gray-500" />
+        );
 
-              {subscription.package_price && (
-                <p className="mt-2 text-lg font-bold text-gray-900">
-                  {subscription.package_price.toFixed(2)} AED
-                </p>
-              )}
-
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Calendar className="h-4 w-4" />
-                  <span>
-                    {format(new Date(subscription.starts_at), 'MMM dd, yyyy')} -{' '}
-                    {format(new Date(subscription.end_at), 'MMM dd, yyyy')}
+        return (
+          <div
+            key={subscription.id}
+            className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/80 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-white/5"
+          >
+            <div className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${accent}`} aria-hidden />
+            <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-1 flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-lg bg-[#c49a47] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-sm">
+                    {subscription.package_name}
                   </span>
+                  <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${statusColor}`}>
+                    {statusIcon}
+                    {active ? t('account.billing.history.active') : t('account.billing.history.expired')}
+                  </span>
+                  {subscription.package_price && (
+                    <span className="rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold text-[#8a6a1f] dark:bg-[#c49a47]/15 dark:text-[#e3c37b]">
+                      {subscription.package_price.toFixed(2)} AED
+                    </span>
+                  )}
                 </div>
 
-                {subscription.coupon_used && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Tag className="h-4 w-4 text-green-600" />
-                    <span className="font-mono font-semibold text-green-700">
-                      {subscription.coupon_used.code}
-                    </span>
-                    <span className="text-gray-500">
-                      ({subscription.coupon_used.type === '%'
-                        ? `${subscription.coupon_used.discount}% ${t('account.billing.coupon.off')}`
-                        : `${subscription.coupon_used.discount} AED ${t('account.billing.coupon.off')}`}
-                      )
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="flex items-center gap-2 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-sm text-gray-700 dark:border-white/10 dark:bg-white/5 dark:text-white/80">
+                    <Calendar className="h-4 w-4 text-gray-500" />
+                    <span>
+                      {format(new Date(subscription.starts_at), 'MMM dd, yyyy')} - {format(new Date(subscription.end_at), 'MMM dd, yyyy')}
                     </span>
                   </div>
-                )}
 
-                {subscription.created_at && (
-                  <div className="text-xs text-gray-500">
-                    {t('account.billing.history.purchased')} {format(new Date(subscription.created_at), 'MMM dd, yyyy HH:mm')}
+                  <div className="flex items-center gap-2 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-sm text-gray-700 dark:border-white/10 dark:bg-white/5 dark:text-white/80">
+                    <Clock className="h-4 w-4 text-gray-500" />
+                    <span>
+                      {t('account.billing.history.purchased')} {format(new Date(subscription.created_at), 'MMM dd, yyyy HH:mm')}
+                    </span>
                   </div>
-                )}
+
+                  {subscription.coupon_used && (
+                    <div className="flex items-center gap-2 rounded-xl border border-[#c49a47]/30 bg-[#c49a47]/10 px-3 py-2 text-sm text-[#8a6a1f] dark:border-[#c49a47]/30 dark:bg-[#c49a47]/15">
+                      <Tag className="h-4 w-4 text-[#c49a47]" />
+                      <span className="font-mono font-semibold">
+                        {subscription.coupon_used.code}
+                      </span>
+                      <span className="text-sm text-[#8a6a1f]">
+                        {subscription.coupon_used.type === '%'
+                          ? `${subscription.coupon_used.discount}% ${t('account.billing.coupon.off')}`
+                          : `${subscription.coupon_used.discount} AED ${t('account.billing.coupon.off')}`}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="shrink-0">
+                <div className="relative overflow-hidden rounded-xl border border-[#c49a47]/30 bg-[#c49a47]/5 px-4 py-3 text-center shadow-inner dark:border-[#c49a47]/30 dark:bg-[#c49a47]/10">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/0 dark:from-white/10" aria-hidden />
+                  <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-white/60">
+                    {active ? t('account.billing.status.daysRemaining') : t('account.billing.history.expired')}
+                  </p>
+                  <p className="mt-1 text-3xl font-bold text-[#8a6a1f] dark:text-[#e3c37b]">
+                    {active ? subscription.days_remaining ?? 0 : '—'}
+                  </p>
+                  {active && (
+                    <p className="text-xs font-medium text-[#8a6a1f] dark:text-[#e3c37b]">{t('account.billing.status.active')}</p>
+                  )}
+                </div>
               </div>
             </div>
-
-            {subscription.is_active && subscription.days_remaining !== undefined && (
-              <div className="text-end">
-                <div className="rounded-lg bg-white px-4 py-2 shadow-sm">
-                  <p className="text-2xl font-bold text-primary">
-                    {subscription.days_remaining}
-                  </p>
-                  <p className="text-xs text-gray-600">{t('account.billing.status.daysRemaining')}</p>
-                </div>
-              </div>
-            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

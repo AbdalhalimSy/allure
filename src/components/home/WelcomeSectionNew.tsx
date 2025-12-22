@@ -13,11 +13,6 @@ interface WelcomeSectionProps {
     support: { title: string; desc: string };
     network: { title: string; desc: string };
   };
-  badges: {
-    casting: string;
-    production: string;
-    delivery: string;
-  };
   ribbon: string;
   ribbonTitle: string;
   ribbonTag: string;
@@ -28,7 +23,6 @@ export default function WelcomeSectionNew({
   title,
   subtitle,
   pillars,
-  badges,
   ribbon,
   ribbonTitle,
   ribbonTag,
@@ -66,18 +60,7 @@ export default function WelcomeSectionNew({
             ))}
           </div>
 
-          {/* Badges */}
-          <div className="flex flex-wrap gap-3">
-            {Object.entries(badges).map(([key, badge]) => (
-              <span
-                key={key}
-                className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-gray-800 shadow-sm dark:bg-gray-800/80 dark:text-white"
-              >
-                <CircleIcon />
-                {badge}
-              </span>
-            ))}
-          </div>
+          {/* Badges removed per request */}
         </div>
 
         {/* Right column - Image */}
@@ -108,14 +91,7 @@ export default function WelcomeSectionNew({
   );
 }
 
-function CircleIcon() {
-  return (
-    <span
-      className="inline-block h-2.5 w-2.5 rounded-full bg-primary"
-      aria-hidden
-    />
-  );
-}
+// CircleIcon removed with badges
 
 function ShieldIcon() {
   return (

@@ -29,7 +29,9 @@
     "subtitle": "From humble beginnings to regional excellence",
     "paragraph1": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
     "paragraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
-    "paragraph3": "We understand the dynamic nature of the entertainment and advertising industries. That's why we're committed to staying ahead of trends, continuously updating our talent pool, and providing innovative solutions that exceed expectations."
+    "paragraph3": "We understand the dynamic nature of the entertainment and advertising industries. That's why we're committed to staying ahead of trends, continuously updating our talent pool, and providing innovative solutions that exceed expectations.",
+    "ctaPrimary": "Meet our talents",
+    "ctaSecondary": "Book a call"
   },
   "expansion": {
     "badge": "Our Growth",
@@ -37,7 +39,9 @@
     "subtitle": "Building bridges between talent and opportunity",
     "paragraph1": "Responding to growing regional demand we expanded to Dubai and later Abu Dhabi—forming a tri-city presence that gives productions diverse talent pools with on-the-ground support.",
     "paragraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow that reduces friction from first brief to final usage.",
-    "paragraph3": "Our strategic locations enable us to serve clients across the GCC with unmatched efficiency and local expertise."
+    "paragraph3": "Our strategic locations enable us to serve clients across the GCC with unmatched efficiency and local expertise.",
+    "ctaPrimary": "Hire talent",
+    "ctaSecondary": "See our reach"
   },
   "values": {
     "badge": "Our Values",
@@ -91,12 +95,5 @@
     "title": "Partners & Clients",
     "subtitle": "We have worked with some of the best names in the market. Be one of them!",
     "noPartners": "Loading our partners..."
-  },
-  "cta": {
-    "title": "Ready to Work With Us?",
-    "subtitle": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
-    "talentButton": "Become a Talent",
-    "clientButton": "Find Talent",
-    "contactButton": "Get in Touch"
   }
 }

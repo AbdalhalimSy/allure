@@ -48,6 +48,12 @@ export interface Subscription {
   is_active: boolean;
   days_remaining: number;
   created_at: string;
+  // Optional fields from backend for coupon display
+  coupon_used?: {
+    code: string;
+    type: '%' | 'fixed' | string;
+    discount: number;
+  };
 }
 
 export interface Payment {
@@ -57,6 +63,9 @@ export interface Payment {
   payment_reference: string;
   paid_at: string;
   created_at: string;
+  package_name?: string;
+  package?: PackageInfo;
+  subscription_id?: number;
 }
 
 // API Request types

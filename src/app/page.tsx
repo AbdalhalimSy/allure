@@ -265,11 +265,6 @@ export default function HomePage() {
             desc: t("homeNew.welcome.pillars.network.desc"),
           },
         }}
-        badges={{
-          casting: t("homeNew.welcome.badges.casting"),
-          production: t("homeNew.welcome.badges.production"),
-          delivery: t("homeNew.welcome.badges.delivery"),
-        }}
         ribbon={t("homeNew.welcome.ribbon")}
         ribbonTitle={t("homeNew.welcome.ribbonTitle")}
         ribbonTag={t("homeNew.welcome.ribbonTag")}
@@ -298,6 +293,7 @@ export default function HomePage() {
         noPartnersText={
           t("homeNew.partners.noPartners") || "No partners available"
         }
+        hideArrows
       />
     </div>
   );

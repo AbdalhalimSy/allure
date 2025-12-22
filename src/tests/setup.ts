@@ -66,7 +66,14 @@ jest.mock('@/lib/api/client', () => {
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args: unknown[]) => {
-    if (/(Failed to fetch profile|Failed to switch profile)/.test(String(args[0]))) return;
+    const msg = args.map((a) => String(a)).join(" ");
+    // Suppress known noisy warnings during tests
+    if (
+      /(Failed to fetch profile|Failed to switch profile)/.test(msg) ||
+      /not wrapped in act\(\)/i.test(msg)
+    ) {
+      return;
+    }
     originalError(...args);
   };
 });

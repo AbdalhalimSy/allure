@@ -1,16 +1,17 @@
 'use client';
 
-import { Payment } from '@/types/subscription';
+import { Payment, Subscription } from '@/types/subscription';
 import { Receipt, CreditCard } from 'lucide-react';
 import { format } from 'date-fns';
 import { useI18n } from '@/contexts/I18nContext';
 
 interface PaymentHistoryTableProps {
   payments: Payment[];
-  totalSpent: number;
+  totalSpent?: number;
+  subscriptions?: Subscription[];
 }
 
-export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTableProps) {
+export function PaymentHistoryTable({ payments, totalSpent: _totalSpent, subscriptions }: PaymentHistoryTableProps) {
   const { t } = useI18n();
   
   const getPaymentMethodIcon = () => {
@@ -28,26 +29,44 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
     return labels[method] || method;
   };
 
-  const formatDate = (dateString: string | null | undefined): string => {
-    if (!dateString) return 'N/A';
+  const formatDateParts = (dateString: string | null | undefined): { dateLabel: string; timeLabel: string } => {
+    if (!dateString) return { dateLabel: '—', timeLabel: '' };
     try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return 'N/A';
-      return format(date, 'MMM dd, yyyy');
+      const date = new Date(dateString.replace(' ', 'T'));
+      if (isNaN(date.getTime())) return { dateLabel: '—', timeLabel: '' };
+      return {
+        dateLabel: format(date, 'MMM dd, yyyy'),
+        timeLabel: format(date, 'HH:mm'),
+      };
     } catch {
-      return 'N/A';
+      return { dateLabel: '—', timeLabel: '' };
     }
   };
 
-  const formatTime = (dateString: string | null | undefined): string => {
-    if (!dateString) return '';
-    try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return '';
-      return format(date, 'HH:mm');
-    } catch {
-      return '';
+  const resolvePackageName = (payment: Payment): string => {
+    if (payment.package_name) return payment.package_name;
+    if (payment.package?.title) return payment.package.title;
+    if (payment.package?.name) return payment.package.name;
+
+    const paymentMoment = payment.paid_at || payment.created_at;
+    if (paymentMoment && subscriptions?.length) {
+      const target = new Date(paymentMoment.replace(' ', 'T')).getTime();
+      const matched = subscriptions.find((subscription) => {
+        const start = new Date(subscription.starts_at.replace(' ', 'T')).getTime();
+        const created = new Date(subscription.created_at.replace(' ', 'T')).getTime();
+        const withinOneMinute = Math.abs(start - target) <= 60_000 || Math.abs(created - target) <= 60_000;
+        return (
+          (payment.subscription_id && subscription.id === payment.subscription_id) ||
+          withinOneMinute
+        );
+      });
+
+      if (matched) {
+        return matched.package_name || matched.package?.title || matched.package?.name || 'Subscription payment';
+      }
     }
+
+    return 'Subscription payment';
   };
 
   if (payments.length === 0) {
@@ -64,11 +83,6 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg bg-linear-to-br from-primary to-primary/80 p-6 text-white">
-        <p className="text-sm font-medium opacity-90">{t('account.billing.payments.totalSpent')}</p>
-        <p className="mt-2 text-3xl font-bold">{totalSpent.toFixed(2)} AED</p>
-      </div>
-
       <div className="overflow-hidden rounded-xl border border-gray-200">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -95,18 +109,22 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {payments.map((payment) => (
+              {payments.map((payment) => {
+                const paymentDate = payment.paid_at || payment.created_at;
+                const { dateLabel, timeLabel } = formatDateParts(paymentDate);
+
+                return (
                 <tr key={payment.id} className="hover:bg-gray-50">
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                    {formatDate(payment.payment_date)}
-                    {formatTime(payment.payment_date) && (
+                    {dateLabel}
+                    {timeLabel && (
                       <div className="text-xs text-gray-500">
-                        {formatTime(payment.payment_date)}
+                        {timeLabel}
                       </div>
                     )}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    {payment.package_name || 'N/A'}
+                    {resolvePackageName(payment)}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
@@ -126,7 +144,8 @@ export function PaymentHistoryTable({ payments, totalSpent }: PaymentHistoryTabl
                     </span>
                   </td>
                 </tr>
-              ))}
+              );
+              })}
             </tbody>
           </table>
         </div>
