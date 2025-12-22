@@ -69,8 +69,8 @@ export default function RegisterPage() {
     setErrors({});
 
     // Validation
-    if (!formData.email) return setErrors({ email: "Required" });
-    if (!formData.password) return setErrors({ password: "Required" });
+    if (!formData.email) return setErrors({ email: t("auth.required") || "Required" });
+    if (!formData.password) return setErrors({ password: t("auth.required") || "Required" });
     if (formData.password !== formData.confirmPassword) {
       return setErrors({ confirmPassword: t("auth.passwordsMismatch") || "Passwords do not match" });
     }
@@ -82,8 +82,8 @@ export default function RegisterPage() {
         return setErrors({ name: t("auth.missingNames") || "Please fill twin names and last name" });
       }
     } else {
-      if (!formData.firstName) return setErrors({ firstName: "Required" });
-      if (!formData.lastName) return setErrors({ lastName: "Required" });
+      if (!formData.firstName) return setErrors({ firstName: t("auth.required") || "Required" });
+      if (!formData.lastName) return setErrors({ lastName: t("auth.required") || "Required" });
     }
 
     try {
@@ -118,6 +118,7 @@ export default function RegisterPage() {
       const message =
         (errData as { message?: string } | null)?.message ||
         (err instanceof Error ? err.message : null) ||
+        t("auth.registrationFailed") ||
         "Registration failed";
       toast.error(message);
     } finally {
@@ -178,13 +179,13 @@ export default function RegisterPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <Label htmlFor="firstName" required>
-                  {t("contact.firstName") || "First Name"}
+                  {t("auth.firstName") || "First Name"}
                 </Label>
                 <Input
                   id="firstName"
                   name="firstName"
                   type="text"
-                  placeholder="John"
+                  placeholder={t("auth.firstNamePlaceholder") || "John"}
                   value={formData.firstName}
                   onChange={handleChange}
                   required
@@ -192,13 +193,13 @@ export default function RegisterPage() {
               </div>
               <div>
                 <Label htmlFor="lastName" required>
-                  {t("contact.lastName") || "Last Name"}
+                  {t("auth.lastName") || "Last Name"}
                 </Label>
                 <Input
                   id="lastName"
                   name="lastName"
                   type="text"
-                  placeholder="Doe"
+                  placeholder={t("auth.lastNamePlaceholder") || "Doe"}
                   value={formData.lastName}
                   onChange={handleChange}
                   required
@@ -215,7 +216,7 @@ export default function RegisterPage() {
                   id="firstTwinName"
                   name="firstTwinName"
                   type="text"
-                  placeholder="First twin"
+                  placeholder={t("auth.firstTwinPlaceholder") || "First twin"}
                   value={formData.firstTwinName}
                   onChange={handleChange}
                   required
@@ -229,7 +230,7 @@ export default function RegisterPage() {
                   id="secondTwinName"
                   name="secondTwinName"
                   type="text"
-                  placeholder="Second twin"
+                  placeholder={t("auth.secondTwinPlaceholder") || "Second twin"}
                   value={formData.secondTwinName}
                   onChange={handleChange}
                   required
@@ -237,13 +238,13 @@ export default function RegisterPage() {
               </div>
               <div className="sm:col-span-2">
                 <Label htmlFor="twinLastName" required>
-                  {t("contact.lastName") || "Last name"}
+                  {t("auth.lastName") || "Last name"}
                 </Label>
                 <Input
                   id="twinLastName"
                   name="twinLastName"
                   type="text"
-                  placeholder="Family name"
+                  placeholder={t("auth.familyNamePlaceholder") || "Family name"}
                   value={formData.twinLastName}
                   onChange={handleChange}
                   required
@@ -255,13 +256,13 @@ export default function RegisterPage() {
           {/* Email */}
           <div>
             <Label htmlFor="email" required>
-              {t("contact.emailAddress")}
+              {t("auth.emailAddress")}
             </Label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder={t('forms.youExampleCom') || "you@example.com"}
               value={formData.email}
               onChange={handleChange}
               required
@@ -277,7 +278,7 @@ export default function RegisterPage() {
             <PasswordInput
               id="password"
               name="password"
-              placeholder="••••••••"
+              placeholder={t('forms.password') || "••••••••"}
               value={formData.password}
               onChange={handleChange}
               required
@@ -291,7 +292,7 @@ export default function RegisterPage() {
             <PasswordInput
               id="confirmPassword"
               name="confirmPassword"
-              placeholder="••••••••"
+              placeholder={t('forms.password') || "••••••••"}
               value={formData.confirmPassword}
               onChange={handleChange}
               required

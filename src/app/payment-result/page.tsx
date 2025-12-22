@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, XCircle, Loader2, ArrowRight } from 'lucide-react';
 import { getPaymentStatus } from '@/lib/api/payments';
 import Button from '@/components/ui/Button';
 
 export default function PaymentResultPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'checking' | 'success' | 'failed' | 'pending'>('checking');
   const [message, setMessage] = useState('Verifying your payment...');

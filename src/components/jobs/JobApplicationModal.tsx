@@ -43,11 +43,6 @@ interface JobApplicationModalProps {
   profileId?: number;
 }
 
-interface ResponseData {
-  condition_id: number;
-  value: string | string[];
-  media?: File;
-}
 
 export default function JobApplicationModal({
   isOpen,

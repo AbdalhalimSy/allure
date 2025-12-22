@@ -32,7 +32,7 @@ export default function LoginPage() {
       
       // Check if email verification is required
       if (data?.status === "error" && isEmailVerificationError(data?.message)) {
-        toast.error(data.message || "Please verify your email before logging in.");
+        toast.error(data.message || t("auth.verifyEmailBeforeLogin") || "Please verify your email before logging in.");
         // Redirect to verify-email page with email and password
         router.push(`/verify-email?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
         return;
@@ -66,14 +66,14 @@ export default function LoginPage() {
         // Step 4: Fetch full profile data (now profile_id is set in localStorage)
         await fetchProfile();
         
-        toast.success(data?.message || "Login successful!");
+        toast.success(data?.message || t("auth.loginSuccessful") || "Login successful!");
         router.push("/");
       } else {
-        toast.error("Login failed: No token returned");
+        toast.error(t("auth.loginFailedNoToken") || "Login failed: No token returned");
       }
     } catch (err) {
       console.error("Login failed", err);
-      const message = getErrorMessage(err, "Unauthorized");
+      const message = getErrorMessage(err, t("auth.unauthorized") || "Unauthorized");
       
       // Check if the error is about email verification
       if (isEmailVerificationError(err)) {
@@ -107,7 +107,7 @@ export default function LoginPage() {
         {/* All error notifications now use react-hot-toast */}
         <div>
           <Label htmlFor="email" required>
-            {t("contact.emailAddress")}
+            {t("auth.emailAddress")}
           </Label>
           <Input
             id="email"

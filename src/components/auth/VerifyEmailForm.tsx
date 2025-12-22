@@ -35,7 +35,7 @@ export default function VerifyEmailForm({
 
   const handleResendOtp = async (): Promise<void> => {
     if (!email) {
-      toast.error("Email is required");
+      toast.error(t("auth.emailRequired") || "Email is required");
       return;
     }
     try {
@@ -44,7 +44,7 @@ export default function VerifyEmailForm({
       toast.success(t("auth.otpResent") || "OTP resent to your email");
       setOtp("");
     } catch (err: unknown) {
-      toast.error(getErrorMessage(err, "Failed to resend OTP"));
+      toast.error(getErrorMessage(err, t("auth.failedToResendOtp") || "Failed to resend OTP"));
     } finally {
       setIsResending(false);
     }
@@ -62,7 +62,7 @@ export default function VerifyEmailForm({
       return;
     }
     if (!email) {
-      toast.error("Email is required");
+      toast.error(t("auth.emailRequired") || "Email is required");
       return;
     }
     try {
@@ -118,7 +118,7 @@ export default function VerifyEmailForm({
         }
       }
     } catch (err: unknown) {
-      toast.error(getErrorMessage(err, "Verification failed"));
+      toast.error(getErrorMessage(err, t("auth.verificationFailed") || "Verification failed"));
     } finally {
       setOtpLoading(false);
     }

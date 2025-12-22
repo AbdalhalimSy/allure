@@ -38,6 +38,8 @@ export default function Footer() {
     { name: t("nav.jobs"), href: "/jobs" },
     { name: t("nav.faq"), href: "/faq" },
     { name: t("nav.contact"), href: "/contact" },
+    { name: t("nav.terms") || "Terms", href: "/terms" },
+    { name: t("nav.privacy") || "Privacy", href: "/privacy" },
   ];
 
   return (

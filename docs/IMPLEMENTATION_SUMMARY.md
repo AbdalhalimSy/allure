@@ -99,6 +99,13 @@ An intermittent error `{"error":"Profile not found for this talent."}` occurred 
    - GET from `/api/profile/professions`
    - Maps response to ProfessionEntry array
 
+### 4. **Website Pages** ✓
+- **New Page**: Terms and Conditions
+   - **File**: `src/app/terms/page.tsx`
+   - **Design**: Modern, brand-consistent (accent `#c49a47`, responsive, dark mode supported)
+   - **Content**: Legal terms including acceptance, ownership, user content, subscriptions, liabilities, and electronic agreements
+   - **Footer**: Added quick link to `/terms` in `src/components/layout/Footer.tsx`
+
 4. **`mapApiResponseToEntries(apiData)`**
    - Converts backend response to UI state
    - Handles nested sub-professions structure

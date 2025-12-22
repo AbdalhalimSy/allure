@@ -30,18 +30,18 @@ export default function ForgotPasswordPage() {
       const { data } = await apiClient.post("/auth/forgot-password", { email });
       
       if (data?.status === "success") {
-        toast.success(data?.message || "Reset code sent to your email!");
+        toast.success(data?.message || t("auth.resetCodeSent") || "Reset code sent to your email!");
         setMode("success");
         // Redirect to reset password page with email
         setTimeout(() => {
           router.push(`/reset-password?email=${encodeURIComponent(email)}`);
         }, 2000);
       } else {
-        toast.error(data?.message || "Failed to send reset code");
+        toast.error(data?.message || t("auth.failedToSendResetCode") || "Failed to send reset code");
       }
     } catch (err) {
       console.error("Forgot password failed", err);
-      const message = getErrorMessage(err, "Failed to send reset code");
+      const message = getErrorMessage(err, t("auth.failedToSendResetCode") || "Failed to send reset code");
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -89,12 +89,12 @@ export default function ForgotPasswordPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="email" required>
-              {t("contact.emailAddress")}
+              {t("auth.emailAddress")}
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder={t('forms.youExampleCom') || "you@example.com"}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

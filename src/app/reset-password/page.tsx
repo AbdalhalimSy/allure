@@ -32,7 +32,7 @@ function ResetPasswordContent() {
     e.preventDefault();
 
     if (password !== passwordConfirmation) {
-      toast.error("Passwords do not match");
+      toast.error(t("auth.passwordsMismatch") || "Passwords do not match");
       return;
     }
 
@@ -47,16 +47,16 @@ function ResetPasswordContent() {
       });
 
       if (data?.status === "success") {
-        toast.success(data?.message || "Password reset successful!");
+        toast.success(data?.message || t("auth.passwordResetSuccessful") || "Password reset successful!");
         setTimeout(() => {
           router.push("/login");
         }, 1500);
       } else {
-        toast.error(data?.message || "Failed to reset password");
+        toast.error(data?.message || t("auth.failedToResetPassword") || "Failed to reset password");
       }
     } catch (err) {
       console.error("Reset password failed", err);
-      const message = getErrorMessage(err, "Failed to reset password");
+      const message = getErrorMessage(err, t("auth.failedToResetPassword") || "Failed to reset password");
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -66,7 +66,7 @@ function ResetPasswordContent() {
   return (
     <AuthShell
       title={t("auth.resetPassword") || "Reset Password"}
-      description="Enter the code sent to your email and your new password"
+      description={t("auth.resetCodeDescription") || "Enter the code sent to your email and your new password"}
       icon={<KeyRound className="h-8 w-8" />}
       footer={
         <>
@@ -80,7 +80,7 @@ function ResetPasswordContent() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <Label htmlFor="email" required>
-            {t("contact.emailAddress")}
+            {t("auth.emailAddress")}
           </Label>
           <Input
             id="email"
@@ -94,7 +94,7 @@ function ResetPasswordContent() {
 
         <div>
           <Label htmlFor="code" required>
-            Reset Code
+            {t("auth.resetCodeLabel") || "Reset Code"}
           </Label>
           <Input
             id="code"
@@ -138,9 +138,9 @@ function ResetPasswordContent() {
         </Button>
 
         <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-          Didn&apos;t receive the code? {" "}
+          {t("auth.didntReceiveCode") || "Didn't receive the code?"} {" "}
           <Link href="/forgot-password" className="font-semibold text-[#c49a47]">
-            Resend code
+            {t("auth.resendCode") || "Resend code"}
           </Link>
         </div>
       </form>

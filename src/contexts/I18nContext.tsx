@@ -8,6 +8,8 @@ import enTalents from '@/lib/locales/en/talents.json';
 import enAbout from '@/lib/locales/en/about.json';
 import enContact from '@/lib/locales/en/contact.json';
 import enFaq from '@/lib/locales/en/faq.json';
+import enAuth from '@/lib/locales/en/auth.json';
+import enPolicies from '@/lib/locales/en/policies.json';
 import arCommon from '@/lib/locales/ar/common.json';
 import arHome from '@/lib/locales/ar/home.json';
 import arAccount from '@/lib/locales/ar/account.json';
@@ -16,6 +18,8 @@ import arTalents from '@/lib/locales/ar/talents.json';
 import arAbout from '@/lib/locales/ar/about.json';
 import arContact from '@/lib/locales/ar/contact.json';
 import arFaq from '@/lib/locales/ar/faq.json';
+import arAuth from '@/lib/locales/ar/auth.json';
+import arPolicies from '@/lib/locales/ar/policies.json';
 
 type Locale = 'en' | 'ar';
 
@@ -27,8 +31,8 @@ interface I18nContextType {
 
 const translations = {
   // Aggregate split locale namespaces so t() stays backward-compatible
-  en: { ...enCommon, ...enHome, ...enAccount, ...enJobs, talents: enTalents, about: enAbout, contact: enContact, faq: enFaq },
-  ar: { ...arCommon, ...arHome, ...arAccount, ...arJobs, talents: arTalents, about: arAbout, contact: arContact, faq: arFaq },
+  en: { ...enCommon, ...enHome, ...enAccount, ...enJobs, ...enAuth, talents: enTalents, about: enAbout, contact: enContact, faq: enFaq, policies: enPolicies },
+  ar: { ...arCommon, ...arHome, ...arAccount, ...arJobs, ...arAuth, talents: arTalents, about: arAbout, contact: arContact, faq: arFaq, policies: arPolicies },
 };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
