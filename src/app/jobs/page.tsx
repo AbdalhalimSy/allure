@@ -8,20 +8,24 @@ import JobFilterBar from "@/components/jobs/JobFilterBar";
 import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
 import Loader from "@/components/ui/Loader";
 import SurfaceCard from "@/components/ui/SurfaceCard";
-import { Job, JobFilters, JobsResponse } from "@/types/job";
-import { Briefcase, AlertCircle } from "lucide-react";
+import Switch from "@/components/ui/Switch";
+import { Job, JobFilters, JobsResponse, EligibleRolesResponse } from "@/types/job";
+import { Briefcase, AlertCircle, Sparkles } from "lucide-react";
 
 export default function JobsPage() {
   const pathname = usePathname();
-  const { activeProfileId } = useAuth();
+  const { activeProfileId, isAuthenticated } = useAuth();
   const { locale, t } = useI18n();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [switching, setSwitching] = useState(false); // New state for toggle switch
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<JobFilters>({});
   const [meta, setMeta] = useState({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   const [hasMore, setHasMore] = useState(true);
+  const [showEligibleOnly, setShowEligibleOnly] = useState(false);
+  const requestIdRef = useRef(0); // Track latest request to avoid stale loading toggles
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
 
@@ -33,14 +37,17 @@ export default function JobsPage() {
     setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
   }, [pathname]);
 
-  // Fetch jobs when filters or profile changes (first page)
+  // Fetch jobs when filters, profile, or eligible toggle changes (first page)
   useEffect(() => {
     if (activeProfileId) {
+      // Show switching animation when toggle changes
+      setSwitching(true);
       fetchJobs(1, true);
     }
-  }, [filters, activeProfileId, locale]);
+  }, [filters, activeProfileId, locale, showEligibleOnly]);
 
   const fetchJobs = useCallback(async (page: number = 1, reset: boolean = false) => {
+    const requestId = ++requestIdRef.current;
     if (!activeProfileId) {
       setError(t("jobs.errors.profileNotLoaded"));
       if (reset) setLoading(false);
@@ -59,54 +66,86 @@ export default function JobsPage() {
       
       if (page === 1) setError(null);
 
-      const params = new URLSearchParams();
-      
-      // Always add profile_id
-      params.append("profile_id", String(activeProfileId));
-      
-      // Add filter parameters
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value === undefined || value === null || value === "") return;
-        if (Array.isArray(value)) {
-          if (value.length) params.append(key, value.join(","));
-        } else if (key === "eligible" && typeof value === "boolean") {
-          // Convert boolean to 1/0 for API
-          params.append(key, value ? "1" : "0");
-        } else {
-          params.append(key, String(value));
+      const token = localStorage.getItem("auth_token") || "";
+
+      // If showEligibleOnly is true, fetch from eligible-roles endpoint
+      if (showEligibleOnly) {
+        const response = await fetch(`/api/profile/${activeProfileId}/eligible-roles`, {
+          signal: abortRef.current.signal,
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept-Language": locale,
+          }
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message || t("jobs.errors.fetchFailed"));
         }
-      });
-      
-      // Add page and per_page
-      params.append("page", String(page));
-      params.append("per_page", String(meta.per_page));
-      
-      const response = await fetch(`/api/jobs?${params.toString()}`, { 
-        signal: abortRef.current.signal,
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("auth_token") || ""}`,
-          "Accept-Language": locale,
-        }
-      });
-      
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || data.message || t("jobs.errors.fetchFailed"));
-      }
-      
-      const result: JobsResponse = await response.json();
-      if (result.status === "success" || result.status === true) {
-        if (reset) {
-          setJobs(result.data);
-          setMeta(result.meta || { current_page: 1, per_page: 12, total: 0, last_page: 1 });
-          setHasMore((result.meta?.current_page || 1) < (result.meta?.last_page || 1));
+
+        const result: EligibleRolesResponse = await response.json();
+        if (result.success) {
+          // Eligible roles endpoint returns all data at once (no pagination)
+          // Convert EligibleJob to Job format by adding required fields
+          const jobsData = result.data.map(job => ({
+            ...job,
+            roles_count: job.roles.length,
+            open_to_apply: true,
+          })) as Job[];
+          
+          setJobs(jobsData);
+          setMeta({ current_page: 1, per_page: jobsData.length, total: jobsData.length, last_page: 1 });
+          setHasMore(false); // No pagination for eligible roles
         } else {
-          setJobs(prev => [...prev, ...result.data]);
-          setMeta(result.meta || { current_page: page, per_page: 12, total: 0, last_page: 1 });
-          setHasMore((result.meta?.current_page || page) < (result.meta?.last_page || 1));
+          throw new Error(result.message || t("jobs.errors.loadFailed"));
         }
       } else {
-        throw new Error(result.message || t("jobs.errors.loadFailed"));
+        // Fetch regular jobs with pagination
+        const params = new URLSearchParams();
+        params.append("profile_id", String(activeProfileId));
+        
+        // Add filter parameters
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value === undefined || value === null || value === "") return;
+          if (Array.isArray(value)) {
+            if (value.length) params.append(key, value.join(","));
+          } else if (key === "eligible" && typeof value === "boolean") {
+            params.append(key, value ? "1" : "0");
+          } else {
+            params.append(key, String(value));
+          }
+        });
+        
+        params.append("page", String(page));
+        params.append("per_page", String(meta.per_page));
+        
+        const response = await fetch(`/api/jobs?${params.toString()}`, { 
+          signal: abortRef.current.signal,
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept-Language": locale,
+          }
+        });
+        
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || data.message || t("jobs.errors.fetchFailed"));
+        }
+        
+        const result: JobsResponse = await response.json();
+        if (result.status === "success" || result.status === true) {
+          if (reset) {
+            setJobs(result.data);
+            setMeta(result.meta || { current_page: 1, per_page: 12, total: 0, last_page: 1 });
+            setHasMore((result.meta?.current_page || 1) < (result.meta?.last_page || 1));
+          } else {
+            setJobs(prev => [...prev, ...result.data]);
+            setMeta(result.meta || { current_page: page, per_page: 12, total: 0, last_page: 1 });
+            setHasMore((result.meta?.current_page || page) < (result.meta?.last_page || 1));
+          }
+        } else {
+          throw new Error(result.message || t("jobs.errors.loadFailed"));
+        }
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
@@ -115,10 +154,14 @@ export default function JobsPage() {
       }
       console.error("Error fetching jobs:", err);
     } finally {
-      setLoading(false);
-      setLoadingMore(false);
+      // Only clear loading states for the latest request so aborted/stale calls don't hide the skeleton
+      if (requestIdRef.current === requestId) {
+        setLoading(false);
+        setLoadingMore(false);
+        setSwitching(false);
+      }
     }
-  }, [activeProfileId, filters, locale, meta.per_page, t]);
+  }, [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly]);
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
@@ -175,12 +218,37 @@ export default function JobsPage() {
 
       {/* Main Content */}
       <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        {/* Toggle Switch for Eligible Roles - Only show when authenticated */}
+        {isAuthenticated && activeProfileId && (
+          <div className="mb-8 flex items-center justify-center">
+            <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white/80 px-6 py-4 shadow-lg backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80">
+              <div className="flex items-center gap-2">
+                <Briefcase className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t("jobs.allJobs") || "All Jobs"}
+                </span>
+              </div>
+              <Switch
+                checked={showEligibleOnly}
+                onChange={setShowEligibleOnly}
+                disabled={loading || switching}
+              />
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-[#c49a47]" />
+                <span className="text-sm font-medium text-[#c49a47]">
+                  {t("jobs.eligibleOnly") || "Eligible for Me"}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="relative z-10 mb-12">
-          <JobFilterBar value={filters} onChange={handleFilterChange} onReset={handleReset} loadingResults={loading} />
+          <JobFilterBar value={filters} onChange={handleFilterChange} onReset={handleReset} loadingResults={loading || switching} />
         </div>
 
-        {/* Loading Initial */}
-        {loading && jobs.length === 0 ? (
+        {/* Loading State - Show when switching or initial load */}
+        {(switching || (loading && jobs.length === 0)) ? (
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>

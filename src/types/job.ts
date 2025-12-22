@@ -157,3 +157,21 @@ export interface AppliedJobsResponse {
     last_page: number;
   };
 }
+
+// Eligible Roles API types
+export interface EligibleRole extends DetailedRole {
+  // All properties from DetailedRole, but budget is a string in this API
+  budget: string | null; // e.g., "4876.00"
+  eligibility_score: number;
+  can_apply: boolean;
+}
+
+export interface EligibleJob extends Omit<DetailedJob, 'roles'> {
+  roles: EligibleRole[];
+}
+
+export interface EligibleRolesResponse {
+  success: boolean;
+  message: string;
+  data: EligibleJob[];
+}

@@ -2,23 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Input from "@/components/ui/Input";
 import PhoneInput from "@/components/ui/PhoneInput";
 import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import { useI18n } from "@/contexts/I18nContext";
 import TextArea from "@/components/ui/TextArea";
-import { 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Briefcase, 
-  Send, 
+import {
+  Mail,
+  MapPin,
+  Clock,
+  Briefcase,
+  Send,
   Users,
   Phone,
-  ArrowRight,
-  MessageSquare
+  MessageSquare,
 } from "lucide-react";
 import { FaInstagram, FaTiktok, FaYoutube, FaFacebook } from "react-icons/fa";
 import { toast } from "react-hot-toast";
@@ -62,21 +60,46 @@ export default function ContactPage() {
       title: t("contact.info.talents.title"),
       description: t("contact.info.talents.description"),
       items: [
-        { icon: Mail, label: "Email", value: t("contact.info.talents.email"), href: `mailto:${t("contact.info.talents.email")}` },
-        { icon: Phone, label: "Phone", value: t("contact.info.talents.phone"), href: `tel:${t("contact.info.talents.phone").replace(/\s/g, "")}` },
+        {
+          icon: Mail,
+          label: "Email",
+          value: t("contact.info.talents.email"),
+          href: `mailto:${t("contact.info.talents.email")}`,
+        },
+        {
+          icon: Phone,
+          label: "Phone",
+          value: t("contact.info.talents.phone"),
+          href: `tel:${t("contact.info.talents.phone").replace(/\s/g, "")}`,
+        },
       ],
-      color: "from-emerald-400 to-teal-500"
+      color: "from-emerald-400 to-teal-500",
     },
     {
       icon: Briefcase,
       title: t("contact.info.clients.title"),
       description: t("contact.info.clients.description"),
       items: [
-        { icon: Mail, label: "Email", value: t("contact.info.clients.email"), href: `mailto:${t("contact.info.clients.email")}` },
-        { icon: Phone, label: "UAE", value: t("contact.info.clients.uae"), href: `tel:${t("contact.info.clients.uae").replace(/\s/g, "")}` },
-        { icon: Phone, label: "Lebanon", value: t("contact.info.clients.lebanon"), href: `tel:${t("contact.info.clients.lebanon").replace(/\s/g, "")}` },
+        {
+          icon: Mail,
+          label: "Email",
+          value: t("contact.info.clients.email"),
+          href: `mailto:${t("contact.info.clients.email")}`,
+        },
+        {
+          icon: Phone,
+          label: "UAE",
+          value: t("contact.info.clients.uae"),
+          href: `tel:${t("contact.info.clients.uae").replace(/\s/g, "")}`,
+        },
+        {
+          icon: Phone,
+          label: "Lebanon",
+          value: t("contact.info.clients.lebanon"),
+          href: `tel:${t("contact.info.clients.lebanon").replace(/\s/g, "")}`,
+        },
       ],
-      color: "from-sky-400 to-blue-600"
+      color: "from-sky-400 to-blue-600",
     },
     {
       icon: MapPin,
@@ -87,7 +110,7 @@ export default function ContactPage() {
         { icon: MapPin, label: "", value: t("contact.info.address.line2") },
         { icon: MapPin, label: "", value: t("contact.info.address.line3") },
       ],
-      color: "from-primary to-[#a57b30]"
+      color: "from-primary to-[#a57b30]",
     },
     {
       icon: Clock,
@@ -97,7 +120,7 @@ export default function ContactPage() {
         { icon: Clock, label: "", value: t("contact.info.hours.days") },
         { icon: Clock, label: "", value: t("contact.info.hours.time") },
       ],
-      color: "from-purple-400 to-pink-500"
+      color: "from-purple-400 to-pink-500",
     },
   ];
 
@@ -107,21 +130,24 @@ export default function ContactPage() {
       address: t("contact.locations.dubai.address"),
       phone: t("contact.locations.dubai.phone"),
       email: t("contact.locations.dubai.email"),
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
     },
     {
       name: t("contact.locations.abuDhabi.name"),
       address: t("contact.locations.abuDhabi.address"),
       phone: t("contact.locations.abuDhabi.phone"),
       email: t("contact.locations.abuDhabi.email"),
-      image: "https://images.unsplash.com/photo-1624317937315-0ced8736c9e9?q=80&w=2402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1624317937315-0ced8736c9e9?q=80&w=2402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: t("contact.locations.lebanon.name"),
       address: t("contact.locations.lebanon.address"),
       phone: t("contact.locations.lebanon.phone"),
       email: t("contact.locations.lebanon.email"),
-      image: "https://images.unsplash.com/photo-1496823407868-80f47c7453b5?q=80&w=2413&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1496823407868-80f47c7453b5?q=80&w=2413&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
 
@@ -130,25 +156,26 @@ export default function ContactPage() {
       name: "Instagram",
       url: "https://www.instagram.com/allureagency",
       icon: FaInstagram,
-      color: "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-red-500"
+      color:
+        "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-red-500",
     },
     {
       name: "TikTok",
       url: "https://www.tiktok.com/@allureagency",
       icon: FaTiktok,
-      color: "hover:bg-black"
+      color: "hover:bg-black",
     },
     {
       name: "YouTube",
       url: "https://www.youtube.com/@AllureMediaAgency",
       icon: FaYoutube,
-      color: "hover:bg-red-600"
+      color: "hover:bg-red-600",
     },
     {
       name: "Facebook",
       url: "https://www.facebook.com/Allureagency1",
       icon: FaFacebook,
-      color: "hover:bg-blue-600"
+      color: "hover:bg-blue-600",
     },
   ];
 
@@ -195,10 +222,14 @@ export default function ContactPage() {
                   className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-gray-900"
                 >
                   {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-linear-to-br ${info.color} opacity-0 transition group-hover:opacity-5`} />
+                  <div
+                    className={`absolute inset-0 bg-linear-to-br ${info.color} opacity-0 transition group-hover:opacity-5`}
+                  />
 
                   <div className="relative space-y-4">
-                    <div className={`inline-flex rounded-2xl bg-linear-to-br ${info.color} p-3 text-white shadow-lg`}>
+                    <div
+                      className={`inline-flex rounded-2xl bg-linear-to-br ${info.color} p-3 text-white shadow-lg`}
+                    >
                       <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -216,10 +247,10 @@ export default function ContactPage() {
                             {hasHref ? (
                               <a
                                 href={item.href}
-                                className="flex items-start gap-2 text-sm text-gray-600 transition hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                                className="flex items-start gap-2 text-sm text-gray-600 transition hover:text-primary dark:text-gray-400 dark:hover:text-primary "
                               >
                                 <ItemIcon className="mt-0.5 h-4 w-4 shrink-0" />
-                                <span>{item.value}</span>
+                                <span dir="ltr">{item.value}</span>
                               </a>
                             ) : (
                               <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -318,8 +349,12 @@ export default function ContactPage() {
                   className="w-full"
                   isLoading={isLoading}
                 >
-                  {!isLoading && <Send className={`h-5 w-5 ${isRTL ? "ms-2" : "me-2"}`} />}
-                  {isLoading ? t("contact.form.sending") : t("contact.form.submit")}
+                  {!isLoading && (
+                    <Send className={`h-5 w-5 ${isRTL ? "ms-2" : "me-2"}`} />
+                  )}
+                  {isLoading
+                    ? t("contact.form.sending")
+                    : t("contact.form.submit")}
                 </Button>
               </form>
 
@@ -417,51 +452,26 @@ export default function ContactPage() {
                   </div>
                   <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
                     <Phone className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <a href={`tel:${location.phone.replace(/\s/g, "")}`} className="hover:text-primary">
+                    <a
+                      dir="ltr"
+                      href={`tel:${location.phone.replace(/\s/g, "")}`}
+                      className="hover:text-primary"
+                    >
                       {location.phone}
                     </a>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
                     <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <a href={`mailto:${location.email}`} className="hover:text-primary">
+                    <a
+                      href={`mailto:${location.email}`}
+                      className="hover:text-primary"
+                    >
                       {location.email}
                     </a>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-primary to-[#a57b30] px-6 py-16 lg:px-12 lg:py-24">
-        {/* Background decorations */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -end-20 -top-20 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -start-20 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-        </div>
-
-        <div className="container relative mx-auto max-w-5xl text-center">
-          <h2 className="mb-6 text-3xl font-bold text-white lg:text-4xl">
-            {t("contact.cta.title")}
-          </h2>
-          <p className="mb-10 text-lg text-white/90">
-            {t("contact.cta.subtitle")}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/register">
-              <button className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-primary shadow-xl transition hover:scale-105 hover:shadow-2xl">
-                {t("contact.cta.talentButton")}
-                <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
-              </button>
-            </Link>
-            <Link href="/talents">
-              <button className="group inline-flex items-center gap-2 rounded-full border-2 border-white px-8 py-4 text-base font-semibold text-white transition hover:bg-white hover:text-primary">
-                {t("contact.cta.clientButton")}
-                <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
-              </button>
-            </Link>
           </div>
         </div>
       </section>

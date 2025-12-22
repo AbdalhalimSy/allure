@@ -27,6 +27,7 @@ export default function TalentsPage() {
     last_page: 1,
   });
   const [hasMore, setHasMore] = useState(true);
+  const requestIdRef = useRef(0); // Track the latest request to avoid stale loading flips
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
   const queryHydratedRef = useRef(false);
@@ -55,6 +56,7 @@ export default function TalentsPage() {
   }, [filters, locale]);
 
   const fetchTalents = useCallback(async (page: number = 1, reset: boolean = false) => {
+    const requestId = ++requestIdRef.current;
     try {
       // Abort any in-flight request to avoid race conditions
       if (abortRef.current) {
@@ -119,8 +121,11 @@ export default function TalentsPage() {
       }
       console.error("Error fetching talents:", err);
     } finally {
-      setLoading(false);
-      setLoadingMore(false);
+      // Only clear loading for the latest request so aborted/stale calls don't hide the skeleton
+      if (requestIdRef.current === requestId) {
+        setLoading(false);
+        setLoadingMore(false);
+      }
     }
   }, [filters, locale]);
 

@@ -115,6 +115,8 @@
     "noMoreJobs": "No more jobs to load",
     "authRequired": "Sign in to View Jobs",
     "authRequiredDescription": "Create an account or sign in to explore casting calls and apply for opportunities that match your profile.",
+    "allJobs": "All Jobs",
+    "eligibleOnly": "Eligible for Me",
     "errors": {
       "profileNotLoaded": "Profile not loaded. Please try again.",
       "fetchFailed": "Failed to fetch jobs",
@@ -189,6 +191,23 @@
       "status": "Status",
       "open": "Open",
       "requirements": "Key Requirements"
+    }
+  },
+  "eligibleRoles": {
+    "loading": "Loading your matches...",
+    "matchesFound": "Eligible Opportunities",
+    "sortBy": "Sort by",
+    "bestMatch": "Best Match",
+    "shootingDate": "Shooting Date",
+    "expiringSoon": "Expiring Soon",
+    "loginMessage": "Please login to see roles you're eligible for.",
+    "noMatches": "No Eligible Roles Yet",
+    "noMatchesMessage": "We couldn't find any roles matching your profile at the moment. Check back soon or explore all available jobs.",
+    "browseAllJobs": "Browse All Jobs",
+    "tryAgain": "Try Again",
+    "errors": {
+      "loadFailed": "Failed to Load",
+      "generic": "Something went wrong"
     }
   }
 }
