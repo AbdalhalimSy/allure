@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import apiClient, { setAuthToken, getActiveProfileId, setActiveProfileId } from "@/lib/api/client";
 import { getMediaUrl } from "@/lib/utils/media";
 import type { ExperienceResponseItem } from "@/types/experience";
@@ -141,7 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [activeProfileId, setActiveProfileIdState] = useState<number | null>(null);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       // Get the active profile ID from localStorage
       const currentActiveId = getActiveProfileId();
@@ -180,7 +180,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout();
       }
     }
-  };
+  }, []);
 
   const switchProfile = async (profileId: number) => {
     try {
@@ -222,7 +222,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUserState(null);
     }
     setHydrated(true);
-  }, []);
+  }, [fetchProfile]);
 
   const setUser = (u: User | null) => {
     setUserState(u);

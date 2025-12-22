@@ -11,7 +11,7 @@ interface PaymentHistoryTableProps {
   subscriptions?: Subscription[];
 }
 
-export function PaymentHistoryTable({ payments, totalSpent: _totalSpent, subscriptions }: PaymentHistoryTableProps) {
+export function PaymentHistoryTable({ payments, subscriptions }: PaymentHistoryTableProps) {
   const { t } = useI18n();
   
   const getPaymentMethodIcon = () => {

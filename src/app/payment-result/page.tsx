@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, XCircle, Loader2, ArrowRight } from 'lucide-react';
@@ -12,8 +12,11 @@ export default function PaymentResultPage() {
   const [status, setStatus] = useState<'checking' | 'success' | 'failed' | 'pending'>('checking');
   const [message, setMessage] = useState('Verifying your payment...');
   const [orderDetails, setOrderDetails] = useState<any>(null);
+  const checkTimeoutRef = useRef<NodeJS.Timeout>();
+  const checkFunctionRef = useRef<() => Promise<void>>();
 
-  const checkPaymentStatus = async () => {
+  // Separate function to avoid circular dependency with setTimeout
+  const performPaymentCheck = useCallback(async () => {
     try {
       // Get order ID from URL params or localStorage
       let orderId = searchParams.get('order_id');
@@ -45,8 +48,11 @@ export default function PaymentResultPage() {
         } else if (paymentStatus === 'pending') {
           setStatus('pending');
           setMessage('Payment is being processed. Please wait...');
-          // Retry after 3 seconds
-          setTimeout(checkPaymentStatus, 3000);
+          // Retry after 3 seconds using ref
+          if (checkTimeoutRef.current) clearTimeout(checkTimeoutRef.current);
+          if (checkFunctionRef.current) {
+            checkTimeoutRef.current = setTimeout(checkFunctionRef.current, 3000);
+          }
         } else if (paymentStatus === 'failed' || paymentStatus === 'cancelled') {
           setStatus('failed');
           setMessage(
@@ -65,11 +71,19 @@ export default function PaymentResultPage() {
       setStatus('failed');
       setMessage('An error occurred while verifying your payment. Please contact support.');
     }
-  };
+  }, [searchParams]);
+
+  // Store the callback in a ref so setTimeout can access it
+  useEffect(() => {
+    checkFunctionRef.current = performPaymentCheck;
+  }, [performPaymentCheck]);
 
   useEffect(() => {
-    checkPaymentStatus();
-  }, []);
+    performPaymentCheck();
+    return () => {
+      if (checkTimeoutRef.current) clearTimeout(checkTimeoutRef.current);
+    };
+  }, [performPaymentCheck]);
 
   return (
     <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">

@@ -9,7 +9,16 @@
     "confirm": "Confirm",
     "saveAndContinue": "Save & Continue",
     "download": "Download",
-    "code": "Code"
+    "code": "Code",
+    "notifications": {
+      "title": "Enable Notifications",
+      "description": "Stay in the loop with new jobs, messages, and payment updates.",
+      "previewTitle": "New role posted",
+      "previewSubtitle": "Casting call near you • Tap to view",
+      "enable": "Enable Notifications",
+      "notNow": "Not Now",
+      "dismiss": "Dismiss"
+    }
   },
   "ui": {
     "select": "Select...",

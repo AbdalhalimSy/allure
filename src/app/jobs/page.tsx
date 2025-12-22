@@ -44,7 +44,7 @@ export default function JobsPage() {
       setSwitching(true);
       fetchJobs(1, true);
     }
-  }, [filters, activeProfileId, locale, showEligibleOnly]);
+  }, [filters, activeProfileId, locale, showEligibleOnly, fetchJobs]);
 
   const fetchJobs = useCallback(async (page: number = 1, reset: boolean = false) => {
     const requestId = ++requestIdRef.current;
@@ -174,13 +174,14 @@ export default function JobsPage() {
       { rootMargin: "200px" }
     );
 
-    if (observerTargetRef.current) {
-      observer.observe(observerTargetRef.current);
+    const currentRef = observerTargetRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observerTargetRef.current) {
-        observer.unobserve(observerTargetRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [hasMore, loadingMore, loading, fetchJobs, meta.current_page, jobs.length]);

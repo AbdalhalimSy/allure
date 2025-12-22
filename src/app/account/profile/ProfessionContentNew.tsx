@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { TbPlus, TbInfoCircle } from "react-icons/tb";
 import AccountSection from "@/components/account/AccountSection";
@@ -25,7 +25,7 @@ export default function ProfessionContent({
   const { fetchProfile } = useAuth();
   const { t } = useI18n();
 
-  const translate = (
+  const translate = useCallback((
     key: string,
     fallback: string,
     options?: Record<string, string | number>
@@ -42,7 +42,7 @@ export default function ProfessionContent({
     }
     
     return value;
-  };
+  }, [t]);
 
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [entries, setEntries] = useState<ProfessionEntry[]>([]);
@@ -60,7 +60,7 @@ export default function ProfessionContent({
       `${entries.length} professions added`,
       { count: entries.length }
     );
-  }, [entries.length, t]);
+  }, [entries.length, translate]);
 
   // Fetch professions and saved data
   useEffect(() => {
@@ -98,7 +98,7 @@ export default function ProfessionContent({
     };
 
     fetchData();
-  }, [t]);
+  }, [translate]);
 
   const handleAddEntry = () => {
     const newEntry: ProfessionEntry = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Calendar, ChevronLeft, ChevronRight, X } from "lucide-react";
 import Label from "./Label";
 import { useI18n } from "@/contexts/I18nContext";
@@ -38,7 +38,7 @@ export default function DatePicker({
   const pickerRef = useRef<HTMLDivElement>(null);
 
   // Parse the value to date object
-  const selectedDate = value ? new Date(value) : null;
+  const selectedDate = useMemo(() => value ? new Date(value) : null, [value]);
 
   // Initialize calendar to selected date or today
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function DatePicker({
       setCurrentMonth(selectedDate.getMonth());
       setCurrentYear(selectedDate.getFullYear());
     }
-  }, [value]);
+  }, [selectedDate]);
 
   // Close on outside click
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import Image from "next/image";
@@ -40,22 +40,7 @@ export default function TalentDetailPage() {
   const [selectedPhoto, setSelectedPhoto] = useState<any>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  useEffect(() => {
-    fetchTalent();
-  }, [params.id, locale]);
-
-  // Set selected photo when talent loads
-  useEffect(() => {
-    if (talent) {
-      const featuredPhoto =
-        talent.media.photos.find((p) => p.featured_image) || talent.media.photos[0];
-      if (featuredPhoto && !selectedPhoto) {
-        setSelectedPhoto(featuredPhoto);
-      }
-    }
-  }, [talent]);
-
-  const fetchTalent = async () => {
+  const fetchTalent = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -90,7 +75,22 @@ export default function TalentDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id, locale]);
+
+  useEffect(() => {
+    fetchTalent();
+  }, [params.id, locale, fetchTalent]);
+
+  // Set selected photo when talent loads
+  useEffect(() => {
+    if (talent) {
+      const featuredPhoto =
+        talent.media.photos.find((p) => p.featured_image) || talent.media.photos[0];
+      if (featuredPhoto && !selectedPhoto) {
+        setSelectedPhoto(featuredPhoto);
+      }
+    }
+  }, [talent, selectedPhoto]);
 
   if (loading) {
     return (

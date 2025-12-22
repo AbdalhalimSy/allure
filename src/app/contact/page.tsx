@@ -41,7 +41,7 @@ export default function ContactPage() {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       toast.success(t("contact.form.success"));
       setFormData({ name: "", email: "", phone: "", message: "" });
-    } catch (error) {
+    } catch {
       toast.error(t("contact.form.error"));
     } finally {
       setIsLoading(false);

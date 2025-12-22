@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Loader from "@/components/ui/Loader";
@@ -44,13 +44,7 @@ export default function JobDetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isRTL = locale === "ar";
 
-  useEffect(() => {
-    if (activeProfileId) {
-      fetchJob();
-    }
-  }, [params.id, activeProfileId]);
-
-  const fetchJob = async () => {
+  const fetchJob = useCallback(async () => {
     if (!activeProfileId) {
       setError(t("jobDetail.errors.profileNotLoaded"));
       setLoading(false);
@@ -92,7 +86,13 @@ export default function JobDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeProfileId, params.id, t, locale]);
+
+  useEffect(() => {
+    if (activeProfileId) {
+      fetchJob();
+    }
+  }, [params.id, activeProfileId, fetchJob]);
 
   if (loading) {
     return (

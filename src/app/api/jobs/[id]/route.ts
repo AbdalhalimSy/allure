@@ -28,7 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ status: "error", message: data.message || "Job not found.", data: null }, { status: response.status });
     }
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ status: "error", message: "Internal server error", data: null }, { status: 500 });
   }
 }

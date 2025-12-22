@@ -3,7 +3,7 @@
  * Eliminates code duplication across multiple profile/filter components
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useI18n } from '@/contexts/I18nContext';
 import apiClient from '@/lib/api/client';
 
@@ -47,7 +47,7 @@ const DEFAULT_OPTIONS: LookupOptions = {
  */
 export function useLookupData(options: LookupOptions = {}) {
   const { locale } = useI18n();
-  const mergedOptions = { ...DEFAULT_OPTIONS, ...options };
+  const mergedOptions = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [options]);
 
   const [data, setData] = useState<Partial<LookupData>>({
     nationalities: [],
@@ -95,7 +95,17 @@ export function useLookupData(options: LookupOptions = {}) {
 
         const responses = await Promise.all(requests);
 
-        const newData: Partial<LookupData> = { ...data };
+        const newData: Partial<LookupData> = {
+          nationalities: [],
+          ethnicities: [],
+          countries: [],
+          hairColors: [],
+          eyeColors: [],
+          skinTones: [],
+          bodyTypes: [],
+          tattooMarks: [],
+          scars: [],
+        };
 
         // Handle standard lookups
         responses.forEach((response, index) => {
@@ -137,7 +147,7 @@ export function useLookupData(options: LookupOptions = {}) {
     };
 
     fetchLookups();
-  }, [locale, mergedOptions.fetchCountries, mergedOptions.fetchEthnicities, mergedOptions.fetchNationalities, mergedOptions.fetchAppearanceOptions]);
+  }, [locale, mergedOptions]);
 
   return { data, loading, error };
 }

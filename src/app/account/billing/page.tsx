@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import AccountLayout from "@/components/account/AccountLayout";
@@ -69,7 +69,7 @@ export default function BillingPage() {
       setError(t("account.billing.errors.selectProfile"));
       setLoading(false);
     }
-  }, []);
+  }, [loadData, t]);
 
   useEffect(() => {
     if (hasSubscription) {
@@ -78,7 +78,7 @@ export default function BillingPage() {
     }
   }, [hasSubscription]);
 
-  const loadData = async (profId: number) => {
+  const loadData = useCallback(async (profId: number) => {
     try {
       setLoading(true);
       const [packagesRes, statusRes, historyRes, paymentsRes] =
@@ -111,7 +111,7 @@ export default function BillingPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
   const handleSubscribe = async () => {
     if (!selectedPackageId || !profileId) return;

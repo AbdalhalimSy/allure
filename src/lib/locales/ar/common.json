@@ -9,7 +9,16 @@
     "confirm": "تأكيد",
     "saveAndContinue": "احفظ وتابع",
     "download": "تحميل",
-    "code": "الرمز"
+    "code": "الرمز",
+    "notifications": {
+      "title": "تفعيل الإشعارات",
+      "description": "كن على اطلاع بأحدث الوظائف والرسائل وتحديثات الدفع.",
+      "previewTitle": "تم نشر دور جديد",
+      "previewSubtitle": "إعلان كاستينج قريب منك • اضغط للعرض",
+      "enable": "تفعيل الإشعارات",
+      "notNow": "لاحقًا",
+      "dismiss": "إغلاق"
+    }
   },
   "ui": {
     "select": "اختر...",

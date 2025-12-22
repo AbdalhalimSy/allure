@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, MapPin, Users, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { Job } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
@@ -30,10 +31,11 @@ export default function JobCard({ job }: JobCardProps) {
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 dark:border-gray-800 dark:bg-gray-900">
       {/* Job Image */}
       <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
-        <img
+        <Image
           src={job.image || '/logo/logo-black.svg'}
           alt={job.title}
-          className={`h-full w-full ${job.image ? 'object-cover' : 'p-4 object-contain'}`}
+          fill
+          className={`${job.image ? 'object-cover' : 'p-4 object-contain'}`}
           onError={(e) => {
             if (e.currentTarget.src !== '/logo/logo-black.svg') {
               e.currentTarget.src = '/logo/logo-black.svg';

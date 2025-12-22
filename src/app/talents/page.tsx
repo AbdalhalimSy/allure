@@ -53,7 +53,7 @@ export default function TalentsPage() {
     if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
       fetchTalents(1, true);
     }
-  }, [filters, locale]);
+  }, [filters, locale, fetchTalents]);
 
   const fetchTalents = useCallback(async (page: number = 1, reset: boolean = false) => {
     const requestId = ++requestIdRef.current;
@@ -140,13 +140,14 @@ export default function TalentsPage() {
       { rootMargin: "200px" }
     );
 
-    if (observerTargetRef.current) {
-      observer.observe(observerTargetRef.current);
+    const currentRef = observerTargetRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observerTargetRef.current) {
-        observer.unobserve(observerTargetRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [hasMore, loadingMore, loading, fetchTalents, meta.current_page, talents.length]);

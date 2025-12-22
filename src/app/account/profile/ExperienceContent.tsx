@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { TbPlus } from 'react-icons/tb';
 import AccountSection from "@/components/account/AccountSection";
 import Button from "@/components/ui/Button";
@@ -21,7 +21,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
   const { t } = useI18n();
   const { fetchProfile } = useAuth();
 
-  const translate = (
+  const translate = useCallback((
     key: string,
     fallback: string,
     options?: Record<string, string | number>
@@ -38,7 +38,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
     }
     
     return value;
-  };
+  }, [t]);
 
   const [entries, setEntries] = useState<ExperienceEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
       `${entries.length} experiences added`,
       { count: entries.length }
     );
-  }, [entries.length, t]);
+  }, [entries.length, translate]);
 
   useEffect(() => {
     const load = async () => {
@@ -72,7 +72,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
       }
     };
     load();
-  }, [t]);
+  }, [translate]);
 
   const addEntry = () => {
     const newEntry: ExperienceEntry = {
