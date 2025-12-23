@@ -146,12 +146,7 @@ export default function HeroBanner({
                     {ctaRegister}
                     <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
                   </Link>
-                  <Link
-                    href="/login"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/20 px-6 py-3.5 text-base font-semibold text-white shadow-lg backdrop-blur-md transition hover:bg-white/30 hover:scale-105"
-                  >
-                    {ctaLogin}
-                  </Link>
+                  
                 </>
               )}
 

@@ -3,10 +3,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { I18nProvider, useI18n } from "@/contexts/I18nContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 import { useMemo } from "react";
+import NotificationHandler from "@/components/notifications/NotificationHandler";
+import NotificationPermissionPrompt from "@/components/notifications/NotificationPermissionPrompt";
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { locale } = useI18n();
@@ -19,6 +22,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         toastOptions={{ duration: 4000 }}
         containerStyle={{ top: 88 }}
       />
+      <NotificationHandler />
+      <NotificationPermissionPrompt />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
@@ -37,7 +42,9 @@ export default function ClientLayout({
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <AuthProvider>
-          <LayoutContent>{children}</LayoutContent>
+          <NotificationProvider>
+            <LayoutContent>{children}</LayoutContent>
+          </NotificationProvider>
         </AuthProvider>
       </I18nProvider>
     </QueryClientProvider>
