@@ -346,7 +346,7 @@ export default function JobDetailPage() {
                         {t("jobs.jobDetail.gender")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
-                        {t(`filters.${role.gender}`)}
+                        {role.gender ? t(`filters.${role.gender}`) : t("jobs.appliedJobs.notSpecified") || "Not specified"}
                       </span>
                     </div>
 

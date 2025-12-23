@@ -78,7 +78,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
                 
                 <div className="flex flex-wrap items-center gap-2 text-xs text-white/90">
                   <div className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 backdrop-blur-sm">
-                    <span>{t(`filters.${profile.gender}`)}</span>
+                    <span>{profile.gender ? t(`filters.${profile.gender}`) : t("jobs.appliedJobs.notSpecified") || "Not specified"}</span>
                     <span>•</span>
                     <span>{profile.age}</span>
                   </div>

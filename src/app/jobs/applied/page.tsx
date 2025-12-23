@@ -382,7 +382,7 @@ export default function AppliedJobsPage() {
                       {t("jobs.appliedJobs.details.gender")}
                     </p>
                     <p className="font-semibold text-gray-900 dark:text-white">
-                      {t(`filters.${role.gender}`)}
+                      {role.gender ? t(`filters.${role.gender}`) : t("jobs.appliedJobs.notSpecified") || "Not specified"}
                     </p>
                   </div>
                   <div className="rounded-lg bg-gray-50 p-3 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200">
