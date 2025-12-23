@@ -162,27 +162,30 @@ export default function TalentsPage() {
 
   return (
     <div className="bg-white dark:bg-black">
-      {/* Hero Banner Section - Same style as About page */}
-      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+        {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
-          <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
         </div>
-        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
-          <div className="text-center">
-            <div className="mb-6 flex items-center justify-center gap-3">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
-                <Users className="h-8 w-8 text-white" />
-              </div>
-            </div>
-            <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white md:text-6xl">
-              {t("talents.heroTitlePrefix")}
-              <span className="text-[#c49a47]">{t("talents.heroTitleHighlight")}</span>
+
+        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge */}
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+              <Users className="h-4 w-4" />
+              {t("talents.hero.badge")}
+            </p>
+
+            {/* Title */}
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+              {t("talents.hero.title")}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-              {t("talents.heroSubtitleLine1")}
-              <br />
-              {t("talents.heroSubtitleLine2")}
+
+            {/* Subtitle */}
+            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+              {t("talents.hero.subtitle")}
             </p>
           </div>
         </div>

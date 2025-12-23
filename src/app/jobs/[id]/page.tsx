@@ -46,7 +46,7 @@ export default function JobDetailPage() {
 
   const fetchJob = useCallback(async () => {
     if (!activeProfileId) {
-      setError(t("jobDetail.errors.profileNotLoaded"));
+      setError(t("jobs.jobDetail.errors.profileNotLoaded"));
       setLoading(false);
       return;
     }
@@ -67,7 +67,7 @@ export default function JobDetailPage() {
       if (!response.ok) {
         const data = await response.json();
         throw new Error(
-          data.error || data.message || t("jobDetail.errors.fetchFailed")
+          data.error || data.message || t("jobs.jobDetail.errors.fetchFailed")
         );
       }
 
@@ -76,11 +76,11 @@ export default function JobDetailPage() {
       if (result.status === "success" || result.status === true) {
         setJob(result.data);
       } else {
-        throw new Error(result.message || t("jobDetail.errors.loadFailed"));
+        throw new Error(result.message || t("jobs.jobDetail.errors.loadFailed"));
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : t("jobDetail.errors.generic")
+        err instanceof Error ? err.message : t("jobs.jobDetail.errors.generic")
       );
       console.error("Error fetching job:", err);
     } finally {
@@ -108,14 +108,14 @@ export default function JobDetailPage() {
         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center dark:border-red-800 dark:bg-red-950/20">
           <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
           <h3 className="mb-2 text-lg font-semibold text-red-900 dark:text-red-200">
-            {t("jobDetail.failedToLoad")}
+            {t("jobs.jobDetail.failedToLoad")}
           </h3>
           <p className="mb-4 text-sm text-red-700 dark:text-red-300">{error}</p>
           <button
             onClick={() => router.push("/jobs")}
             className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
-            {t("jobDetail.backToJobs")}
+            {t("jobs.jobDetail.backToJobs")}
           </button>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function JobDetailPage() {
           className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] dark:text-gray-400"
         >
           <ArrowLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
-          {t("jobDetail.backToJobs")}
+          {t("jobs.jobDetail.backToJobs")}
         </button>
 
         {/* Header Section */}
@@ -169,25 +169,25 @@ export default function JobDetailPage() {
                 {daysUntilExpiry <= 7 && daysUntilExpiry > 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
                     <Clock className="h-3 w-3" />
-                    {t("jobDetail.expiresIn")} {daysUntilExpiry}{" "}
-                    {t("jobDetail.days")}
+                    {t("jobs.jobDetail.expiresIn")} {daysUntilExpiry}{" "}
+                    {t("jobs.jobDetail.days")}
                   </span>
                 )}
                 {daysUntilExpiry <= 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-gray-400 px-3 py-1 text-xs font-semibold text-white">
                     <AlertCircle className="h-3 w-3" />
-                    {t("jobDetail.applicationClosed")}
+                    {t("jobs.jobDetail.applicationClosed")}
                   </span>
                 )}
               </div>
               {job.is_active && job.open_to_apply && (
                 <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  {t("jobDetail.openToApply")}
+                  {t("jobs.jobDetail.openToApply")}
                 </span>
               )}
               {!job.open_to_apply && (
                 <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-400">
-                  {t("jobDetail.closed")}
+                  {t("jobs.jobDetail.closed")}
                 </span>
               )}
             </div>
@@ -199,7 +199,7 @@ export default function JobDetailPage() {
             {job.highlights && (
               <div className="mb-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
                 <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
-                  {t("jobDetail.highlights")}
+                  {t("jobs.jobDetail.highlights")}
                 </p>
                 <p className="mt-1 text-sm text-blue-800 dark:text-blue-300">
                   {job.highlights}
@@ -210,7 +210,7 @@ export default function JobDetailPage() {
             {job.usage_terms && (
               <div className="mb-6 rounded-lg bg-purple-50 p-4 dark:bg-purple-900/20">
                 <p className="text-sm font-semibold text-purple-900 dark:text-purple-200">
-                  {t("jobDetail.usageTerms")}
+                  {t("jobs.jobDetail.usageTerms")}
                 </p>
                 <p className="mt-1 text-sm text-purple-800 dark:text-purple-300">
                   {job.usage_terms}
@@ -224,7 +224,7 @@ export default function JobDetailPage() {
                 <Calendar className="h-5 w-5 text-[#c49a47]" />
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("jobDetail.shootingDate")}
+                    {t("jobs.jobDetail.shootingDate")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.shooting_date)}
@@ -236,7 +236,7 @@ export default function JobDetailPage() {
                 <Clock className="h-5 w-5 text-[#c49a47]" />
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("jobDetail.expiresOn")}
+                    {t("jobs.jobDetail.expiresOn")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {formatDate(job.expiration_date)}
@@ -248,10 +248,10 @@ export default function JobDetailPage() {
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("jobDetail.openRoles")}
+                    {t("jobs.jobDetail.openRoles")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {roleCount} {t("jobDetail.available")}
+                    {roleCount} {t("jobs.jobDetail.available")}
                   </p>
                 </div>
               </div>
@@ -260,10 +260,10 @@ export default function JobDetailPage() {
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("jobDetail.locations")}
+                    {t("jobs.jobDetail.locations")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {job.job_countries?.length || 0} {t("jobDetail.countries")}
+                    {job.job_countries?.length || 0} {t("jobs.jobDetail.countries")}
                   </p>
                 </div>
               </div>
@@ -280,7 +280,7 @@ export default function JobDetailPage() {
                 <div className="mb-4 flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-[#c49a47]" />
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                    {t("jobDetail.requiredProfessions")}
+                    {t("jobs.jobDetail.requiredProfessions")}
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -302,7 +302,7 @@ export default function JobDetailPage() {
                 <div className="mb-4 flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-[#c49a47]" />
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                    {t("jobDetail.subProfessions")}
+                    {t("jobs.jobDetail.subProfessions")}
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -321,7 +321,7 @@ export default function JobDetailPage() {
             {/* Roles Section */}
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("jobDetail.availableRoles")} ({roleCount})
+                {t("jobs.jobDetail.availableRoles")} ({roleCount})
               </h2>
 
               {roles.map((role) => (
@@ -343,7 +343,7 @@ export default function JobDetailPage() {
                     <div className="flex items-center gap-2 text-sm">
                       <User className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {t("jobDetail.gender")}
+                        {t("jobs.jobDetail.gender")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
                         {t(`filters.${role.gender}`)}
@@ -353,17 +353,17 @@ export default function JobDetailPage() {
                     <div className="flex items-center gap-2 text-sm">
                       <Calendar className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {t("jobDetail.ageRange")}
+                        {t("jobs.jobDetail.ageRange")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
-                        {role.start_age} - {role.end_age} {t("jobDetail.years")}
+                        {role.start_age} - {role.end_age} {t("jobs.jobDetail.years")}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <Briefcase className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {t("jobDetail.ethnicity")}
+                        {t("jobs.jobDetail.ethnicity")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
                         {Array.isArray(role.ethnicity)
@@ -375,7 +375,7 @@ export default function JobDetailPage() {
                     <div className="flex items-center gap-2 text-sm">
                       <DollarSign className="h-4 w-4 text-[#c49a47]" />
                       <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {t("jobDetail.paymentTerms")}
+                        {t("jobs.jobDetail.paymentTerms")}
                       </span>
                       <span className="text-gray-900 dark:text-white">
                         {role.payment_terms_days} days
@@ -386,7 +386,7 @@ export default function JobDetailPage() {
                       <div className="flex items-center gap-2 text-sm">
                         <DollarSign className="h-4 w-4 text-[#c49a47]" />
                         <span className="font-medium text-gray-700 dark:text-gray-300">
-                          {t("jobDetail.budget")}
+                          {t("jobs.jobDetail.budget")}
                         </span>
                         <span className="text-gray-900 dark:text-white">
                           AED {role.budget.toLocaleString()}
@@ -400,15 +400,15 @@ export default function JobDetailPage() {
                     <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 dark:bg-[#00ff00]/20">
                       <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                       <span className="text-sm font-medium text-green-700 dark:text-green-300">
-                        {t("jobDetail.meetRequirements")}
+                        {t("jobs.jobDetail.meetRequirements")}
                       </span>
                     </div>
                   ) : (
                     <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 dark:bg-[#ff0000]/20">
                       <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
                       <span className="text-sm font-medium text-red-700 dark:text-red-300">
-                        {t("jobDetail.notMeetRequirements")} (
-                        {t("jobDetail.eligibility")}:{" "}
+                        {t("jobs.jobDetail.notMeetRequirements")} (
+                        {t("jobs.jobDetail.eligibility")}:{" "}
                         {role.eligibility_score || 0}%)
                       </span>
                     </div>
@@ -418,7 +418,7 @@ export default function JobDetailPage() {
                   {role.meta_conditions.length > 0 && (
                     <div className="mb-4 rounded-lg border border-gray-200 p-4 dark:bg-gray-800">
                       <h4 className="mb-3 font-semibold text-gray-900 dark:text-white">
-                        {t("jobDetail.physicalRequirements")}
+                        {t("jobs.jobDetail.physicalRequirements")}
                       </h4>
                       <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2 text-sm">
                         {Object.entries(role.meta_conditions[0]).map(
@@ -468,7 +468,7 @@ export default function JobDetailPage() {
                   {role.conditions.length > 0 && (
                     <div className="mb-4">
                       <h4 className="mb-3 font-semibold text-gray-900 dark:text-white">
-                        {t("jobDetail.additionalRequirements")}
+                        {t("jobs.jobDetail.additionalRequirements")}
                       </h4>
                       <div className="space-y-2">
                         {role.conditions.map((condition) => (
@@ -502,7 +502,7 @@ export default function JobDetailPage() {
                           setIsModalOpen(true);
                         } else {
                           toast.error(
-                            t("jobDetail.notEligibleToApply") ||
+                            t("jobs.jobDetail.notEligibleToApply") ||
                               "You don't meet the requirements for this role"
                           );
                         }
@@ -515,14 +515,14 @@ export default function JobDetailPage() {
                       }`}
                     >
                       {role.can_apply
-                        ? (t("jobDetail.applyFor") || "Apply for") +
+                        ? (t("jobs.jobDetail.applyFor") || "Apply for") +
                           " " +
                           role.name
-                        : t("jobDetail.canNotApply") || "Can not apply"}
+                        : t("jobs.jobDetail.canNotApply") || "Can not apply"}
                     </button>
                     {!role.can_apply && (
                       <p className="text-xs text-center text-gray-500 dark:text-gray-400">
-                        {t("jobDetail.eligibilityScoreNote") ||
+                        {t("jobs.jobDetail.eligibilityScoreNote") ||
                           "You don't fully meet the requirements but can still apply"}
                       </p>
                     )}
@@ -539,7 +539,7 @@ export default function JobDetailPage() {
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  {t("jobDetail.jobLocations")}
+                  {t("jobs.jobDetail.jobLocations")}
                 </h3>
               </div>
               <ul className="space-y-2">
@@ -553,7 +553,7 @@ export default function JobDetailPage() {
                   </li>
                 )) || (
                   <li className="text-sm text-gray-500">
-                    {t("jobDetail.noLocations")}
+                    {t("jobs.jobDetail.noLocations")}
                   </li>
                 )}
               </ul>
@@ -565,7 +565,7 @@ export default function JobDetailPage() {
                 <div className="mb-4 flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-[#c49a47]" />
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                    {t("jobDetail.residenceCountries")}
+                    {t("jobs.jobDetail.residenceCountries")}
                   </h3>
                 </div>
                 <ul className="space-y-2">

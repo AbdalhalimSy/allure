@@ -43,7 +43,7 @@ export default function JobsPage() {
     async (page: number = 1, reset: boolean = false) => {
       const requestId = ++requestIdRef.current;
       if (!activeProfileId) {
-        setError(t("jobs.errors.profileNotLoaded"));
+        setError(t("jobs.jobs.errors.profileNotLoaded"));
         if (reset) setLoading(false);
         return;
       }
@@ -77,7 +77,7 @@ export default function JobsPage() {
 
           if (!response.ok) {
             const data = await response.json();
-            throw new Error(data.message || t("jobs.errors.fetchFailed"));
+            throw new Error(data.message || t("jobs.jobs.errors.fetchFailed"));
           }
 
           const result: EligibleRolesResponse = await response.json();
@@ -99,7 +99,7 @@ export default function JobsPage() {
             });
             setHasMore(false); // No pagination for eligible roles
           } else {
-            throw new Error(result.message || t("jobs.errors.loadFailed"));
+            throw new Error(result.message || t("jobs.jobs.errors.loadFailed"));
           }
         } else {
           // Fetch regular jobs with pagination
@@ -132,7 +132,7 @@ export default function JobsPage() {
           if (!response.ok) {
             const data = await response.json();
             throw new Error(
-              data.error || data.message || t("jobs.errors.fetchFailed")
+              data.error || data.message || t("jobs.jobs.errors.fetchFailed")
             );
           }
 
@@ -167,14 +167,14 @@ export default function JobsPage() {
               );
             }
           } else {
-            throw new Error(result.message || t("jobs.errors.loadFailed"));
+            throw new Error(result.message || t("jobs.jobs.errors.loadFailed"));
           }
         }
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         if (reset) {
           setError(
-            err instanceof Error ? err.message : t("jobs.errors.generic")
+            err instanceof Error ? err.message : t("jobs.jobs.errors.generic")
           );
         }
         console.error("Error fetching jobs:", err);
@@ -253,25 +253,32 @@ export default function JobsPage() {
 
   return (
     <div className="bg-white dark:bg-black">
-      {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+        {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -start-10 top-10 h-72 w-72 rounded-full bg-[#c49a47]/20 blur-3xl" />
-          <div className="absolute -end-10 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
         </div>
-        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8 text-center">
-          <div className="mb-6 flex items-center justify-center gap-3">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
-              <Briefcase className="h-8 w-8 text-white" />
-            </div>
+
+        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge */}
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+              <Briefcase className="h-4 w-4" />
+              {t("jobs.hero.badge")}
+            </p>
+
+            {/* Title */}
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+              {t("jobs.hero.title")}
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+              {t("jobs.hero.subtitle")}
+            </p>
           </div>
-          <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white md:text-6xl">
-            Explore <span className="text-[#c49a47]">Casting Calls</span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-            Discover active opportunities and roles. Filter by profession,
-            location, dates and appearance to pinpoint the perfect casting.
-          </p>
         </div>
       </section>
 
@@ -284,7 +291,7 @@ export default function JobsPage() {
               <div className="flex items-center gap-2">
                 <Briefcase className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {t("jobs.allJobs") || "All Jobs"}
+                  {t("jobs.jobs.allJobs") || "All Jobs"}
                 </span>
               </div>
               <Switch
@@ -295,7 +302,7 @@ export default function JobsPage() {
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-[#c49a47]" />
                 <span className="text-sm font-medium text-[#c49a47]">
-                  {t("jobs.eligibleOnly") || "Eligible for Me"}
+                  {t("jobs.jobs.eligibleOnly") || "Eligible for Me"}
                 </span>
               </div>
             </div>
@@ -321,7 +328,7 @@ export default function JobsPage() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                 <Loader className="h-4 w-4" />
-                <span>{t("jobs.loading")}</span>
+                <span>{t("jobs.jobs.loading")}</span>
               </div>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -339,14 +346,14 @@ export default function JobsPage() {
                 </div>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                {t("jobs.failedToLoad")}
+                {t("jobs.jobs.failedToLoad")}
               </h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
               <button
                 onClick={() => fetchJobs(1, true)}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
-                {t("jobs.tryAgain")}
+                {t("jobs.jobs.tryAgain")}
               </button>
             </SurfaceCard>
           </div>
@@ -359,16 +366,16 @@ export default function JobsPage() {
                 </div>
               </div>
               <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-                {t("jobs.noJobsFound")}
+                {t("jobs.jobs.noJobsFound")}
               </h3>
               <p className="mb-8 text-gray-600 dark:text-gray-400">
-                {t("jobs.noJobsHint")}
+                {t("jobs.jobs.noJobsHint")}
               </p>
               <button
                 onClick={handleReset}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
               >
-                {t("jobs.clearFilters")}
+                {t("jobs.jobs.clearFilters")}
               </button>
             </SurfaceCard>
           </div>
@@ -379,18 +386,18 @@ export default function JobsPage() {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                   {meta.total}{" "}
                   {meta.total === 1
-                    ? t("jobs.jobSingular")
-                    : t("jobs.jobPlural")}{" "}
-                  {t("jobs.found")}
+                    ? t("jobs.jobs.jobSingular")
+                    : t("jobs.jobs.jobPlural")}{" "}
+                  {t("jobs.jobs.found")}
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {t("jobs.showing")} {jobs.length} {t("jobs.of")} {meta.total}
+                  {t("jobs.jobs.showing")} {jobs.length} {t("jobs.jobs.of")} {meta.total}
                 </p>
               </div>
               {loadingMore && (
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                   <Loader className="h-4 w-4" />
-                  <span>{t("jobs.updating")}</span>
+                  <span>{t("jobs.jobs.updating")}</span>
                 </div>
               )}
             </div>
@@ -409,7 +416,7 @@ export default function JobsPage() {
                 <div className="flex items-center gap-2">
                   <Loader className="h-5 w-5 animate-spin text-[#c49a47]" />
                   <span className="text-gray-600 dark:text-gray-400">
-                    {t("jobs.loading")}
+                    {t("jobs.jobs.loading")}
                   </span>
                 </div>
               </div>
@@ -419,7 +426,7 @@ export default function JobsPage() {
             {!hasMore && jobs.length > 0 && (
               <div className="mt-12 py-8 text-center">
                 <p className="text-gray-600 dark:text-gray-400">
-                  {t("jobs.noMoreJobs")}
+                  {t("jobs.jobs.noMoreJobs")}
                 </p>
               </div>
             )}

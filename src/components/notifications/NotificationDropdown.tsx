@@ -275,10 +275,15 @@ export default function NotificationDropdown() {
                   {item.title}
                 </p>
                 {!item.is_read && (
-                  <span
-                    className="mt-0.5 inline-flex h-2 w-2 rounded-full bg-[#c49a47]"
-                    aria-hidden
-                  />
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span
+                      className="inline-flex h-2 w-2 rounded-full bg-[#c49a47]"
+                      aria-hidden
+                    />
+                    <span className="inline-flex rounded-full bg-[#c49a47]/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-[#c49a47]">
+                      {t("common.notifications.new") || "New"}
+                    </span>
+                  </div>
                 )}
               </div>
               {item.body && (
@@ -290,11 +295,6 @@ export default function NotificationDropdown() {
                 {formatTimestamp(item.sent_at || item.created_at, locale)}
               </p>
             </div>
-            {!item.is_read && (
-              <span className="absolute inset-y-3 end-2 rounded-full bg-[#c49a47]/10 px-2 text-[11px] font-semibold uppercase text-[#c49a47]">
-                {t("common.notifications.new") || "New"}
-              </span>
-            )}
           </button>
         ))}
       </div>
@@ -359,14 +359,7 @@ export default function NotificationDropdown() {
           {renderedItems}
         </div>
 
-        <div className="flex items-center justify-between gap-2 border-t border-gray-100 bg-linear-to-r from-[#fff8ec] via-white to-white px-4 py-3 dark:border-white/10 dark:from-[#c49a47]/5 dark:via-black dark:to-black">
-          <Link
-            href="/account/notifications"
-            className="text-sm font-semibold text-[#c49a47] transition hover:text-[#a87d35]"
-            onClick={() => setOpen(false)}
-          >
-            {t("common.notifications.viewAll") || "View all"}
-          </Link>
+        <div className="flex items-center justify-start gap-2 border-t border-gray-100 bg-linear-to-r from-[#fff8ec] via-white to-white px-4 py-3 dark:border-white/10 dark:from-[#c49a47]/5 dark:via-black dark:to-black">
           <Link
             href="/account"
             className="text-sm font-medium text-gray-700 transition hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"

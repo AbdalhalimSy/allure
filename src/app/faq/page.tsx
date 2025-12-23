@@ -60,23 +60,33 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] py-20 lg:py-28">
-        <div className="absolute inset-0 bg-[url('/patterns/dots.svg')] opacity-10"></div>
-        <div className="container relative mx-auto px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-sm">
-              <HelpCircle className="h-4 w-4 text-white" />
-              <span className="text-sm font-medium text-white">{t("faq.hero.badge")}</span>
-            </div>
-            <h1 className="mb-6 text-4xl font-bold text-white lg:text-6xl">
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+        {/* Background decorations */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
+        </div>
+
+        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge */}
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+              <HelpCircle className="h-4 w-4" />
+              {t("faq.hero.badge")}
+            </p>
+
+            {/* Title */}
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
               {t("faq.hero.title")}
             </h1>
-            <p className="text-lg text-white/90 lg:text-xl">
+
+            {/* Subtitle */}
+            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
               {t("faq.hero.subtitle")}
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Search Bar */}
       <div className="container mx-auto -mt-8 px-6 lg:px-8">

@@ -53,7 +53,6 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         icon: <TbPhoto />,
       },
       { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
-      { id: "notifications", label: "Notifications", labelKey: "account.nav.notifications", icon: <TbBell /> },
       { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
     ];
   }
@@ -67,7 +66,6 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       icon: <TbUser />,
     },
     { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
-    { id: "notifications", label: "Notifications", labelKey: "account.nav.notifications", icon: <TbBell /> },
     { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
   ];
 };

@@ -20,6 +20,7 @@ import {
   Megaphone,
   Lightbulb,
   ArrowRight,
+  Briefcase,
 } from "lucide-react";
 
 type Partner = {
@@ -143,6 +144,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
             <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+              <Briefcase className="h-4 w-4" />
               {t("about.hero.badge")}
             </p>
 
@@ -152,19 +154,23 @@ export default function AboutPage() {
             </h1>
 
             {/* Subtitle */}
-            <p className="mb-8 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
               {t("about.hero.subtitle")}
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Stats Grid */}
-          <div className="mx-auto mt-16 grid max-w-5xl gap-6 grid-cols-2 lg:grid-cols-4">
+      {/* Stats Section */}
+      <section className="px-6 py-16 lg:px-12 lg:py-24">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={stat.label}
-                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-6 text-center shadow-lg backdrop-blur-sm transition hover:shadow-xl dark:border-white/10 dark:bg-gray-900/90"
+                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-6 text-center shadow-lg backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-gray-900/90"
                 >
                   {/* Hover gradient */}
                   <div className="absolute inset-0 bg-linear-to-br from-[rgba(196,154,71,0.05)] to-transparent opacity-0 transition group-hover:opacity-100" />

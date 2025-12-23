@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "badge": "Discover Talent",
+    "title": "Our Exceptional Roster",
+    "subtitle": "Explore our curated roster of exceptional professionals ready to bring your vision to life. From models to actors and beyond, find the perfect talent for your next project."
+  },
   "loading": "Loading talents...",
   "failedToLoad": "Failed to Load Talents",
   "tryAgain": "Try Again",

@@ -16,7 +16,13 @@ type UseFcmReturn = {
 };
 
 export function useFCM(): UseFcmReturn {
-  const [fcmToken, setFcmToken] = useState<string | null>(null);
+  const [fcmToken, setFcmToken] = useState<string | null>(() => {
+    // Initialize from localStorage if available
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("fcm_token");
+    }
+    return null;
+  });
   const [notification, setNotification] = useState<MessagePayload | null>(null);
   const [isSupported, setIsSupported] = useState(false);
 
@@ -75,6 +81,8 @@ export function useFCM(): UseFcmReturn {
 
       if (token) {
         setFcmToken(token);
+        // Persist to localStorage for login requests
+        localStorage.setItem("fcm_token", token);
         return token;
       }
     } catch (error) {

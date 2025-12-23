@@ -31,8 +31,8 @@ interface I18nContextType {
 
 const translations = {
   // Aggregate split locale namespaces so t() stays backward-compatible
-  en: { ...enCommon, ...enHome, ...enAccount, ...enJobs, ...enAuth, talents: enTalents, about: enAbout, contact: enContact, faq: enFaq, policies: enPolicies },
-  ar: { ...arCommon, ...arHome, ...arAccount, ...arJobs, ...arAuth, talents: arTalents, about: arAbout, contact: arContact, faq: arFaq, policies: arPolicies },
+  en: { ...enCommon, ...enHome, ...enAccount, ...enAuth, jobs: enJobs, talents: enTalents, about: enAbout, contact: enContact, faq: enFaq, policies: enPolicies },
+  ar: { ...arCommon, ...arHome, ...arAccount, ...arAuth, jobs: arJobs, talents: arTalents, about: arAbout, contact: arContact, faq: arFaq, policies: arPolicies },
 };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);

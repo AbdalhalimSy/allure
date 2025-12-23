@@ -121,7 +121,7 @@ export default function JobFilterBar({
           <div className="relative flex-1 min-w-0">
             <Search className="pointer-events-none absolute start-3 sm:start-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
-              placeholder={t("jobsFilter.searchPlaceholder")}
+              placeholder={t("jobs.jobsFilter.searchPlaceholder")}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               className="h-10 sm:h-12 ps-10 sm:ps-12 pe-10 sm:pe-12 text-sm sm:text-base"
@@ -149,7 +149,7 @@ export default function JobFilterBar({
             className="flex items-center gap-1 sm:gap-2 shrink-0 px-3 sm:px-4"
           >
             <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="hidden sm:inline">{t("jobsFilter.filters")}</span>
+            <span className="hidden sm:inline">{t("jobs.jobsFilter.filters")}</span>
             {activeFiltersCount > 0 && (
               <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#c49a47] text-[10px] sm:text-xs font-semibold text-white">
                 {activeFiltersCount}
@@ -170,7 +170,7 @@ export default function JobFilterBar({
               className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
             >
               <RotateCcw className="h-4 w-4" />
-              <span>{t("jobsFilter.reset")}</span>
+              <span>{t("jobs.jobsFilter.reset")}</span>
             </Button>
           )}
           {activeFiltersCount > 0 && (
@@ -179,7 +179,7 @@ export default function JobFilterBar({
               variant="secondary"
               onClick={handleReset}
               className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
-              title={t("jobsFilter.resetAllTitle")}
+              title={t("jobs.jobsFilter.resetAllTitle")}
             >
               <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
@@ -200,13 +200,13 @@ export default function JobFilterBar({
           <div className="space-y-4">
             <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
               <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-                {t("jobsFilter.section.dates")}
+                {t("jobs.jobsFilter.section.dates")}
               </h3>
             </div>
             <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
                 <DatePicker
-                  label={t("jobsFilter.shootingFrom")}
+                  label={t("jobs.jobsFilter.shootingFrom")}
                   value={local.shooting_date_from || ""}
                   onChange={(date) =>
                     update({
@@ -214,13 +214,13 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectStartDate")}
+                  placeholder={t("jobs.jobsFilter.selectStartDate")}
                   maxDate={local.shooting_date_to}
                 />
               </div>
               <div className="space-y-2">
                 <DatePicker
-                  label={t("jobsFilter.shootingTo")}
+                  label={t("jobs.jobsFilter.shootingTo")}
                   value={local.shooting_date_to || ""}
                   onChange={(date) =>
                     update({
@@ -228,17 +228,17 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectEndDate")}
+                  placeholder={t("jobs.jobsFilter.selectEndDate")}
                   minDate={local.shooting_date_from}
                 />
               </div>
               <div className="space-y-2">
-                <Label>{t("jobsFilter.eligible")}</Label>
+                <Label>{t("jobs.jobsFilter.eligible")}</Label>
                 <SingleSelect
                   options={[
-                    { value: "", label: t("jobsFilter.allJobs") },
-                    { value: "true", label: t("jobsFilter.eligibleOnly") },
-                    { value: "false", label: t("jobsFilter.notEligible") },
+                    { value: "", label: t("jobs.jobsFilter.allJobs") },
+                    { value: "true", label: t("jobs.jobsFilter.eligibleOnly") },
+                    { value: "false", label: t("jobs.jobsFilter.notEligible") },
                   ]}
                   value={
                     local.eligible === undefined
@@ -256,7 +256,7 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.allJobs")}
+                  placeholder={t("jobs.jobsFilter.allJobs")}
                   searchable={false}
                 />
               </div>
@@ -267,12 +267,12 @@ export default function JobFilterBar({
           <div className="space-y-4">
             <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
               <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-                {t("jobsFilter.section.professional")}
+                {t("jobs.jobsFilter.section.professional")}
               </h3>
             </div>
             <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label>{t("jobsFilter.professions")}</Label>
+                <Label>{t("jobs.jobsFilter.professions")}</Label>
                 <MultiSelect
                   options={professions}
                   value={
@@ -288,12 +288,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectProfessions")}
+                  placeholder={t("jobs.jobsFilter.selectProfessions")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>{t("jobsFilter.jobCountries")}</Label>
+                <Label>{t("jobs.jobsFilter.jobCountries")}</Label>
                 <MultiSelect
                   options={countries}
                   value={
@@ -309,12 +309,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectCountries")}
+                  placeholder={t("jobs.jobsFilter.selectCountries")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>{t("jobsFilter.talentResidenceCountries")}</Label>
+                <Label>{t("jobs.jobsFilter.talentResidenceCountries")}</Label>
                 <MultiSelect
                   options={countries}
                   value={
@@ -330,12 +330,12 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectCountries")}
+                  placeholder={t("jobs.jobsFilter.selectCountries")}
                   loading={loadingLookups}
                 />
               </div>
               <div className="space-y-2">
-                <Label>{t("jobsFilter.nationalities")}</Label>
+                <Label>{t("jobs.jobsFilter.nationalities")}</Label>
                 <MultiSelect
                   options={nationalities}
                   value={
@@ -351,7 +351,7 @@ export default function JobFilterBar({
                       page: 1,
                     })
                   }
-                  placeholder={t("jobsFilter.selectNationalities")}
+                  placeholder={t("jobs.jobsFilter.selectNationalities")}
                   loading={loadingLookups}
                 />
               </div>

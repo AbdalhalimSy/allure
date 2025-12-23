@@ -11,6 +11,14 @@ import OTPInput from "@/components/ui/OTPInput";
 import apiClient, { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { getErrorMessage } from "@/lib/utils/errorHandling";
+import { useClientFcmToken } from "@/hooks/useClientFcmToken";
+
+const getDeviceName = () => {
+  if (typeof navigator === "undefined") return "web";
+  return navigator.userAgent?.slice(0, 255) || "web";
+};
+
+const getPlatform = () => "web";
 
 interface VerifyEmailFormProps {
   email: string;
@@ -30,6 +38,7 @@ export default function VerifyEmailForm({
   const { setUser, fetchProfile } = useAuth();
 
   const [otp, setOtp] = useState("");
+  const getClientFcmToken = useClientFcmToken();
   const [otpLoading, setOtpLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
 
@@ -72,7 +81,16 @@ export default function VerifyEmailForm({
 
       // Auto login if password is available
       if (password) {
-        const loginRes = await apiClient.post("/auth/login", { email, password });
+        // Try to get FCM token, but make it optional
+        const tokenForRequest = await getClientFcmToken();
+
+        const loginRes = await apiClient.post("/auth/login", {
+          email,
+          password,
+          device_name: getDeviceName(),
+          platform: getPlatform(),
+          fcm_token: tokenForRequest || undefined,
+        });
         const token = loginRes?.data?.data?.token;
         const talent = loginRes?.data?.data?.talent;
         const userData = loginRes?.data?.data?.user;

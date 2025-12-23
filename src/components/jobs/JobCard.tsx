@@ -51,7 +51,7 @@ export default function JobCard({ job }: JobCardProps) {
       {isExpiringSoon && (
         <div className="absolute end-4 top-6 flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
           <Clock className="h-3 w-3" />
-          {t("jobCard.expiringSoon")}
+          {t("jobs.jobCard.expiringSoon")}
         </div>
       )}
 
@@ -70,13 +70,13 @@ export default function JobCard({ job }: JobCardProps) {
         <div className="mb-4 space-y-2">
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Calendar className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">{t("jobCard.shooting")}</span>
+            <span className="font-medium">{t("jobs.jobCard.shooting")}</span>
             <span>{formatDate(job.shooting_date)}</span>
           </div>
           
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Clock className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">{t("jobCard.expires")}</span>
+            <span className="font-medium">{t("jobs.jobCard.expires")}</span>
             <span>{formatDate(job.expiration_date)}</span>
           </div>
           
@@ -91,7 +91,7 @@ export default function JobCard({ job }: JobCardProps) {
           
           <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
             <Users className="h-4 w-4 text-[#c49a47]" />
-            <span className="font-medium">{job.roles_count} {t("jobCard.rolesAvailable")}</span>
+            <span className="font-medium">{job.roles_count} {t("jobs.jobCard.rolesAvailable")}</span>
           </div>
         </div>
 
@@ -100,7 +100,7 @@ export default function JobCard({ job }: JobCardProps) {
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="h-4 w-4 text-[#c49a47]" />
-              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{t("jobCard.requiredSkills")}</span>
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{t("jobs.jobCard.requiredSkills")}</span>
             </div>
             <p className="line-clamp-2 text-xs text-gray-600 dark:text-gray-400">
               {job.skills}
@@ -132,7 +132,7 @@ export default function JobCard({ job }: JobCardProps) {
           href={`/jobs/${job.id}`}
           className="flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-6 py-3 font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40 group-hover:gap-3"
         >
-          {t("jobCard.viewDetails")}
+          {t("jobs.jobCard.viewDetails")}
           <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
         </Link>
       </div>

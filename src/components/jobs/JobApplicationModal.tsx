@@ -108,8 +108,8 @@ export default function JobApplicationModal({
     // Validate call time if enabled
     if (role.call_time_enabled) {
       if (!selectedCallTimeSlotId || !selectedCallTime) {
-        setCallTimeError(t("jobApplication.callTimeRequired"));
-        toast.error(t("jobApplication.callTimeRequired"));
+        setCallTimeError(t("jobs.jobApplication.callTimeRequired"));
+        toast.error(t("jobs.jobApplication.callTimeRequired"));
         return false;
       }
     }
@@ -120,13 +120,13 @@ export default function JobApplicationModal({
         if (condition.input_type === "media_upload") {
           // For media upload, check mediaFiles
           if (!mediaFiles[condition.id]) {
-            toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
+            toast.error(`${t("jobs.jobApplication.answerRequired")}: ${condition.label}`);
             return false;
           }
         } else {
           const response = responses[condition.id];
           if (!response || (Array.isArray(response) && response.length === 0)) {
-            toast.error(`${t("jobApplication.answerRequired")}: ${condition.label}`);
+            toast.error(`${t("jobs.jobApplication.answerRequired")}: ${condition.label}`);
             return false;
           }
         }
@@ -139,7 +139,7 @@ export default function JobApplicationModal({
     e.preventDefault();
 
     if (!profileId) {
-      toast.error(t("jobApplication.loginToApply"));
+      toast.error(t("jobs.jobApplication.loginToApply"));
       return;
     }
 
@@ -194,7 +194,7 @@ export default function JobApplicationModal({
       const isSuccess = response.ok && (result.status === "success" || result.status === true || result.success === true);
 
       if (isSuccess) {
-        toast.success(result.message || t("jobApplication.submitted"));
+        toast.success(result.message || t("jobs.jobApplication.submitted"));
         onClose();
         setResponses({});
         setMediaFiles({});
@@ -218,12 +218,12 @@ export default function JobApplicationModal({
         result?.errors?.message ||
         result?.error ||
         result?.message ||
-        t("jobApplication.submitFailed");
+        t("jobs.jobApplication.submitFailed");
 
       toast.error(errorMessage);
     } catch (error) {
       console.error("Error submitting application:", error);
-      toast.error(t("jobApplication.genericError"));
+      toast.error(t("jobs.jobApplication.genericError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -395,7 +395,7 @@ export default function JobApplicationModal({
           <FileUploader
             accept="image/*,video/*,.pdf"
             maxSize={20 * 1024 * 1024}
-            description={t("jobApplication.uploadDescription") || "Upload images, videos, or PDF (max 20MB)"}
+            description={t("jobs.jobApplication.uploadDescription") || "Upload images, videos, or PDF (max 20MB)"}
             onChange={(files) => {
               if (files.length > 0 && files[0] instanceof File) {
                 handleFileChange(condition.id, files[0]);
@@ -415,7 +415,7 @@ export default function JobApplicationModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 dark:border-gray-800">
           <div>
-            <h2 className="text-2xl font-bold text-white">{t("jobApplication.applyForRole")}</h2>
+            <h2 className="text-2xl font-bold text-white">{t("jobs.jobApplication.applyForRole")}</h2>
             <p className="text-sm text-white/90">{role.name}</p>
           </div>
           <button
@@ -442,7 +442,7 @@ export default function JobApplicationModal({
             {/* Call Time Selection */}
             {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
               <div className="space-y-2">
-                <Label required>{t("jobApplication.callTime")}</Label>
+                <Label required>{t("jobs.jobApplication.callTime")}</Label>
                 <CallTimeSelector
                   slotGroups={role.call_time_slots}
                   selectedSlotId={selectedCallTimeSlotId}
@@ -464,11 +464,11 @@ export default function JobApplicationModal({
 
             {/* Optional: File upload for portfolio/showreel */}
             <div className="space-y-2">
-              <Label>{t("jobApplication.additionalDocs")}</Label>
+              <Label>{t("jobs.jobApplication.additionalDocs")}</Label>
               <FileUploader
                 accept="image/*,video/*,.pdf"
                 maxSize={20 * 1024 * 1024}
-                description={t("jobApplication.uploadDescription")}
+                description={t("jobs.jobApplication.uploadDescription")}
                 onChange={(files) => {
                   if (files.length > 0 && files[0] instanceof File) {
                     handleFileChange(999, files[0]);
@@ -482,7 +482,7 @@ export default function JobApplicationModal({
           <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
             <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
             <p className="text-sm text-[#c49a47] dark:text-[#c49a47]">
-              {t("jobApplication.infoBox")}
+              {t("jobs.jobApplication.infoBox")}
             </p>
           </div>
         </form>
@@ -510,7 +510,7 @@ export default function JobApplicationModal({
               {!isSubmitting && (
                 <>
                   <CheckCircle className="h-5 w-5 me-2" />
-                  {t("jobApplication.submit")}
+                  {t("jobs.jobApplication.submit")}
                 </>
               )}
             </Button>

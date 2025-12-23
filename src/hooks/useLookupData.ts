@@ -12,6 +12,8 @@ export interface LookupData {
   ethnicities: any[];
   countries: any[];
   hairColors?: any[];
+  hairTypes?: any[];
+  hairLengths?: any[];
   eyeColors?: any[];
   skinTones?: any[];
   bodyTypes?: any[];
@@ -62,6 +64,8 @@ export function useLookupData(options: LookupOptions = {}) {
     ethnicities: [],
     countries: [],
     hairColors: [],
+    hairTypes: [],
+    hairLengths: [],
     eyeColors: [],
     skinTones: [],
     bodyTypes: [],
@@ -108,6 +112,8 @@ export function useLookupData(options: LookupOptions = {}) {
           ethnicities: [],
           countries: [],
           hairColors: [],
+          hairTypes: [],
+          hairLengths: [],
           eyeColors: [],
           skinTones: [],
           bodyTypes: [],
@@ -130,6 +136,8 @@ export function useLookupData(options: LookupOptions = {}) {
             if (appResponse.data.status === 'success' && appResponse.data.data) {
               const appOptions = appResponse.data.data;
               newData.hairColors = appOptions.hair_colors || [];
+              newData.hairTypes = appOptions.hair_types || [];
+              newData.hairLengths = appOptions.hair_lengths || [];
               newData.eyeColors = appOptions.eye_colors || [];
               newData.skinTones = appOptions.skin_tones || [];
               newData.bodyTypes = appOptions.body_types || [];

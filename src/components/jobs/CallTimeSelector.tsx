@@ -76,9 +76,9 @@ export default function CallTimeSelector({
     const availableSpots = Number.isFinite(parsedSpots)
       ? Number(parsedSpots)
       : 0;
-    if (isBooked) return t("jobDetail.fullyBooked") || "Fully Booked";
+    if (isBooked) return t("jobs.jobDetail.fullyBooked") || "Fully Booked";
     const label =
-      availableSpots === 1 ? t("jobDetail.spotLeft") : t("jobDetail.spotsLeft");
+      availableSpots === 1 ? t("jobs.jobDetail.spotLeft") : t("jobs.jobDetail.spotsLeft");
     return `${availableSpots} ${label || "spots left"}`;
   };
 
@@ -87,7 +87,7 @@ export default function CallTimeSelector({
       <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800/50">
         <Calendar className="mx-auto mb-2 h-8 w-8 text-gray-400" />
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t("jobDetail.noCallTimes") ||
+          {t("jobs.jobDetail.noCallTimes") ||
             "No call time slots available for this role"}
         </p>
       </div>
@@ -103,7 +103,7 @@ export default function CallTimeSelector({
             {t("content.callTimeRequired") || "Call Time Required"}
           </p>
           <p>
-            {t("jobApplication.callTimeRequired") ||
+            {t("jobs.jobApplication.callTimeRequired") ||
               "Please choose an available date and time below."}
           </p>
         </div>
@@ -158,7 +158,7 @@ export default function CallTimeSelector({
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400">
                             {slot.interval_minutes}{" "}
-                            {t("jobDetail.min") || "min"} intervals
+                            {t("jobs.jobDetail.min") || "min"} intervals
                           </div>
                         </div>
                       </div>
@@ -242,7 +242,7 @@ export default function CallTimeSelector({
                             })
                           ) : (
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {t("jobDetail.fullyBooked") ||
+                              {t("jobs.jobDetail.fullyBooked") ||
                                 "No available times"}
                             </p>
                           )}

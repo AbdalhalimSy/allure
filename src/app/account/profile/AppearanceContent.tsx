@@ -31,23 +31,23 @@ type MeasurementUnit = "cm" | "in" | "EU";
 
 type AppearanceFormState = {
   profile_id: number;
-  hair_color: string;
-  hair_type: string;
-  hair_length: string;
-  eye_color: string;
+  hair_color_id: number | null;
+  hair_type_id: number | null;
+  hair_length_id: number | null;
+  eye_color_id: number | null;
   height_value: string;
-  height_unit: MeasurementUnit | "";
+  height_unit: MeasurementUnit;
   shoe_size_value: string;
-  shoe_size_unit: MeasurementUnit | "";
+  shoe_size_unit: MeasurementUnit;
   tshirt_size: string;
   pants_size: string;
   jacket_size: string;
   chest_value: string;
-  chest_unit: MeasurementUnit | "";
+  chest_unit: MeasurementUnit;
   bust_value: string;
-  bust_unit: MeasurementUnit | "";
+  bust_unit: MeasurementUnit;
   waist_value: string;
-  waist_unit: MeasurementUnit | "";
+  waist_unit: MeasurementUnit;
 };
 
 export default function AppearanceContent({
@@ -65,17 +65,17 @@ export default function AppearanceContent({
   // Extract appearance options from lookupData with fallbacks
   const appearanceOptions = {
     hair_colors: lookupData.hairColors || [],
-    hair_types: lookupData.hairColors || [], // Adjust based on actual API response structure
-    hair_lengths: lookupData.hairColors || [], // Adjust based on actual API response structure
+    hair_types: lookupData.hairTypes || [],
+    hair_lengths: lookupData.hairLengths || [],
     eye_colors: lookupData.eyeColors || [],
   };
 
   const [form, setForm] = useState<AppearanceFormState>({
     profile_id: 0,
-    hair_color: "",
-    hair_type: "",
-    hair_length: "",
-    eye_color: "",
+    hair_color_id: null,
+    hair_type_id: null,
+    hair_length_id: null,
+    eye_color_id: null,
     height_value: "",
     height_unit: "cm",
     shoe_size_value: "",
@@ -94,16 +94,22 @@ export default function AppearanceContent({
   useEffect(() => {
     const profile = user?.profile;
     if (profile?.id) {
+      const toId = (value: number | string | null | undefined) => {
+        if (value === null || value === undefined) return null;
+        const numeric = typeof value === "string" ? parseInt(value, 10) : value;
+        return Number.isNaN(numeric as number) ? null : (numeric as number);
+      };
+
       const toStr = (value: string | number | null | undefined) =>
         value === null || value === undefined ? "" : String(value);
 
       setForm((prev) => ({
         ...prev,
         profile_id: profile.id,
-        hair_color: toStr(profile.hair_color || ""),
-        hair_type: toStr(profile.hair_type || ""),
-        hair_length: toStr(profile.hair_length || ""),
-        eye_color: toStr(profile.eye_color || ""),
+        hair_color_id: toId(profile.hair_color_id),
+        hair_type_id: toId(profile.hair_type_id),
+        hair_length_id: toId(profile.hair_length_id),
+        eye_color_id: toId(profile.eye_color_id),
         // API stores in cm, convert to user's preferred unit
         height_value: convertFromApiUnit(profile.height, prev.height_unit || "cm", "length"),
         height_unit: prev.height_unit || "cm",
@@ -130,21 +136,20 @@ export default function AppearanceContent({
   };
 
   const validate = (): string | null => {
-    const requiredFields: Array<
-      keyof Omit<
-        AppearanceFormState,
-        | "profile_id"
-        | "height_unit"
-        | "shoe_size_unit"
-        | "chest_unit"
-        | "bust_unit"
-        | "waist_unit"
-      >
-    > = [
-      "hair_color",
-      "hair_type",
-      "hair_length",
-      "eye_color",
+    const requiredIds: Array<keyof AppearanceFormState> = [
+      "hair_color_id",
+      "hair_type_id",
+      "hair_length_id",
+      "eye_color_id",
+    ];
+    for (const key of requiredIds) {
+      const value = form[key];
+      if (value === null || value === undefined) {
+        return `Please select ${key.replace("_id", "").replaceAll("_", " ")}`;
+      }
+    }
+
+    const requiredValues: Array<keyof AppearanceFormState> = [
       "height_value",
       "shoe_size_value",
       "tshirt_size",
@@ -154,12 +159,14 @@ export default function AppearanceContent({
       "bust_value",
       "waist_value",
     ];
-    for (const key of requiredFields) {
-      const value = form[key];
+
+    for (const key of requiredValues) {
+      const value = form[key] as string;
       if (typeof value !== "string" || !value.trim()) {
         return `Please fill ${key.replaceAll("_", " ")}`;
       }
     }
+
     if (!form.profile_id) return "Profile ID missing";
     return null;
   };
@@ -175,18 +182,18 @@ export default function AppearanceContent({
     try {
       const payload = {
         profile_id: form.profile_id,
-        hair_color: form.hair_color,
-        hair_type: form.hair_type,
-        hair_length: form.hair_length,
-        eye_color: form.eye_color,
-        height: form.height_value ? convertToApiUnit(form.height_value, form.height_unit as any, "length") : null,
-        shoe_size: form.shoe_size_value ? convertToApiUnit(form.shoe_size_value, form.shoe_size_unit as any, "shoe_size") : null,
+        hair_color_id: form.hair_color_id,
+        hair_type_id: form.hair_type_id,
+        hair_length_id: form.hair_length_id,
+        eye_color_id: form.eye_color_id,
+        height: form.height_value ? convertToApiUnit(form.height_value, form.height_unit, "length") : null,
+        shoe_size: form.shoe_size_value ? convertToApiUnit(form.shoe_size_value, form.shoe_size_unit, "shoe_size") : null,
         tshirt_size: form.tshirt_size,
         pants_size: form.pants_size,
         jacket_size: form.jacket_size,
-        chest: form.chest_value ? convertToApiUnit(form.chest_value, form.chest_unit as any, "length") : null,
-        bust: form.bust_value ? convertToApiUnit(form.bust_value, form.bust_unit as any, "length") : null,
-        waist: form.waist_value ? convertToApiUnit(form.waist_value, form.waist_unit as any, "length") : null,
+        chest: form.chest_value ? convertToApiUnit(form.chest_value, form.chest_unit, "length") : null,
+        bust: form.bust_value ? convertToApiUnit(form.bust_value, form.bust_unit, "length") : null,
+        waist: form.waist_value ? convertToApiUnit(form.waist_value, form.waist_unit, "length") : null,
       };
       const { data } = await apiClient.post("/profile/appearance", payload);
       if (data.status === "success") {
@@ -225,11 +232,11 @@ export default function AppearanceContent({
           >
             <SingleSelect
               options={appearanceOptions.hair_colors.map((option): SingleSelectOption => ({
-                value: option.name,
+                value: option.id ?? option.slug ?? option.name,
                 label: option.name,
               }))}
-              value={form.hair_color}
-              onChange={(value) => onChange({ target: { name: 'hair_color', value: String(value) } } as any)}
+              value={form.hair_color_id}
+              onChange={(value) => setForm((prev) => ({ ...prev, hair_color_id: value ? Number(value) : null }))}
               placeholder={t('forms.selectHairColor') || 'Select hair color'}
               searchable={false}
             />
@@ -244,11 +251,11 @@ export default function AppearanceContent({
           >
             <SingleSelect
               options={appearanceOptions.hair_types.map((option): SingleSelectOption => ({
-                value: option.name,
+                value: option.id ?? option.slug ?? option.name,
                 label: option.name,
               }))}
-              value={form.hair_type}
-              onChange={(value) => onChange({ target: { name: 'hair_type', value: String(value) } } as any)}
+              value={form.hair_type_id}
+              onChange={(value) => setForm((prev) => ({ ...prev, hair_type_id: value ? Number(value) : null }))}
               placeholder={t('forms.selectHairType') || 'Select hair type'}
               searchable={false}
             />
@@ -263,11 +270,11 @@ export default function AppearanceContent({
           >
             <SingleSelect
               options={appearanceOptions.hair_lengths.map((option): SingleSelectOption => ({
-                value: option.name,
+                value: option.id ?? option.slug ?? option.name,
                 label: option.name,
               }))}
-              value={form.hair_length}
-              onChange={(value) => onChange({ target: { name: 'hair_length', value: String(value) } } as any)}
+              value={form.hair_length_id}
+              onChange={(value) => setForm((prev) => ({ ...prev, hair_length_id: value ? Number(value) : null }))}
               placeholder={t('forms.selectHairLength') || 'Select hair length'}
               searchable={false}
             />
@@ -283,11 +290,11 @@ export default function AppearanceContent({
           >
             <SingleSelect
               options={appearanceOptions.eye_colors.map((option): SingleSelectOption => ({
-                value: option.name,
+                value: option.id ?? option.slug ?? option.name,
                 label: option.name,
               }))}
-              value={form.eye_color}
-              onChange={(value) => onChange({ target: { name: 'eye_color', value: String(value) } } as any)}
+              value={form.eye_color_id}
+              onChange={(value) => setForm((prev) => ({ ...prev, eye_color_id: value ? Number(value) : null }))}
               placeholder={t('forms.selectEyeColor') || 'Select eye color'}
               searchable={false}
             />

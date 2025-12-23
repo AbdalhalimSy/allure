@@ -14,12 +14,21 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { getErrorMessage, isEmailVerificationError } from "@/lib/utils/errorHandling";
 import { useAuthRedirect } from "@/hooks/useAuthPatterns";
+import { useClientFcmToken } from "@/hooks/useClientFcmToken";
+
+const getDeviceName = () => {
+  if (typeof navigator === "undefined") return "web";
+  return navigator.userAgent?.slice(0, 255) || "web";
+};
+
+const getPlatform = () => "web";
 
 export default function LoginPage() {
   const { t } = useI18n();
   const router = useRouter();
   const { setUser, fetchProfile } = useAuth();
   const { hydrated, isAuthenticated } = useAuthRedirect();
+  const getClientFcmToken = useClientFcmToken();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +37,17 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { data } = await apiClient.post("/auth/login", { email, password });
+      // Try to get FCM token, but make it optional
+      const tokenForRequest = await getClientFcmToken();
+      console.log("FCM Token for login:", tokenForRequest);
+
+      const { data } = await apiClient.post("/auth/login", {
+        email,
+        password,
+        device_name: getDeviceName(),
+        platform: getPlatform(),
+        ...(tokenForRequest && { fcm_token: tokenForRequest }),
+      });
       
       // Check if email verification is required
       if (data?.status === "error" && isEmailVerificationError(data?.message)) {

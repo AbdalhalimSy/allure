@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "badge": "Explore Opportunities",
+    "title": "Active Casting Calls",
+    "subtitle": "Discover active opportunities and roles. Filter by profession, location, dates and appearance to pinpoint the perfect casting for your project."
+  },
   "appliedJobs": {
     "title": "My Applications",
     "subtitle": "Track and manage your job applications",
