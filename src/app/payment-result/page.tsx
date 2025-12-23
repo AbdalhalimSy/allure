@@ -1,26 +1,24 @@
 'use client';
 
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle, XCircle, Loader2, ArrowRight } from 'lucide-react';
-import { getPaymentStatus } from '@/lib/api/payments';
+import { ArrowRight, CheckCircle, Loader2, XCircle } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import Button from '@/components/ui/Button';
+import { getPaymentStatus } from '@/lib/api/payments';
 
-export default function PaymentResultPage() {
+function PaymentResultContent() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'checking' | 'success' | 'failed' | 'pending'>('checking');
   const [message, setMessage] = useState('Verifying your payment...');
   const [orderDetails, setOrderDetails] = useState<any>(null);
-  const checkTimeoutRef = useRef<NodeJS.Timeout>();
-  const checkFunctionRef = useRef<() => Promise<void>>();
+  const checkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const checkFunctionRef = useRef<(() => Promise<void>) | null>(null);
 
-  // Separate function to avoid circular dependency with setTimeout
   const performPaymentCheck = useCallback(async () => {
     try {
-      // Get order ID from URL params or localStorage
       let orderId = searchParams.get('order_id');
-      
+
       if (!orderId && typeof window !== 'undefined') {
         orderId = localStorage.getItem('pending_order_id');
       }
@@ -31,7 +29,6 @@ export default function PaymentResultPage() {
         return;
       }
 
-      // Check payment status
       const response = await getPaymentStatus(orderId);
 
       if (response.status === 'success' && response.data) {
@@ -41,14 +38,12 @@ export default function PaymentResultPage() {
           setStatus('success');
           setMessage('Payment completed successfully! Your subscription is now active.');
           setOrderDetails(response.data);
-          // Clear pending order
           if (typeof window !== 'undefined') {
             localStorage.removeItem('pending_order_id');
           }
         } else if (paymentStatus === 'pending') {
           setStatus('pending');
           setMessage('Payment is being processed. Please wait...');
-          // Retry after 3 seconds using ref
           if (checkTimeoutRef.current) clearTimeout(checkTimeoutRef.current);
           if (checkFunctionRef.current) {
             checkTimeoutRef.current = setTimeout(checkFunctionRef.current, 3000);
@@ -73,7 +68,6 @@ export default function PaymentResultPage() {
     }
   }, [searchParams]);
 
-  // Store the callback in a ref so setTimeout can access it
   useEffect(() => {
     checkFunctionRef.current = performPaymentCheck;
   }, [performPaymentCheck]);
@@ -90,7 +84,6 @@ export default function PaymentResultPage() {
       <div className="container mx-auto flex min-h-[80vh] items-center justify-center px-6 py-16">
         <div className="w-full max-w-md">
           <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg dark:border-white/10 dark:bg-white/5">
-            {/* Status Icon */}
             <div className="mb-6 text-center">
               {status === 'checking' || status === 'pending' ? (
                 <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/20">
@@ -118,7 +111,6 @@ export default function PaymentResultPage() {
               <p className="text-gray-600 dark:text-gray-400">{message}</p>
             </div>
 
-            {/* Order Details */}
             {orderDetails && (
               <div className="mb-6 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
                 <div className="flex items-center justify-between text-sm">
@@ -144,7 +136,6 @@ export default function PaymentResultPage() {
               </div>
             )}
 
-            {/* Action Buttons */}
             <div className="space-y-3">
               {status === 'success' ? (
                 <>
@@ -183,5 +174,24 @@ export default function PaymentResultPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-linear-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">
+          <div className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-white/10">
+            <Loader2 className="h-5 w-5 animate-spin text-[#c49a47]" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              Loading payment status...
+            </span>
+          </div>
+        </div>
+      }
+    >
+      <PaymentResultContent />
+    </Suspense>
   );
 }

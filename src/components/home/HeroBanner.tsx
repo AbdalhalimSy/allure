@@ -43,7 +43,6 @@ export default function HeroBanner({
   hydrated,
   kicker,
   ctaRegister,
-  ctaLogin,
   ctaDashboard,
   ctaBrowse,
   metrics,
@@ -144,9 +143,12 @@ export default function HeroBanner({
                     className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-xl transition hover:scale-105 hover:shadow-2xl"
                   >
                     {ctaRegister}
-                    <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
+                    <ArrowRight
+                      className={`h-5 w-5 transition group-hover:translate-x-1 ${
+                        isRTL ? "scale-x-[-1]" : ""
+                      }`}
+                    />
                   </Link>
-                  
                 </>
               )}
 
@@ -156,7 +158,11 @@ export default function HeroBanner({
                   className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-xl transition hover:scale-105 hover:shadow-2xl"
                 >
                   {ctaDashboard}
-                  <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${isRTL ? "scale-x-[-1]" : ""}`} />
+                  <ArrowRight
+                    className={`h-5 w-5 transition group-hover:translate-x-1 ${
+                      isRTL ? "scale-x-[-1]" : ""
+                    }`}
+                  />
                 </Link>
               )}
 
@@ -178,7 +184,7 @@ export default function HeroBanner({
               ].map((metric, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-white/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/30 hover:scale-105"
+                  className="rounded-2xl border border-white/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/30"
                 >
                   <p className="text-3xl font-bold text-primary">
                     {metric.value}

@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { HandHeart, Layers } from "lucide-react";
 import { useI18n } from "@/contexts/I18nContext";
+import HorizontalCarousel, {
+  HorizontalCarouselItem,
+} from "@/components/ui/HorizontalCarousel";
 
 interface Profession {
   id: number;
@@ -72,8 +75,8 @@ export default function ProfessionsSection({
           </div>
         </div>
 
-        {/* Professions grid */}
-        <div className="relative overflow-hidden">
+        {/* Professions carousel */}
+        <div className="relative">
           {loading && (
             <div className="flex w-full items-center justify-center rounded-2xl border border-dashed border-[rgba(196,154,71,0.35)] px-6 py-12 text-sm text-primary dark:border-[rgba(196,154,71,0.35)] dark:text-primary">
               {loadingText}
@@ -87,16 +90,17 @@ export default function ProfessionsSection({
           )}
 
           {!loading && professions.length > 0 && (
-            <div
-              className="flex gap-4 overflow-x-auto pb-10 [scrollbar-width:none] [-ms-overflow-style:none]"
-              style={{ scrollSnapType: "x mandatory" }}
-            >
-              {professions.map((profession) => (
+            <HorizontalCarousel
+              items={professions.map<HorizontalCarouselItem<Profession>>(
+                (p) => ({
+                  key: p.id,
+                  data: p,
+                })
+              )}
+              renderItem={({ data: profession }) => (
                 <button
-                  key={profession.id}
                   onClick={() => onProfessionClick(profession.id)}
-                  className="group relative min-w-72 flex-1 scroll-ml-6 rounded-3xl border border-gray-100 bg-white/90 p-6 text-start shadow-lg transition hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-white/10 dark:bg-gray-900/90"
-                  style={{ scrollSnapAlign: "start" }}
+                  className="group relative min-w-72 shrink-0 rounded-3xl border border-gray-100 bg-white/90 p-6 text-start shadow-lg transition hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-white/10 dark:bg-gray-900/90"
                 >
                   {/* Hover gradient */}
                   <div
@@ -133,8 +137,12 @@ export default function ProfessionsSection({
                     {cta}
                   </div>
                 </button>
-              ))}
-            </div>
+              )}
+              autoScroll
+              autoScrollPxPerSecond={50}
+              arrows={false}
+              loop
+            />
           )}
         </div>
       </div>

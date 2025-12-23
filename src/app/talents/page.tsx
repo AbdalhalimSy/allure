@@ -49,12 +49,6 @@ export default function TalentsPage() {
     queryHydratedRef.current = true;
   }, [searchParams]);
 
-  useEffect(() => {
-    if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
-      fetchTalents(1, true);
-    }
-  }, [filters, locale, fetchTalents]);
-
   const fetchTalents = useCallback(async (page: number = 1, reset: boolean = false) => {
     const requestId = ++requestIdRef.current;
     try {
@@ -128,6 +122,12 @@ export default function TalentsPage() {
       }
     }
   }, [filters, locale]);
+
+  useEffect(() => {
+    if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
+      fetchTalents(1, true);
+    }
+  }, [filters, locale, fetchTalents]);
 
   // Intersection Observer for infinite scroll
   useEffect(() => {

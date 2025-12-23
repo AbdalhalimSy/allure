@@ -10,6 +10,7 @@ import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "react-hot-toast";
 import { ChevronRight, Check, Menu, X } from "lucide-react";
 import { logger } from "@/lib/utils/logger";
+import NotificationDropdown from "@/components/notifications/NotificationDropdown";
 
 export default function Header() {
   const { t, locale } = useI18n();
@@ -176,6 +177,7 @@ export default function Header() {
             ))}
           </nav>
           <div className="flex items-center gap-4" suppressHydrationWarning>
+            <NotificationDropdown />
             <LanguageSwitcher />
             {!isAuthenticated ? (
               <>

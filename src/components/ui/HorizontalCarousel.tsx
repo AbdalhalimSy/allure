@@ -44,21 +44,37 @@ export default function HorizontalCarousel<T = unknown>({
     }
   }, []);
 
+  // Initialize scroll position for RTL
+  useEffect(() => {
+    if (isRTL && scrollRef.current && loop) {
+      // Start from the middle for RTL to show correct items initially
+      const halfWidth = scrollRef.current.scrollWidth / 2;
+      scrollRef.current.scrollLeft = -halfWidth;
+    }
+  }, [isRTL, loop]);
+
   // Prepare loop items if needed
   const displayItems = loop ? [...items, ...items] : items;
 
   const step = autoScrollPxPerSecond / 60; // px per frame at ~60fps
+  const scrollStep = isRTL ? -step : step; // Invert for RTL
 
   const animate = useCallback(() => {
     const tick = () => {
       if (!autoScroll || isPaused) return;
       const el = scrollRef.current;
       if (!el) return;
-      el.scrollLeft += step;
+      el.scrollLeft += scrollStep;
       if (loop) {
         const halfWidth = el.scrollWidth / 2;
-        if (el.scrollLeft >= halfWidth) {
-          el.scrollLeft -= halfWidth;
+        if (isRTL) {
+          if (el.scrollLeft <= -halfWidth) {
+            el.scrollLeft += halfWidth;
+          }
+        } else {
+          if (el.scrollLeft >= halfWidth) {
+            el.scrollLeft -= halfWidth;
+          }
         }
       } else if (el.scrollLeft + el.clientWidth >= el.scrollWidth) {
         el.scrollLeft = 0;
@@ -66,7 +82,7 @@ export default function HorizontalCarousel<T = unknown>({
       frameRef.current = requestAnimationFrame(tick);
     };
     tick();
-  }, [autoScroll, isPaused, step, loop]);
+  }, [autoScroll, isPaused, scrollStep, loop, isRTL]);
 
   useEffect(() => {
     if (autoScroll) {
@@ -84,13 +100,23 @@ export default function HorizontalCarousel<T = unknown>({
     // If looping, ensure seamless wrap when navigating with arrows
     if (loop) {
       const halfWidth = el.scrollWidth / 2;
-      // Wrap from the start to the cloned set when moving left
-      if (dx < 0 && el.scrollLeft + dx <= 0) {
-        el.scrollLeft = el.scrollLeft + halfWidth;
-      }
-      // Wrap from the end back to original when moving right
-      if (dx > 0 && el.scrollLeft + dx >= halfWidth) {
-        el.scrollLeft = el.scrollLeft - halfWidth;
+      if (isRTL) {
+        // In RTL: wrap when scrolling right (positive) or left (negative)
+        if (dx > 0 && el.scrollLeft + dx >= 0) {
+          el.scrollLeft = el.scrollLeft - halfWidth;
+        }
+        if (dx < 0 && el.scrollLeft + dx <= -halfWidth) {
+          el.scrollLeft = el.scrollLeft + halfWidth;
+        }
+      } else {
+        // Wrap from the start to the cloned set when moving left
+        if (dx < 0 && el.scrollLeft + dx <= 0) {
+          el.scrollLeft = el.scrollLeft + halfWidth;
+        }
+        // Wrap from the end back to original when moving right
+        if (dx > 0 && el.scrollLeft + dx >= halfWidth) {
+          el.scrollLeft = el.scrollLeft - halfWidth;
+        }
       }
     }
     el.scrollBy({ left: dx, behavior: "smooth" });
@@ -104,12 +130,20 @@ export default function HorizontalCarousel<T = unknown>({
     if (!el) return;
     const halfWidth = el.scrollWidth / 2;
     // Seamless wrap for manual/user scroll
-    if (el.scrollLeft >= halfWidth) {
-      el.scrollLeft -= halfWidth;
-    } else if (el.scrollLeft <= 0) {
-      el.scrollLeft += halfWidth;
+    if (isRTL) {
+      if (el.scrollLeft >= 0) {
+        el.scrollLeft -= halfWidth;
+      } else if (el.scrollLeft <= -halfWidth) {
+        el.scrollLeft += halfWidth;
+      }
+    } else {
+      if (el.scrollLeft >= halfWidth) {
+        el.scrollLeft -= halfWidth;
+      } else if (el.scrollLeft <= 0) {
+        el.scrollLeft += halfWidth;
+      }
     }
-  }, [loop]);
+  }, [loop, isRTL]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     const el = scrollRef.current;
@@ -168,7 +202,6 @@ export default function HorizontalCarousel<T = unknown>({
         ref={scrollRef}
         className="no-scrollbar flex overflow-x-auto scroll-px-6 pt-2 pb-10 cursor-grab active:cursor-grabbing" // Ensures no native scrollbar is visible
         style={{ gap: itemGap, userSelect: isDragging ? "none" : "auto" }}
-        dir={isRTL ? "ltr" : undefined}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

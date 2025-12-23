@@ -159,7 +159,7 @@ export interface AppliedJobsResponse {
 }
 
 // Eligible Roles API types
-export interface EligibleRole extends DetailedRole {
+export interface EligibleRole extends Omit<DetailedRole, 'budget'> {
   // All properties from DetailedRole, but budget is a string in this API
   budget: string | null; // e.g., "4876.00"
   eligibility_score: number;

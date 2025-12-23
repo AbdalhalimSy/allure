@@ -17,7 +17,18 @@
       "previewSubtitle": "Casting call near you • Tap to view",
       "enable": "Enable Notifications",
       "notNow": "Not Now",
-      "dismiss": "Dismiss"
+      "dismiss": "Dismiss",
+      "markAllRead": "Mark all as read",
+      "viewAll": "View all notifications",
+      "seeProfile": "See the profile",
+      "new": "New",
+      "empty": "You're all caught up",
+      "emptySubtitle": "New alerts will show up here.",
+      "caughtUp": "You're caught up",
+      "unread": "{{count}} unread",
+      "fetchError": "Couldn't load notifications",
+      "markAllFailed": "Failed to mark all as read",
+      "markOneFailed": "Failed to mark notification as read"
     }
   },
   "ui": {
