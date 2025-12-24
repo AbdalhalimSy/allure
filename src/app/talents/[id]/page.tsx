@@ -178,7 +178,7 @@ export default function TalentDetailPage() {
                 <User className="h-5 w-5 text-[#c49a47]" />
                 <div>
                   <p className="text-xs text-gray-600 dark:text-gray-400">{t('content.gender')}</p>
-                  <p className="font-semibold text-gray-900 dark:text-white">{profile.gender ? t(`filters.${profile.gender}`) : t("jobs.appliedJobs.notSpecified") || "Not specified"}</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{t(`filters.${profile.gender}`)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
