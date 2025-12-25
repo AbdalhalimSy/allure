@@ -67,21 +67,21 @@ export function CouponInput({
 
   if (appliedCoupon) {
     return (
-      <div className="rounded-lg border-2 border-green-200 bg-green-50 p-4 dark:border-green-900/50 dark:bg-green-900/20">
+ <div className="rounded-lg border-2 border-green-200 bg-green-50 p-4 ">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <CheckCircle className="mt-0.5 h-5 w-5 text-green-600 dark:text-green-400" />
+ <CheckCircle className="mt-0.5 h-5 w-5 text-green-600 " />
             <div>
-              <p className="font-semibold text-green-900 dark:text-green-100">
+ <p className="font-semibold text-green-900 ">
                 Coupon Applied!
               </p>
-              <p className="mt-1 text-sm text-green-700 dark:text-green-300">
+ <p className="mt-1 text-sm text-green-700 ">
                 Code:{" "}
                 <span className="font-mono font-bold">
                   {appliedCoupon.code}
                 </span>
               </p>
-              <p className="mt-1 text-xs text-green-600 dark:text-green-400">
+ <p className="mt-1 text-xs text-green-600 ">
                 {appliedCoupon.discount_type === "percentage"
                   ? `${appliedCoupon.discount_value}% discount`
                   : `AED ${appliedCoupon.discount_value} discount`}
@@ -96,7 +96,7 @@ export function CouponInput({
           </div>
           <button
             onClick={handleRemove}
-            className="text-sm text-green-700 hover:text-green-900 underline dark:text-green-300 dark:hover:text-green-100"
+ className="text-sm text-green-700 hover:text-green-900 underline "
           >
             Remove
           </button>
@@ -107,7 +107,7 @@ export function CouponInput({
 
   return (
     <div className="space-y-2">
-      <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+ <label className="flex items-center gap-2 text-sm font-medium text-gray-700 ">
         <Tag className="h-4 w-4" />
         Have a coupon code?
       </label>
@@ -137,9 +137,9 @@ export function CouponInput({
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-900/50 dark:bg-red-900/20">
-          <XCircle className="h-4 w-4 text-red-600 dark:text-red-400 mt-0.5" />
-          <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+ <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 ">
+ <XCircle className="h-4 w-4 text-red-600 mt-0.5" />
+ <p className="text-sm text-red-700 ">{error}</p>
         </div>
       )}
     </div>

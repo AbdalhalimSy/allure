@@ -42,11 +42,7 @@ export default function JobsPage() {
   const fetchJobs = useCallback(
     async (page: number = 1, reset: boolean = false) => {
       const requestId = ++requestIdRef.current;
-      if (!activeProfileId) {
-        setError(t("jobs.jobs.errors.profileNotLoaded"));
-        if (reset) setLoading(false);
-        return;
-      }
+      const usePublic = !isAuthenticated || !activeProfileId;
 
       try {
         if (abortRef.current) abortRef.current.abort();
@@ -64,6 +60,19 @@ export default function JobsPage() {
 
         // If showEligibleOnly is true, fetch from eligible-roles endpoint
         if (showEligibleOnly) {
+          if (usePublic) {
+            setError(
+              t("jobs.jobs.errors.authRequired") ||
+                "Login to view eligible roles"
+            );
+            if (reset) {
+              setLoading(false);
+            }
+            setLoadingMore(false);
+            setSwitching(false);
+            return;
+          }
+
           const response = await fetch(
             `/api/profile/${activeProfileId}/eligible-roles`,
             {
@@ -104,7 +113,9 @@ export default function JobsPage() {
         } else {
           // Fetch regular jobs with pagination
           const params = new URLSearchParams();
-          params.append("profile_id", String(activeProfileId));
+          if (!usePublic && activeProfileId) {
+            params.append("profile_id", String(activeProfileId));
+          }
 
           // Add filter parameters
           Object.entries(filters).forEach(([key, value]) => {
@@ -121,13 +132,16 @@ export default function JobsPage() {
           params.append("page", String(page));
           params.append("per_page", String(meta.per_page));
 
-          const response = await fetch(`/api/jobs?${params.toString()}`, {
+          const response = await fetch(
+            `${usePublic ? "/api/public/jobs" : "/api/jobs"}?${params.toString()}`,
+            {
             signal: abortRef.current.signal,
             headers: {
-              Authorization: `Bearer ${token}`,
+              ...(usePublic ? {} : { Authorization: `Bearer ${token}` }),
               "Accept-Language": locale,
             },
-          });
+          }
+          );
 
           if (!response.ok) {
             const data = await response.json();
@@ -187,7 +201,7 @@ export default function JobsPage() {
         }
       }
     },
-    [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly]
+    [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly, isAuthenticated]
   );
 
   // Reset jobs and show loading when pathname changes (navigation)
@@ -252,9 +266,9 @@ export default function JobsPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-black">
+ <div className="bg-white ">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+ <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
@@ -264,18 +278,18 @@ export default function JobsPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+ <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               <Briefcase className="h-4 w-4" />
               {t("jobs.hero.badge")}
             </p>
 
             {/* Title */}
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+ <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
               {t("jobs.hero.title")}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+ <p className="text-lg text-gray-600 sm:text-xl">
               {t("jobs.hero.subtitle")}
             </p>
           </div>
@@ -287,10 +301,10 @@ export default function JobsPage() {
         {/* Toggle Switch for Eligible Roles - Only show when authenticated */}
         {isAuthenticated && activeProfileId && (
           <div className="mb-8 flex items-center justify-center">
-            <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white/80 px-6 py-4 shadow-lg backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80">
+ <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white/80 px-6 py-4 shadow-lg backdrop-blur-sm ">
               <div className="flex items-center gap-2">
-                <Briefcase className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+ <Briefcase className="h-5 w-5 text-gray-600 " />
+ <span className="text-sm font-medium text-gray-700 ">
                   {t("jobs.jobs.allJobs") || "All Jobs"}
                 </span>
               </div>
@@ -323,10 +337,10 @@ export default function JobsPage() {
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <div className="h-6 w-40 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-                <div className="mt-2 h-4 w-56 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+ <div className="h-6 w-40 animate-pulse rounded bg-gray-200 " />
+ <div className="mt-2 h-4 w-56 animate-pulse rounded bg-gray-200 " />
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+ <div className="flex items-center gap-2 text-sm text-gray-600 ">
                 <Loader className="h-4 w-4" />
                 <span>{t("jobs.jobs.loading")}</span>
               </div>
@@ -341,14 +355,14 @@ export default function JobsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-8 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
-                  <AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
+ <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 ">
+ <AlertCircle className="h-8 w-8 text-red-600 " />
                 </div>
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+ <h3 className="mb-2 text-xl font-semibold text-gray-900 ">
                 {t("jobs.jobs.failedToLoad")}
               </h3>
-              <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
+ <p className="mb-6 text-gray-600 ">{error}</p>
               <button
                 onClick={() => fetchJobs(1, true)}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
@@ -361,14 +375,14 @@ export default function JobsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-12 text-center">
               <div className="mb-6 flex justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+ <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 ">
                   <Briefcase className="h-10 w-10 text-gray-400" />
                 </div>
               </div>
-              <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+ <h3 className="mb-3 text-2xl font-bold text-gray-900 ">
                 {t("jobs.jobs.noJobsFound")}
               </h3>
-              <p className="mb-8 text-gray-600 dark:text-gray-400">
+ <p className="mb-8 text-gray-600 ">
                 {t("jobs.jobs.noJobsHint")}
               </p>
               <button
@@ -383,19 +397,19 @@ export default function JobsPage() {
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+ <h2 className="text-2xl font-bold text-gray-900 ">
                   {meta.total}{" "}
                   {meta.total === 1
                     ? t("jobs.jobs.jobSingular")
                     : t("jobs.jobs.jobPlural")}{" "}
                   {t("jobs.jobs.found")}
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+ <p className="text-sm text-gray-600 ">
                   {t("jobs.jobs.showing")} {jobs.length} {t("jobs.jobs.of")} {meta.total}
                 </p>
               </div>
               {loadingMore && (
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+ <div className="flex items-center gap-2 text-sm text-gray-600 ">
                   <Loader className="h-4 w-4" />
                   <span>{t("jobs.jobs.updating")}</span>
                 </div>
@@ -415,7 +429,7 @@ export default function JobsPage() {
               >
                 <div className="flex items-center gap-2">
                   <Loader className="h-5 w-5 animate-spin text-[#c49a47]" />
-                  <span className="text-gray-600 dark:text-gray-400">
+ <span className="text-gray-600 ">
                     {t("jobs.jobs.loading")}
                   </span>
                 </div>
@@ -425,7 +439,7 @@ export default function JobsPage() {
             {/* End of results message */}
             {!hasMore && jobs.length > 0 && (
               <div className="mt-12 py-8 text-center">
-                <p className="text-gray-600 dark:text-gray-400">
+ <p className="text-gray-600 ">
                   {t("jobs.jobs.noMoreJobs")}
                 </p>
               </div>

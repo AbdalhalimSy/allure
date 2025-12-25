@@ -143,19 +143,25 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      if (!isAuthenticated || !activeProfileId) return;
       try {
         setJobsLoading(true);
-        const params = new URLSearchParams({
-          profile_id: String(activeProfileId),
-          per_page: "6",
-        });
-        const res = await fetch(`/api/jobs?${params.toString()}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token") || ""}`,
-            "Accept-Language": locale,
-          },
-        });
+        const params = new URLSearchParams({ per_page: "6" });
+        const usePublic = !isAuthenticated || !activeProfileId;
+        if (!usePublic && activeProfileId) {
+          params.append("profile_id", String(activeProfileId));
+        }
+
+        const res = await fetch(
+          `${usePublic ? "/api/public/jobs" : "/api/jobs"}?${params.toString()}`,
+          {
+            headers: {
+              ...(usePublic
+                ? {}
+                : { Authorization: `Bearer ${localStorage.getItem("auth_token") || ""}` }),
+              "Accept-Language": locale,
+            },
+          }
+        );
         if (!res.ok) return;
         const data = await res.json();
         if (data?.status === "success" || data?.status === true) {
@@ -194,7 +200,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-white text-gray-900 dark:bg-black dark:text-white">
+ <div className="bg-white text-gray-900 ">
       {/* Hero Banner */}
       <HeroBanner
         slides={slides}

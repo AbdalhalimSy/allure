@@ -33,12 +33,12 @@ export default function ConfirmDialog({
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-[61] w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-black"
+ className="relative z-[61] w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl "
       >
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
+ <h3 className="text-xl font-semibold text-gray-900 ">{title}</h3>
           {description ? (
-            <p className="text-sm text-gray-600 dark:text-gray-300">{description}</p>
+ <p className="text-sm text-gray-600 ">{description}</p>
           ) : null}
         </div>
 
@@ -48,7 +48,7 @@ export default function ConfirmDialog({
           </Button>
           <Button
             variant="primary"
-            className="min-w-[120px] bg-rose-600 hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-600"
+ className="min-w-[120px] bg-rose-600 hover:bg-rose-700 "
             onClick={onConfirm}
             isLoading={loading}
           >

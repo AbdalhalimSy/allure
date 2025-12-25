@@ -180,9 +180,9 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="bg-white dark:bg-black">
+    <div className="bg-white ">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
@@ -192,18 +192,18 @@ export default function ContactPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               <MessageSquare className="h-4 w-4" />
               {t("contact.hero.badge")}
             </p>
 
             {/* Title */}
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
               {t("contact.hero.title")}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+            <p className="text-lg text-gray-600 sm:text-xl">
               {t("contact.hero.subtitle")}
             </p>
           </div>
@@ -219,7 +219,7 @@ export default function ContactPage() {
               return (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-gray-900"
+                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl "
                 >
                   {/* Gradient overlay */}
                   <div
@@ -232,13 +232,11 @@ export default function ContactPage() {
                     >
                       <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-lg font-bold text-gray-900 ">
                       {info.title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {info.description}
-                    </p>
-                    <div className="space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
+                    <p className="text-sm text-gray-600 ">{info.description}</p>
+                    <div className="space-y-2 border-t border-gray-100 pt-4 ">
                       {info.items.map((item, itemIndex) => {
                         const ItemIcon = item.icon;
                         const hasHref = "href" in item && item.href;
@@ -247,13 +245,13 @@ export default function ContactPage() {
                             {hasHref ? (
                               <a
                                 href={item.href}
-                                className="flex items-start gap-2 text-sm text-gray-600 transition hover:text-primary dark:text-gray-400 dark:hover:text-primary "
+                                className="flex items-start gap-2 text-sm text-gray-600 transition hover:text-primary "
                               >
                                 <ItemIcon className="mt-0.5 h-4 w-4 shrink-0" />
                                 <span dir="ltr">{item.value}</span>
                               </a>
                             ) : (
-                              <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
+                              <div className="flex items-start gap-2 text-sm text-gray-600 ">
                                 <ItemIcon className="mt-0.5 h-4 w-4 shrink-0 opacity-0" />
                                 <span>{item.value}</span>
                               </div>
@@ -271,18 +269,16 @@ export default function ContactPage() {
       </section>
 
       {/* Form and Map Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 px-6 py-16 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 lg:px-12 lg:py-24">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 px-6 py-16 lg:px-12 lg:py-24">
         <div className="container mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Contact Form */}
-            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-xl dark:border-white/10 dark:bg-gray-900 lg:p-10">
+            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-xl lg:p-10">
               <div className="mb-8">
-                <h2 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
+                <h2 className="mb-3 text-3xl font-bold text-gray-900 ">
                   {t("contact.form.title")}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {t("contact.form.subtitle")}
-                </p>
+                <p className="text-gray-600 ">{t("contact.form.subtitle")}</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -359,11 +355,11 @@ export default function ContactPage() {
               </form>
 
               {/* Social Media */}
-              <div className="mt-10 border-t border-gray-200 pt-10 dark:border-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="mt-10 border-t border-gray-200 pt-10 ">
+                <h3 className="mb-4 text-lg font-semibold text-gray-900 ">
                   {t("contact.social.title")}
                 </h3>
-                <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mb-6 text-sm text-gray-600 ">
                   {t("contact.social.subtitle")}
                 </p>
                 <div className="flex gap-3">
@@ -375,10 +371,10 @@ export default function ContactPage() {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-white transition-all hover:scale-110 hover:border-transparent hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 ${social.color}`}
+                        className={`group flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-white transition-all hover:scale-110 hover:border-transparent hover:shadow-lg ${social.color}`}
                         aria-label={social.name}
                       >
-                        <Icon className="h-5 w-5 text-gray-600 transition-colors group-hover:text-white dark:text-gray-400" />
+                        <Icon className="h-5 w-5 text-gray-600 transition-colors group-hover:text-white " />
                       </a>
                     );
                   })}
@@ -388,7 +384,7 @@ export default function ContactPage() {
 
             {/* Map */}
             <div className="space-y-6">
-              <div className="overflow-hidden rounded-3xl border border-gray-100 shadow-xl dark:border-white/10">
+              <div className="overflow-hidden rounded-3xl border border-gray-100 shadow-xl ">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.566982937897!2d55.26242207605644!3d25.18622833168819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69d4f8f0b4c3%3A0x3b8e9f7c8e7e3c3e!2sChurchill%20Tower%2C%20Business%20Bay%20-%20Dubai!5e0!3m2!1sen!2sae!4v1699999999999!5m2!1sen!2sae"
                   width="100%"
@@ -410,13 +406,13 @@ export default function ContactPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="mx-auto mb-12 max-w-3xl space-y-4 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+            <p className="inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               {t("contact.locations.badge")}
             </p>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white lg:text-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
               {t("contact.locations.title")}
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-600 ">
               {t("contact.locations.subtitle")}
             </p>
           </div>
@@ -426,7 +422,7 @@ export default function ContactPage() {
             {locations.map((location, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-lg transition hover:shadow-xl dark:border-white/10 dark:bg-gray-900"
+                className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-lg transition hover:shadow-xl "
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
@@ -446,11 +442,11 @@ export default function ContactPage() {
 
                 {/* Content */}
                 <div className="space-y-3 p-6">
-                  <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-start gap-3 text-sm text-gray-600 ">
                     <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{location.address}</span>
                   </div>
-                  <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-start gap-3 text-sm text-gray-600 ">
                     <Phone className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <a
                       dir="ltr"
@@ -460,7 +456,7 @@ export default function ContactPage() {
                       {location.phone}
                     </a>
                   </div>
-                  <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-start gap-3 text-sm text-gray-600 ">
                     <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <a
                       href={`mailto:${location.email}`}

@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #000000;
   --primary: #c49a47;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -12,13 +13,6 @@
   --color-primary: var(--primary);
   /* Default to English font; switch to Arabic via :lang/dir below */
   --font-sans: var(--font-en);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-  }
 }
 
 *,

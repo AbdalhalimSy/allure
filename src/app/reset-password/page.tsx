@@ -137,7 +137,7 @@ function ResetPasswordContent() {
           {t("auth.resetPassword") || "Reset Password"}
         </Button>
 
-        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+ <div className="text-center text-sm text-gray-600 ">
           {t("auth.didntReceiveCode") || "Didn't receive the code?"} {" "}
           <Link href="/forgot-password" className="font-semibold text-[#c49a47]">
             {t("auth.resendCode") || "Resend code"}

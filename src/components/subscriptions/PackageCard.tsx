@@ -35,8 +35,8 @@ export function PackageCard({
       <div
         className={`rounded-2xl h-full w-full p-6 transition-colors duration-300 ${
           isSelected
-            ? 'bg-white dark:bg-black'
-            : 'bg-white dark:bg-black'
+ ? 'bg-white '
+ : 'bg-white '
         }`}
       >
         {isSelected && (
@@ -46,7 +46,7 @@ export function PackageCard({
         )}
 
         <div className="mb-5">
-          <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+ <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 ">
             {pkg.title || pkg.name}
           </h3>
           <div className="mt-2 flex flex-wrap gap-2">
@@ -76,7 +76,7 @@ export function PackageCard({
             </div>
           ) : (
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-bold text-gray-900 dark:text-white">
+ <span className="text-4xl font-bold text-gray-900 ">
                 {pkg.price.toFixed(2)}
               </span>
               <span className="mb-1 text-sm font-medium text-gray-500">AED</span>
@@ -86,7 +86,7 @@ export function PackageCard({
 
         <ul className="space-y-2">
           {featureLines.map((feat, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+ <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 ">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#c49a47]" />
               <span>{feat}</span>
             </li>

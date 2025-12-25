@@ -84,10 +84,10 @@ export default function ExperienceEntryForm({
     : null;
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm ring-1 ring-black/5 dark:border-white/10 dark:bg-white/5">
+ <div className="rounded-2xl border border-gray-200 bg-white shadow-sm ring-1 ring-black/5 ">
       <div
         className={`flex items-start justify-between gap-3 px-5 py-4 ${
-          isOpen ? "border-b border-gray-100 dark:border-white/10" : ""
+ isOpen ? "border-b border-gray-100 " : ""
         }`}
       >
         <button
@@ -96,7 +96,7 @@ export default function ExperienceEntryForm({
           aria-expanded={isOpen}
           className="group flex flex-1 flex-col items-start gap-2 text-left focus:outline-none"
         >
-          <div className="inline-flex items-center gap-2 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#c49a47] dark:bg-[#c49a47]/20 dark:text-[#e3c37b]">
+ <div className="inline-flex items-center gap-2 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#c49a47] ">
             <span>
               {translate(
                 'account.experience.cardTitle',
@@ -110,17 +110,17 @@ export default function ExperienceEntryForm({
               }`}
             />
           </div>
-          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+ <h4 className="text-lg font-semibold text-gray-900 ">
             {experienceLabel}
           </h4>
           {dateRange && (
-            <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
+ <div className="flex items-center gap-1.5 text-sm text-gray-600 ">
               <TbCalendar className="h-4 w-4" />
               <span>{dateRange}</span>
             </div>
           )}
           {hasMissingRequiredFields && (
-            <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-100">
+ <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 ">
               <span className="h-2 w-2 rounded-full bg-red-500" aria-hidden />
               {translate(
                 'account.experience.validation.incomplete',
@@ -137,7 +137,7 @@ export default function ExperienceEntryForm({
           type="button"
           onClick={onRemove}
           disabled={disabled}
-          className="inline-flex items-center gap-2 rounded-full border border-red-100 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50 dark:border-red-500/30 dark:text-red-200 dark:hover:bg-red-500/10"
+ className="inline-flex items-center gap-2 rounded-full border border-red-100 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50 "
         >
           <TbX className="h-4 w-4" />
           {translate('common.remove', 'Remove')}
@@ -153,7 +153,7 @@ export default function ExperienceEntryForm({
         <div className="space-y-5 px-5 py-5">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+ <label className="block text-sm font-medium text-gray-800 mb-2">
               {translate('account.experience.fields.title', 'Title')}{' '}
               <span className="text-red-500">*</span>
             </label>
@@ -178,7 +178,7 @@ export default function ExperienceEntryForm({
             </div>
             <div>
               <div className="mb-1 flex items-center justify-between">
-                <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+ <label className="block text-sm font-medium text-gray-800 ">
                   {translate('account.experience.fields.endDate', 'End Date')}
                   {!entry.is_current && <span className="text-red-500"> *</span>}
                 </label>
@@ -190,7 +190,7 @@ export default function ExperienceEntryForm({
                     disabled={disabled}
                     className="rounded border-gray-300 text-[#c49a47] focus:ring-[#c49a47]"
                   />
-                  <span className="text-gray-700 dark:text-gray-300">
+ <span className="text-gray-700 ">
                     {translate('account.experience.fields.current', 'Current')}
                   </span>
                 </label>
@@ -208,7 +208,7 @@ export default function ExperienceEntryForm({
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+ <label className="block text-sm font-medium text-gray-800 mb-2">
               {translate('account.experience.fields.description', 'Description')}
             </label>
             <TextArea
@@ -222,7 +222,7 @@ export default function ExperienceEntryForm({
 
           {/* Attachment */}
           <div>
-            <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+ <label className="block text-sm font-medium text-gray-800 mb-2">
               {translate('account.experience.fields.attachment', 'Attachment (optional)')}
             </label>
             <FileUploader

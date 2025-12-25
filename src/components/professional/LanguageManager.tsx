@@ -88,7 +88,7 @@ export default function LanguageManager({
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+ <label className="block text-sm font-medium text-gray-700 ">
         {t("account.profession.languages.label") || "Languages"}
       </label>
 
@@ -128,8 +128,8 @@ export default function LanguageManager({
               </button>
 
               {showVoiceUpload === index && (
-                <div className="absolute top-full start-0 mt-2 w-80 z-10 bg-white dark:bg-black rounded-lg shadow-xl border border-gray-200 dark:border-white/10 p-4">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
+ <div className="absolute top-full start-0 mt-2 w-80 z-10 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
+ <p className="text-xs text-gray-600 mb-3">
                     {t("account.profession.languageManager.voiceSample") ||
                       "Upload voice sample for"}{" "}
                     {getLanguageLabel(lang.code)}
@@ -168,7 +168,7 @@ export default function LanguageManager({
       )}
 
       {languages.length === 0 && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+ <p className="text-sm text-gray-500 italic">
           {t("account.profession.languageManager.empty") ||
             "No languages added yet"}
         </p>

@@ -12,22 +12,22 @@ export default function NotFound() {
       <div className="max-w-2xl w-full text-center">
         {/* 404 Illustration */}
         <div className="flex items-center justify-center gap-4 mb-8">
-          <div className="text-[12rem] font-bold text-gray-200 dark:text-gray-800 leading-none select-none">
+ <div className="text-[12rem] font-bold text-gray-200 leading-none select-none">
             4
           </div>
           <div className="flex items-center justify-center">
-            <Search className="w-32 h-32 text-gray-400 dark:text-gray-600 animate-pulse" />
+ <Search className="w-32 h-32 text-gray-400 animate-pulse" />
           </div>
-          <div className="text-[12rem] font-bold text-gray-200 dark:text-gray-800 leading-none select-none">
+ <div className="text-[12rem] font-bold text-gray-200 leading-none select-none">
             4
           </div>
         </div>
 
         {/* Title and Description */}
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+ <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           {t("notFound.title")}
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+ <p className="text-lg text-gray-600 mb-8 max-w-md mx-auto">
           {t("notFound.description")}
         </p>
 
@@ -43,7 +43,7 @@ export default function NotFound() {
           
           <button
             onClick={() => window.history.back()}
-            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
+ className="inline-flex items-center gap-2 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
           >
             <ArrowLeft className="w-5 h-5" />
             {t("notFound.goBack")}
@@ -51,8 +51,8 @@ export default function NotFound() {
         </div>
 
         {/* Helpful Links */}
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
+ <div className="mt-12 pt-8 border-t border-gray-200 ">
+ <p className="text-sm text-gray-500 mb-4">
             {t("notFound.helpfulLinks")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">

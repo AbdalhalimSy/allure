@@ -58,9 +58,9 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black">
+ <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-gray-50 ">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+ <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
@@ -70,18 +70,18 @@ export default function FAQPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+ <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               <HelpCircle className="h-4 w-4" />
               {t("faq.hero.badge")}
             </p>
 
             {/* Title */}
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+ <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
               {t("faq.hero.title")}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+ <p className="text-lg text-gray-600 sm:text-xl">
               {t("faq.hero.subtitle")}
             </p>
           </div>
@@ -98,7 +98,7 @@ export default function FAQPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t("faq.search.placeholder")}
-              className={`w-full rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 ${locale === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} py-4 text-gray-900 dark:text-white shadow-lg transition-all focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20`}
+ className={`w-full rounded-2xl border border-gray-200 bg-white ${locale === 'ar' ? 'pr-12 pl-6' : 'pl-12 pr-6'} py-4 text-gray-900 shadow-lg transition-all focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20`}
             />
           </div>
         </div>
@@ -120,21 +120,21 @@ export default function FAQPage() {
                   className={`group relative overflow-hidden rounded-2xl border p-6 transition-all ${
                     activeCategory === category.id
                       ? 'border-[#c49a47] bg-linear-to-br from-[#c49a47]/10 to-[#d4a855]/5 shadow-lg'
-                      : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-[#c49a47]/50 hover:shadow-md'
+ : 'border-gray-200 bg-white hover:border-[#c49a47]/50 hover:shadow-md'
                   }`}
                 >
                   <div className="flex flex-col items-center gap-3 text-center">
                     <div className={`rounded-full p-3 transition-colors ${
                       activeCategory === category.id
                         ? 'bg-linear-to-br from-[#c49a47] to-[#d4a855] text-white'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 group-hover:bg-[#c49a47]/10 group-hover:text-[#c49a47]'
+ : 'bg-gray-100 text-gray-600 group-hover:bg-[#c49a47]/10 group-hover:text-[#c49a47]'
                     }`}>
                       <Icon className={`h-6 w-6 ${locale === 'ar' ? 'scale-x-[-1]' : ''}`} />
                     </div>
                     <span className={`text-sm font-medium ${
                       activeCategory === category.id
                         ? 'text-[#c49a47]'
-                        : 'text-gray-700 dark:text-gray-300'
+ : 'text-gray-700 '
                     }`}>
                       {category.label}
                     </span>
@@ -150,12 +150,12 @@ export default function FAQPage() {
       <div className="container mx-auto px-6 pb-16 lg:px-8">
         <div className="mx-auto max-w-4xl">
           {filteredQuestions.length === 0 ? (
-            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-12 text-center">
+ <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
               <Search className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
+ <h3 className="mt-4 text-xl font-semibold text-gray-900 ">
                 {t("faq.search.noResults")}
               </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
+ <p className="mt-2 text-gray-600 ">
                 {t("faq.search.tryAgain")}
               </p>
             </div>
@@ -166,13 +166,13 @@ export default function FAQPage() {
                 return (
                   <div
                     key={index}
-                    className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-all hover:shadow-md"
+ className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
                   >
                     <button
                       onClick={() => toggleQuestion(index)}
-                      className="flex w-full items-center justify-between gap-4 p-6 text-start transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50"
+ className="flex w-full items-center justify-between gap-4 p-6 text-start transition-colors hover:bg-gray-50 "
                     >
-                      <span className="flex-1 font-semibold text-gray-900 dark:text-white">
+ <span className="flex-1 font-semibold text-gray-900 ">
                         {item.question}
                       </span>
                       <ChevronDown
@@ -187,8 +187,8 @@ export default function FAQPage() {
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <div className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/30 px-6 py-5">
-                          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+ <div className="border-t border-gray-200 bg-gray-50 px-6 py-5">
+ <p className="text-gray-600 leading-relaxed">
                             {item.answer}
                           </p>
                         </div>
@@ -205,14 +205,14 @@ export default function FAQPage() {
       {/* CTA Section */}
       <div className="container mx-auto px-6 pb-20 lg:px-8 lg:pb-28">
         <div className="mx-auto max-w-4xl">
-          <div className="relative overflow-hidden rounded-3xl border border-gray-200 dark:border-gray-800 bg-linear-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-12 text-center shadow-xl lg:p-16">
+ <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-linear-to-br from-gray-50 via-white to-gray-50 p-12 text-center shadow-xl lg:p-16">
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c49a47]/10 blur-3xl"></div>
             <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#d4a855]/10 blur-3xl"></div>
             <div className="relative">
-              <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white lg:text-4xl">
+ <h2 className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
                 {t("faq.cta.title")}
               </h2>
-              <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+ <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-600 ">
                 {t("faq.cta.subtitle")}
               </p>
               <Link

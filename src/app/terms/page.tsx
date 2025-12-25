@@ -15,12 +15,12 @@ export default function TermsPage() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           {t("policies.terms.title")}
         </h1>
-        <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+ <p className="mt-3 text-sm text-gray-600 ">
           {t("policies.terms.subtitle")}
         </p>
       </header>
 
-      <section className="prose text-justify prose-gray max-w-none dark:prose-invert">
+ <section className="prose text-justify prose-gray max-w-none ">
         <p>{t("policies.terms.intro")}</p>
 
         <h2 className="mt-10 text-2xl font-semibold text-[#c49a47]">

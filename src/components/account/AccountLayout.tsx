@@ -47,17 +47,17 @@ export default function AccountLayout({
     <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
       <div className={`mb-8 text-start`}>
         <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+ <h1 className="text-3xl font-bold text-gray-900 ">
             {t("account.title")}
           </h1>
           {approvalStatus && translatedStatusTitle && (
             <div
               className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${
                 approvalStatus === "approved"
-                  ? "border-green-300 bg-green-50 text-green-700 dark:border-green-900/40 dark:bg-green-900/20 dark:text-green-300"
+ ? "border-green-300 bg-green-50 text-green-700 "
                   : approvalStatus === "pending"
-                  ? "border-yellow-300 bg-yellow-50 text-yellow-700 dark:border-yellow-900/40 dark:bg-yellow-900/20 dark:text-yellow-300"
-                  : "border-red-300 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300"
+ ? "border-yellow-300 bg-yellow-50 text-yellow-700 "
+ : "border-red-300 bg-red-50 text-red-700 "
               }`}
               aria-label={`Approval status: ${approvalStatus}`}
             >
@@ -68,7 +68,7 @@ export default function AccountLayout({
             </div>
           )}
         </div>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+ <p className="mt-2 text-gray-600 ">
           {t("account.subtitle")}
         </p>
       </div>
@@ -76,7 +76,7 @@ export default function AccountLayout({
       <div className="flex flex-col gap-6 lg:flex-row">
         {/* Side Navigation */}
         <aside className={`w-full lg:w-64 shrink-0`}>
-          <nav className="space-y-1 rounded-xl border border-gray-200 bg-white p-2 dark:border-white/10 dark:bg-black">
+ <nav className="space-y-1 rounded-xl border border-gray-200 bg-white p-2 ">
             {navItems.map((item) => {
               const active = isActive(item.id);
               const label =
@@ -90,7 +90,7 @@ export default function AccountLayout({
                   className={`group flex items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                     active
                       ? "bg-[#c49a47] text-white"
-                      : "text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-white/5"
+ : "text-gray-700 hover:bg-gray-50 "
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -106,7 +106,7 @@ export default function AccountLayout({
                           className={`flex h-6 w-6 items-center justify-center rounded-full ${
                             active
                               ? "bg-white/20"
-                              : "bg-[#c49a47]/10 dark:bg-[#c49a47]/20"
+ : "bg-[#c49a47]/10 "
                           }`}
                         >
                           <TbCircleCheck
@@ -119,7 +119,7 @@ export default function AccountLayout({
                           className={`flex h-6 min-w-10 items-center justify-center rounded-full px-2 text-xs font-semibold ${
                             active
                               ? "bg-white/20 text-white"
-                              : "bg-[#c49a47]/10 text-[#c49a47] dark:bg-[#c49a47]/20"
+ : "bg-[#c49a47]/10 text-[#c49a47] "
                           }`}
                         >
                           {item.completion}%
@@ -134,7 +134,7 @@ export default function AccountLayout({
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 rounded-xl border border-gray-200 bg-white p-6 dark:border-white/10 dark:bg-black lg:p-8">
+ <div className="flex-1 rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
           {children}
         </div>
       </div>

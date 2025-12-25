@@ -172,8 +172,8 @@ export default function DatePicker({
                 : today
                 ? "bg-[#c49a47]/10 text-[#c49a47] border border-[#c49a47]/30"
                 : disabled
-                ? "text-gray-300 cursor-not-allowed dark:text-gray-700"
-                : "text-gray-700 hover:bg-gray-100 hover:scale-105 active:scale-100 dark:text-gray-200 dark:hover:bg-gray-800"
+ ? "text-gray-300 cursor-not-allowed "
+ : "text-gray-700 hover:bg-gray-100 hover:scale-105 active:scale-100 "
             }
           `}
         >
@@ -189,14 +189,14 @@ export default function DatePicker({
     <div ref={pickerRef} className={`relative ${className}`}>
       {label && <Label>{label}</Label>}
       
-      <div className="relative flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white transition-all duration-200 ease-in-out hover:border-[#c49a47]/50 focus-within:border-[#c49a47] focus-within:ring-2 focus-within:ring-[#c49a47]/20 dark:border-gray-700 dark:bg-black">
+ <div className="relative flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white transition-all duration-200 ease-in-out hover:border-[#c49a47]/50 focus-within:border-[#c49a47] focus-within:ring-2 focus-within:ring-[#c49a47]/20 ">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex flex-1 items-center gap-2 px-4 py-3 text-start text-black dark:text-white"
+ className="flex flex-1 items-center gap-2 px-4 py-3 text-start text-black "
         >
           <Calendar className="h-4 w-4 text-[#c49a47]" />
-          <span className={value ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400"}>
+ <span className={value ? "text-gray-900 " : "text-gray-500 "}>
             {value ? formatDate(selectedDate) : (placeholder || t("ui.selectDate"))}
           </span>
         </button>
@@ -204,7 +204,7 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handleClear}
-            className="me-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+ className="me-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 "
           >
             <X className="h-3 w-3" />
           </button>
@@ -213,7 +213,7 @@ export default function DatePicker({
 
       {/* Calendar Dropdown */}
       <div
-        className={`absolute start-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95 ${
+ className={`absolute start-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out ${
           isOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none -translate-y-4 scale-95 opacity-0"
@@ -224,13 +224,13 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handlePrevMonth}
-            className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 dark:text-gray-200 dark:hover:bg-gray-800"
+ className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
             {isRTL ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
           </button>
           
           <div className="text-center">
-            <div className="text-sm font-semibold text-gray-900 dark:text-white">
+ <div className="text-sm font-semibold text-gray-900 ">
               {MONTHS[currentMonth]} {currentYear}
             </div>
           </div>
@@ -238,7 +238,7 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handleNextMonth}
-            className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 dark:text-gray-200 dark:hover:bg-gray-800"
+ className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
             {isRTL ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
           </button>
@@ -249,7 +249,7 @@ export default function DatePicker({
           {DAYS.map((day) => (
             <div
               key={day}
-              className="text-center text-xs font-semibold text-gray-500 dark:text-gray-400"
+ className="text-center text-xs font-semibold text-gray-500 "
             >
               {day}
             </div>
@@ -262,7 +262,7 @@ export default function DatePicker({
         </div>
 
         {/* Quick actions */}
-        <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700">
+ <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 ">
           <button
             type="button"
             onClick={() => {
@@ -279,7 +279,7 @@ export default function DatePicker({
             <button
               type="button"
               onClick={handleClear}
-              className="rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:scale-105 active:scale-100 dark:text-red-400 dark:hover:bg-red-950/30"
+ className="rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:scale-105 active:scale-100 "
             >
               {t("ui.clear")}
             </button>

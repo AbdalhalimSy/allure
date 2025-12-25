@@ -4,7 +4,7 @@ const variantClasses = {
   primary:
     "bg-[#c49a47]/10 border-[#c49a47]/30 text-white shadow-[0_0_1px_rgba(196,154,71,0.6)]",
   neutral:
-    "bg-white/10 border-white/20 text-gray-800 dark:text-gray-200 shadow-none",
+ "bg-white/10 border-white/20 text-gray-800 shadow-none",
 };
 
 type AccentTagProps = {

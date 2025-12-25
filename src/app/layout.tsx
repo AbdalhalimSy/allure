@@ -15,10 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ubuntu.variable} ${notoKufiArabic.variable}`}>
-      <body
-        className={`bg-white text-gray-900 antialiased dark:bg-black dark:text-white`}
-        suppressHydrationWarning
-      >
+      <body className="bg-white text-gray-900 antialiased" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

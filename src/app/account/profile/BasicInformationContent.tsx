@@ -391,7 +391,7 @@ export default function BasicInformationContent({
               </AccountField>
             </div>
 
-            <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 dark:border-white/10">
+ <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 ">
               <Button type="submit" variant="primary" disabled={loading}>
                 {loading
                   ? t("account.buttons.saving")

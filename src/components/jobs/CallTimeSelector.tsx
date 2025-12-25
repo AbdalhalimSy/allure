@@ -84,9 +84,9 @@ export default function CallTimeSelector({
 
   if (slotGroups.length === 0) {
     return (
-      <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800/50">
+ <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center ">
         <Calendar className="mx-auto mb-2 h-8 w-8 text-gray-400" />
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+ <p className="text-sm text-gray-600 ">
           {t("jobs.jobDetail.noCallTimes") ||
             "No call time slots available for this role"}
         </p>
@@ -96,9 +96,9 @@ export default function CallTimeSelector({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] p-4 dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
-        <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
-        <div className="text-sm text-[#c49a47] dark:text-[#c49a47]">
+ <div className="flex items-start gap-3 rounded-lg border border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] p-4 ">
+ <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] " />
+ <div className="text-sm text-[#c49a47] ">
           <p className="font-semibold mb-1">
             {t("content.callTimeRequired") || "Call Time Required"}
           </p>
@@ -112,7 +112,7 @@ export default function CallTimeSelector({
       <div className="space-y-3">
         {slotGroups.map((group) => (
           <div key={group.date} className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+ <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 ">
               <Calendar className="h-4 w-4 text-[#c49a47]" />
               {formatDate(group.date)}
             </div>
@@ -130,7 +130,7 @@ export default function CallTimeSelector({
                     className={`overflow-hidden rounded-lg border transition-all duration-200 ${
                       selectedSlotId === slot.id
                         ? "border-[#c49a47] bg-[#c49a47]/5 ring-2 ring-[#c49a47]/20"
-                        : "border-gray-200 bg-white hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
+ : "border-gray-200 bg-white hover:border-gray-300 "
                     }`}
                   >
                     <button
@@ -146,7 +146,7 @@ export default function CallTimeSelector({
                       <div className="flex items-center gap-3">
                         <Clock className="h-5 w-5 text-[#c49a47]" />
                         <div>
-                          <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+ <div className="font-medium text-gray-900 flex items-center gap-2">
                             {formatTime(slot.start_time)} -{" "}
                             {formatTime(slot.end_time)}
                             {selectedSlotId === slot.id && selectedTime && (
@@ -156,7 +156,7 @@ export default function CallTimeSelector({
                               </span>
                             )}
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+ <div className="text-xs text-gray-500 ">
                             {slot.interval_minutes}{" "}
                             {t("jobs.jobDetail.min") || "min"} intervals
                           </div>
@@ -169,8 +169,8 @@ export default function CallTimeSelector({
                           <span
                             className={
                               availableCount > 0
-                                ? "text-[#c49a47] dark:text-[#c49a47]"
-                                : "text-red-600 dark:text-red-400"
+ ? "text-[#c49a47] "
+ : "text-red-600 "
                             }
                           >
                             {availableCount}/{totalCount || 0}
@@ -195,7 +195,7 @@ export default function CallTimeSelector({
                     </button>
 
                     {isExpanded && (
-                      <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+ <div className="border-t border-gray-200 bg-gray-50 p-4 ">
                         <Label>{t("forms.selectTime") || "Select Time"}</Label>
                         <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
                           {slot.available_times?.length ? (
@@ -218,18 +218,18 @@ export default function CallTimeSelector({
                                   disabled={isBooked}
                                   className={`flex flex-col items-start gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
                                     isBooked
-                                      ? "cursor-not-allowed bg-gray-200 text-gray-400 line-through dark:bg-gray-700 dark:text-gray-600"
+ ? "cursor-not-allowed bg-gray-200 text-gray-400 line-through "
                                       : isSelected
                                       ? "bg-[#c49a47] text-white shadow-lg ring-2 ring-[#c49a47]/40"
-                                      : "bg-white text-gray-700 hover:bg-[#c49a47]/10 hover:text-[#c49a47] dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-[#c49a47]/20"
+ : "bg-white text-gray-700 hover:bg-[#c49a47]/10 hover:text-[#c49a47] "
                                   }`}
                                 >
                                   <span>{formatTime(availableTime.time)}</span>
                                   <span
                                     className={`text-xs ${
                                       isBooked
-                                        ? "text-red-600 dark:text-red-400"
-                                        : "text-gray-600 dark:text-gray-300"
+ ? "text-red-600 "
+ : "text-gray-600 "
                                     }`}
                                   >
                                     {renderAvailability(
@@ -241,7 +241,7 @@ export default function CallTimeSelector({
                               );
                             })
                           ) : (
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+ <p className="text-sm text-gray-500 ">
                               {t("jobs.jobDetail.fullyBooked") ||
                                 "No available times"}
                             </p>
@@ -258,7 +258,7 @@ export default function CallTimeSelector({
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+ <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700 ">
           {error}
         </div>
       )}

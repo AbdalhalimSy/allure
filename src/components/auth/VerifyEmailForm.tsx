@@ -144,7 +144,7 @@ export default function VerifyEmailForm({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200">
+ <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 ">
         {t("auth.verifyEmailInfo") ||
           "We've sent a verification link to your email. You can either click the link or enter the OTP code below."}
       </div>
@@ -160,7 +160,7 @@ export default function VerifyEmailForm({
             onChange={setOtp}
             onComplete={(code) => submitOtp(code)}
           />
-          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+ <p className="mt-2 text-xs text-gray-500 ">
             {t("auth.otpHint") ||
               "Enter the 4–6 digit code we sent to"}{" "}
             <strong>{email || (t("auth.yourEmail") || "your email")}</strong>
@@ -200,7 +200,7 @@ export default function VerifyEmailForm({
           {showBackToLogin && (
             <Link
               href="/login"
-              className="text-gray-600 hover:text-[#c49a47] dark:text-gray-400"
+ className="text-gray-600 hover:text-[#c49a47] "
             >
               {t("auth.backToLogin") || "Back to login"}
             </Link>

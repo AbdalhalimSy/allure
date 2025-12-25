@@ -22,9 +22,9 @@ export default function Button({
     primary:
       "bg-[#c49a47] text-white shadow-lg shadow-[#c49a47]/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0",
     secondary:
-      "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300 hover:shadow-md hover:-translate-y-0.5 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 active:translate-y-0",
+ "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0",
     link:
-      "bg-transparent px-4 py-2 text-[#c49a47] hover:text-[#b88833] hover:underline dark:text-[#e3c37b] transition-colors duration-200",
+ "bg-transparent px-4 py-2 text-[#c49a47] hover:text-[#b88833] hover:underline transition-colors duration-200",
   };
 
   return (

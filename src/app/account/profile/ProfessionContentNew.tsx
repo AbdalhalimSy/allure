@@ -275,27 +275,27 @@ export default function ProfessionContent({
       )}
     >
       <div className="space-y-6">
-        <div className="rounded-2xl border border-[#c49a47]/30 bg-linear-to-r from-white via-[#fefaf3] to-white dark:from-white/5 dark:via-white/0 dark:to-white/5 p-5 shadow-sm">
+ <div className="rounded-2xl border border-[#c49a47]/30 bg-linear-to-r from-white via-[#fefaf3] to-white p-5 shadow-sm">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="space-y-1">
-              <p className="text-sm font-semibold text-[#c49a47] dark:text-[#e3c37b] uppercase tracking-wide">
+ <p className="text-sm font-semibold text-[#c49a47] uppercase tracking-wide">
                 {translate(
                   "account.profession.sectionLabel",
                   "Professional Profile"
                 )}
               </p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+ <p className="text-lg font-semibold text-gray-900 ">
                 {entryCountLabel}
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+ <p className="text-sm text-gray-600 ">
                 {translate(
                   "account.profession.helper",
                   "Requirements adapt based on each profession and sub-profession."
                 )}
               </p>
             </div>
-            <div className="flex flex-wrap gap-2 text-xs text-gray-700 dark:text-gray-300">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#c49a47]/40 bg-white px-3 py-2 dark:bg-white/5">
+ <div className="flex flex-wrap gap-2 text-xs text-gray-700 ">
+ <span className="inline-flex items-center gap-2 rounded-full border border-[#c49a47]/40 bg-white px-3 py-2 ">
                 <TbInfoCircle className="h-4 w-4 text-[#c49a47]" />
                 {translate(
                   "account.profession.mediaHint",
@@ -307,17 +307,17 @@ export default function ProfessionContent({
         </div>
 
         {entries.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center dark:border-white/20 dark:bg-white/5">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c49a47]/10 text-[#c49a47] dark:bg-[#c49a47]/20">
+ <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center ">
+ <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c49a47]/10 text-[#c49a47] ">
               <TbPlus className="h-7 w-7" />
             </div>
-            <p className="text-lg font-semibold text-gray-900 dark:text-white">
+ <p className="text-lg font-semibold text-gray-900 ">
               {translate(
                 "account.profession.emptyTitle",
                 "Add your first profession"
               )}
             </p>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+ <p className="mt-2 text-sm text-gray-600 ">
               {translate(
                 "account.profession.emptyDesc",
                 "Start with your main role, then add supporting roles or specialties."
@@ -356,7 +356,7 @@ export default function ProfessionContent({
                 type="button"
                 onClick={handleAddEntry}
                 disabled={saving || professions.length === 0}
-                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:border-[#c49a47]"
+ className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] "
               >
                 <TbPlus className="h-4 w-4" />
                 {translate(
@@ -368,8 +368,8 @@ export default function ProfessionContent({
           </div>
         )}
 
-        <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/5 md:flex-row md:items-center md:justify-between">
-          <div className="text-sm text-gray-600 dark:text-gray-300">
+ <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 md:flex-row md:items-center md:justify-between">
+ <div className="text-sm text-gray-600 ">
             {translate(
               "account.profession.footerHint",
               "You can update your professional information at any time."

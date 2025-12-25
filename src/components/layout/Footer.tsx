@@ -43,7 +43,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full border-t border-[#c49a47]/30 bg-gray-50 py-12 shadow-inner dark:border-[#c49a47]/20 dark:bg-gray-950">
+ <footer className="w-full border-t border-[#c49a47]/30 bg-gray-50 py-12 shadow-inner ">
       <div className="container mx-auto max-w-7xl px-6 lg:px-8" suppressHydrationWarning>
         <div className="flex flex-col items-center gap-8" suppressHydrationWarning>
           {/* Quick Links */}
@@ -52,7 +52,7 @@ export default function Footer() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-gray-600 transition-colors hover:text-[#c49a47] dark:text-gray-400 dark:hover:text-[#c49a47]"
+ className="text-sm text-gray-600 transition-colors hover:text-[#c49a47] "
               >
                 {link.name}
               </a>
@@ -69,7 +69,7 @@ export default function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 transition-colors hover:text-[#c49a47] dark:text-gray-400 dark:hover:text-[#c49a47]"
+ className="text-gray-500 transition-colors hover:text-[#c49a47] "
                   aria-label={social.name}
                 >
                   <Icon className="h-5 w-5" />
@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           {/* Copyright */}
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+ <p className="text-sm text-gray-500 ">
             &copy; <span suppressHydrationWarning>{CURRENT_YEAR}</span>{" "}
             {t("footer.copyright")}
           </p>

@@ -158,7 +158,7 @@ export default function Loader({
     <div className={`inline-flex flex-col items-center gap-2 ${center ? 'justify-center' : ''}`}>
       {renderLoader()}
       {text && (
-        <span className="text-sm text-gray-600 dark:text-gray-400">
+ <span className="text-sm text-gray-600 ">
           {text}
         </span>
       )}

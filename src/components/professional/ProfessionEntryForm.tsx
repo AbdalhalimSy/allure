@@ -167,10 +167,10 @@ export default function ProfessionEntryForm({
   ].filter(Boolean) as { label: string; icon: typeof TbCamera }[];
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm ring-1 ring-black/5 dark:border-white/10 dark:bg-white/5">
+ <div className="rounded-2xl border border-gray-200 bg-white shadow-sm ring-1 ring-black/5 ">
       <div
         className={`flex items-start justify-between gap-3 px-5 py-4 ${
-          isOpen ? "border-b border-gray-100  dark:border-white/10" : ""
+ isOpen ? "border-b border-gray-100 " : ""
         }`}
       >
         <button
@@ -179,7 +179,7 @@ export default function ProfessionEntryForm({
           aria-expanded={isOpen}
           className="group flex flex-1 flex-col items-start gap-2 text-left focus:outline-none"
         >
-          <div className="inline-flex items-center gap-2 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#c49a47] dark:bg-[#c49a47]/20 dark:text-[#e3c37b]">
+ <div className="inline-flex items-center gap-2 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#c49a47] ">
             <span>
               {translate(
                 "account.profession.cardTitle",
@@ -193,7 +193,7 @@ export default function ProfessionEntryForm({
               }`}
             />
           </div>
-          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+ <h4 className="text-lg font-semibold text-gray-900 ">
             {professionLabel}
           </h4>
           {requirementPills.length > 0 && (
@@ -201,7 +201,7 @@ export default function ProfessionEntryForm({
               {requirementPills.map(({ label, icon: Icon }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] dark:bg-[#c49a47]/20 dark:text-[#e3c37b]"
+ className="inline-flex items-center gap-1.5 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] "
                 >
                   <Icon className="h-3.5 w-3.5" />
                   {label}
@@ -210,7 +210,7 @@ export default function ProfessionEntryForm({
             </div>
           )}
           {hasMissingRequiredFields && (
-            <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-100">
+ <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 ">
               <span className="h-2 w-2 rounded-full bg-red-500" aria-hidden />
               {translate(
                 "account.profession.validation.incomplete",
@@ -227,7 +227,7 @@ export default function ProfessionEntryForm({
           type="button"
           onClick={onRemove}
           disabled={disabled}
-          className="inline-flex items-center gap-2 rounded-full border border-red-100 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50 dark:border-red-500/30 dark:text-red-200 dark:hover:bg-red-500/10"
+ className="inline-flex items-center gap-2 rounded-full border border-red-100 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50 "
         >
           <TbX className="h-4 w-4" />
           {translate("common.remove", "Remove")}
@@ -240,9 +240,9 @@ export default function ProfessionEntryForm({
         } transition-[max-height] duration-300 ease-in-out`}
         style={{ maxHeight: isOpen ? 3000 : 0 }}
       >
-        <div className="grid gap-5 border-b border-gray-100 px-5 py-5 dark:border-white/10 md:grid-cols-2">
+ <div className="grid gap-5 border-b border-gray-100 px-5 py-5 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-800 dark:text-gray-200">
+ <label className="text-sm font-medium text-gray-800 ">
               {translate(
                 "account.profession.selector.profession",
                 "Profession"
@@ -266,7 +266,7 @@ export default function ProfessionEntryForm({
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-800 dark:text-gray-200">
+ <label className="text-sm font-medium text-gray-800 ">
               {translate(
                 "account.profession.selector.subProfession",
                 "Sub-Profession"
@@ -298,7 +298,7 @@ export default function ProfessionEntryForm({
               searchable={true}
             />
             {availableSubProfessions.length === 0 && (
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+ <p className="text-xs text-gray-500 ">
                 {translate(
                   "account.profession.selector.noSub",
                   "No sub-professions required for this role."
@@ -311,10 +311,10 @@ export default function ProfessionEntryForm({
         {(requiresPhoto || requiresVideo || requiresAudio) && (
           <div className="space-y-4 px-5 py-5">
             <div className="flex items-center justify-between">
-              <h5 className="text-sm font-semibold text-gray-900 dark:text-white">
+ <h5 className="text-sm font-semibold text-gray-900 ">
                 {translate("account.profession.media.title", "Media Uploads")}
               </h5>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+ <p className="text-xs text-gray-500 ">
                 {translate(
                   "account.profession.media.hint",
                   "Keep files under 50MB; use clear, recent media."
@@ -324,8 +324,8 @@ export default function ProfessionEntryForm({
 
             <div className="grid gap-4 md:grid-cols-2">
               {requiresPhoto && (
-                <div className="rounded-xl border border-gray-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                  <label className="mb-2 block text-sm font-medium text-gray-800 dark:text-gray-200">
+ <div className="rounded-xl border border-gray-200 bg-white/70 p-4 ">
+ <label className="mb-2 block text-sm font-medium text-gray-800 ">
                     {translate("account.profession.uploads.photo", "Photo")}{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -343,8 +343,8 @@ export default function ProfessionEntryForm({
               )}
 
               {requiresVideo && (
-                <div className="rounded-xl border border-gray-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                  <label className="mb-2 block text-sm font-medium text-gray-800 dark:text-gray-200">
+ <div className="rounded-xl border border-gray-200 bg-white/70 p-4 ">
+ <label className="mb-2 block text-sm font-medium text-gray-800 ">
                     {translate("account.profession.uploads.video", "Video")}{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -362,8 +362,8 @@ export default function ProfessionEntryForm({
               )}
 
               {requiresAudio && (
-                <div className="rounded-xl border border-gray-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                  <label className="mb-2 block text-sm font-medium text-gray-800 dark:text-gray-200">
+ <div className="rounded-xl border border-gray-200 bg-white/70 p-4 ">
+ <label className="mb-2 block text-sm font-medium text-gray-800 ">
                     {translate("account.profession.uploads.audio", "Audio")}{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -384,7 +384,7 @@ export default function ProfessionEntryForm({
         )}
 
         {requiresLanguages && (
-          <div className="border-t border-gray-100 px-5 py-5 dark:border-white/10">
+ <div className="border-t border-gray-100 px-5 py-5 ">
             <LanguageManager
               languages={entry.languages}
               onChange={(languages) => onChange({ ...entry, languages })}

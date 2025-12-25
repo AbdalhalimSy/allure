@@ -92,8 +92,8 @@ export function SubscriptionStatus({
                   </span>
                 )}
               </div>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">{subscription.package_name}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+ <p className="text-lg font-semibold text-gray-900 ">{subscription.package_name}</p>
+ <p className="text-sm text-gray-600 ">
                 {t('account.billing.status.started')}: {format(startDate, 'MMM dd, yyyy')} • {t('account.billing.status.expires')}: {format(endDate, 'MMM dd, yyyy')}
               </p>
             </div>
@@ -112,9 +112,9 @@ export function SubscriptionStatus({
           </div>
         </div>
 
-        <div className="border-t border-[#c49a47]/20 bg-gradient-to-r from-[#c49a47]/10 via-white to-[#c49a47]/10 px-6 py-4">
+        <div className="border-t border-[#c49a47]/20 bg-linear-to-r from-[#c49a47]/10 via-white to-[#c49a47]/10 px-6 py-4">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-wrap gap-3 text-sm text-gray-700 dark:text-gray-200">
+ <div className="flex flex-wrap gap-3 text-sm text-gray-700 ">
               <div className="inline-flex items-center gap-2 rounded-lg bg-white/70 px-3 py-2 shadow-sm ring-1 ring-[#c49a47]/20">
                 <Calendar className="h-4 w-4 text-[#c49a47]" />
                 <span>{format(startDate, 'MMM dd, yyyy')}</span>
@@ -126,11 +126,11 @@ export function SubscriptionStatus({
             </div>
 
             <div className="w-full max-w-xs">
-              <div className="flex items-center justify-between text-xs font-semibold text-gray-600 dark:text-gray-300">
+ <div className="flex items-center justify-between text-xs font-semibold text-gray-600 ">
                 <span>{t('account.billing.status.daysRemaining')}</span>
                 <span>{Math.max(daysRemaining, 0)}d</span>
               </div>
-              <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-white/10">
+ <div className="mt-2 h-2 rounded-full bg-gray-200 ">
                 <div
                   className={`h-2 rounded-full ${isExpiringSoon ? 'bg-orange-500' : 'bg-[#c49a47]'}`}
                   style={{ width: `${progress}%` }}

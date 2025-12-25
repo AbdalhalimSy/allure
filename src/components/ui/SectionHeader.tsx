@@ -24,11 +24,11 @@ export default function SectionHeader({
   const titleColor =
     tone === "dark"
       ? "text-white"
-      : "text-gray-900 dark:text-white";
+ : "text-gray-900 ";
   const descriptionColor =
     tone === "dark"
       ? "text-gray-300"
-      : "text-gray-600 dark:text-gray-300";
+ : "text-gray-600 ";
 
   return (
     <div

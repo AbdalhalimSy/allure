@@ -35,7 +35,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
         {/* Gradient Border Effect */}
         <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-[#c49a47]/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
-        <div className="relative h-full overflow-hidden rounded-3xl border border-gray-200/50 bg-white/90 backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80">
+ <div className="relative h-full overflow-hidden rounded-3xl border border-gray-200/50 bg-white/90 backdrop-blur-xl ">
           {/* Image */}
           <div className="relative aspect-3/4 w-full overflow-hidden">
             <Image
@@ -104,7 +104,7 @@ export default function TalentCard({ talent }: TalentCardProps) {
                 {professions.slice(1, 4).map((profession) => (
                   <span
                     key={profession.id}
-                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-white/5 dark:text-gray-300"
+ className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 "
                   >
                     {profession.name}
                   </span>

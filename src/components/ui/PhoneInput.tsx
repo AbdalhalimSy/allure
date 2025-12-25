@@ -144,11 +144,11 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             className={`flex items-center gap-2 rounded-s-lg border border-e-0 px-3 transition-all focus:outline-none focus:ring-2 ${
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 dark:border-gray-700"
-            } bg-white dark:bg-gray-950`}
+ : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 "
+ } bg-white `}
           >
             <span className="text-xl">{selectedCountry.flag}</span>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{selectedCountry.dialCode}</span>
+ <span className="text-sm font-medium text-gray-700 ">{selectedCountry.dialCode}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -170,8 +170,8 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             className={`flex-1 rounded-e-lg border px-4 py-3 transition-all focus:outline-none focus:ring-2 ${
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 dark:border-gray-700"
-            } bg-white text-black dark:bg-black dark:text-white ${className}`}
+ : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 "
+ } bg-white text-black ${className}`}
             placeholder="52 342 9898"
             {...props}
           />
@@ -179,15 +179,15 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
 
         {/* Country Dropdown */}
         {isOpen && (
-          <div className="absolute z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900">
+ <div className="absolute z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg ">
             {/* Search Input */}
-            <div className="sticky top-0 border-b border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-900">
+ <div className="sticky top-0 border-b border-gray-200 bg-white p-2 ">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search country..."
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+ className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 "
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -200,17 +200,17 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
                     key={country.code}
                     type="button"
                     onClick={() => handleCountrySelect(country)}
-                    className={`flex w-full items-center gap-3 px-4 py-2.5 text-start text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
+ className={`flex w-full items-center gap-3 px-4 py-2.5 text-start text-sm transition-colors hover:bg-gray-100 ${
                       selectedCountry.code === country.code ? "bg-[#c49a47]/10" : ""
                     }`}
                   >
                     <span className="text-xl">{country.flag}</span>
-                    <span className="flex-1 text-gray-700 dark:text-gray-300">{country.name}</span>
-                    <span className="text-gray-500 dark:text-gray-400">{country.dialCode}</span>
+ <span className="flex-1 text-gray-700 ">{country.name}</span>
+ <span className="text-gray-500 ">{country.dialCode}</span>
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+ <div className="px-4 py-8 text-center text-sm text-gray-500 ">
                   No countries found
                 </div>
               )}

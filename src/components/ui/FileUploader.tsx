@@ -204,20 +204,20 @@ export default function FileUploader({
           onDrop={handleDrop}
           className={`relative border-2 border-dashed rounded-lg p-6 transition-all ${
             isDragging
-              ? "border-[#c49a47] bg-[#c49a47]/5 dark:bg-[#c49a47]/10"
-              : "border-gray-200 dark:border-white/10 hover:border-[#c49a47] dark:hover:border-[#c49a47]"
+ ? "border-[#c49a47] bg-[#c49a47]/5 "
+ : "border-gray-200 hover:border-[#c49a47] "
           }`}
         >
           <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center mb-3">
-              <Upload className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+ <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3">
+ <Upload className="h-5 w-5 text-gray-600 " />
             </div>
             <div className="text-center">
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+ <span className="text-sm font-medium text-gray-700 ">
                 {dragDropLabel}
               </span>
               {resolvedDescription && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{resolvedDescription}</p>
+ <p className="text-xs text-gray-500 mt-1">{resolvedDescription}</p>
               )}
             </div>
             <input
@@ -238,7 +238,7 @@ export default function FileUploader({
           {fileItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 p-3 border border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-white/5"
+ className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
             >
               {/* Preview or Icon */}
               <div className="shrink-0">
@@ -249,18 +249,18 @@ export default function FileUploader({
                     className="w-10 h-10 rounded object-cover"
                   />
                 ) : (
-                  <div className="w-10 h-10 rounded bg-gray-100 dark:bg-white/5 flex items-center justify-center">
-                    <FileIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+ <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center">
+ <FileIcon className="h-5 w-5 text-gray-600 " />
                   </div>
                 )}
               </div>
 
               {/* File Info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+ <p className="text-sm font-medium text-gray-900 truncate">
                   {item.file.name}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+ <p className="text-xs text-gray-500 ">
                   {formatFileSize(item.file.size)}
                 </p>
 
@@ -268,10 +268,10 @@ export default function FileUploader({
                 {item.status === "uploading" && (
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-gray-600 dark:text-gray-400">Uploading...</span>
-                      <span className="text-gray-600 dark:text-gray-400">{item.progress}%</span>
+ <span className="text-gray-600 ">Uploading...</span>
+ <span className="text-gray-600 ">{item.progress}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-white/10 rounded-full h-1.5">
+ <div className="w-full bg-gray-200 rounded-full h-1.5">
                       <div
                         className="bg-[#c49a47] h-1.5 rounded-full transition-all"
                         style={{ width: `${item.progress}%` }}
@@ -282,7 +282,7 @@ export default function FileUploader({
 
                 {/* Error Message */}
                 {item.status === "error" && item.error && (
-                  <p className="text-xs text-red-600 dark:text-red-400 mt-1">{item.error}</p>
+ <p className="text-xs text-red-600 mt-1">{item.error}</p>
                 )}
               </div>
 
@@ -292,11 +292,11 @@ export default function FileUploader({
                   <Loader2 className="h-5 w-5 text-[#c49a47] animate-spin" />
                 )}
                 {item.status === "complete" && (
-                  <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+ <CheckCircle2 className="h-5 w-5 text-green-600 " />
                 )}
                 {item.status === "error" && (
                   <>
-                    <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+ <AlertCircle className="h-5 w-5 text-red-600 " />
                     <button
                       type="button"
                       onClick={() => retryFile(index)}
@@ -309,10 +309,10 @@ export default function FileUploader({
                 <button
                   type="button"
                   onClick={() => removeFile(index)}
-                  className="p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded transition-colors"
+ className="p-1 hover:bg-gray-100 rounded transition-colors"
                   aria-label="Remove file"
                 >
-                  <X className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+ <X className="h-4 w-4 text-gray-500 " />
                 </button>
               </div>
             </div>
@@ -349,7 +349,7 @@ export default function FileUploader({
             return (
               <div
                 key={`existing-${index}`}
-                className="flex items-center gap-3 p-3 border border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-white/5"
+ className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
               >
                 {/* Preview or Icon */}
                 <div className="shrink-0">
@@ -365,15 +365,15 @@ export default function FileUploader({
                       }}
                     />
                   ) : null}
-                  <div className={`w-10 h-10 rounded bg-gray-100 dark:bg-white/5 flex items-center justify-center ${showImagePreview ? 'hidden' : ''}`}>
-                    <FileIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+ <div className={`w-10 h-10 rounded bg-gray-100 flex items-center justify-center ${showImagePreview ? 'hidden' : ''}`}>
+ <FileIcon className="h-5 w-5 text-gray-600 " />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+ <p className="text-sm font-medium text-gray-900 truncate">
                     Existing file: {filename}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Previously uploaded</p>
+ <p className="text-xs text-gray-500 ">Previously uploaded</p>
                 </div>
                 <button
                   type="button"
@@ -382,10 +382,10 @@ export default function FileUploader({
                       onChange(value.filter((_, i) => i !== fileItems.length + index));
                     }
                   }}
-                  className="p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded transition-colors"
+ className="p-1 hover:bg-gray-100 rounded transition-colors"
                   aria-label="Remove file"
                 >
-                  <X className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+ <X className="h-4 w-4 text-gray-500 " />
                 </button>
               </div>
             );

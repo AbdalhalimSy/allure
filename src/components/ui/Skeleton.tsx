@@ -8,7 +8,7 @@ type SkeletonProps = {
 export function Skeleton({ className = "" }: SkeletonProps) {
   return (
     <div
-      className={`animate-pulse rounded-md bg-gray-200/80 dark:bg-gray-800/60 ${className}`}
+ className={`animate-pulse rounded-md bg-gray-200/80 ${className}`}
       aria-hidden
     />
   );
@@ -29,7 +29,7 @@ type CircleProps = {
 };
 
 export function SkeletonCircle({ size = "h-10 w-10", className = "" }: CircleProps) {
-  return <div className={`animate-pulse rounded-full bg-gray-200/80 dark:bg-gray-800/60 ${size} ${className}`} />;
+ return <div className={`animate-pulse rounded-full bg-gray-200/80 ${size} ${className}`} />;
 }
 
 export default Skeleton;

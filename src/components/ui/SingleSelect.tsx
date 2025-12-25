@@ -82,8 +82,8 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
     return (
       <div ref={setRefs} className={`relative w-full ${className}`}>
         <div
-          className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] dark:bg-black dark:text-white ${
-            error ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+ className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] ${
+ error ? "border-red-500" : "border-gray-300 "
           } ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
           onClick={() => !loading && !disabled && setIsOpen((v) => !v)}
           aria-haspopup="listbox"
@@ -110,18 +110,18 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
 
         {isOpen && !loading && (
           <div
-            className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-black"
+ className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg "
             id={listboxId}
             role="listbox"
           >
             {searchable && (
-              <div className="border-b border-gray-200 p-2 dark:border-gray-700">
+ <div className="border-b border-gray-200 p-2 ">
                 <input
                   type="text"
                   placeholder={t("ui.search")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+ className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none "
                   onClick={(e) => e.stopPropagation()}
                 />
               </div>
@@ -136,10 +136,10 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
                       e.stopPropagation();
                       handleSelect(opt);
                     }}
-                    className={`flex w-full items-center justify-between px-4 py-2 text-start text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${
+ className={`flex w-full items-center justify-between px-4 py-2 text-start text-sm transition-colors hover:bg-gray-100 ${
                       String(value) === String(opt.value)
                         ? "bg-[#c49a47]/10 text-[#c49a47]"
-                        : "text-gray-900 dark:text-white"
+ : "text-gray-900 "
                     }`}
                     role="option"
                     aria-selected={String(value) === String(opt.value)}

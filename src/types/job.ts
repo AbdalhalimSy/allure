@@ -6,7 +6,10 @@ export interface Role {
   start_age: number;
   end_age: number;
   can_apply?: boolean | null;
+  has_applied?: boolean;
   eligibility_score?: number | null;
+  call_time_enabled?: boolean;
+  call_time_slots?: CallTimeSlotGroup[];
 }
 
 // Base Job type for job listings
@@ -23,6 +26,7 @@ export interface Job {
   is_active: boolean;
   open_to_apply: boolean;
   roles_count: number;
+  has_applied?: boolean;
   countries?: string[]; // For list endpoint
   job_countries?: string[]; // For detail endpoint
   professions?: string[]; // Optional
@@ -71,6 +75,16 @@ export interface CallTimeSlot {
 export interface CallTimeSlotGroup {
   date: string; // "YYYY-MM-DD" (date-only)
   slots: CallTimeSlot[];
+}
+
+export interface SelectedCallTimeDetails {
+  slot_id?: number;
+  date?: string;
+  start_time?: string;
+  end_time?: string;
+  selected_time?: string;
+  time?: string;
+  label?: string;
 }
 
 export interface DetailedRole extends Role {
@@ -133,7 +147,10 @@ export interface JobDetailResponse {
 
 // Applied jobs
 export interface AppliedJobRole extends Omit<DetailedRole, 'call_time_slots'> {
+  has_selected_time?: boolean;
+  selected_time_details?: SelectedCallTimeDetails | null;
   call_time_enabled: boolean;
+  call_time_slots?: CallTimeSlotGroup[];
 }
 
 export interface AppliedJob {
@@ -142,6 +159,10 @@ export interface AppliedJob {
   approved_payment_terms: boolean;
   job_role_id: number;
   profile_id: number;
+  call_time_enabled?: boolean;
+  call_time_slots?: CallTimeSlotGroup[];
+  has_selected_time?: boolean;
+  selected_time_details?: SelectedCallTimeDetails | null;
   role: AppliedJobRole;
   created_at: string;
 }

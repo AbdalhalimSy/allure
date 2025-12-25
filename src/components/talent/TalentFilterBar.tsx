@@ -154,7 +154,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
   return (
     <div className="relative space-y-4">
       {/* Main Filters - Single Row */}
-      <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+ <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl ">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search Input */}
           <div className="relative flex-1 min-w-0">
@@ -168,7 +168,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
             {searchText && (
               <button
                 onClick={() => setSearchText("")}
-                className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+ className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 "
               >
                 <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
@@ -195,7 +195,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           />
 
           {/* Divider */}
-          <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700 shrink-0" />
+ <div className="hidden sm:block h-8 w-px bg-gray-200 shrink-0" />
 
           {/* Advanced Filters Toggle */}
           <Button
@@ -221,12 +221,12 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           {/* Reset Filters Button */}
           {activeFiltersCount > 0 && (
             <>
-              <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700 shrink-0" />
+ <div className="hidden sm:block h-8 w-px bg-gray-200 shrink-0" />
               <Button
                 type="button"
                 variant="secondary"
                 onClick={handleReset}
-                className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
+ className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0"
               >
                 <RotateCcw className="h-4 w-4" />
                 <span>{t('filters.reset') || 'Reset'}</span>
@@ -236,7 +236,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
                 type="button"
                 variant="secondary"
                 onClick={handleReset}
-                className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
+ className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3"
                 title="Reset All Filters"
               >
                 <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -252,14 +252,14 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           showAdvanced
             ? "z-60 opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
             : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
-        } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95`}
+ } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out `}
         aria-hidden={!showAdvanced}
       >
         <div className="space-y-6 p-6">
             {/* Demographics Section */}
             <div className="relative z-40 space-y-4">
-              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.demographics') || 'Demographics'}</h3>
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="font-semibold text-gray-900 ">{t('filters.demographics') || 'Demographics'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -344,8 +344,8 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
 
             {/* Professional Section */}
             <div className="relative z-30 space-y-4">
-              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.professional') || 'Professional'}</h3>
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="font-semibold text-gray-900 ">{t('filters.professional') || 'Professional'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
@@ -385,8 +385,8 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
 
             {/* Location Section */}
             <div className="relative z-20 space-y-4">
-              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.locationOrigin') || 'Location & Origin'}</h3>
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="font-semibold text-gray-900 ">{t('filters.locationOrigin') || 'Location & Origin'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
@@ -426,8 +426,8 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
 
             {/* Appearance Section */}
             <div className="relative z-10 space-y-4">
-              <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{t('filters.appearance') || 'Appearance'}</h3>
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="font-semibold text-gray-900 ">{t('filters.appearance') || 'Appearance'}</h3>
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">

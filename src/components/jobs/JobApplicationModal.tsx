@@ -14,8 +14,6 @@ import TextArea from "@/components/ui/TextArea";
 import Label from "@/components/ui/Label";
 import Button from "@/components/ui/Button";
 import FileUploader from "@/components/ui/FileUploader";
-import CallTimeSelector from "@/components/jobs/CallTimeSelector";
-import { CallTimeSlotGroup } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
 
 interface Condition {
@@ -32,7 +30,6 @@ interface Role {
   description: string;
   conditions: Condition[];
   call_time_enabled: boolean;
-  call_time_slots?: CallTimeSlotGroup[];
 }
 
 interface JobApplicationModalProps {
@@ -55,17 +52,8 @@ export default function JobApplicationModal({
   const [responses, setResponses] = useState<Record<number, any>>({});
   const [mediaFiles, setMediaFiles] = useState<Record<number, File>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedCallTimeSlotId, setSelectedCallTimeSlotId] = useState<number | null>(null);
-  const [selectedCallTime, setSelectedCallTime] = useState<string | null>(null);
-  const [callTimeError, setCallTimeError] = useState<string>("");
 
   if (!isOpen) return null;
-
-  const handleCallTimeChange = (slotId: number, time: string) => {
-    setSelectedCallTimeSlotId(slotId);
-    setSelectedCallTime(time);
-    setCallTimeError("");
-  };
 
   const handleInputChange = (conditionId: number, value: any) => {
     setResponses((prev) => ({
@@ -105,15 +93,6 @@ export default function JobApplicationModal({
   };
 
   const validateForm = () => {
-    // Validate call time if enabled
-    if (role.call_time_enabled) {
-      if (!selectedCallTimeSlotId || !selectedCallTime) {
-        setCallTimeError(t("jobs.jobApplication.callTimeRequired"));
-        toast.error(t("jobs.jobApplication.callTimeRequired"));
-        return false;
-      }
-    }
-
     // Validate conditions
     for (const condition of role.conditions) {
       if (condition.is_required) {
@@ -154,12 +133,6 @@ export default function JobApplicationModal({
       formData.append("profile_id", profileId.toString());
       formData.append("approved_payment_terms", "true");
 
-      // Add call time data if enabled
-      if (role.call_time_enabled && selectedCallTimeSlotId && selectedCallTime) {
-        formData.append("call_time_slot_id", selectedCallTimeSlotId.toString());
-        formData.append("selected_time", selectedCallTime);
-      }
-
       // Build responses array
       const responsesArray = role.conditions.map((condition) => {
         if (condition.input_type === "media_upload") {
@@ -198,23 +171,10 @@ export default function JobApplicationModal({
         onClose();
         setResponses({});
         setMediaFiles({});
-        setSelectedCallTimeSlotId(null);
-        setSelectedCallTime(null);
-        setCallTimeError("");
         return;
       }
 
-      const callTimeErrorMessage =
-        result?.errors?.selected_time?.[0] ||
-        result?.errors?.call_time_slot_id?.[0] ||
-        (typeof result.message === "string" ? result.message : "");
-
-      if (callTimeErrorMessage) {
-        setCallTimeError(callTimeErrorMessage);
-      }
-
       const errorMessage =
-        callTimeErrorMessage ||
         result?.errors?.message ||
         result?.error ||
         result?.message ||
@@ -245,7 +205,7 @@ export default function JobApplicationModal({
                 }
                 className="peer sr-only"
               />
-              <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:peer-checked:bg-[#c49a47]/20 dark:peer-checked:text-[#d4a855]">
+ <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                 {responses[condition.id] === "yes" ? (
                   <CheckCircle2 className="h-4 w-4" />
                 ) : (
@@ -265,7 +225,7 @@ export default function JobApplicationModal({
                 }
                 className="peer sr-only"
               />
-              <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:peer-checked:bg-[#c49a47]/20 dark:peer-checked:text-[#d4a855]">
+ <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                 {responses[condition.id] === "no" ? (
                   <CheckCircle2 className="h-4 w-4" />
                 ) : (
@@ -315,7 +275,7 @@ export default function JobApplicationModal({
                   }
                   className="peer sr-only"
                 />
-                <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:peer-checked:bg-[#c49a47]/20 dark:peer-checked:text-[#d4a855]">
+ <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                   {responses[condition.id] === option.value ? (
                     <CheckCircle2 className="h-4 w-4" />
                   ) : (
@@ -353,9 +313,9 @@ export default function JobApplicationModal({
                     className="peer sr-only"
                   />
                   <span
-                    className={`inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 ${
+ className={`inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 ${
                       isChecked
-                        ? "border-[#c49a47] bg-[#c49a47]/10 text-[#c49a47] ring-2 ring-[#c49a47]/20 dark:bg-[#c49a47]/20 dark:text-[#d4a855]"
+ ? "border-[#c49a47] bg-[#c49a47]/10 text-[#c49a47] ring-2 ring-[#c49a47]/20 "
                         : ""
                     }`}
                   >
@@ -411,9 +371,9 @@ export default function JobApplicationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-900">
+ <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl ">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 dark:border-gray-800">
+ <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 ">
           <div>
             <h2 className="text-2xl font-bold text-white">{t("jobs.jobApplication.applyForRole")}</h2>
             <p className="text-sm text-white/90">{role.name}</p>
@@ -433,26 +393,12 @@ export default function JobApplicationModal({
           className="max-h-[calc(90vh-180px)] overflow-y-auto p-6"
         >
           <div className="mb-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+ <p className="text-sm text-gray-600 ">
               {role.description}
             </p>
           </div>
 
           <div className="space-y-6">
-            {/* Call Time Selection */}
-            {role.call_time_enabled && role.call_time_slots && role.call_time_slots.length > 0 && (
-              <div className="space-y-2">
-                <Label required>{t("jobs.jobApplication.callTime")}</Label>
-                <CallTimeSelector
-                  slotGroups={role.call_time_slots}
-                  selectedSlotId={selectedCallTimeSlotId}
-                  selectedTime={selectedCallTime}
-                  onSlotChange={handleCallTimeChange}
-                  error={callTimeError}
-                />
-              </div>
-            )}
-
             {role.conditions.map((condition) => (
               <div key={condition.id} className="space-y-2">
                 <Label required={condition.is_required}>
@@ -479,16 +425,22 @@ export default function JobApplicationModal({
           </div>
 
           {/* Info Box */}
-          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] dark:border-[#c49a47]/40 dark:bg-linear-to-r dark:from-[#2d2210] dark:to-[#3a2c13]">
-            <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] dark:text-[#c49a47]" />
-            <p className="text-sm text-[#c49a47] dark:text-[#c49a47]">
+ <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] ">
+ <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] " />
+ <p className="text-sm text-[#c49a47] ">
               {t("jobs.jobApplication.infoBox")}
+              {role.call_time_enabled && (
+ <span className="mt-1 block text-xs text-[#b3822f] ">
+                  {t("jobs.jobApplication.callTimeShortlistNotice") ||
+                    "If shortlisted, you will be asked to choose a call time."}
+                </span>
+              )}
             </p>
           </div>
         </form>
 
         {/* Footer */}
-        <div className="border-t border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-800">
+ <div className="border-t border-gray-200 bg-gray-50 p-6 ">
           <div className="flex gap-3">
             <Button
               type="button"

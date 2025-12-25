@@ -60,7 +60,7 @@ export default function AccountStepper({
       <div className="relative">
         {/* Progress Line */}
         <div
-          className="absolute top-5 h-0.5 bg-gray-200 dark:bg-gray-700"
+ className="absolute top-5 h-0.5 bg-gray-200 "
           style={{
             width: `calc(100% - ${100 / steps.length}%)`,
             insetInlineStart: `${50 / steps.length}%`,
@@ -95,10 +95,10 @@ export default function AccountStepper({
                     completed
                       ? "border-[#c49a47] bg-[#c49a47] text-white"
                       : active
-                      ? "border-[#c49a47] bg-white text-[#c49a47] dark:bg-black"
+ ? "border-[#c49a47] bg-white text-[#c49a47] "
                       : accessible
-                      ? "border-gray-300 bg-white text-gray-400 dark:border-gray-600 dark:bg-black dark:text-gray-500"
-                      : "border-gray-200 bg-gray-100 text-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-600"
+ ? "border-gray-300 bg-white text-gray-400 "
+ : "border-gray-200 bg-gray-100 text-gray-300 "
                   }`}
                 >
                   {completed ? (
@@ -115,8 +115,8 @@ export default function AccountStepper({
                       active || completed
                         ? "text-[#c49a47]"
                         : accessible
-                        ? "text-gray-700 dark:text-gray-300"
-                        : "text-gray-400 dark:text-gray-600"
+ ? "text-gray-700 "
+ : "text-gray-400 "
                     }`}
                   >
                     {t(step.labelKey)}

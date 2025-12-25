@@ -33,7 +33,7 @@ export default function ProtectedRoute({ children, requireAuth = true }: Protect
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-[#c49a47] border-t-transparent"></div>
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+ <p className="mt-4 text-sm text-gray-500 ">
             {t("auth.loading") || "Loading..."}
           </p>
         </div>

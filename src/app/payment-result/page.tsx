@@ -80,26 +80,26 @@ function PaymentResultContent() {
   }, [performPaymentCheck]);
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">
+ <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
       <div className="container mx-auto flex min-h-[80vh] items-center justify-center px-6 py-16">
         <div className="w-full max-w-md">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg dark:border-white/10 dark:bg-white/5">
+ <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg ">
             <div className="mb-6 text-center">
               {status === 'checking' || status === 'pending' ? (
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/20">
-                  <Loader2 className="h-10 w-10 animate-spin text-blue-600 dark:text-blue-400" />
+ <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100 ">
+ <Loader2 className="h-10 w-10 animate-spin text-blue-600 " />
                 </div>
               ) : status === 'success' ? (
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
-                  <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400" />
+ <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 ">
+ <CheckCircle className="h-10 w-10 text-green-600 " />
                 </div>
               ) : (
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
-                  <XCircle className="h-10 w-10 text-red-600 dark:text-red-400" />
+ <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-red-100 ">
+ <XCircle className="h-10 w-10 text-red-600 " />
                 </div>
               )}
 
-              <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+ <h1 className="mb-2 text-2xl font-bold text-gray-900 ">
                 {status === 'checking'
                   ? 'Verifying Payment'
                   : status === 'pending'
@@ -108,28 +108,28 @@ function PaymentResultContent() {
                   ? 'Payment Successful!'
                   : 'Payment Failed'}
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">{message}</p>
+ <p className="text-gray-600 ">{message}</p>
             </div>
 
             {orderDetails && (
-              <div className="mb-6 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
+ <div className="mb-6 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-4 ">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Order ID</span>
-                  <span className="font-mono font-medium text-gray-900 dark:text-white">
+ <span className="text-gray-600 ">Order ID</span>
+ <span className="font-mono font-medium text-gray-900 ">
                     {orderDetails.order_id}
                   </span>
                 </div>
                 {orderDetails.tracking_id && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Tracking ID</span>
-                    <span className="font-mono font-medium text-gray-900 dark:text-white">
+ <span className="text-gray-600 ">Tracking ID</span>
+ <span className="font-mono font-medium text-gray-900 ">
                       {orderDetails.tracking_id}
                     </span>
                   </div>
                 )}
-                <div className="flex items-center justify-between text-sm border-t border-gray-200 pt-2 dark:border-white/10">
-                  <span className="text-gray-600 dark:text-gray-400">Amount</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">
+ <div className="flex items-center justify-between text-sm border-t border-gray-200 pt-2 ">
+ <span className="text-gray-600 ">Amount</span>
+ <span className="font-semibold text-gray-900 ">
                     AED {orderDetails.amount.toFixed(2)}
                   </span>
                 </div>
@@ -165,7 +165,7 @@ function PaymentResultContent() {
                   </Link>
                 </>
               ) : (
-                <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+ <div className="text-center text-sm text-gray-600 ">
                   Please wait while we verify your payment...
                 </div>
               )}
@@ -181,10 +181,10 @@ export default function PaymentResultPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-linear-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">
-          <div className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-white/10">
+ <div className="flex min-h-screen items-center justify-center bg-linear-to-b from-white via-gray-50 to-white ">
+ <div className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 shadow-sm ">
             <Loader2 className="h-5 w-5 animate-spin text-[#c49a47]" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+ <span className="text-sm font-medium text-gray-700 ">
               Loading payment status...
             </span>
           </div>

@@ -197,7 +197,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
       <div className="space-y-6">
         {/* Entry Count Label */}
         <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+ <p className="text-sm font-medium text-gray-600 ">
             {entryCountLabel}
           </p>
         </div>
@@ -224,7 +224,7 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
             type="button"
             onClick={addEntry}
             disabled={saving}
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] disabled:opacity-50 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:border-[#c49a47]"
+ className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] disabled:opacity-50 "
           >
             <TbPlus className="h-4 w-4" />
             {translate('account.experience.addEntry', 'Add Experience')}

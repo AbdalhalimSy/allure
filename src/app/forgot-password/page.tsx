@@ -107,10 +107,10 @@ export default function ForgotPasswordPage() {
         </form>
       ) : (
         <div className="space-y-6 text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-100 text-3xl text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+ <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-100 text-3xl text-emerald-600 ">
             ✓
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
+ <p className="text-gray-600 ">
             {t("auth.didntReceiveEmail")} {t("or")} {" "}
             <button type="button" onClick={() => setMode("form")} className="font-semibold text-[#c49a47]">
               {t("auth.tryAnotherEmail")}.

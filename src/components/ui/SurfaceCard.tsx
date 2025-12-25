@@ -26,7 +26,7 @@ export default function SurfaceCard({
   backgroundClassName,
 }: SurfaceCardProps) {
   const background =
-    backgroundClassName ?? "border border-white/20 bg-white/80 dark:bg-gray-900/60";
+ backgroundClassName ?? "border border-white/20 bg-white/80 ";
   return (
     <div
       className={[

@@ -80,7 +80,7 @@ export default function OTPInput({ length = 6, value, onChange, onComplete }: OT
           onChange={(e) => setChar(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={(e) => handlePaste(i, e)}
-          className="h-12 w-10 rounded-lg border border-gray-300 bg-white text-center text-lg font-semibold tracking-widest text-gray-900 focus:border-[#c49a47] focus:outline-none focus:ring-1 focus:ring-[#c49a47] dark:border-white/20 dark:bg-white/5 dark:text-white"
+ className="h-12 w-10 rounded-lg border border-gray-300 bg-white text-center text-lg font-semibold tracking-widest text-gray-900 focus:border-[#c49a47] focus:outline-none focus:ring-1 focus:ring-[#c49a47] "
           aria-label={`OTP digit ${i + 1}`}
         />
       ))}

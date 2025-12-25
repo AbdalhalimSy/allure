@@ -152,7 +152,7 @@ export default function LoginPage() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-          <label className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+ <label className="flex items-center gap-2 text-gray-600 ">
             <input
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-[#c49a47] focus:ring-[#c49a47]"

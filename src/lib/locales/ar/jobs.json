@@ -30,6 +30,12 @@
       "ethnicity": "العرق",
       "callTimeEnabled": "وقت الاتصال مفعّل",
       "callTimeMessage": "تطبق متطلبات توقيت محددة لهذا الدور",
+      "callTimeAwaiting": "يمكنك اختيار وقت بعد إضافتك للقائمة المختصرة",
+      "callTimeSelected": "تم اختيار وقت الاتصال",
+      "callTimeNote": "الأوقات حسب أسبقية الحجز",
+      "callTimeUpdate": "تحديث وقت الاتصال",
+      "callTimeConfirm": "تأكيد وقت الاتصال",
+      "noCallTimeSlots": "لم تتوفر أوقات اتصال بعد",
       "description": "الوصف",
       "status": "الحالة"
     },
@@ -43,8 +49,13 @@
       "next": "التالي"
     },
     "errors": {
-      "loadFailed": "فشل تحميل طلباتك"
-    }
+      "loadFailed": "فشل تحميل طلباتك",
+      "callTimeNotShortlisted": "اختيار وقت الاتصال متاح فقط بعد الإضافة للقائمة المختصرة",
+      "callTimeDisabled": "اختيار وقت الاتصال غير مفعّل لهذا الدور",
+      "callTimeFailed": "تعذر حفظ وقت الاتصال",
+      "generic": "حدث خطأ"
+    },
+    "callTimeSaved": "تم حفظ وقت الاتصال"
   },
   "jobDetail": {
     "failedToLoad": "فشل تحميل الوظيفة",
@@ -97,6 +108,8 @@
     "fullyBooked": "مكتمل الحجز",
     "additionalRequirements": "متطلبات إضافية",
     "applyFor": "التقديم لـ",
+    "alreadyApplied": "تم التقديم مسبقاً",
+    "loginToApply": "سجّل الدخول للتقديم",
     "jobLocations": "مواقع الوظيفة",
     "noLocations": "لا توجد مواقع محددة",
     "residenceCountries": "دول الإقامة"
@@ -133,6 +146,7 @@
     "expiringSoon": "ينتهي قريباً",
     "shooting": "التصوير:",
     "expires": "ينتهي:",
+    "alreadyApplied": "تم التقديم مسبقاً",
     "rolesAvailable": "أدوار متاحة",
     "requiredSkills": "المهارات المطلوبة",
     "viewDetails": "عرض التفاصيل"
@@ -178,6 +192,7 @@
     "applyForRole": "التقديم على الدور",
     "callTime": "وقت الاتصال",
     "callTimeRequired": "يرجى اختيار وقت الاتصال وتاريخه",
+    "callTimeShortlistNotice": "عند إضافتك للقائمة المختصرة سنطلب منك اختيار وقت الاتصال.",
     "answerRequired": "يرجى الإجابة",
     "loginToApply": "يرجى تسجيل الدخول للتقديم على هذا الدور",
     "submitted": "تم إرسال الطلب بنجاح!",

@@ -55,10 +55,10 @@ export default function EligibleRolesPage() {
           <div className="mb-4 flex justify-center">
             <AlertCircle className="h-16 w-16 text-yellow-500" />
           </div>
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+ <h2 className="mb-4 text-2xl font-bold text-gray-900 ">
             {t("auth.loginRequired") || "Login Required"}
           </h2>
-          <p className="mb-6 text-gray-600 dark:text-gray-400">
+ <p className="mb-6 text-gray-600 ">
             {t("jobs.eligibleRoles.loginMessage") ||
               "Please login to see roles you're eligible for."}
           </p>
@@ -74,19 +74,19 @@ export default function EligibleRolesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+ <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-linear-to-br from-[#c49a47]/10 via-white to-[#d4af69]/10 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+ <div className="relative overflow-hidden bg-linear-to-br from-[#c49a47]/10 via-white to-[#d4af69]/10 ">
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8 text-center">
           <div className="mb-6 flex items-center justify-center gap-3">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
               <Sparkles className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 dark:text-white md:text-6xl">
+ <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
             Your <span className="text-[#c49a47]">Perfect Matches</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+ <p className="mx-auto max-w-2xl text-lg text-gray-600 ">
             Roles specially curated based on your profile. These opportunities
             match your age, gender, ethnicity, and other criteria.
           </p>
@@ -99,7 +99,7 @@ export default function EligibleRolesPage() {
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-[#c49a47]" />
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+ <h2 className="text-xl font-semibold text-gray-900 ">
               {isLoading
                 ? t("jobs.eligibleRoles.loading") || "Loading..."
                 : `${sortedJobs.length} ${
@@ -109,13 +109,13 @@ export default function EligibleRolesPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+ <label className="text-sm font-medium text-gray-700 ">
               {t("jobs.eligibleRoles.sortBy") || "Sort by"}:
             </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-[#c49a47] focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300"
+ className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-[#c49a47] focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 "
             >
               <option value="best-match">
                 {t("jobs.eligibleRoles.bestMatch") || "Best Match"}
@@ -145,10 +145,10 @@ export default function EligibleRolesPage() {
             <div className="mb-4 flex justify-center">
               <AlertCircle className="h-16 w-16 text-red-500" />
             </div>
-            <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+ <h3 className="mb-2 text-xl font-bold text-gray-900 ">
               {t("jobs.eligibleRoles.errors.loadFailed") || "Failed to Load"}
             </h3>
-            <p className="mb-6 text-gray-600 dark:text-gray-400">
+ <p className="mb-6 text-gray-600 ">
               {error instanceof Error
                 ? error.message
                 : t("jobs.eligibleRoles.errors.generic") || "Something went wrong"}
@@ -168,10 +168,10 @@ export default function EligibleRolesPage() {
             <div className="mb-4 flex justify-center">
               <Sparkles className="h-16 w-16 text-gray-400" />
             </div>
-            <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+ <h3 className="mb-2 text-xl font-bold text-gray-900 ">
               {t("jobs.eligibleRoles.noMatches") || "No Eligible Roles Yet"}
             </h3>
-            <p className="mb-6 text-gray-600 dark:text-gray-400">
+ <p className="mb-6 text-gray-600 ">
               {t("jobs.eligibleRoles.noMatchesMessage") ||
                 "We couldn't find any roles matching your profile at the moment. Check back soon or explore all available jobs."}
             </p>

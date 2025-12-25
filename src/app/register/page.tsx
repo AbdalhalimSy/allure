@@ -163,7 +163,7 @@ export default function RegisterPage() {
       {step === 1 ? (
         <form onSubmit={submitStep1} className="space-y-6">
           {/* Twins toggle */}
-          <div className="flex items-center gap-4 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-700 dark:bg-white/5 dark:text-gray-300">
+ <div className="flex items-center gap-4 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-700 ">
             <label className="flex items-center gap-2">
               <input type="radio" name="twinsMode" checked={!isTwins} onChange={() => setIsTwins(false)} />
               <span>{t("auth.singleRegistration") || "Single registration"}</span>
@@ -301,7 +301,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Terms */}
-          <div className="flex items-start gap-3 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-600 dark:bg_white/5 dark:text-gray-300">
+ <div className="flex items-start gap-3 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-600 ">
             <input
               id="acceptTerms"
               name="acceptTerms"

@@ -1,60 +1,95 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getAuthApiHeaders } from "@/lib/api/headers";
+import { env } from "@/lib/config/env";
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string; roleId: string }> }
 ) {
   try {
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { status: "error", message: "Unauthorized", data: null },
+        { status: 401 }
+      );
+    }
+
     const { id, roleId } = await params;
     const formData = await request.formData();
-    
-    const profile_id = formData.get("profile_id");
-    const responsesJson = formData.get("responses");
 
-    if (!profile_id) {
+    // Remove legacy call time fields to match the new contract
+    formData.delete("call_time_slot_id");
+    formData.delete("selected_time");
+
+    const profileId = formData.get("profile_id");
+    const responsesJson = formData.get("responses");
+    const approvedPaymentTerms = formData.get("approved_payment_terms");
+
+    if (!profileId) {
       return NextResponse.json(
-        { status: "error", message: "Profile ID is required", data: null },
+        { status: "error", message: "profile_id is required", data: null },
         { status: 400 }
       );
     }
 
     if (!responsesJson) {
       return NextResponse.json(
-        { status: "error", message: "Responses are required", data: null },
+        { status: "error", message: "responses are required", data: null },
         { status: 400 }
       );
     }
 
-    const responses = JSON.parse(responsesJson as string);
+    if (!approvedPaymentTerms) {
+      return NextResponse.json(
+        { status: "error", message: "approved_payment_terms is required", data: null },
+        { status: 400 }
+      );
+    }
 
-    // Here you would typically:
-    // 1. Validate the responses
-    // 2. Check if the user has already applied
-    // 3. Save to database
-    // 4. Send confirmation email
-    // 5. Notify the casting team
+    // Validate JSON responses early to provide clear feedback
+    try {
+      JSON.parse(responsesJson as string);
+    } catch (err) {
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "responses must be valid JSON",
+          data: null,
+        },
+        { status: 400 }
+      );
+    }
 
-    // For now, we'll return a success response
-    console.log("Job Application Received:", {
-      jobId: id,
-      roleId: roleId,
-      profileId: profile_id,
-      responses: responses,
-    });
+    const token = authHeader.replace("Bearer ", "");
+    const headers = getAuthApiHeaders(request, token);
+    // Let fetch set multipart boundaries automatically
+    delete (headers as Record<string, string>)["Content-Type"];
 
-    // Simulate processing
-    return NextResponse.json({
-      status: "success",
-      message: "Your application has been submitted successfully! The casting team will review it shortly.",
-      data: {
-        application_id: Math.floor(Math.random() * 10000),
-        job_id: Number(id),
-        role_id: Number(roleId),
-        profile_id: Number(profile_id),
-        status: "pending",
-        submitted_at: new Date().toISOString(),
-      },
-    });
+    const backendResponse = await fetch(
+      `${env.apiBaseUrl}/jobs/${id}/roles/${roleId}/apply`,
+      {
+        method: "POST",
+        headers,
+        body: formData,
+      }
+    );
+
+    const contentType = backendResponse.headers.get("content-type");
+    const responseBody = contentType?.includes("application/json")
+      ? await backendResponse.json()
+      : await backendResponse.text();
+
+    if (!backendResponse.ok) {
+      return NextResponse.json(
+        typeof responseBody === "string"
+          ? { status: "error", message: responseBody }
+          : responseBody,
+        { status: backendResponse.status }
+      );
+    }
+
+    return NextResponse.json(responseBody);
   } catch (error) {
     console.error("Error processing application:", error);
     return NextResponse.json(

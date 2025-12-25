@@ -161,9 +161,9 @@ export default function TalentsPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-black">
+ <div className="bg-white ">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 dark:from-gray-950 dark:via-black dark:to-gray-950">
+ <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
@@ -173,18 +173,18 @@ export default function TalentsPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary dark:bg-[rgba(196,154,71,0.15)] dark:text-primary">
+ <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               <Users className="h-4 w-4" />
               {t("talents.hero.badge")}
             </p>
 
             {/* Title */}
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+ <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
               {t("talents.hero.title")}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+ <p className="text-lg text-gray-600 sm:text-xl">
               {t("talents.hero.subtitle")}
             </p>
           </div>
@@ -208,10 +208,10 @@ export default function TalentsPage() {
           <>
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <div className="h-6 w-48 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-                <div className="mt-2 h-4 w-64 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+ <div className="h-6 w-48 animate-pulse rounded bg-gray-200 " />
+ <div className="mt-2 h-4 w-64 animate-pulse rounded bg-gray-200 " />
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+ <div className="flex items-center gap-2 text-sm text-gray-600 ">
                 <Loader className="h-4 w-4" />
                 <span>{t("talents.loading")}</span>
               </div>
@@ -227,14 +227,14 @@ export default function TalentsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-8 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
-                  <AlertCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
+ <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 ">
+ <AlertCircle className="h-8 w-8 text-red-600 " />
                 </div>
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+ <h3 className="mb-2 text-xl font-semibold text-gray-900 ">
                 {t("talents.failedToLoad")}
               </h3>
-              <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
+ <p className="mb-6 text-gray-600 ">{error}</p>
               <button
                 onClick={() => fetchTalents(1, true)}
                 className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
@@ -248,14 +248,14 @@ export default function TalentsPage() {
           <div className="flex min-h-[500px] items-center justify-center">
             <SurfaceCard className="max-w-md p-12 text-center">
               <div className="mb-6 flex justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+ <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-gray-200 ">
                   <Users className="h-10 w-10 text-gray-400" />
                 </div>
               </div>
-              <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+ <h3 className="mb-3 text-2xl font-bold text-gray-900 ">
                 {t("talents.noTalentsFound")}
               </h3>
-              <p className="mb-8 text-gray-600 dark:text-gray-400">
+ <p className="mb-8 text-gray-600 ">
                 {t("talents.noTalentsHint")}
               </p>
               <button
@@ -272,15 +272,15 @@ export default function TalentsPage() {
             {/* Results Header */}
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+ <h2 className="text-2xl font-bold text-gray-900 ">
                   {meta.total} {meta.total === 1 ? t("talents.talentSingular") : t("talents.talentPlural")} {t("talents.found")}
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+ <p className="text-sm text-gray-600 ">
                   {t("talents.showing")} {talents.length} {t("talents.of")} {meta.total}
                 </p>
               </div>
               {loadingMore && (
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+ <div className="flex items-center gap-2 text-sm text-gray-600 ">
                   <Loader className="h-4 w-4" />
                   <span>{t("talents.updating")}</span>
                 </div>
@@ -299,7 +299,7 @@ export default function TalentsPage() {
               <div ref={observerTargetRef} className="mt-12 flex justify-center py-8">
                 <div className="flex items-center gap-2">
                   <Loader className="h-5 w-5 animate-spin text-[#c49a47]" />
-                  <span className="text-gray-600 dark:text-gray-400">{t("talents.loading")}</span>
+ <span className="text-gray-600 ">{t("talents.loading")}</span>
                 </div>
               </div>
             )}
@@ -307,7 +307,7 @@ export default function TalentsPage() {
             {/* End of results message */}
             {!hasMore && talents.length > 0 && (
               <div className="mt-12 py-8 text-center">
-                <p className="text-gray-600 dark:text-gray-400">{t("talents.noMoreTalents")}</p>
+ <p className="text-gray-600 ">{t("talents.noMoreTalents")}</p>
               </div>
             )}
           </>

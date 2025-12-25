@@ -115,7 +115,7 @@ export default function JobFilterBar({
 
   return (
     <div className="relative space-y-4">
-      <div className="relative z-70 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/95">
+ <div className="relative z-70 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl ">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search */}
           <div className="relative flex-1 min-w-0">
@@ -129,7 +129,7 @@ export default function JobFilterBar({
             {searchText && (
               <button
                 onClick={() => setSearchText("")}
-                className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+ className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 "
               >
                 <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
@@ -167,7 +167,7 @@ export default function JobFilterBar({
               type="button"
               variant="secondary"
               onClick={handleReset}
-              className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0"
+ className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0"
             >
               <RotateCcw className="h-4 w-4" />
               <span>{t("jobs.jobsFilter.reset")}</span>
@@ -178,7 +178,7 @@ export default function JobFilterBar({
               type="button"
               variant="secondary"
               onClick={handleReset}
-              className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/30 dark:hover:text-red-300 shrink-0 px-2 sm:px-3"
+ className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3"
               title={t("jobs.jobsFilter.resetAllTitle")}
             >
               <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -192,14 +192,14 @@ export default function JobFilterBar({
           showAdvanced
             ? "z-60 opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
             : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
-        } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-gray-900/95`}
+ } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out `}
         aria-hidden={!showAdvanced}
       >
         <div className="space-y-6 p-4 sm:p-6">
           {/* Shooting Dates & Eligibility */}
           <div className="space-y-4">
-            <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="text-sm sm:text-base font-semibold text-gray-900 ">
                 {t("jobs.jobsFilter.section.dates")}
               </h3>
             </div>
@@ -265,8 +265,8 @@ export default function JobFilterBar({
 
           {/* Professional & Location */}
           <div className="space-y-4">
-            <div className="border-b border-gray-200/50 pb-2 dark:border-white/10">
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+ <div className="border-b border-gray-200/50 pb-2 ">
+ <h3 className="text-sm sm:text-base font-semibold text-gray-900 ">
                 {t("jobs.jobsFilter.section.professional")}
               </h3>
             </div>

@@ -197,7 +197,7 @@ export default function BillingPage() {
           )}
 
           {/* Tab Navigation */}
-          <div className="border-b border-gray-200 dark:border-white/10">
+ <div className="border-b border-gray-200 ">
             <nav className="-mb-px flex gap-8">
               {!hasSubscription && (
                 <button
@@ -205,7 +205,7 @@ export default function BillingPage() {
                   className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
                     activeTab === "subscribe"
                       ? "border-[#c49a47] text-[#c49a47]"
-                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+ : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                   }`}
                 >
                   {t("account.billing.tabs.plans")}
@@ -216,7 +216,7 @@ export default function BillingPage() {
                 className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
                   activeTab === "history"
                     ? "border-[#c49a47] text-[#c49a47]"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+ : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                 }`}
               >
                 {t("account.billing.tabs.history")} (
@@ -227,7 +227,7 @@ export default function BillingPage() {
                 className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
                   activeTab === "payments"
                     ? "border-[#c49a47] text-[#c49a47]"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+ : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                 }`}
               >
                 {t("account.billing.tabs.payments")} ({payments?.length || 0})
@@ -259,8 +259,8 @@ export default function BillingPage() {
                 </div>
 
                 {(packages?.length ?? 0) === 0 && (
-                  <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center dark:border-white/10 dark:bg-white/5">
-                    <p className="text-gray-600 dark:text-gray-400">
+ <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center ">
+ <p className="text-gray-600 ">
                       {t("account.billing.packages.noPackages")}
                     </p>
                   </div>
@@ -278,28 +278,28 @@ export default function BillingPage() {
                     />
 
                     {/* Order Summary */}
-                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">
+ <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
+ <h3 className="font-semibold text-gray-900 ">
                         {t("account.billing.order.summary")}
                       </h3>
                       <div className="mt-4 space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">
+ <span className="text-gray-600 ">
                             {t("account.billing.order.package")}:
                           </span>
-                          <span className="font-medium text-gray-900 dark:text-white">
+ <span className="font-medium text-gray-900 ">
                             {selectedPackage?.title || selectedPackage?.name}
                           </span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">
+ <span className="text-gray-600 ">
                             {t("account.billing.order.originalPrice")}:
                           </span>
                           <span
                             className={
                               couponDiscount > 0
-                                ? "text-gray-900 line-through dark:text-white"
-                                : "text-gray-900 dark:text-white"
+ ? "text-gray-900 line-through "
+ : "text-gray-900 "
                             }
                           >
                             {selectedPackage?.price.toFixed(2)} AED
@@ -311,9 +311,9 @@ export default function BillingPage() {
                             <span>-{couponDiscount.toFixed(2)} AED</span>
                           </div>
                         )}
-                        <div className="border-t border-gray-200 pt-2 dark:border-white/10">
+ <div className="border-t border-gray-200 pt-2 ">
                           <div className="flex justify-between">
-                            <span className="text-lg font-bold text-gray-900 dark:text-white">
+ <span className="text-lg font-bold text-gray-900 ">
                               {t("account.billing.order.total")}:
                             </span>
                             <span className="text-2xl font-bold text-[#c49a47]">

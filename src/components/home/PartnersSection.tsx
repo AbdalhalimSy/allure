@@ -39,11 +39,11 @@ export default function PartnersSection({
         {/* Header */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary dark:text-primary">
+ <p className="text-sm uppercase tracking-[0.3em] text-primary ">
               {kicker}
             </p>
             <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
-            <p className="text-gray-700 dark:text-gray-300">{subtitle}</p>
+ <p className="text-gray-700 ">{subtitle}</p>
           </div>
           <div className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg">
             <Users className="h-4 w-4" />
@@ -64,7 +64,7 @@ export default function PartnersSection({
                 data: p,
               }))}
               renderItem={({ data }) => (
-                <div className="flex h-28 w-52 items-center justify-center rounded-2xl border border-gray-200 bg-white/70 px-4 py-3 shadow-md transition hover:-translate-y-1 hover:border-[rgba(196,154,71,0.35)] hover:shadow-xl dark:border-white/10 dark:bg-gray-900/80">
+ <div className="flex h-28 w-52 items-center justify-center rounded-2xl border border-gray-200 bg-white/70 px-4 py-3 shadow-md transition hover:-translate-y-1 hover:border-[rgba(196,154,71,0.35)] hover:shadow-xl ">
                   <Image
                     src={data.logo}
                     alt={data.title}
@@ -81,7 +81,7 @@ export default function PartnersSection({
               itemGap={24}
             />
           ) : (
-            <div className="py-8 text-center text-gray-500 dark:text-gray-400">
+ <div className="py-8 text-center text-gray-500 ">
               {noPartnersText}
             </div>
           )}

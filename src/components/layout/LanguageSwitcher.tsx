@@ -29,7 +29,7 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full border border-[#c49a47]/40 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 dark:text-white"
+ className="flex items-center gap-2 rounded-full border border-[#c49a47]/40 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 "
       >
         <span>{currentLang?.flag}</span>
         <span>{currentLang?.label}</span>
@@ -44,7 +44,7 @@ export default function LanguageSwitcher() {
       </button>
 
       <div
-        className={`absolute end-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl dark:border-[#c49a47]/20 dark:bg-gray-900 transition-all duration-200 ease-in-out origin-top-right ${
+ className={`absolute end-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl transition-all duration-200 ease-in-out origin-top-right ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
@@ -60,11 +60,11 @@ export default function LanguageSwitcher() {
               className={`w-full flex items-center gap-3 px-4 py-3 text-start transition-all duration-200 ease-in-out ${
                 locale === language.code
                   ? 'bg-[#c49a47]/10 text-[#c49a47]'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+ : 'hover:bg-gray-100 '
               }`}
             >
               <span className="text-xl">{language.flag}</span>
-              <span className="text-sm font-medium text-gray-900 dark:text-white">{language.label}</span>
+ <span className="text-sm font-medium text-gray-900 ">{language.label}</span>
               {locale === language.code && (
                 <svg className="w-5 h-5 ms-auto text-[#c49a47]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

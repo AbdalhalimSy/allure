@@ -68,7 +68,7 @@ export default function AccountFormSkeleton() {
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 dark:border-white/10">
+ <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 ">
         <Skeleton className="h-10 w-40 rounded-lg" />
       </div>
     </div>

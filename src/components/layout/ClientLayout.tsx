@@ -7,7 +7,7 @@ import { NotificationProvider } from "@/contexts/NotificationContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import NotificationHandler from "@/components/notifications/NotificationHandler";
 import NotificationPermissionPrompt from "@/components/notifications/NotificationPermissionPrompt";
 
@@ -37,6 +37,18 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const queryClient = useMemo(() => new QueryClient(), []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove("dark");
+    root.style.colorScheme = "light";
+
+    if (document.body) {
+      document.body.classList.remove("dark");
+      document.body.style.backgroundColor = "#ffffff";
+      document.body.style.color = "#111827";
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

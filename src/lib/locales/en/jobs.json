@@ -30,6 +30,12 @@
       "ethnicity": "Ethnicity",
       "callTimeEnabled": "Call Time Enabled",
       "callTimeMessage": "Specific timing requirements apply for this role",
+      "callTimeAwaiting": "You will be able to choose a time after you are shortlisted",
+      "callTimeSelected": "Call time selected",
+      "callTimeNote": "Times are first-come, first-served",
+      "callTimeUpdate": "Update Call Time",
+      "callTimeConfirm": "Confirm Call Time",
+      "noCallTimeSlots": "Call time slots are not available yet",
       "description": "Description",
       "status": "Status"
     },
@@ -43,8 +49,13 @@
       "next": "Next"
     },
     "errors": {
-      "loadFailed": "Failed to load your applications"
-    }
+      "loadFailed": "Failed to load your applications",
+      "callTimeNotShortlisted": "Only shortlisted applications can pick a call time",
+      "callTimeDisabled": "Call time selection is not enabled for this role",
+      "callTimeFailed": "Could not save call time",
+      "generic": "Something went wrong"
+    },
+    "callTimeSaved": "Call time saved"
   },
   "jobDetail": {
     "failedToLoad": "Failed to Load Job",
@@ -97,6 +108,8 @@
     "fullyBooked": "Fully Booked",
     "additionalRequirements": "Additional Requirements",
     "applyFor": "Apply for",
+    "alreadyApplied": "Already applied",
+    "loginToApply": "Login to apply",
     "jobLocations": "Job Locations",
     "noLocations": "No locations specified",
     "residenceCountries": "Residence Countries"
@@ -133,6 +146,7 @@
     "expiringSoon": "Expiring Soon",
     "shooting": "Shooting:",
     "expires": "Expires:",
+    "alreadyApplied": "Already Applied",
     "rolesAvailable": "Roles Available",
     "requiredSkills": "Required Skills",
     "viewDetails": "View Details"
@@ -178,6 +192,7 @@
     "applyForRole": "Apply for Role",
     "callTime": "Call Time",
     "callTimeRequired": "Please select a call time slot and time",
+    "callTimeShortlistNotice": "If shortlisted, you will be asked to choose a call time.",
     "answerRequired": "Please answer",
     "loginToApply": "Please login to apply for this role",
     "submitted": "Application submitted successfully!",

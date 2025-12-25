@@ -5,7 +5,6 @@ import {
   TbStar,
   TbPhoto,
   TbShieldCheck,
-  TbBell,
   TbCreditCard,
 } from "react-icons/tb";
 import { ProfileData } from "@/contexts/AuthContext";
