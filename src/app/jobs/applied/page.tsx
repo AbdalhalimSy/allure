@@ -480,7 +480,7 @@ export default function AppliedJobsPage() {
  <div className="mt-4 rounded-2xl border border-[#c49a47]/30 bg-white shadow-sm ">
                       {/* Header */}
                       <button
-                        className="flex w-full items-center justify-between gap-3 rounded-t-2xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-4 py-3 text-left text-white"
+                        className="flex w-full items-center justify-between gap-3 rounded-t-2xl bg-linear-to-r from-[#c49a47] to-[#d4a855] px-4 py-3 text-start text-white"
                         onClick={() => setExpanded((prev) => ({ ...prev, [app.id]: !prev[app.id] }))}
                         aria-expanded={Boolean(expanded[app.id])}
                       >

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
+import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
 import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
@@ -15,6 +16,7 @@ export default function TalentsPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale, t } = useI18n();
+  const { getCountryId } = useCountryFilter();
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -69,6 +71,12 @@ export default function TalentsPage() {
       // Build query string from filters
       const params = new URLSearchParams();
       
+      // Add country filter if selected
+      const countryId = getCountryId();
+      if (countryId !== null) {
+        params.append("country_ids", String(countryId));
+      }
+      
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
           params.append(key, String(value));
@@ -121,7 +129,7 @@ export default function TalentsPage() {
         setLoadingMore(false);
       }
     }
-  }, [filters, locale]);
+  }, [filters, locale, getCountryId]);
 
   useEffect(() => {
     if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {

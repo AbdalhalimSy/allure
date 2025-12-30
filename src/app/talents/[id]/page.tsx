@@ -500,7 +500,7 @@ export default function TalentDetailPage() {
                   }}
                   className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-6 w-6 rtl:scale-x-[-1]" />
                 </button>
                 <button
                   onClick={(e) => {
@@ -511,7 +511,7 @@ export default function TalentDetailPage() {
                   }}
                   className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-6 w-6 rtl:scale-x-[-1]" />
                 </button>
               </div>
             )}

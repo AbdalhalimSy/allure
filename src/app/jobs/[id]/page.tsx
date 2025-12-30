@@ -42,7 +42,6 @@ export default function JobDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<DetailedRole | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isRTL = locale === "ar";
 
   const fetchJob = useCallback(async () => {
     try {
@@ -78,7 +77,9 @@ export default function JobDetailPage() {
       if (result.status === "success" || result.status === true) {
         setJob(result.data);
       } else {
-        throw new Error(result.message || t("jobs.jobDetail.errors.loadFailed"));
+        throw new Error(
+          result.message || t("jobs.jobDetail.errors.loadFailed")
+        );
       }
     } catch (err) {
       setError(
@@ -105,12 +106,12 @@ export default function JobDetailPage() {
   if (error || !job) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
- <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center ">
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center ">
           <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
- <h3 className="mb-2 text-lg font-semibold text-red-900 ">
+          <h3 className="mb-2 text-lg font-semibold text-red-900 ">
             {t("jobs.jobDetail.failedToLoad")}
           </h3>
- <p className="mb-4 text-sm text-red-700 ">{error}</p>
+          <p className="mb-4 text-sm text-red-700 ">{error}</p>
           <button
             onClick={() => router.push("/jobs")}
             className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
@@ -130,24 +131,24 @@ export default function JobDetailPage() {
   const roleCount = roles.length;
 
   return (
- <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         {/* Back Button */}
         <button
           onClick={() => router.push("/jobs")}
- className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] "
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] "
         >
-          <ArrowLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
+          <ArrowLeft className="h-4 w-4 rtl:scale-x-[-1]" />
           {t("jobs.jobDetail.backToJobs")}
         </button>
 
         {/* Header Section */}
- <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg ">
+        <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg ">
           <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
 
           {/* Job Image */}
           {job.image && (
- <div className="relative h-64 w-full overflow-hidden bg-gray-200 ">
+            <div className="relative h-64 w-full overflow-hidden bg-gray-200 ">
               {/* Optimized image with responsive sizes and compression */}
               <OptimizedImage
                 src={job.image}
@@ -163,7 +164,7 @@ export default function JobDetailPage() {
           <div className="p-8">
             <div className="mb-4 flex items-start justify-between">
               <div>
- <h1 className="mb-2 text-3xl font-bold text-gray-900 ">
+                <h1 className="mb-2 text-3xl font-bold text-gray-900 ">
                   {job.title}
                 </h1>
                 {daysUntilExpiry <= 7 && daysUntilExpiry > 0 && (
@@ -181,38 +182,34 @@ export default function JobDetailPage() {
                 )}
               </div>
               {job.is_active && job.open_to_apply && (
- <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 ">
+                <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 ">
                   {t("jobs.jobDetail.openToApply")}
                 </span>
               )}
               {!job.open_to_apply && (
- <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 ">
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 ">
                   {t("jobs.jobDetail.closed")}
                 </span>
               )}
             </div>
 
- <p className="mb-6 text-lg text-gray-700 ">
-              {job.description}
-            </p>
+            <p className="mb-6 text-lg text-gray-700 ">{job.description}</p>
 
             {job.highlights && (
- <div className="mb-6 rounded-lg bg-blue-50 p-4 ">
- <p className="text-sm font-semibold text-blue-900 ">
+              <div className="mb-6 rounded-lg bg-blue-50 p-4 ">
+                <p className="text-sm font-semibold text-blue-900 ">
                   {t("jobs.jobDetail.highlights")}
                 </p>
- <p className="mt-1 text-sm text-blue-800 ">
-                  {job.highlights}
-                </p>
+                <p className="mt-1 text-sm text-blue-800 ">{job.highlights}</p>
               </div>
             )}
 
             {job.usage_terms && (
- <div className="mb-6 rounded-lg bg-purple-50 p-4 ">
- <p className="text-sm font-semibold text-purple-900 ">
+              <div className="mb-6 rounded-lg bg-purple-50 p-4 ">
+                <p className="text-sm font-semibold text-purple-900 ">
                   {t("jobs.jobDetail.usageTerms")}
                 </p>
- <p className="mt-1 text-sm text-purple-800 ">
+                <p className="mt-1 text-sm text-purple-800 ">
                   {job.usage_terms}
                 </p>
               </div>
@@ -220,50 +217,51 @@ export default function JobDetailPage() {
 
             {/* Quick Info Grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Calendar className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">
+                  <p className="text-xs text-gray-600 ">
                     {t("jobs.jobDetail.shootingDate")}
                   </p>
- <p className="font-semibold text-gray-900 ">
+                  <p className="font-semibold text-gray-900 ">
                     {formatDate(job.shooting_date)}
                   </p>
                 </div>
               </div>
 
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Clock className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">
+                  <p className="text-xs text-gray-600 ">
                     {t("jobs.jobDetail.expiresOn")}
                   </p>
- <p className="font-semibold text-gray-900 ">
+                  <p className="font-semibold text-gray-900 ">
                     {formatDate(job.expiration_date)}
                   </p>
                 </div>
               </div>
 
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">
+                  <p className="text-xs text-gray-600 ">
                     {t("jobs.jobDetail.openRoles")}
                   </p>
- <p className="font-semibold text-gray-900 ">
+                  <p className="font-semibold text-gray-900 ">
                     {roleCount} {t("jobs.jobDetail.available")}
                   </p>
                 </div>
               </div>
 
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">
+                  <p className="text-xs text-gray-600 ">
                     {t("jobs.jobDetail.locations")}
                   </p>
- <p className="font-semibold text-gray-900 ">
-                    {job.job_countries?.length || 0} {t("jobs.jobDetail.countries")}
+                  <p className="font-semibold text-gray-900 ">
+                    {job.job_countries?.length || 0}{" "}
+                    {t("jobs.jobDetail.countries")}
                   </p>
                 </div>
               </div>
@@ -276,10 +274,10 @@ export default function JobDetailPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Professions Section */}
             {job.professions && job.professions.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
                 <div className="mb-4 flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">
+                  <h2 className="text-xl font-bold text-gray-900 ">
                     {t("jobs.jobDetail.requiredProfessions")}
                   </h2>
                 </div>
@@ -287,7 +285,7 @@ export default function JobDetailPage() {
                   {job.professions.map((profession, index) => (
                     <span
                       key={index}
- className="rounded-lg bg-[#c49a47]/10 px-4 py-2 text-sm font-medium text-[#c49a47] "
+                      className="rounded-lg bg-[#c49a47]/10 px-4 py-2 text-sm font-medium text-[#c49a47] "
                     >
                       {profession}
                     </span>
@@ -298,10 +296,10 @@ export default function JobDetailPage() {
 
             {/* Sub Professions Section */}
             {job.sub_professions && job.sub_professions.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
                 <div className="mb-4 flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">
+                  <h2 className="text-xl font-bold text-gray-900 ">
                     {t("jobs.jobDetail.subProfessions")}
                   </h2>
                 </div>
@@ -309,7 +307,7 @@ export default function JobDetailPage() {
                   {job.sub_professions.map((subProf, index) => (
                     <span
                       key={index}
- className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 "
+                      className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 "
                     >
                       {subProf}
                     </span>
@@ -320,32 +318,31 @@ export default function JobDetailPage() {
 
             {/* Roles Section */}
             <div className="space-y-4">
- <h2 className="text-2xl font-bold text-gray-900 ">
+              <h2 className="text-2xl font-bold text-gray-900 ">
                 {t("jobs.jobDetail.availableRoles")} ({roleCount})
               </h2>
 
               {roles.map((role) => (
                 <div
                   key={role.id}
- className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm "
+                  className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm "
                 >
                   {role.has_applied && (
- <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ">
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ">
                       <CheckCircle className="h-4 w-4" />
                       {t("jobs.jobDetail.alreadyApplied") || "Already Applied"}
                     </div>
                   )}
                   <div className="mb-4">
- <h3 className="mb-2 text-xl font-bold text-gray-900 ">
+                    <h3 className="mb-2 text-xl font-bold text-gray-900 ">
                       {role.name}
                     </h3>
- <p className="text-gray-600 ">
-                      {role.description}
-                    </p>
+                    <p className="text-gray-600 ">{role.description}</p>
                     {role.call_time_enabled && (
- <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 ">
+                      <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 ">
                         <Clock className="h-3 w-3" />
-                        {t("jobs.appliedJobs.details.callTimeEnabled") || "Call time required"}
+                        {t("jobs.appliedJobs.details.callTimeEnabled") ||
+                          "Call time required"}
                       </div>
                     )}
                   </div>
@@ -353,30 +350,31 @@ export default function JobDetailPage() {
                   <div className="mb-4 grid gap-3 sm:grid-cols-2">
                     <div className="flex items-center gap-2 text-sm">
                       <User className="h-4 w-4 text-[#c49a47]" />
- <span className="font-medium text-gray-700 ">
+                      <span className="font-medium text-gray-700 ">
                         {t("jobs.jobDetail.gender")}
                       </span>
- <span className="text-gray-900 ">
+                      <span className="text-gray-900 ">
                         {t(`filters.${role.gender}`)}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <Calendar className="h-4 w-4 text-[#c49a47]" />
- <span className="font-medium text-gray-700 ">
+                      <span className="font-medium text-gray-700 ">
                         {t("jobs.jobDetail.ageRange")}
                       </span>
- <span className="text-gray-900 ">
-                        {role.start_age} - {role.end_age} {t("jobs.jobDetail.years")}
+                      <span className="text-gray-900 ">
+                        {role.start_age} - {role.end_age}{" "}
+                        {t("jobs.jobDetail.years")}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <Briefcase className="h-4 w-4 text-[#c49a47]" />
- <span className="font-medium text-gray-700 ">
+                      <span className="font-medium text-gray-700 ">
                         {t("jobs.jobDetail.ethnicity")}
                       </span>
- <span className="text-gray-900 ">
+                      <span className="text-gray-900 ">
                         {Array.isArray(role.ethnicity)
                           ? role.ethnicity.join(", ")
                           : role.ethnicity}
@@ -385,10 +383,10 @@ export default function JobDetailPage() {
 
                     <div className="flex items-center gap-2 text-sm">
                       <DollarSign className="h-4 w-4 text-[#c49a47]" />
- <span className="font-medium text-gray-700 ">
+                      <span className="font-medium text-gray-700 ">
                         {t("jobs.jobDetail.paymentTerms")}
                       </span>
- <span className="text-gray-900 ">
+                      <span className="text-gray-900 ">
                         {role.payment_terms_days} days
                       </span>
                     </div>
@@ -396,10 +394,10 @@ export default function JobDetailPage() {
                     {role.budget && (
                       <div className="flex items-center gap-2 text-sm">
                         <DollarSign className="h-4 w-4 text-[#c49a47]" />
- <span className="font-medium text-gray-700 ">
+                        <span className="font-medium text-gray-700 ">
                           {t("jobs.jobDetail.budget")}
                         </span>
- <span className="text-gray-900 ">
+                        <span className="text-gray-900 ">
                           AED {role.budget.toLocaleString()}
                         </span>
                       </div>
@@ -413,10 +411,11 @@ export default function JobDetailPage() {
 
                     if (alreadyApplied) {
                       return (
- <div className="mb-4 flex items-center gap-2 rounded-lg bg-emerald-50 p-3 ">
- <CheckCircle className="h-5 w-5 text-emerald-600 " />
- <span className="text-sm font-medium text-emerald-700 ">
-                            {t("jobs.jobDetail.alreadyApplied") || "You already applied for this role"}
+                        <div className="mb-4 flex items-center gap-2 rounded-lg bg-emerald-50 p-3 ">
+                          <CheckCircle className="h-5 w-5 text-emerald-600 " />
+                          <span className="text-sm font-medium text-emerald-700 ">
+                            {t("jobs.jobDetail.alreadyApplied") ||
+                              "You already applied for this role"}
                           </span>
                         </div>
                       );
@@ -424,9 +423,9 @@ export default function JobDetailPage() {
 
                     if (eligible) {
                       return (
- <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 ">
- <CheckCircle className="h-5 w-5 text-green-600 " />
- <span className="text-sm font-medium text-green-700 ">
+                        <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 ">
+                          <CheckCircle className="h-5 w-5 text-green-600 " />
+                          <span className="text-sm font-medium text-green-700 ">
                             {t("jobs.jobDetail.meetRequirements")}
                           </span>
                         </div>
@@ -434,26 +433,27 @@ export default function JobDetailPage() {
                     }
 
                     return (
- <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 ">
- <AlertCircle className="h-5 w-5 text-red-600 " />
- <span className="text-sm font-medium text-red-700 ">
+                      <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 ">
+                        <AlertCircle className="h-5 w-5 text-red-600 " />
+                        <span className="text-sm font-medium text-red-700 ">
                           {t("jobs.jobDetail.notMeetRequirements")} (
-                          {t("jobs.jobDetail.eligibility")}: {role.eligibility_score || 0}%)
+                          {t("jobs.jobDetail.eligibility")}:{" "}
+                          {role.eligibility_score || 0}%)
                         </span>
                       </div>
                     );
                   })()}
                   {role.can_apply ? (
- <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 ">
- <CheckCircle className="h-5 w-5 text-green-600 " />
- <span className="text-sm font-medium text-green-700 ">
+                    <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#00ff00]/10 p-3 ">
+                      <CheckCircle className="h-5 w-5 text-green-600 " />
+                      <span className="text-sm font-medium text-green-700 ">
                         {t("jobs.jobDetail.meetRequirements")}
                       </span>
                     </div>
                   ) : (
- <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 ">
- <AlertCircle className="h-5 w-5 text-red-600 " />
- <span className="text-sm font-medium text-red-700 ">
+                    <div className="mb-4 flex items-center gap-2 rounded-lg bg-[#ff0000]/10 p-3 ">
+                      <AlertCircle className="h-5 w-5 text-red-600 " />
+                      <span className="text-sm font-medium text-red-700 ">
                         {t("jobs.jobDetail.notMeetRequirements")} (
                         {t("jobs.jobDetail.eligibility")}:{" "}
                         {role.eligibility_score || 0}%)
@@ -463,8 +463,8 @@ export default function JobDetailPage() {
 
                   {/* Meta Conditions */}
                   {role.meta_conditions.length > 0 && (
- <div className="mb-4 rounded-lg border border-gray-200 p-4 ">
- <h4 className="mb-3 font-semibold text-gray-900 ">
+                    <div className="mb-4 rounded-lg border border-gray-200 p-4 ">
+                      <h4 className="mb-3 font-semibold text-gray-900 ">
                         {t("jobs.jobDetail.physicalRequirements")}
                       </h4>
                       <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2 text-sm">
@@ -491,15 +491,15 @@ export default function JobDetailPage() {
                               value !== undefined && (
                                 <div
                                   key={key}
- className="flex justify-between px-4 py-2 bg-gray-100 rounded-lg "
+                                  className="flex justify-between px-4 py-2 bg-gray-100 rounded-lg "
                                 >
- <span className="text-gray-600 ">
+                                  <span className="text-gray-600 ">
                                     {translationKey
                                       ? t(translationKey)
                                       : key.replace(/_/g, " ")}
                                     :
                                   </span>
- <span className="font-medium text-gray-900 ">
+                                  <span className="font-medium text-gray-900 ">
                                     {value}
                                   </span>
                                 </div>
@@ -514,7 +514,7 @@ export default function JobDetailPage() {
                   {/* Conditions */}
                   {role.conditions.length > 0 && (
                     <div className="mb-4">
- <h4 className="mb-3 font-semibold text-gray-900 ">
+                      <h4 className="mb-3 font-semibold text-gray-900 ">
                         {t("jobs.jobDetail.additionalRequirements")}
                       </h4>
                       <div className="space-y-2">
@@ -526,9 +526,9 @@ export default function JobDetailPage() {
                             {condition.is_required ? (
                               <CheckCircle className="h-4 w-4 shrink-0 text-[#c49a47]" />
                             ) : (
- <div className="h-4 w-4 shrink-0 rounded-full border-2 border-gray-300 " />
+                              <div className="h-4 w-4 shrink-0 rounded-full border-2 border-gray-300 " />
                             )}
- <span className="text-gray-700 ">
+                            <span className="text-gray-700 ">
                               {condition.label}
                               {condition.is_required && (
                                 <span className="ms-1 text-red-500">*</span>
@@ -545,7 +545,8 @@ export default function JobDetailPage() {
                     <button
                       onClick={() => {
                         const eligible = role.can_apply !== false;
-                        const alreadyApplied = role.has_applied || job.has_applied;
+                        const alreadyApplied =
+                          role.has_applied || job.has_applied;
 
                         if (alreadyApplied) {
                           toast.error(
@@ -591,12 +592,13 @@ export default function JobDetailPage() {
                         !job.is_active ||
                         !isAuthenticated ||
                         !activeProfileId
- ? "bg-gray-300 text-gray-600 cursor-not-allowed "
+                          ? "bg-gray-300 text-gray-600 cursor-not-allowed "
                           : "bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white hover:from-[#b8963f] hover:to-[#c89a4a]"
                       }`}
                     >
                       {role.has_applied || job.has_applied
-                        ? t("jobs.jobDetail.alreadyApplied") || "Already applied"
+                        ? t("jobs.jobDetail.alreadyApplied") ||
+                          "Already applied"
                         : !isAuthenticated || !activeProfileId
                         ? t("jobs.jobDetail.loginToApply") || "Login to apply"
                         : role.can_apply === false
@@ -606,7 +608,7 @@ export default function JobDetailPage() {
                           role.name}
                     </button>
                     {role.can_apply === false && (
- <p className="text-xs text-center text-gray-500 ">
+                      <p className="text-xs text-center text-gray-500 ">
                         {t("jobs.jobDetail.eligibilityScoreNote") ||
                           "You don't fully meet the requirements but can still apply"}
                       </p>
@@ -620,10 +622,10 @@ export default function JobDetailPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Locations */}
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
- <h3 className="text-lg font-bold text-gray-900 ">
+                <h3 className="text-lg font-bold text-gray-900 ">
                   {t("jobs.jobDetail.jobLocations")}
                 </h3>
               </div>
@@ -631,7 +633,7 @@ export default function JobDetailPage() {
                 {job.job_countries?.map((country, index) => (
                   <li
                     key={index}
- className="flex items-center gap-2 text-sm text-gray-700 "
+                    className="flex items-center gap-2 text-sm text-gray-700 "
                   >
                     <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                     {country}
@@ -646,10 +648,10 @@ export default function JobDetailPage() {
 
             {/* Residence Countries */}
             {job.residence_countries && job.residence_countries.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
                 <div className="mb-4 flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-[#c49a47]" />
- <h3 className="text-lg font-bold text-gray-900 ">
+                  <h3 className="text-lg font-bold text-gray-900 ">
                     {t("jobs.jobDetail.residenceCountries")}
                   </h3>
                 </div>
@@ -657,7 +659,7 @@ export default function JobDetailPage() {
                   {job.residence_countries.map((country, index) => (
                     <li
                       key={index}
- className="flex items-center gap-2 text-sm text-gray-700 "
+                      className="flex items-center gap-2 text-sm text-gray-700 "
                     >
                       <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                       {country}

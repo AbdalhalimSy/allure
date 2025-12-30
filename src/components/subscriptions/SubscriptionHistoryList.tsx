@@ -47,7 +47,7 @@ export function SubscriptionHistoryList({ subscriptions }: SubscriptionHistoryLi
             key={subscription.id}
  className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/80 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md "
           >
-            <div className={`absolute inset-y-0 left-0 w-1 bg-linear-to-b ${accent}`} aria-hidden />
+            <div className={`absolute inset-y-0 start-0 w-1 bg-linear-to-b ${accent}`} aria-hidden />
             <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-1 flex-col gap-3">
                 <div className="flex flex-wrap items-center gap-3">

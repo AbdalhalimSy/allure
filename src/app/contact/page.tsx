@@ -22,8 +22,7 @@ import { FaInstagram, FaTiktok, FaYoutube, FaFacebook } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
 export default function ContactPage() {
-  const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
+  const { t } = useI18n();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -345,9 +344,7 @@ export default function ContactPage() {
                   className="w-full"
                   isLoading={isLoading}
                 >
-                  {!isLoading && (
-                    <Send className={`h-5 w-5 ${isRTL ? "ms-2" : "me-2"}`} />
-                  )}
+                  {!isLoading && <Send className="h-5 w-5 rtl:ms-2 ltr:me-2" />}
                   {isLoading
                     ? t("contact.form.sending")
                     : t("contact.form.submit")}

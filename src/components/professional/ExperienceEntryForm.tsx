@@ -94,7 +94,7 @@ export default function ExperienceEntryForm({
           type="button"
           onClick={onToggle}
           aria-expanded={isOpen}
-          className="group flex flex-1 flex-col items-start gap-2 text-left focus:outline-none"
+          className="group flex flex-1 flex-col items-start gap-2 text-start focus:outline-none"
         >
  <div className="inline-flex items-center gap-2 rounded-full bg-[#c49a47]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#c49a47] ">
             <span>

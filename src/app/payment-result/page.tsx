@@ -142,7 +142,7 @@ function PaymentResultContent() {
                   <Link href="/account/subscription">
                     <Button className="w-full bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white">
                       View My Subscription
-                      <ArrowRight className="ms-2 h-4 w-4" />
+                      <ArrowRight className="ms-2 h-4 w-4 rtl:scale-x-[-1]" />
                     </Button>
                   </Link>
                   <Link href="/">

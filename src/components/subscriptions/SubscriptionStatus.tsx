@@ -101,7 +101,7 @@ export function SubscriptionStatus({
 
           <div className="flex items-center gap-3 rounded-xl bg-[#c49a47]/10 px-4 py-3 text-sm font-semibold text-[#8a6a1f] shadow-inner">
             <Clock className="h-4 w-4" />
-            <div className="text-right">
+            <div className="text-end">
               <div>{daysRemaining} {t('account.billing.status.daysRemaining')}</div>
               {mounted && (
                 <div className="text-xs font-normal text-[#8a6a1f]/80">

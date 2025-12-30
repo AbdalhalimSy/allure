@@ -30,8 +30,7 @@ type Partner = {
 };
 
 export default function AboutPage() {
-  const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
+  const { t } = useI18n();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [partnersLoading, setPartnersLoading] = useState(false);
 
@@ -131,9 +130,9 @@ export default function AboutPage() {
   ];
 
   return (
- <div className="bg-white ">
+    <div className="bg-white ">
       {/* Hero Section */}
- <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 ">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
@@ -143,18 +142,18 @@ export default function AboutPage() {
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
             {/* Badge */}
- <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary ">
               <Briefcase className="h-4 w-4" />
               {t("about.hero.badge")}
             </p>
 
             {/* Title */}
- <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
               {t("about.hero.title")}
             </h1>
 
             {/* Subtitle */}
- <p className="text-lg text-gray-600 sm:text-xl">
+            <p className="text-lg text-gray-600 sm:text-xl">
               {t("about.hero.subtitle")}
             </p>
           </div>
@@ -170,7 +169,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={stat.label}
- className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-6 text-center shadow-lg backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-xl "
+                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-6 text-center shadow-lg backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-xl "
                 >
                   {/* Hover gradient */}
                   <div className="absolute inset-0 bg-linear-to-br from-[rgba(196,154,71,0.05)] to-transparent opacity-0 transition group-hover:opacity-100" />
@@ -180,7 +179,7 @@ export default function AboutPage() {
                     <div className="text-4xl font-bold text-primary">
                       {stat.value}
                     </div>
- <div className="mt-2 text-sm font-medium text-gray-600 ">
+                    <div className="mt-2 text-sm font-medium text-gray-600 ">
                       {stat.label}
                     </div>
                   </div>
@@ -209,17 +208,17 @@ export default function AboutPage() {
             {/* Content */}
             <div className="flex flex-col justify-center space-y-6">
               <div>
- <span className="inline-block rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold text-primary ">
+                <span className="inline-block rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold text-primary ">
                   {t("about.story.badge")}
                 </span>
               </div>
- <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
+              <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
                 {t("about.story.title")}
               </h2>
- <p className="text-lg text-gray-700 ">
+              <p className="text-lg text-gray-700 ">
                 {t("about.story.subtitle")}
               </p>
- <div className="space-y-4 text-gray-600 ">
+              <div className="space-y-4 text-gray-600 ">
                 <p>{t("about.story.paragraph1")}</p>
                 <p>{t("about.story.paragraph2")}</p>
                 <p>{t("about.story.paragraph3")}</p>
@@ -228,17 +227,13 @@ export default function AboutPage() {
                 <Link href="/talents">
                   <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
                     {t("about.story.ctaPrimary")}
-                    <ArrowRight
-                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
-                    />
+                    <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
                   </button>
                 </Link>
                 <Link href="/contact">
                   <button className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/5">
                     {t("about.story.ctaSecondary")}
-                    <ArrowRight
-                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
-                    />
+                    <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
                   </button>
                 </Link>
               </div>
@@ -248,23 +243,23 @@ export default function AboutPage() {
       </section>
 
       {/* Expansion Section */}
- <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 px-6 py-16 lg:px-12 lg:py-24">
+      <section className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-gray-100 px-6 py-16 lg:px-12 lg:py-24">
         <div className="container mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Content */}
             <div className="flex flex-col justify-center space-y-6 order-2 lg:order-1">
               <div>
- <span className="inline-block rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 ">
+                <span className="inline-block rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 ">
                   {t("about.expansion.badge")}
                 </span>
               </div>
- <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
+              <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
                 {t("about.expansion.title")}
               </h2>
- <p className="text-lg text-gray-700 ">
+              <p className="text-lg text-gray-700 ">
                 {t("about.expansion.subtitle")}
               </p>
- <div className="space-y-4 text-gray-600 ">
+              <div className="space-y-4 text-gray-600 ">
                 <p>{t("about.expansion.paragraph1")}</p>
                 <p>{t("about.expansion.paragraph2")}</p>
                 <p>{t("about.expansion.paragraph3")}</p>
@@ -273,17 +268,13 @@ export default function AboutPage() {
                 <Link href="/talents">
                   <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
                     {t("about.expansion.ctaPrimary")}
-                    <ArrowRight
-                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
-                    />
+                    <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
                   </button>
                 </Link>
                 <Link href="/about">
                   <button className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/5">
                     {t("about.expansion.ctaSecondary")}
-                    <ArrowRight
-                      className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`}
-                    />
+                    <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
                   </button>
                 </Link>
               </div>
@@ -308,13 +299,13 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="mx-auto max-w-3xl space-y-4 text-center">
- <p className="inline-flex items-center gap-2 rounded-full bg-sky-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-sky-600 ">
+            <p className="inline-flex items-center gap-2 rounded-full bg-sky-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-sky-600 ">
               {t("about.values.badge")}
             </p>
- <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
               {t("about.values.title")}
             </h2>
- <p className="text-lg text-gray-600 ">
+            <p className="text-lg text-gray-600 ">
               {t("about.values.subtitle")}
             </p>
           </div>
@@ -326,7 +317,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={value.title}
- className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 shadow-lg transition hover:-translate-y-1 hover:shadow-xl "
+                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 shadow-lg transition hover:-translate-y-1 hover:shadow-xl "
                 >
                   {/* Hover gradient */}
                   <div
@@ -339,10 +330,10 @@ export default function AboutPage() {
                     >
                       <Icon className="h-6 w-6" />
                     </div>
- <h3 className="text-xl font-bold text-gray-900 ">
+                    <h3 className="text-xl font-bold text-gray-900 ">
                       {value.title}
                     </h3>
- <p className="text-sm text-gray-600 ">
+                    <p className="text-sm text-gray-600 ">
                       {value.description}
                     </p>
                   </div>
@@ -354,17 +345,17 @@ export default function AboutPage() {
       </section>
 
       {/* Services Section */}
- <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 px-6 py-16 lg:px-12 lg:py-24">
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50 px-6 py-16 lg:px-12 lg:py-24">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="mx-auto max-w-3xl space-y-4 text-center">
- <p className="inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-purple-600 ">
+            <p className="inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-purple-600 ">
               {t("about.services.badge")}
             </p>
- <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 lg:text-4xl">
               {t("about.services.title")}
             </h2>
- <p className="text-lg text-gray-600 ">
+            <p className="text-lg text-gray-600 ">
               {t("about.services.subtitle")}
             </p>
           </div>
@@ -376,7 +367,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={service.title}
- className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-8 shadow-lg backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-xl "
+                  className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white/90 p-8 shadow-lg backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-xl "
                 >
                   {/* Hover gradient */}
                   <div
@@ -385,10 +376,10 @@ export default function AboutPage() {
 
                   <div className="relative space-y-4">
                     <Icon className="h-10 w-10 text-primary" />
- <h3 className="text-xl font-bold text-gray-900 ">
+                    <h3 className="text-xl font-bold text-gray-900 ">
                       {service.title}
                     </h3>
- <p className="text-sm text-gray-600 ">
+                    <p className="text-sm text-gray-600 ">
                       {service.description}
                     </p>
                   </div>

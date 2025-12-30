@@ -74,7 +74,7 @@ export default function WelcomeSectionNew({
               className="h-[420px] w-full object-cover"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <div className="absolute bottom-0 start-0 end-0 p-6 text-white">
               <p className="text-sm uppercase tracking-[0.3em] text-white/70">
                 {ribbon}
               </p>

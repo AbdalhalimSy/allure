@@ -4,11 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
+import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import apiClient from "@/lib/api/client";
 import {
   HeroBanner,
   ProfessionsSection,
-  JobsSection,
+  HomeJobsSection,
   WelcomeSectionNew,
   TalentsSection,
   PartnersSection,
@@ -40,6 +41,7 @@ export default function HomePage() {
   const router = useRouter();
   const { isAuthenticated, hydrated, activeProfileId } = useAuth();
   const { t, locale } = useI18n();
+  const { getCountryId } = useCountryFilter();
 
   const slides = useMemo(
     () => [
@@ -151,6 +153,12 @@ export default function HomePage() {
           params.append("profile_id", String(activeProfileId));
         }
 
+        // Add country filter if selected
+        const countryId = getCountryId();
+        if (countryId !== null) {
+          params.append("country_ids", String(countryId));
+        }
+
         const res = await fetch(
           `${usePublic ? "/api/public/jobs" : "/api/jobs"}?${params.toString()}`,
           {
@@ -175,7 +183,7 @@ export default function HomePage() {
     };
 
     fetchJobs();
-  }, [activeProfileId, isAuthenticated, locale]);
+  }, [activeProfileId, isAuthenticated, locale, getCountryId]);
 
   useEffect(() => {
     const fetchTalents = async () => {
@@ -234,19 +242,17 @@ export default function HomePage() {
         onProfessionClick={handleProfessionClick}
       />
 
-      {/* Jobs Section - Only for authenticated users */}
-      {isAuthenticated && (
-        <JobsSection
-          jobs={jobs}
-          loading={jobsLoading}
-          kicker={t("homeNew.jobs.kicker")}
-          title={t("homeNew.jobs.title")}
-          subtitle={t("homeNew.jobs.subtitle")}
-          viewAll={t("homeNew.jobs.viewAll")}
-          loadingText={t("homeNew.jobs.loading")}
-          emptyText={t("homeNew.jobs.empty")}
-        />
-      )}
+      {/* Jobs Section - For all users - Horizontal cards in 2-column grid */}
+      <HomeJobsSection
+        jobs={jobs}
+        loading={jobsLoading}
+        kicker={t("homeNew.jobs.kicker")}
+        title={t("homeNew.jobs.title")}
+        subtitle={t("homeNew.jobs.subtitle")}
+        viewAll={t("homeNew.jobs.viewAll")}
+        loadingText={t("homeNew.jobs.loading")}
+        emptyText={t("homeNew.jobs.empty")}
+      />
 
       {/* Welcome Section */}
       <WelcomeSectionNew

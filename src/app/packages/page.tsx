@@ -123,13 +123,11 @@ export default function PackagesPage() {
 
   if (loading) {
     return (
- <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
+      <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
         <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-6">
           <div className="text-center">
             <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#c49a47]" />
- <p className="mt-4 text-gray-600 ">
-              Loading packages...
-            </p>
+            <p className="mt-4 text-gray-600 ">Loading packages...</p>
           </div>
         </div>
       </div>
@@ -138,10 +136,10 @@ export default function PackagesPage() {
 
   if (error) {
     return (
- <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
+      <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
         <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-6">
           <div className="text-center">
- <p className="text-red-600 ">{error}</p>
+            <p className="text-red-600 ">{error}</p>
           </div>
         </div>
       </div>
@@ -149,23 +147,23 @@ export default function PackagesPage() {
   }
 
   return (
- <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
+    <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
       {/* Hero Section */}
- <section className="relative overflow-hidden border-b border-gray-200 bg-linear-to-br from-white via-[#fff8ec] to-white ">
- <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] " />
+      <section className="relative overflow-hidden border-b border-gray-200 bg-linear-to-br from-white via-[#fff8ec] to-white ">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] " />
         <div className="container relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
           <div className="text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#c49a47]/30 bg-[#c49a47]/10 px-4 py-2 text-sm font-semibold text-[#c49a47]">
               <Crown className="h-4 w-4" />
               Premium Membership
             </div>
- <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
+            <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
               Unlock Your{" "}
               <span className="bg-linear-to-r from-[#c49a47] to-[#d4a855] bg-clip-text text-transparent">
                 Full Potential
               </span>
             </h1>
- <p className="mx-auto max-w-2xl text-lg text-gray-600 md:text-xl">
+            <p className="mx-auto max-w-2xl text-lg text-gray-600 md:text-xl">
               Join thousands of professionals who have elevated their careers
               with our premium membership. Get exclusive access to premium
               features, priority support, and unlimited opportunities.
@@ -191,24 +189,22 @@ export default function PackagesPage() {
                 description: "Upload more photos, videos & audio",
               },
               {
-                icon: <ArrowRight className="h-6 w-6" />,
+                icon: <ArrowRight className="h-6 w-6 rtl:scale-x-[-1]" />,
                 title: "Priority Support",
                 description: "24/7 dedicated customer service",
               },
             ].map((benefit, idx) => (
               <div
                 key={idx}
- className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-[#c49a47] hover:shadow-lg "
+                className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-[#c49a47] hover:shadow-lg "
               >
                 <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-[#c49a47] to-[#d4a855] text-white shadow-lg shadow-[#c49a47]/20">
                   {benefit.icon}
                 </div>
- <h3 className="mb-2 font-semibold text-gray-900 ">
+                <h3 className="mb-2 font-semibold text-gray-900 ">
                   {benefit.title}
                 </h3>
- <p className="text-sm text-gray-600 ">
-                  {benefit.description}
-                </p>
+                <p className="text-sm text-gray-600 ">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -218,18 +214,18 @@ export default function PackagesPage() {
       {/* Packages Section */}
       <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
         <div className="mb-12 text-center">
- <h2 className="mb-4 text-4xl font-bold text-gray-900 ">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 ">
             Choose Your Plan
           </h2>
- <p className="text-lg text-gray-600 ">
+          <p className="text-lg text-gray-600 ">
             Select the perfect package for your needs. All plans include full
             access to platform features.
           </p>
         </div>
 
         {packages.length === 0 ? (
- <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center ">
- <p className="text-gray-600 ">
+          <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center ">
+            <p className="text-gray-600 ">
               No packages available at this time. Please check back later.
             </p>
           </div>
@@ -249,25 +245,23 @@ export default function PackagesPage() {
         {/* Payment Section */}
         {packages.length > 0 && user && selectedPackage && (
           <div className="mt-12 mx-auto max-w-2xl">
- <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg ">
- <h3 className="mb-6 text-2xl font-bold text-gray-900 ">
+            <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg ">
+              <h3 className="mb-6 text-2xl font-bold text-gray-900 ">
                 Complete Your Purchase
               </h3>
 
               {/* Error Display */}
               {error && (
- <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 ">
- <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
- <p className="text-sm text-red-800 ">
-                    {error}
-                  </p>
+                <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 ">
+                  <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-800 ">{error}</p>
                 </div>
               )}
 
               {/* Selected Package Info */}
- <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 ">
+              <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 ">
                 <div className="flex items-center justify-between mb-2">
- <span className="text-sm font-medium text-gray-600 ">
+                  <span className="text-sm font-medium text-gray-600 ">
                     Selected Package
                   </span>
                   <button
@@ -277,10 +271,10 @@ export default function PackagesPage() {
                     Change
                   </button>
                 </div>
- <h4 className="text-lg font-semibold text-gray-900 ">
+                <h4 className="text-lg font-semibold text-gray-900 ">
                   {selectedPackage.title}
                 </h4>
- <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 mt-1">
                   {selectedPackage.duration_in_days} days
                 </p>
               </div>
@@ -298,23 +292,21 @@ export default function PackagesPage() {
               </div>
 
               {/* Price Summary */}
- <div className="mb-6 space-y-2 border-t border-gray-200 pt-4 ">
+              <div className="mb-6 space-y-2 border-t border-gray-200 pt-4 ">
                 <div className="flex items-center justify-between text-sm">
- <span className="text-gray-600 ">
-                    Original Price
-                  </span>
- <span className="font-medium text-gray-900 ">
+                  <span className="text-gray-600 ">Original Price</span>
+                  <span className="font-medium text-gray-900 ">
                     AED {selectedPackage.price.toFixed(2)}
                   </span>
                 </div>
                 {couponDiscount && (
- <div className="flex items-center justify-between text-sm text-green-600 ">
+                  <div className="flex items-center justify-between text-sm text-green-600 ">
                     <span>Discount</span>
                     <span>-AED {couponDiscount.toFixed(2)}</span>
                   </div>
                 )}
- <div className="flex items-center justify-between border-t border-gray-200 pt-2 ">
- <span className="text-lg font-bold text-gray-900 ">
+                <div className="flex items-center justify-between border-t border-gray-200 pt-2 ">
+                  <span className="text-lg font-bold text-gray-900 ">
                     Total
                   </span>
                   <span className="text-2xl font-bold text-[#c49a47]">
@@ -337,12 +329,12 @@ export default function PackagesPage() {
                 ) : (
                   <>
                     Proceed to Payment
-                    <ArrowRight className="ms-2 h-4 w-4" />
+                    <ArrowRight className="ms-2 h-4 w-4 rtl:scale-x-[-1]" />
                   </>
                 )}
               </Button>
 
- <p className="mt-4 text-center text-xs text-gray-500 ">
+              <p className="mt-4 text-center text-xs text-gray-500 ">
                 Secure payment powered by CCAvenue
               </p>
             </div>
@@ -351,11 +343,11 @@ export default function PackagesPage() {
 
         {/* CTA Section for non-logged in users */}
         {packages.length > 0 && !user && (
- <div className="mt-16 rounded-2xl border border-[#c49a47]/30 bg-linear-to-br from-[#fff8ec] to-[#f7e6c2] p-8 text-center lg:p-12">
- <h3 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
+          <div className="mt-16 rounded-2xl border border-[#c49a47]/30 bg-linear-to-br from-[#fff8ec] to-[#f7e6c2] p-8 text-center lg:p-12">
+            <h3 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
               Ready to Get Started?
             </h3>
- <p className="mb-6 text-gray-700 ">
+            <p className="mb-6 text-gray-700 ">
               Sign up now to choose your package and unlock all premium
               features.
             </p>
@@ -363,7 +355,7 @@ export default function PackagesPage() {
               <Link href="/register">
                 <Button className="min-w-[180px] bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40">
                   Create Account
-                  <ArrowRight className="ms-2 h-4 w-4" />
+                  <ArrowRight className="ms-2 h-4 w-4 rtl:scale-x-[-1]" />
                 </Button>
               </Link>
               <Link href="/login">
@@ -372,7 +364,7 @@ export default function PackagesPage() {
                 </Button>
               </Link>
             </div>
- <p className="mt-6 text-sm text-gray-600 ">
+            <p className="mt-6 text-sm text-gray-600 ">
               Already have an account?{" "}
               <Link
                 href="/login"
@@ -387,9 +379,9 @@ export default function PackagesPage() {
       </section>
 
       {/* FAQ Section */}
- <section className="border-t border-gray-200 bg-gray-50 ">
+      <section className="border-t border-gray-200 bg-gray-50 ">
         <div className="container mx-auto max-w-4xl px-6 py-16 lg:px-8 lg:py-24">
- <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 ">
+          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 ">
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
@@ -413,12 +405,12 @@ export default function PackagesPage() {
             ].map((faq, idx) => (
               <details
                 key={idx}
- className="group rounded-xl border border-gray-200 bg-white p-6 "
+                className="group rounded-xl border border-gray-200 bg-white p-6 "
               >
- <summary className="cursor-pointer text-lg font-semibold text-gray-900 ">
+                <summary className="cursor-pointer text-lg font-semibold text-gray-900 ">
                   {faq.q}
                 </summary>
- <p className="mt-4 text-gray-600 ">{faq.a}</p>
+                <p className="mt-4 text-gray-600 ">{faq.a}</p>
               </details>
             ))}
           </div>

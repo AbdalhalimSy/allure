@@ -17,8 +17,18 @@ interface DatePickerProps {
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 export default function DatePicker({
@@ -38,7 +48,7 @@ export default function DatePicker({
   const pickerRef = useRef<HTMLDivElement>(null);
 
   // Parse the value to date object
-  const selectedDate = useMemo(() => value ? new Date(value) : null, [value]);
+  const selectedDate = useMemo(() => (value ? new Date(value) : null), [value]);
 
   // Initialize calendar to selected date or today
   useEffect(() => {
@@ -51,7 +61,10 @@ export default function DatePicker({
   // Close on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -80,8 +93,8 @@ export default function DatePicker({
     const date = new Date(currentYear, currentMonth, day);
     // Format as YYYY-MM-DD without timezone conversion
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const dayStr = String(day).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const dayStr = String(day).padStart(2, "0");
     const dateString = `${year}-${month}-${dayStr}`;
     onChange(dateString);
     setIsOpen(false);
@@ -113,7 +126,7 @@ export default function DatePicker({
   const isDateDisabled = (day: number) => {
     const date = new Date(currentYear, currentMonth, day);
     const dateString = date.toISOString().split("T")[0];
-    
+
     if (minDate && dateString < minDate) return true;
     if (maxDate && dateString > maxDate) return true;
     return false;
@@ -144,12 +157,7 @@ export default function DatePicker({
 
     // Empty cells for days before the first day of month
     for (let i = 0; i < firstDay; i++) {
-      days.push(
-        <div
-          key={`empty-${i}`}
-          className="aspect-square"
-        />
-      );
+      days.push(<div key={`empty-${i}`} className="aspect-square" />);
     }
 
     // Days of the month
@@ -172,8 +180,8 @@ export default function DatePicker({
                 : today
                 ? "bg-[#c49a47]/10 text-[#c49a47] border border-[#c49a47]/30"
                 : disabled
- ? "text-gray-300 cursor-not-allowed "
- : "text-gray-700 hover:bg-gray-100 hover:scale-105 active:scale-100 "
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-700 hover:bg-gray-100 hover:scale-105 active:scale-100 "
             }
           `}
         >
@@ -188,23 +196,25 @@ export default function DatePicker({
   return (
     <div ref={pickerRef} className={`relative ${className}`}>
       {label && <Label>{label}</Label>}
-      
- <div className="relative flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white transition-all duration-200 ease-in-out hover:border-[#c49a47]/50 focus-within:border-[#c49a47] focus-within:ring-2 focus-within:ring-[#c49a47]/20 ">
+
+      <div className="relative flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white transition-all duration-200 ease-in-out hover:border-[#c49a47]/50 focus-within:border-[#c49a47] focus-within:ring-2 focus-within:ring-[#c49a47]/20 ">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
- className="flex flex-1 items-center gap-2 px-4 py-3 text-start text-black "
+          className="flex flex-1 items-center gap-2 px-4 py-3 text-start text-black "
         >
           <Calendar className="h-4 w-4 text-[#c49a47]" />
- <span className={value ? "text-gray-900 " : "text-gray-500 "}>
-            {value ? formatDate(selectedDate) : (placeholder || t("ui.selectDate"))}
+          <span className={value ? "text-gray-900 " : "text-gray-500 "}>
+            {value
+              ? formatDate(selectedDate)
+              : placeholder || t("ui.selectDate")}
           </span>
         </button>
         {value && (
           <button
             type="button"
             onClick={handleClear}
- className="me-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 "
+            className="me-2 rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 "
           >
             <X className="h-3 w-3" />
           </button>
@@ -213,7 +223,7 @@ export default function DatePicker({
 
       {/* Calendar Dropdown */}
       <div
- className={`absolute start-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out ${
+        className={`absolute start-0 top-full z-40 mt-2 w-80 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-in-out ${
           isOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none -translate-y-4 scale-95 opacity-0"
@@ -224,13 +234,17 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handlePrevMonth}
- className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
+            className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
-            {isRTL ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+            {isRTL ? (
+              <ChevronRight className="h-5 w-5" />
+            ) : (
+              <ChevronLeft className="h-5 w-5" />
+            )}
           </button>
-          
+
           <div className="text-center">
- <div className="text-sm font-semibold text-gray-900 ">
+            <div className="text-sm font-semibold text-gray-900 ">
               {MONTHS[currentMonth]} {currentYear}
             </div>
           </div>
@@ -238,9 +252,13 @@ export default function DatePicker({
           <button
             type="button"
             onClick={handleNextMonth}
- className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
+            className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
-            {isRTL ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+            {isRTL ? (
+              <ChevronLeft className="h-5 w-5" />
+            ) : (
+              <ChevronRight className="h-5 w-5" />
+            )}
           </button>
         </div>
 
@@ -249,7 +267,7 @@ export default function DatePicker({
           {DAYS.map((day) => (
             <div
               key={day}
- className="text-center text-xs font-semibold text-gray-500 "
+              className="text-center text-xs font-semibold text-gray-500 "
             >
               {day}
             </div>
@@ -257,12 +275,10 @@ export default function DatePicker({
         </div>
 
         {/* Calendar grid */}
-        <div className="grid grid-cols-7 gap-1">
-          {renderCalendar()}
-        </div>
+        <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
 
         {/* Quick actions */}
- <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 ">
+        <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 ">
           <button
             type="button"
             onClick={() => {
@@ -279,7 +295,7 @@ export default function DatePicker({
             <button
               type="button"
               onClick={handleClear}
- className="rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:scale-105 active:scale-100 "
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:scale-105 active:scale-100 "
             >
               {t("ui.clear")}
             </button>

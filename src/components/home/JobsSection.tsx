@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import JobCard from "@/components/jobs/JobCard";
 import type { Job } from "@/types/job";
-import { useI18n } from "@/contexts/I18nContext";
 
 interface JobsSectionProps {
   jobs: Job[];
@@ -27,8 +26,6 @@ export default function JobsSection({
   loadingText,
   emptyText,
 }: JobsSectionProps) {
-  const { locale } = useI18n();
-  const isRTL = locale === "ar";
 
   return (
     <section className="px-6 py-16 lg:px-12">
@@ -49,7 +46,7 @@ export default function JobsSection({
  className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary hover:text-primary "
           >
             {viewAll}
-            <ArrowRight className={`h-4 w-4 ${isRTL ? "scale-x-[-1]" : ""}`} />
+            <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
           </Link>
         </div>
 

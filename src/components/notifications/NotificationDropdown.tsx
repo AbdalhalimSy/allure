@@ -211,12 +211,12 @@ export default function NotificationDropdown() {
           {[1, 2, 3].map((item) => (
             <div
               key={item}
- className="flex animate-pulse items-start gap-3 rounded-lg bg-linear-to-r from-gray-50 to-white p-3 "
+              className="flex animate-pulse items-start gap-3 rounded-lg bg-linear-to-r from-gray-50 to-white p-3 "
             >
- <div className="h-10 w-10 rounded-full bg-gray-200/80 " />
+              <div className="h-10 w-10 rounded-full bg-gray-200/80 " />
               <div className="flex-1 space-y-2">
- <div className="h-3 w-2/3 rounded bg-gray-200/80 " />
- <div className="h-3 w-1/2 rounded bg-gray-200/70 " />
+                <div className="h-3 w-2/3 rounded bg-gray-200/80 " />
+                <div className="h-3 w-1/2 rounded bg-gray-200/70 " />
               </div>
             </div>
           ))}
@@ -226,7 +226,7 @@ export default function NotificationDropdown() {
 
     if (error) {
       return (
- <div className="rounded-lg bg-rose-50 p-3 text-sm text-rose-600 ">
+        <div className="rounded-lg bg-rose-50 p-3 text-sm text-rose-600 ">
           {error}
         </div>
       );
@@ -234,12 +234,12 @@ export default function NotificationDropdown() {
 
     if (!items.length) {
       return (
- <div className="flex flex-col items-center justify-center rounded-lg bg-gray-50 p-6 text-center ">
+        <div className="flex flex-col items-center justify-center rounded-lg bg-gray-50 p-6 text-center ">
           <BellOff className="mb-2 h-8 w-8 text-gray-400" />
- <p className="font-semibold text-gray-900 ">
+          <p className="font-semibold text-gray-900 ">
             {t("common.notifications.empty") || "You're all caught up"}
           </p>
- <p className="mt-1 text-sm text-gray-500 ">
+          <p className="mt-1 text-sm text-gray-500 ">
             {t("common.notifications.emptySubtitle") ||
               "New alerts will appear here."}
           </p>
@@ -254,16 +254,16 @@ export default function NotificationDropdown() {
             key={item.id}
             type="button"
             onClick={() => markAsRead(item.id)}
- className={`group relative flex w-full items-start gap-3 rounded-xl border p-3 text-start transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md ${
+            className={`group relative flex w-full items-start gap-3 rounded-xl border p-3 text-start transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md ${
               item.is_read
- ? "border-gray-100 bg-white "
- : "border-[#c49a47]/30 bg-linear-to-r from-white via-[#fff8ec] to-white shadow-sm "
+                ? "border-gray-100 bg-white "
+                : "border-[#c49a47]/30 bg-linear-to-r from-white via-[#fff8ec] to-white shadow-sm "
             }`}
           >
             <div
               className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ${
                 item.is_read
- ? "bg-gray-100 text-gray-600 "
+                  ? "bg-gray-100 text-gray-600 "
                   : "bg-[#c49a47]/15 text-[#c49a47]"
               }`}
             >
@@ -271,7 +271,7 @@ export default function NotificationDropdown() {
             </div>
             <div className="flex-1 space-y-1">
               <div className="flex items-start justify-between gap-2">
- <p className="text-sm font-semibold text-gray-900 line-clamp-1">
+                <p className="text-sm font-semibold text-gray-900 line-clamp-1">
                   {item.title}
                 </p>
                 {!item.is_read && (
@@ -287,11 +287,11 @@ export default function NotificationDropdown() {
                 )}
               </div>
               {item.body && (
- <p className="text-sm text-gray-600 line-clamp-2">
+                <p className="text-sm text-gray-600 line-clamp-2">
                   {item.body}
                 </p>
               )}
- <p className="text-xs text-gray-500 ">
+              <p className="text-xs text-gray-500 ">
                 {formatTimestamp(item.sent_at || item.created_at, locale)}
               </p>
             </div>
@@ -310,12 +310,12 @@ export default function NotificationDropdown() {
       <button
         type="button"
         onClick={toggle}
- className="relative flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md "
+        className="relative flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md "
         aria-label={t("common.notifications.title") || "Notifications"}
       >
         <Bell className="h-5 w-5" />
         {hasUnread && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c49a47] px-1 text-[11px] font-semibold text-white shadow-lg">
+          <span className="absolute -end-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c49a47] px-1 text-[11px] font-semibold text-white shadow-lg">
             {Math.min(unreadCount, 9)}
             {unreadCount > 9 ? "+" : ""}
           </span>
@@ -323,18 +323,18 @@ export default function NotificationDropdown() {
       </button>
 
       <div
- className={`absolute end-0 mt-3 w-[360px] max-w-[90vw] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl backdrop-blur transition-all duration-200 ease-in-out origin-top-right ${
+        className={`absolute end-0 mt-3 w-[360px] max-w-[90vw] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl backdrop-blur transition-all duration-200 ease-in-out origin-top-right ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-2 opacity-0"
         }`}
       >
- <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3 ">
+        <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3 ">
           <div>
- <p className="text-sm font-semibold text-gray-900 ">
+            <p className="text-sm font-semibold text-gray-900 ">
               {t("common.notifications.title") || "Notifications"}
             </p>
- <p className="text-xs text-gray-500 ">
+            <p className="text-xs text-gray-500 ">
               {hasUnread
                 ? unreadText
                 : t("common.notifications.caughtUp") || "You're caught up"}
@@ -359,10 +359,10 @@ export default function NotificationDropdown() {
           {renderedItems}
         </div>
 
- <div className="flex items-center justify-start gap-2 border-t border-gray-100 bg-linear-to-r from-[#fff8ec] via-white to-white px-4 py-3 ">
+        <div className="flex items-center justify-start gap-2 border-t border-gray-100 bg-linear-to-r from-[#fff8ec] via-white to-white px-4 py-3 ">
           <Link
             href="/account"
- className="text-sm font-medium text-gray-700 transition hover:text-gray-900 "
+            className="text-sm font-medium text-gray-700 transition hover:text-gray-900 "
             onClick={() => setOpen(false)}
           >
             {t("common.notifications.seeProfile") || "See the profile"}

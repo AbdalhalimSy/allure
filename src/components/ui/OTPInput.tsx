@@ -8,7 +8,12 @@ type OTPInputProps = {
   onComplete?: (code: string) => void;
 };
 
-export default function OTPInput({ length = 6, value, onChange, onComplete }: OTPInputProps) {
+export default function OTPInput({
+  length = 6,
+  value,
+  onChange,
+  onComplete,
+}: OTPInputProps) {
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const chars = Array.from({ length });
 
@@ -28,7 +33,10 @@ export default function OTPInput({ length = 6, value, onChange, onComplete }: OT
     if (nextEl) nextEl.focus();
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Backspace") {
       e.preventDefault();
       const arr = value.split("");
@@ -50,7 +58,10 @@ export default function OTPInput({ length = 6, value, onChange, onComplete }: OT
     }
   };
 
-  const handlePaste = (index: number, e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (
+    index: number,
+    e: React.ClipboardEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
     const pasted = e.clipboardData.getData("text").replace(/\D/g, "");
     if (!pasted) return;
@@ -80,7 +91,7 @@ export default function OTPInput({ length = 6, value, onChange, onComplete }: OT
           onChange={(e) => setChar(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={(e) => handlePaste(i, e)}
- className="h-12 w-10 rounded-lg border border-gray-300 bg-white text-center text-lg font-semibold tracking-widest text-gray-900 focus:border-[#c49a47] focus:outline-none focus:ring-1 focus:ring-[#c49a47] "
+          className="h-12 w-10 rounded-lg border border-gray-300 bg-white text-center text-lg font-semibold tracking-widest text-gray-900 focus:border-[#c49a47] focus:outline-none focus:ring-1 focus:ring-[#c49a47] "
           aria-label={`OTP digit ${i + 1}`}
         />
       ))}

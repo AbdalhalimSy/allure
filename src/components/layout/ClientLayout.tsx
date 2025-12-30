@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { I18nProvider, useI18n } from "@/contexts/I18nContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
+import { CountryFilterProvider } from "@/contexts/CountryFilterContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
@@ -53,11 +54,13 @@ export default function ClientLayout({
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <AuthProvider>
-          <NotificationProvider>
-            <LayoutContent>{children}</LayoutContent>
-          </NotificationProvider>
-        </AuthProvider>
+        <CountryFilterProvider>
+          <AuthProvider>
+            <NotificationProvider>
+              <LayoutContent>{children}</LayoutContent>
+            </NotificationProvider>
+          </AuthProvider>
+        </CountryFilterProvider>
       </I18nProvider>
     </QueryClientProvider>
   );

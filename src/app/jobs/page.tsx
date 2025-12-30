@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
+import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilterBar from "@/components/jobs/JobFilterBar";
 import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
@@ -21,6 +22,7 @@ export default function JobsPage() {
   const pathname = usePathname();
   const { activeProfileId, isAuthenticated } = useAuth();
   const { locale, t } = useI18n();
+  const { getCountryId } = useCountryFilter();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -117,6 +119,12 @@ export default function JobsPage() {
             params.append("profile_id", String(activeProfileId));
           }
 
+          // Add country filter if selected
+          const countryId = getCountryId();
+          if (countryId !== null) {
+            params.append("country_ids", String(countryId));
+          }
+
           // Add filter parameters
           Object.entries(filters).forEach(([key, value]) => {
             if (value === undefined || value === null || value === "") return;
@@ -201,7 +209,7 @@ export default function JobsPage() {
         }
       }
     },
-    [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly, isAuthenticated]
+    [activeProfileId, filters, locale, meta.per_page, t, showEligibleOnly, isAuthenticated, getCountryId]
   );
 
   // Reset jobs and show loading when pathname changes (navigation)
@@ -214,12 +222,16 @@ export default function JobsPage() {
 
   // Fetch jobs when filters, profile, or eligible toggle changes (first page)
   useEffect(() => {
-    if (activeProfileId) {
-      // Show switching animation when toggle changes
-      setSwitching(true);
-      fetchJobs(1, true);
+    // Fetch for authenticated users OR all users (public jobs)
+    if (isAuthenticated && !activeProfileId) {
+      // Still loading auth
+      return;
     }
-  }, [filters, activeProfileId, locale, showEligibleOnly, fetchJobs]);
+    
+    // Show switching animation when toggle changes
+    setSwitching(true);
+    fetchJobs(1, true);
+  }, [filters, activeProfileId, locale, showEligibleOnly, fetchJobs, isAuthenticated]);
 
   // Intersection Observer for infinite scroll
   useEffect(() => {

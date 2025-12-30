@@ -83,9 +83,9 @@ function SortableItem({
   return (
     <div ref={setNodeRef} style={style} className="group relative">
       {/* Modern Card Container */}
- <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all duration-500 hover:shadow-2xl hover:ring-[#c49a47]/20 ">
+      <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all duration-500 hover:shadow-2xl hover:ring-[#c49a47]/20 ">
         {/* 3:4 Aspect Ratio Image Container */}
- <div className="relative aspect-3/4 overflow-hidden bg-linear-to-br from-gray-100 to-gray-50 ">
+        <div className="relative aspect-3/4 overflow-hidden bg-linear-to-br from-gray-100 to-gray-50 ">
           {item.file_url ? (
             item.media_type?.startsWith("video") ? (
               <video
@@ -104,11 +104,11 @@ function SortableItem({
               />
             )
           ) : item.file ? (
- <div className="flex h-full w-full items-center justify-center text-sm text-gray-400 ">
+            <div className="flex h-full w-full items-center justify-center text-sm text-gray-400 ">
               {t("forms.newFilePendingUpload") || "New file pending upload"}
             </div>
           ) : (
- <div className="flex h-full w-full items-center justify-center text-sm text-gray-400 ">
+            <div className="flex h-full w-full items-center justify-center text-sm text-gray-400 ">
               {t("forms.noPreview") || "No preview"}
             </div>
           )}
@@ -118,10 +118,10 @@ function SortableItem({
         </div>
 
         {/* Top Controls Bar */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-3">
+        <div className="absolute top-0 start-0 end-0 flex items-center justify-between p-3">
           {/* Status Badge */}
           <div className="flex items-center gap-2">
- <span className="rounded-lg bg-white/95 px-2.5 py-1 text-xs font-bold text-gray-900 shadow-lg backdrop-blur-sm ">
+            <span className="rounded-lg bg-white/95 px-2.5 py-1 text-xs font-bold text-gray-900 shadow-lg backdrop-blur-sm ">
               #{index + 1}
             </span>
             <span
@@ -140,27 +140,27 @@ function SortableItem({
             className={`group/star rounded-lg p-2 shadow-lg backdrop-blur-sm transition-all ${
               isFeatured
                 ? "bg-[#c49a47] text-white"
- : "bg-white/95 text-gray-400 hover:bg-[#c49a47] hover:text-white "
+                : "bg-white/95 text-gray-400 hover:bg-[#c49a47] hover:text-white "
             }`}
             aria-label={
               t("portfolio.setFeaturedTooltip") || "Set as profile picture"
             }
           >
             {isFeatured ? <TbStarFilled size={20} /> : <TbStar size={20} />}
- <span className="pointer-events-none absolute top-full mt-2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-xl transition-opacity group-hover/star:opacity-100 ltr:left-1/2 ltr:-translate-x-10/12 rtl:right-1/2 rtl:translate-x-10/12 ">
+            <span className="pointer-events-none absolute top-full mt-2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-xl transition-opacity group-hover/star:opacity-100 start-1/2 ltr:-translate-x-10/12 rtl:translate-x-10/12 ">
               {t("portfolio.setFeaturedTooltip") || "Set as profile picture"}
             </span>
           </button>
         </div>
 
         {/* Bottom Action Bar - Visible on Hover */}
-        <div className="absolute bottom-0 left-0 right-0 translate-y-full p-3 transition-transform duration-500 group-hover:translate-y-0">
- <div className="flex items-center justify-between gap-2 rounded-xl bg-white/95 p-2 shadow-2xl backdrop-blur-md ">
+        <div className="absolute bottom-0 start-0 end-0 translate-y-full p-3 transition-transform duration-500 group-hover:translate-y-0">
+          <div className="flex items-center justify-between gap-2 rounded-xl bg-white/95 p-2 shadow-2xl backdrop-blur-md ">
             {/* Remove Button */}
             <button
               type="button"
               onClick={() => onRemove(item.id, item.tempKey)}
- className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-500 hover:text-white "
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-500 hover:text-white "
             >
               <TbTrash size={16} />
               <span className="hidden sm:inline">
@@ -182,7 +182,7 @@ function SortableItem({
 
         {/* Featured Badge Indicator */}
         {isFeatured && (
-          <div className="absolute bottom-3 rounded-lg bg-[#c49a47] px-3 py-1.5 text-xs font-bold text-white shadow-lg transition-all duration-500 group-hover:bottom-18 ltr:left-3 rtl:right-3">
+          <div className="absolute bottom-3 rounded-lg bg-[#c49a47] px-3 py-1.5 text-xs font-bold text-white shadow-lg transition-all duration-500 group-hover:bottom-18 start-3">
             {t("portfolio.profilePicture") || "Profile Picture"}
           </div>
         )}
@@ -362,19 +362,19 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             </div>
           </div>
         </div>
- <div className="rounded-3xl border border-gray-200/60 bg-white/90 p-5 shadow-lg backdrop-blur ">
- <p className="text-sm font-semibold text-gray-900 ">
+        <div className="rounded-3xl border border-gray-200/60 bg-white/90 p-5 shadow-lg backdrop-blur ">
+          <p className="text-sm font-semibold text-gray-900 ">
             {t("portfolio.featuredHint") ||
               "Tip: Star one item to set it as your public profile picture."}
           </p>
- <p className="mt-2 text-xs text-gray-600 ">
+          <p className="mt-2 text-xs text-gray-600 ">
             {t("portfolio.syncHint") ||
               "Upload multiple images or videos, drag to reorder, then sync to push changes live."}
           </p>
         </div>
       </div>
 
- <div className="mb-6 rounded-3xl border border-gray-200/60 bg-white/90 p-5 shadow-lg backdrop-blur ">
+      <div className="mb-6 rounded-3xl border border-gray-200/60 bg-white/90 p-5 shadow-lg backdrop-blur ">
         <FileUploader
           accept="image/*,video/*"
           multiple
@@ -389,7 +389,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       </div>
 
       {errors.length > 0 && (
- <div className="mb-4 space-y-1 rounded-2xl border border-red-300 bg-red-50 p-4 text-xs text-red-700 shadow-sm ">
+        <div className="mb-4 space-y-1 rounded-2xl border border-red-300 bg-red-50 p-4 text-xs text-red-700 shadow-sm ">
           {errors.map((e, i) => (
             <div key={i}>{e}</div>
           ))}
@@ -430,7 +430,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           </SortableContext>
         </DndContext>
       ) : (
- <div className="relative overflow-hidden rounded-3xl border border-dashed border-gray-300 bg-linear-to-br from-gray-50 via-white to-gray-100 p-10 text-center shadow-inner ">
+        <div className="relative overflow-hidden rounded-3xl border border-dashed border-gray-300 bg-linear-to-br from-gray-50 via-white to-gray-100 p-10 text-center shadow-inner ">
           <div className="absolute inset-0 bg-linear-to-tr from-[#c49a47]/15 via-transparent to-indigo-200/20" />
           <div className="relative">
             <svg
@@ -439,7 +439,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
               viewBox="0 0 24 24"
               strokeWidth={1}
               stroke="currentColor"
- className="mx-auto h-16 w-16 text-gray-400 "
+              className="mx-auto h-16 w-16 text-gray-400 "
             >
               <path
                 strokeLinecap="round"
@@ -447,11 +447,11 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
                 d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
               />
             </svg>
- <p className="mt-4 text-base font-semibold text-gray-700 ">
+            <p className="mt-4 text-base font-semibold text-gray-700 ">
               {t("portfolio.noItems") ||
                 "No portfolio items yet. Upload your work above!"}
             </p>
- <p className="mt-2 text-sm text-gray-500 ">
+            <p className="mt-2 text-sm text-gray-500 ">
               {t("portfolio.emptyHint") ||
                 "Upload a few shots, star your hero image, then sync to publish."}
             </p>
@@ -459,7 +459,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         </div>
       )}
 
- <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-6 ">
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-6 ">
         <div className="flex gap-3">
           <Button variant="secondary" onClick={onBack}>
             {t("common.back") || "Back"}

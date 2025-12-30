@@ -11,7 +11,6 @@ import {
   Sparkles,
   Waves,
 } from "lucide-react";
-import { useI18n } from "@/contexts/I18nContext";
 
 interface HeroSlide {
   title: string;
@@ -47,8 +46,6 @@ export default function HeroBanner({
   ctaBrowse,
   metrics,
 }: HeroBannerProps) {
-  const { locale } = useI18n();
-  const isRTL = locale === "ar";
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -98,14 +95,14 @@ export default function HeroBanner({
           onClick={prevSlide}
           className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
         >
-          <ChevronLeft className={`h-6 w-6 ${isRTL ? "scale-x-[-1]" : ""}`} />
+          <ChevronLeft className="h-6 w-6 rtl:scale-x-[-1]" />
         </button>
         <button
           aria-label="Next slide"
           onClick={nextSlide}
           className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
         >
-          <ChevronRight className={`h-6 w-6 ${isRTL ? "scale-x-[-1]" : ""}`} />
+          <ChevronRight className="h-6 w-6 rtl:scale-x-[-1]" />
         </button>
       </div>
 
@@ -143,11 +140,7 @@ export default function HeroBanner({
                     className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-xl transition hover:scale-105 hover:shadow-2xl"
                   >
                     {ctaRegister}
-                    <ArrowRight
-                      className={`h-5 w-5 transition group-hover:translate-x-1 ${
-                        isRTL ? "scale-x-[-1]" : ""
-                      }`}
-                    />
+                    <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1 rtl:scale-x-[-1]" />
                   </Link>
                 </>
               )}
@@ -158,11 +151,7 @@ export default function HeroBanner({
                   className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-xl transition hover:scale-105 hover:shadow-2xl"
                 >
                   {ctaDashboard}
-                  <ArrowRight
-                    className={`h-5 w-5 transition group-hover:translate-x-1 ${
-                      isRTL ? "scale-x-[-1]" : ""
-                    }`}
-                  />
+                  <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1 rtl:scale-x-[-1]" />
                 </Link>
               )}
 
