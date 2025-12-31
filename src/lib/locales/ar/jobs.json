@@ -109,10 +109,18 @@
     "additionalRequirements": "متطلبات إضافية",
     "applyFor": "التقديم لـ",
     "alreadyApplied": "تم التقديم مسبقاً",
+    "applied": "تم التقديم",
     "loginToApply": "سجّل الدخول للتقديم",
     "jobLocations": "مواقع الوظيفة",
     "noLocations": "لا توجد مواقع محددة",
-    "residenceCountries": "دول الإقامة"
+    "residenceCountries": "دول الإقامة",
+    "requirements": "المتطلبات",
+    "talentLocation": "موقع الموهبة",
+    "doNotMeetRequirements": "أنت لا تستوفي المتطلبات بالكامل لهذا الدور",
+    "multipleRolesAllowed": "السماح بأدوار متعددة",
+    "singleRoleOnly": "دور واحد فقط",
+    "shootingDates": "تواريخ التصوير",
+    "tbd": "قيد الانتظار"
   },
   "jobs": {
     "loading": "جارٍ تحميل الوظائف...",

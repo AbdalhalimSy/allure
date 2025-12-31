@@ -89,7 +89,7 @@ export default function JobDetailPage() {
   const roleCount = roles.length;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 via-white to-gray-50">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <JobDetailBackButton onClick={() => router.push("/jobs")} />
         <JobDetailHeader job={job} />
@@ -98,9 +98,11 @@ export default function JobDetailPage() {
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-900">
-                {t("jobs.jobDetail.availableRoles")} ({roleCount})
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  {t("jobs.jobDetail.availableRoles")} ({roleCount})
+                </h2>
+              </div>
 
               {roles.map((role) => (
                 <JobRoleCard
@@ -115,7 +117,9 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          <JobDetailSidebar jobCountries={job.job_countries} />
+          <div className="sticky top-24 self-start">
+            <JobDetailSidebar jobCountries={job.job_countries} />
+          </div>
         </div>
       </div>
 

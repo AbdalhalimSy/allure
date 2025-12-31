@@ -109,10 +109,18 @@
     "additionalRequirements": "Additional Requirements",
     "applyFor": "Apply for",
     "alreadyApplied": "Already applied",
+    "applied": "Applied",
     "loginToApply": "Login to apply",
     "jobLocations": "Job Locations",
     "noLocations": "No locations specified",
-    "residenceCountries": "Residence Countries"
+    "residenceCountries": "Residence Countries",
+    "requirements": "Requirements",
+    "talentLocation": "Talent Location",
+    "doNotMeetRequirements": "Do Not Meet Requirements",
+    "multipleRolesAllowed": "Multiple Roles Allowed",
+    "singleRoleOnly": "Single Role Only",
+    "shootingDates": "Shooting Dates",
+    "tbd": "To Be Determined"
   },
   "jobs": {
     "loading": "Loading jobs...",

@@ -35,8 +35,14 @@ export function useJobs(showEligibleOnly: boolean) {
       const usePublic = !isAuthenticated || !activeProfileId;
 
       try {
-        if (abortRef.current) abortRef.current.abort();
+        // Only abort previous requests, don't abort the current one yet
+        const previousAbortController = abortRef.current;
         abortRef.current = new AbortController();
+        
+        // Abort the previous request
+        if (previousAbortController) {
+          previousAbortController.abort();
+        }
 
         if (reset) {
           setLoading(true);
@@ -72,6 +78,11 @@ export function useJobs(showEligibleOnly: boolean) {
               },
             }
           );
+
+          // Check if this request was aborted
+          if (!response.ok && response.status === 0) {
+            return;
+          }
 
           if (!response.ok) {
             const data = await response.json();
@@ -133,6 +144,11 @@ export function useJobs(showEligibleOnly: boolean) {
               },
             }
           );
+
+          // Check if this request was aborted
+          if (!response.ok && response.status === 0) {
+            return;
+          }
 
           if (!response.ok) {
             const data = await response.json();

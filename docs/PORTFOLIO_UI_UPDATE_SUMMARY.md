@@ -24,7 +24,7 @@ Updated locations:
 - Card borders: `border-[#c49a47]/20`
 - Card hover shadow: `hover:shadow-[#c49a47]/30`
 - Gradient overlays: `from-[#c49a47]/25` and `from-[#c49a47]/15`
-- Gradient backgrounds: `bg-gradient-to-br from-[#c49a47]/20`
+- Gradient backgrounds: `bg-linear-to-br from-[#c49a47]/20`
 - Status indicator: `bg-[#c49a47]/20 px-4 py-2 text-[#c49a47]`
 - Icon color: `text-[#c49a47]`
 - Text color: `text-[#c49a47]`

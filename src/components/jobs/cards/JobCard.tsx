@@ -140,9 +140,15 @@ export default function JobCard({ job }: JobCardProps) {
 
         {/* Professions Tags - Aggregated from roles */}
         {(() => {
-          const allProfessions = [...new Set(
-            job.roles?.flatMap(role => role.professions || []) || []
-          )];
+          const allProfessions = [
+            ...new Set(
+              job.roles?.flatMap(role => 
+                (role.professions || []).map(p => 
+                  typeof p === 'string' ? p : p.name
+                )
+              ) || []
+            )
+          ];
           return allProfessions.length > 0 && (
             <div className="mb-4 flex flex-wrap gap-2">
               {allProfessions.slice(0, 3).map((profession) => (

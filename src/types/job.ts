@@ -1,3 +1,38 @@
+// Profession type with descriptions
+export interface Profession {
+  id: number;
+  name: string;
+  description?: string | null;
+  image?: string | null;
+  requires_photo: boolean;
+  requires_photo_description?: string | null;
+  requires_video: boolean;
+  requires_video_description?: string | null;
+  requires_audio: boolean;
+  requires_audio_description?: string | null;
+  requires_languages: boolean;
+  requires_languages_description?: string | null;
+  requires_socials: boolean;
+  requires_socials_description?: string | null;
+  sub_professions?: SubProfession[];
+}
+
+// Sub-profession type with descriptions
+export interface SubProfession {
+  id: number;
+  profession_id: number;
+  name: string;
+  description?: string | null;
+  requires_photo: boolean;
+  requires_photo_description?: string | null;
+  requires_video: boolean;
+  requires_video_description?: string | null;
+  requires_audio: boolean;
+  requires_audio_description?: string | null;
+  requires_sizes: boolean;
+  requires_sizes_description?: string | null;
+}
+
 // Base Role type for job listings
 export interface Role {
   id: number;
@@ -14,8 +49,8 @@ export interface Role {
   call_time_slots?: CallTimeSlotGroup[];
   // NEW FIELDS - Moved from Job level
   talent_based_countries?: string[] | null; // Talents must be based in these countries
-  professions?: string[] | null; // Required professions for this role
-  sub_professions?: string[] | null; // Required sub-professions for this role
+  professions?: string[] | Profession[] | null; // Required professions for this role (can be string or object)
+  sub_professions?: string[] | SubProfession[] | null; // Required sub-professions for this role (can be string or object)
 }
 
 // Shooting date object

@@ -156,7 +156,7 @@ export default function ContactPage() {
       url: "https://www.instagram.com/allureagency",
       icon: FaInstagram,
       color:
-        "hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-red-500",
+        "hover:bg-linear-to-r hover:from-purple-500 hover:via-pink-500 hover:to-red-500",
     },
     {
       name: "TikTok",
