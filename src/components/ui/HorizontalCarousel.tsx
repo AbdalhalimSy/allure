@@ -187,14 +187,14 @@ export default function HorizontalCarousel<T = unknown>({
             onClick={() => scrollBy(-480)}
             className="absolute start-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block "
           >
-            <ChevronLeft className="h-5 w-5 rtl:rotate-180" />
+            <ChevronLeft className="h-5 w-5 rtl:scale-x-[-1]" />
           </button>
           <button
             aria-label="Scroll right"
             onClick={() => scrollBy(480)}
             className="absolute end-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block "
           >
-            <ChevronRight className="h-5 w-5 rtl:rotate-180" />
+            <ChevronRight className="h-5 w-5 rtl:scale-x-[-1]" />
           </button>
         </>
       )}

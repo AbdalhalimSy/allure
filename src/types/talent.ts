@@ -26,9 +26,16 @@ export interface ColorOption {
 
 export interface Experience {
   id: number;
+  profile_id?: number;
   title: string;
   description?: string;
   year?: number;
+  start_date?: string;
+  end_date?: string | null;
+  is_current?: boolean;
+  attachment_url?: string | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Profile {
@@ -42,6 +49,7 @@ export interface Profile {
   age: number;
   mobile: string;
   whatsapp?: string;
+  languages_spoken?: string | null;
   progress_step: string;
   
   // Physical attributes

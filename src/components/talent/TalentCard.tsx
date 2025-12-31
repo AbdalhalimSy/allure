@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { Talent } from "@/types/talent";
 import { MapPin, Ruler, Sparkles, TrendingUp } from "lucide-react";
@@ -10,9 +9,10 @@ export type { Talent };
 
 interface TalentCardProps {
   talent: Talent;
+  onClick?: () => void;
 }
 
-export default function TalentCard({ talent }: TalentCardProps) {
+export default function TalentCard({ talent, onClick }: TalentCardProps) {
   const { t } = useI18n();
   const { profile, professions, media } = talent;
   
@@ -30,8 +30,10 @@ export default function TalentCard({ talent }: TalentCardProps) {
                          (profile.facebook_followers || 0);
   
   return (
-    <Link href={`/talents/${profile.id}`}>
-      <div className="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+    <button
+      onClick={onClick}
+      className="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl text-start"
+    >
         {/* Gradient Border Effect */}
         <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-[#c49a47]/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
@@ -118,7 +120,6 @@ export default function TalentCard({ talent }: TalentCardProps) {
             </div>
           )}
         </div>
-      </div>
-    </Link>
+    </button>
   );
 }

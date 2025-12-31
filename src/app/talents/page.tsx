@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import TalentCard from "@/components/talent/TalentCard";
+import TalentDetailModal from "@/components/talent/TalentDetailModal";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
 import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
 import Loader from "@/components/ui/Loader";
@@ -29,6 +30,8 @@ export default function TalentsPage() {
     last_page: 1,
   });
   const [hasMore, setHasMore] = useState(true);
+  const [selectedTalent, setSelectedTalent] = useState<Talent | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const requestIdRef = useRef(0); // Track the latest request to avoid stale loading flips
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
@@ -298,7 +301,14 @@ export default function TalentsPage() {
             {/* Grid */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {talents.map((talent) => (
-                <TalentCard key={talent.profile.id} talent={talent} />
+                <TalentCard 
+                  key={talent.profile.id} 
+                  talent={talent}
+                  onClick={() => {
+                    setSelectedTalent(talent);
+                    setIsModalOpen(true);
+                  }}
+                />
               ))}
             </div>
 
@@ -321,6 +331,16 @@ export default function TalentsPage() {
           </>
         )}
       </section>
+
+      {/* Talent Detail Modal */}
+      <TalentDetailModal
+        talent={selectedTalent}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedTalent(null);
+        }}
+      />
     </div>
   );
 }
