@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "@/components/ui/Loader";
-import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
+import JobCardSkeleton from "@/components/jobs/cards/JobCardSkeleton";
 
 export default function LoadingJobs() {
   return (

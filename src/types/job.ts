@@ -5,11 +5,22 @@ export interface Role {
   gender: string;
   start_age: number;
   end_age: number;
+  budget_currency?: string | null;
   can_apply?: boolean | null;
   has_applied?: boolean;
   eligibility_score?: number | null;
+  reasons?: string[] | null; // NEW: Reasons why talent cannot apply
   call_time_enabled?: boolean;
   call_time_slots?: CallTimeSlotGroup[];
+  // NEW FIELDS - Moved from Job level
+  talent_based_countries?: string[] | null; // Talents must be based in these countries
+  professions?: string[] | null; // Required professions for this role
+  sub_professions?: string[] | null; // Required sub-professions for this role
+}
+
+// Shooting date object
+export interface ShootingDate {
+  date: string; // YYYY-MM-DD format
 }
 
 // Base Job type for job listings
@@ -21,16 +32,16 @@ export interface Job {
   highlights?: string | null; // Optional highlights field
   usage_terms?: string | null;
   skills?: string; // Optional field
-  shooting_date: string;
+  shooting_dates: ShootingDate[]; // Array of shooting dates
   expiration_date: string;
-  is_active: boolean;
   open_to_apply: boolean;
   roles_count: number;
   has_applied?: boolean;
-  countries?: string[]; // For list endpoint
-  job_countries?: string[]; // For detail endpoint
-  professions?: string[]; // Optional
+  countries?: string[]; // For list endpoint - job location countries
+  job_countries?: string[]; // For detail endpoint - job location countries
+  // NOTE: professions, sub_professions, residence_countries moved to Role level
   roles: Role[];
+  allow_multiple_role_applications?: boolean;
 }
 
 // Extended types for job details
@@ -92,6 +103,11 @@ export interface DetailedRole extends Role {
   ethnicity: string[];
   payment_terms_days: number;
   budget?: number | null;
+  budget_currency?: string | null;
+  // Role-level requirements (moved from Job level)
+  talent_based_countries?: string[] | null;
+  professions?: string[] | null;
+  sub_professions?: string[] | null;
   meta_conditions: MetaCondition[];
   conditions: Condition[];
   call_time_enabled: boolean;
@@ -101,8 +117,7 @@ export interface DetailedRole extends Role {
 export interface DetailedJob extends Omit<Job, 'roles' | 'roles_count' | 'countries'> {
   image?: string | null;
   job_countries: string[]; // Detail endpoint uses 'job_countries' instead of 'countries'
-  residence_countries?: string[];
-  sub_professions: string[];
+  // NOTE: residence_countries, professions, sub_professions now at role level
   roles: DetailedRole[];
 }
 
@@ -123,8 +138,6 @@ export interface JobsResponse {
 export interface JobFilters {
   per_page?: number;
   title?: string;
-  shooting_date_from?: string; // YYYY-MM-DD format
-  shooting_date_to?: string; // YYYY-MM-DD format
   expiration_date_from?: string; // YYYY-MM-DD format
   expiration_date_to?: string; // YYYY-MM-DD format
   country_ids?: number | number[]; // Job location countries

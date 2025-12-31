@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useEligibleRoles } from "@/hooks/useEligibleRoles";
-import JobCard from "@/components/jobs/JobCard";
-import JobCardSkeleton from "@/components/jobs/JobCardSkeleton";
+import JobCard from "@/components/jobs/cards/JobCard";
+import JobCardSkeleton from "@/components/jobs/cards/JobCardSkeleton";
 import SurfaceCard from "@/components/ui/SurfaceCard";
 import { AlertCircle, Sparkles, TrendingUp } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default function EligibleRolesPage() {
   const { isAuthenticated, activeProfileId } = useAuth();
   const { data: eligibleJobs, isLoading, error, refetch } = useEligibleRoles();
   const [sortBy, setSortBy] = useState<
-    "best-match" | "shooting-date" | "expiration"
+    "best-match" | "expiration"
   >("best-match");
 
   // Sort jobs based on selected criteria and add roles_count
@@ -33,11 +33,6 @@ export default function EligibleRolesPage() {
               0
             );
             return bMaxScore - aMaxScore;
-          } else if (sortBy === "shooting-date") {
-            return (
-              new Date(a.shooting_date).getTime() -
-              new Date(b.shooting_date).getTime()
-            );
           } else {
             // expiration
             return (
@@ -120,9 +115,7 @@ export default function EligibleRolesPage() {
               <option value="best-match">
                 {t("jobs.eligibleRoles.bestMatch") || "Best Match"}
               </option>
-              <option value="shooting-date">
-                {t("jobs.eligibleRoles.shootingDate") || "Shooting Date"}
-              </option>
+
               <option value="expiration">
                 {t("jobs.eligibleRoles.expiringSoon") || "Expiring Soon"}
               </option>

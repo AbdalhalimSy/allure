@@ -1,5 +1,5 @@
 import { Job } from "@/types/job";
-import JobCard from "./JobCard";
+import JobCard from "../cards/JobCard";
 
 interface JobListProps {
   jobs: Job[];

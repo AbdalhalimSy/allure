@@ -36,6 +36,18 @@ export default function JobCard({ job }: JobCardProps) {
   const isExpiringSoon = daysUntilExpiry <= 7 && daysUntilExpiry > 0;
   const alreadyApplied = Boolean(job.has_applied);
 
+  // Format shooting dates - show first date or "TBD" if empty
+  const shootingDatesDisplay = () => {
+    if (!job.shooting_dates || job.shooting_dates.length === 0) {
+      return t("jobs.jobCard.tbd") || "TBD";
+    }
+    const firstDate = formatDate(job.shooting_dates[0].date);
+    if (job.shooting_dates.length > 1) {
+      return `${firstDate} +${job.shooting_dates.length - 1} ${t("jobs.jobCard.more") || "more"}`;
+    }
+    return firstDate;
+  };
+
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 ">
       {/* Job Image */}
@@ -86,7 +98,7 @@ export default function JobCard({ job }: JobCardProps) {
           <div className="flex items-center gap-2 text-sm text-gray-700 ">
             <Calendar className="h-4 w-4 text-[#c49a47]" />
             <span className="font-medium">{t("jobs.jobCard.shooting")}</span>
-            <span>{formatDate(job.shooting_date)}</span>
+            <span>{shootingDatesDisplay()}</span>
           </div>
 
           <div className="flex items-center gap-2 text-sm text-gray-700 ">
@@ -126,24 +138,29 @@ export default function JobCard({ job }: JobCardProps) {
           </div>
         )}
 
-        {/* Professions Tags */}
-        {job.professions && job.professions.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-2">
-            {job.professions.slice(0, 3).map((profession) => (
-              <span
-                key={profession}
-                className="rounded-lg bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] "
-              >
-                {profession}
-              </span>
-            ))}
-            {job.professions.length > 3 && (
-              <span className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 ">
-                +{job.professions.length - 3}
-              </span>
-            )}
-          </div>
-        )}
+        {/* Professions Tags - Aggregated from roles */}
+        {(() => {
+          const allProfessions = [...new Set(
+            job.roles?.flatMap(role => role.professions || []) || []
+          )];
+          return allProfessions.length > 0 && (
+            <div className="mb-4 flex flex-wrap gap-2">
+              {allProfessions.slice(0, 3).map((profession) => (
+                <span
+                  key={profession}
+                  className="rounded-lg bg-[#c49a47]/10 px-3 py-1 text-xs font-medium text-[#c49a47] "
+                >
+                  {profession}
+                </span>
+              ))}
+              {allProfessions.length > 3 && (
+                <span className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 ">
+                  +{allProfessions.length - 3}
+                </span>
+              )}
+            </div>
+          );
+        })()}
 
         {/* View Details Button */}
         <Link

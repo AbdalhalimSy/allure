@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import JobCard from '@/components/jobs/JobCard';
+import JobCard from '@/components/jobs/cards/JobCard';
 import { Job } from '@/types/job';
 
 jest.mock('next/link', () => {
@@ -15,9 +15,8 @@ describe('JobCard', () => {
     title: 'Lead Actor for Drama Series',
     description: 'Seeking experienced actor for leading role in upcoming drama series',
     skills: 'Acting, Drama, Emotional Range',
-    shooting_date: '2025-12-01',
+    shooting_dates: [{ date: '2025-12-01' }],
     expiration_date: '2025-11-30',
-    is_active: true,
     open_to_apply: true,
     roles_count: 3,
     countries: ['Saudi Arabia', 'UAE', 'Egypt'],

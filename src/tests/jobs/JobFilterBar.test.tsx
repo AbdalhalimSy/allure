@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import JobFilterBar from '@/components/jobs/JobFilterBar';
+import JobFilterBar from '@/components/jobs/filters/JobFilterBar';
 import { I18nProvider } from '@/contexts/I18nContext';
 
 const noop = () => {};

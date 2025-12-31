@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import JobCard from "@/components/jobs/JobCard";
+import JobCard from "@/components/jobs/cards/JobCard";
 import type { Job } from "@/types/job";
 
 interface JobsSectionProps {

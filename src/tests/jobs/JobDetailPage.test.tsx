@@ -27,9 +27,9 @@ const mockJobResponse = {
     description: 'Job description',
     image: null,
     expiration_date: new Date(Date.now() + 3 * 86400000).toISOString(),
-    shooting_date: new Date().toISOString(),
-    is_active: true,
+    shooting_dates: [{ date: new Date().toISOString().split('T')[0] }],
     open_to_apply: true,
+    allow_multiple_role_applications: false,
     highlights: 'Key points',
     usage_terms: 'Usage terms',
     roles: [
@@ -65,13 +65,13 @@ const mockJobResponse = {
             ]
           }
         ],
-        conditions: [ { id: 'c1', label: 'Must be available', is_required: true } ]
+        conditions: [ { id: 'c1', label: 'Must be available', is_required: true } ],
+        professions: ['Actor'],
+        sub_professions: ['Host'],
+        talent_based_countries: ['Lebanon']
       }
     ],
-    professions: ['Actor'],
-    sub_professions: ['Host'],
-    job_countries: ['UAE'],
-    residence_countries: ['Lebanon']
+    job_countries: ['UAE']
   }
 };
 
@@ -100,7 +100,7 @@ describe('JobDetailPage i18n', () => {
     expect(screen.getByText('Highlights:')).toBeInTheDocument();
     expect(screen.getByText('Usage Terms:')).toBeInTheDocument();
     expect(screen.getByText('Job Locations')).toBeInTheDocument();
-    expect(screen.getByText('Residence Countries')).toBeInTheDocument();
+    // Note: Residence countries now shown at role level as talent_based_countries
   });
 
   it('renders Arabic strings when locale is ar', async () => {
@@ -117,6 +117,6 @@ describe('JobDetailPage i18n', () => {
     expect(screen.getByText('أبرز النقاط:')).toBeInTheDocument();
     expect(screen.getByText('شروط الاستخدام:')).toBeInTheDocument();
     expect(screen.getByText('مواقع الوظيفة')).toBeInTheDocument();
-    expect(screen.getByText('دول الإقامة')).toBeInTheDocument();
+    // Note: Residence countries now shown at role level as talent_based_countries
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import JobApplicationModal from '@/components/jobs/JobApplicationModal';
+import JobApplicationModal from '@/components/jobs/modals/JobApplicationModal';
 
 // Mock toast
 jest.mock('react-hot-toast', () => ({

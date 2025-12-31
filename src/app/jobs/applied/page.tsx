@@ -6,7 +6,7 @@ import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/ui/Loader";
 import Button from "@/components/ui/Button";
-import CallTimeSelector from "@/components/jobs/CallTimeSelector";
+import CallTimeSelector from "@/components/jobs/selectors/CallTimeSelector";
 import { toast } from "react-hot-toast";
 import { AlertCircle, CheckCircle2, Clock, Filter, Search, XCircle, ChevronDown } from "lucide-react";
 import { AppliedJob, AppliedJobsResponse } from "@/types/job";
