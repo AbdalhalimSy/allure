@@ -1,350 +1,364 @@
 {
-  "hero": {
-    "badge": "Casting • Representation • Production Support",
-    "title": "Regional casting & talent intelligence since 2009.",
-    "subtitle": "Allure unites curated representation, data‑driven matching, and production‑ready workflow so brands secure the right talent faster across Lebanon, Dubai & Abu Dhabi.",
-    "browseTalents": "Browse Talents",
-    "exploreJobs": "Explore Jobs",
-    "stats": {
-      "representedTalents": "represented talents",
-      "activeCastings": "active castings",
-      "bookingSuccess": "booking success",
-      "averageResponse": "average response"
-    },
-    "workflowLabel": "Intelligent Workflow",
-    "workflow": {
-      "step1": "Publish your casting brief with all the nuance it deserves.",
-      "step2": "Receive curated submissions matched by our talent intelligence.",
-      "step3": "Book fittings, callbacks, and final selections in one dashboard."
-    },
-    "categories": {
-      "fashion": "Fashion",
-      "commercial": "Commercial",
-      "creators": "Content Creators",
-      "actors": "Actors",
-      "hosts": "Hosts"
-    }
-  },
-  "featuredTalents": {
-    "eyebrow": "Talent Roster",
-    "title": "Spotlighted profiles moving the region forward.",
-    "description": "Handpicked and personally managed, each talent listed below is prepped with digitals, reels, and availability so you can confirm the perfect fit in hours.",
-    "viewAll": "View All"
-  },
-  "featuredCastings": {
-    "eyebrow": "Live Opportunities",
-    "title": "Current casting calls curated by the Allure team.",
-    "description": "Explore curated opportunities across the region. Submit your profile or post your own casting.",
-    "postYourOwn": "Post Your Own"
-  },
-  "agencyIntro": {
-    "eyebrow": "Agency DNA",
-    "title": "Boutique sensibility, platform-grade delivery.",
-    "description": "Where boutique sensibility meets platform precision—Allure pairs human care with technology so every production moves with less friction.",
-    "pillars": {
-      "curated": {
-        "title": "Curated Representation",
-        "description": "We build long-term development plans with each talent—digitals, comps, and reels are refreshed quarterly for instant briefs."
-      },
-      "matching": {
-        "title": "Human + Data Matching",
-        "description": "Our bookers combine relationship knowledge with platform data, surfacing a short list that reflects your storyboard from day one."
-      },
-      "workflow": {
-        "title": "Production-Safe Workflow",
-        "description": "Centralize NDAs, call sheets, fittings, and usage terms in one secure workspace, available to clients and talent managers."
-      }
-    },
-    "commitments": {
-      "mena": "MENA-centric scouting team",
-      "bilingual": "Bilingual account managers",
-      "studios": "Casting studio partnerships",
-      "support": "On-set and remote support"
-    }
-  },
-  "contact": {
-    "eyebrow": "Get in Touch",
-    "title": "Let's start a conversation",
-    "titlePart1": "Let's start a",
-    "titlePart2": "conversation",
-    "description": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, we're here to help.",
-    "sendMessage": "Send us a message",
-    "contactInfo": "Contact Information",
-    "address": "Address",
-    "openingHours": "Opening Hours",
-    "forTalents": "For Talents",
-    "forClients": "For Clients",
-    "fullName": "Full Name",
-    "emailAddress": "Email Address",
-    "phoneNumber": "Phone Number",
-    "message": "Message",
-    "sendBtn": "Send Message",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "namePlaceholder": "John Doe",
-    "emailPlaceholder": "you@example.com",
-    "phonePlaceholder": "52 342 9898",
-    "messagePlaceholder": "Tell us about your inquiry...",
-    "addressLine1": "Churchill Tower, Office Number 3411",
-    "addressLine2": "Business Bay - Dubai",
-    "addressLine3": "United Arab Emirates",
-    "openingHoursValue": "Monday - Saturday: 09:00 - 18:00",
-    "phoneLabel": "Phone",
-    "uaeLabel": "UAE",
-    "lebanonLabel": "Lebanon"
-  },
-  "about": {
-    "title": "About Allure",
-    "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East.",
-    "established": "Established",
-    "branches": "Branches",
-    "projects": "Projects",
-    "ourStory": "Our Story",
-    "welcomeTitle": "Welcome to Allure Media Agency",
-    "welcomeText": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
-    "ourHistory": "Our History",
-    "expansionTitle": "Expanding Across the Region",
-    "partnersTitle": "Partners",
-    "partnersDescription": "We have worked with some of the best names in the market. Be one of them!",
-    "becomeTalent": "Become a Talent",
-    "findJob": "Find a Job",
-    "checkAllTalents": "Check All Talents",
-    "readyTitle": "Ready to work with us?",
-    "readyDescription": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
-    "getInTouch": "Get in Touch",
-    "talents": "Talents",
-    "welcomeParagraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
-    "expansionParagraph1": "We expanded to Dubai and later Abu Dhabi—forming a tri‑city presence that gives productions diverse talent pools with on‑the‑ground support.",
-    "expansionParagraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow from first brief to final usage.",
-    "rosterEyebrow": "Our Roster",
-    "rosterTitle": "Meet our talented and creative professionals",
-    "rosterDescription": "Discover the diverse range of exceptional talents who bring creativity and professionalism to every project.",
-    "partnersEyebrow": "Trusted By"
-  },
-  "talentSpotlight": {
-    "badge": "Spotlight",
-    "ready": "Ready",
-    "cards": {
-      "layla": {
-        "name": "Layla Arif",
-        "category": "Runway & Editorial",
-        "location": "Dubai, UAE",
-        "availability": "Available for SS25",
-        "tags": {
-          "height": "Height 178cm",
-          "versatile": "Versatile Looks",
-          "languages": "Arabic + English"
-        }
-      },
-      "omar": {
-        "name": "Omar El Fayed",
-        "category": "Commercial Talent",
-        "location": "Riyadh, KSA",
-        "availability": "Booked through Nov",
-        "tags": {
-          "lifestyle": "Lifestyle",
-          "swimwear": "Swimwear",
-          "tvReady": "TV Ready"
-        }
-      },
-      "sofia": {
-        "name": "Sofia Haddad",
-        "category": "Actors & Hosts",
-        "location": "Beirut, Lebanon",
-        "availability": "Accepting Voiceovers",
-        "tags": {
-          "acting": "Acting",
-          "voice": "Voice",
-          "mc": "MC Experience"
-        }
-      },
-      "malik": {
-        "name": "Malik Rahman",
-        "category": "Digital Creators",
-        "location": "Doha, Qatar",
-        "availability": "Studio + Remote",
-        "tags": {
-          "content": "Content",
-          "beauty": "Beauty",
-          "arReady": "AR Ready"
-        }
-      }
-    }
-  },
-  "castingOpportunities": {
-    "luxuryResort": {
-      "title": "Luxury Resort SS25 Campaign",
-      "brand": "AMAARI Resorts",
-      "location": "Abu Dhabi, UAE",
-      "timeline": "Feb 02 – Feb 08",
-      "budget": "25,000 AED",
-      "requirements": {
-        "req1": "Mixed gender cast of 6",
-        "req2": "Swim + Resort wear",
-        "req3": "Comfort with underwater stills"
-      }
-    },
-    "beautyEditorial": {
-      "title": "Beauty Editorial x Global Gloss",
-      "brand": "Global Gloss",
-      "location": "Jeddah, KSA",
-      "timeline": "Jan 15 – Jan 18",
-      "budget": "16,500 SAR",
-      "requirements": {
-        "req1": "Female-presenting talent",
-        "req2": "Expressive eyes + freckles",
-        "req3": "Comfortable with closeups"
-      }
-    },
-    "immersiveFashion": {
-      "title": "Immersive Fashion Presentation",
-      "brand": "FutureLab Studios",
-      "location": "Dubai Design District",
-      "timeline": "Mar 01 – Mar 12",
-      "budget": "30,000 AED",
-      "requirements": {
-        "req1": "Movement / choreography background",
-        "req2": "Experience with interactive shows",
-        "req3": "Multi-lingual bonus"
-      }
-    },
-    "hospitalityLifestyle": {
-      "title": "Hospitality Lifestyle Series",
-      "brand": "Kafara Collection",
-      "location": "Doha, Qatar",
-      "timeline": "Feb 18 – Feb 22",
-      "budget": "18,000 QAR",
-      "requirements": {
-        "req1": "Couple dynamic",
-        "req2": "Comfort with dialog",
-        "req3": "Natural chemistry"
-      }
-    }
-  },
-  "talentList": {
-    "title": "Talents",
-    "placeholder": "Talent",
-    "role": "Model"
-  },
-  "castingList": {
-    "title": "Active Casting Calls",
-    "cardTitle": "Casting",
-    "roleLabel": "Role",
-    "countryLabel": "Country",
-    "deadlineLabel": "Deadline",
-    "placeholderRole": "Model",
-    "placeholderCountry": "UAE",
-    "placeholderDeadline": "2025-12-01"
-  },
-  "homeNew": {
+  "home": {
     "hero": {
-      "kicker": "Find Talents",
-      "badgeCampaigns": "Campaign Acceleration",
-      "badgeProduction": "On-Set Support",
-      "badgePlatform": "Platform Precision",
-      "slides": [
-        {
-          "title": "Cast globally. Confirm locally.",
-          "subtitle": "A bilingual, production-safe casting runway so clients, creatives, and talent move in sync.",
-          "pulse": "Live campaigns in motion"
-        },
-        {
-          "title": "From treatment to call sheet in days.",
-          "subtitle": "Allure bridges creative intent with vetted faces, rehearsals, and approvals in one place.",
-          "pulse": "Producers love our calm"
-        },
-        {
-          "title": "One roster. Infinite stories.",
-          "subtitle": "Segment talents, co-manage profiles, and preview looks with instant, production-ready reels.",
-          "pulse": "Signal, not noise"
-        }
-      ],
-      "ctaRegister": "Register as talent",
-      "ctaLogin": "Login",
-      "ctaDashboard": "Go to your jobs",
-      "ctaBrowse": "Find Jobs",
-      "metrics": {
-        "speed": "From brief to shortlist",
-        "profiles": "Profiles curated by humans",
-        "success": "Booking confidence"
+      "badge": "Casting • Representation • Production Support",
+      "title": "Regional casting & talent intelligence since 2009.",
+      "subtitle": "Allure unites curated representation, data‑driven matching, and production‑ready workflow so brands secure the right talent faster across Lebanon, Dubai & Abu Dhabi.",
+      "browseTalents": "Browse Talents",
+      "exploreJobs": "Explore Jobs",
+      "stats": {
+        "representedTalents": "represented talents",
+        "activeCastings": "active castings",
+        "bookingSuccess": "booking success",
+        "averageResponse": "average response"
+      },
+      "workflowLabel": "Intelligent Workflow",
+      "workflow": {
+        "step1": "Publish your casting brief with all the nuance it deserves.",
+        "step2": "Receive curated submissions matched by our talent intelligence.",
+        "step3": "Book fittings, callbacks, and final selections in one dashboard."
+      },
+      "categories": {
+        "fashion": "Fashion",
+        "commercial": "Commercial",
+        "creators": "Content Creators",
+        "actors": "Actors",
+        "hosts": "Hosts"
       }
     },
-    "professions": {
-      "kicker": "Disciplines",
-      "title": "Explore professions ready for immediate casting.",
-      "subtitle": "Swipe through the roles we source daily. Tap to land on a pre-filtered roster.",
-      "helper": "Tap any card to filter talents by that profession",
-      "hint": "Instant filter",
-      "label": "Profession",
-      "card": "Curated shortlists built for speed",
-      "cta": "View Talents",
-      "loading": "Loading professions…",
-      "empty": "No professions found right now."
+    "featuredTalents": {
+      "eyebrow": "Talent Roster",
+      "title": "Spotlighted profiles moving the region forward.",
+      "description": "Handpicked and personally managed, each talent listed below is prepped with digitals, reels, and availability so you can confirm the perfect fit in hours.",
+      "viewAll": "View All"
     },
-    "jobs": {
-      "kicker": "Upcoming Jobs",
-      "title": "Your next bookings are lining up.",
-      "subtitle": "Stay ahead of callbacks, fittings, and deadlines with a calm, visual queue.",
-      "viewAll": "Open jobs dashboard",
-      "loading": "Loading your upcoming jobs…",
-      "empty": "No upcoming jobs yet. We’ll surface them here once you’re shortlisted.",
-      "badge": "Priority",
-      "timeline": "This week",
-      "defaultLocation": "Remote"
+    "featuredCastings": {
+      "eyebrow": "Live Opportunities",
+      "title": "Current casting calls curated by the Allure team.",
+      "description": "Explore curated opportunities across the region. Submit your profile or post your own casting.",
+      "postYourOwn": "Post Your Own"
     },
-    "welcome": {
-      "kicker": "Welcome to Allure Agency",
-      "title": "Boutique care meets platform-grade control.",
-      "subtitle": "We were born in Beirut and refined in Dubai. Today we run a casting OS trusted by global brands across MENA.",
+    "agencyIntro": {
+      "eyebrow": "Agency DNA",
+      "title": "Boutique sensibility, platform-grade delivery.",
+      "description": "Where boutique sensibility meets platform precision—Allure pairs human care with technology so every production moves with less friction.",
       "pillars": {
-        "craft": { "title": "Creative craft", "desc": "Bookers that translate treatments into human-centered shortlists." },
-        "data": { "title": "Data clarity", "desc": "Availability, reels, and usage in one transparent layer." },
-        "support": { "title": "Production support", "desc": "On-set and remote support from briefing to wrap." },
-        "network": { "title": "Regional network", "desc": "Tri-city presence across Beirut, Dubai, and Abu Dhabi." }
+        "curated": {
+          "title": "Curated Representation",
+          "description": "We build long-term development plans with each talent—digitals, comps, and reels are refreshed quarterly for instant briefs."
+        },
+        "matching": {
+          "title": "Human + Data Matching",
+          "description": "Our bookers combine relationship knowledge with platform data, surfacing a short list that reflects your storyboard from day one."
+        },
+        "workflow": {
+          "title": "Production-Safe Workflow",
+          "description": "Centralize NDAs, call sheets, fittings, and usage terms in one secure workspace, available to clients and talent managers."
+        }
       },
-      "badges": {
-        "casting": "Casting rooms and digitals",
-        "production": "Production-safe approvals",
-        "delivery": "Delivery without friction"
+      "commitments": {
+        "mena": "MENA-centric scouting team",
+        "bilingual": "Bilingual account managers",
+        "studios": "Casting studio partnerships",
+        "support": "On-set and remote support"
+      }
+    },
+    "contact": {
+      "eyebrow": "Get in Touch",
+      "title": "Let's start a conversation",
+      "titlePart1": "Let's start a",
+      "titlePart2": "conversation",
+      "description": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, we're here to help.",
+      "sendMessage": "Send us a message",
+      "contactInfo": "Contact Information",
+      "address": "Address",
+      "openingHours": "Opening Hours",
+      "forTalents": "For Talents",
+      "forClients": "For Clients",
+      "fullName": "Full Name",
+      "emailAddress": "Email Address",
+      "phoneNumber": "Phone Number",
+      "message": "Message",
+      "sendBtn": "Send Message",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "52 342 9898",
+      "messagePlaceholder": "Tell us about your inquiry...",
+      "addressLine1": "Churchill Tower, Office Number 3411",
+      "addressLine2": "Business Bay - Dubai",
+      "addressLine3": "United Arab Emirates",
+      "openingHoursValue": "Monday - Saturday: 09:00 - 18:00",
+      "phoneLabel": "Phone",
+      "uaeLabel": "UAE",
+      "lebanonLabel": "Lebanon"
+    },
+    "about": {
+      "title": "About Allure",
+      "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East.",
+      "established": "Established",
+      "branches": "Branches",
+      "projects": "Projects",
+      "ourStory": "Our Story",
+      "welcomeTitle": "Welcome to Allure Media Agency",
+      "welcomeText": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
+      "ourHistory": "Our History",
+      "expansionTitle": "Expanding Across the Region",
+      "partnersTitle": "Partners",
+      "partnersDescription": "We have worked with some of the best names in the market. Be one of them!",
+      "becomeTalent": "Become a Talent",
+      "findJob": "Find a Job",
+      "checkAllTalents": "Check All Talents",
+      "readyTitle": "Ready to work with us?",
+      "readyDescription": "Whether you're a talent looking to join our roster or a client seeking the perfect cast, let's start a conversation.",
+      "getInTouch": "Get in Touch",
+      "talents": "Talents",
+      "welcomeParagraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
+      "expansionParagraph1": "We expanded to Dubai and later Abu Dhabi—forming a tri‑city presence that gives productions diverse talent pools with on‑the‑ground support.",
+      "expansionParagraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow from first brief to final usage.",
+      "rosterEyebrow": "Our Roster",
+      "rosterTitle": "Meet our talented and creative professionals",
+      "rosterDescription": "Discover the diverse range of exceptional talents who bring creativity and professionalism to every project.",
+      "partnersEyebrow": "Trusted By"
+    },
+    "talentSpotlight": {
+      "badge": "Spotlight",
+      "ready": "Ready",
+      "cards": {
+        "layla": {
+          "name": "Layla Arif",
+          "category": "Runway & Editorial",
+          "location": "Dubai, UAE",
+          "availability": "Available for SS25",
+          "tags": {
+            "height": "Height 178cm",
+            "versatile": "Versatile Looks",
+            "languages": "Arabic + English"
+          }
+        },
+        "omar": {
+          "name": "Omar El Fayed",
+          "category": "Commercial Talent",
+          "location": "Riyadh, KSA",
+          "availability": "Booked through Nov",
+          "tags": {
+            "lifestyle": "Lifestyle",
+            "swimwear": "Swimwear",
+            "tvReady": "TV Ready"
+          }
+        },
+        "sofia": {
+          "name": "Sofia Haddad",
+          "category": "Actors & Hosts",
+          "location": "Beirut, Lebanon",
+          "availability": "Accepting Voiceovers",
+          "tags": {
+            "acting": "Acting",
+            "voice": "Voice",
+            "mc": "MC Experience"
+          }
+        },
+        "malik": {
+          "name": "Malik Rahman",
+          "category": "Digital Creators",
+          "location": "Doha, Qatar",
+          "availability": "Studio + Remote",
+          "tags": {
+            "content": "Content",
+            "beauty": "Beauty",
+            "arReady": "AR Ready"
+          }
+        }
+      }
+    },
+    "castingOpportunities": {
+      "luxuryResort": {
+        "title": "Luxury Resort SS25 Campaign",
+        "brand": "AMAARI Resorts",
+        "location": "Abu Dhabi, UAE",
+        "timeline": "Feb 02 – Feb 08",
+        "budget": "25,000 AED",
+        "requirements": {
+          "req1": "Mixed gender cast of 6",
+          "req2": "Swim + Resort wear",
+          "req3": "Comfort with underwater stills"
+        }
       },
-      "ribbon": "Since 2009",
-      "ribbonTitle": "Regional casting with global standards.",
-      "ribbonTag": "Trusted by producers"
-    },
-    "talents": {
-      "kicker": "Allure Talents",
-      "title": "Every look, Every Age, Every Story",
-      "subtitle": "Find the right talent for your campaign, shoot, or production.",
-      "viewAll": "Browse all talents",
-      "book": "View profile",
-      "tags": {
-        "height": "178cm stature",
-        "languages": "Arabic + English",
-        "availability": "SS25 ready",
-        "camera": "Camera confident",
-        "voice": "Voice trained",
-        "motion": "Movement ready",
-        "hosting": "Hosting & live",
-        "bilingual": "Bilingual",
-        "ready": "On-hold friendly"
+      "beautyEditorial": {
+        "title": "Beauty Editorial x Global Gloss",
+        "brand": "Global Gloss",
+        "location": "Jeddah, KSA",
+        "timeline": "Jan 15 – Jan 18",
+        "budget": "16,500 SAR",
+        "requirements": {
+          "req1": "Female-presenting talent",
+          "req2": "Expressive eyes + freckles",
+          "req3": "Comfortable with closeups"
+        }
       },
-      "cards": [
-        { "focus": "Runway & editorial" },
-        { "focus": "Commercial & lifestyle" },
-        { "focus": "Hosts & presenters" }
-      ]
+      "immersiveFashion": {
+        "title": "Immersive Fashion Presentation",
+        "brand": "FutureLab Studios",
+        "location": "Dubai Design District",
+        "timeline": "Mar 01 – Mar 12",
+        "budget": "30,000 AED",
+        "requirements": {
+          "req1": "Movement / choreography background",
+          "req2": "Experience with interactive shows",
+          "req3": "Multi-lingual bonus"
+        }
+      },
+      "hospitalityLifestyle": {
+        "title": "Hospitality Lifestyle Series",
+        "brand": "Kafara Collection",
+        "location": "Doha, Qatar",
+        "timeline": "Feb 18 – Feb 22",
+        "budget": "18,000 QAR",
+        "requirements": {
+          "req1": "Couple dynamic",
+          "req2": "Comfort with dialog",
+          "req3": "Natural chemistry"
+        }
+      }
     },
-    "twins": {
-      "kicker": "SPECIAL CATEGORY",
-      "title": "TWINS MODELS",
-      "subtitle": "Double the charm, double the impact. Perfect for events, shoots, and standout campaigns. Book now!",
-      "cta": "View Twins Models"
+    "talentList": {
+      "title": "Talents",
+      "placeholder": "Talent",
+      "role": "Model"
     },
-    "partners": {
-      "kicker": "Partners",
-      "title": "Partners",
-      "subtitle": "We have worked with some of the best names in the market. Be one of them!",
-      "cta": "Always in good company"
+    "castingList": {
+      "title": "Active Casting Calls",
+      "cardTitle": "Casting",
+      "roleLabel": "Role",
+      "countryLabel": "Country",
+      "deadlineLabel": "Deadline",
+      "placeholderRole": "Model",
+      "placeholderCountry": "UAE",
+      "placeholderDeadline": "2025-12-01"
+    },
+    "homeNew": {
+      "hero": {
+        "kicker": "Find Talents",
+        "badgeCampaigns": "Campaign Acceleration",
+        "badgeProduction": "On-Set Support",
+        "badgePlatform": "Platform Precision",
+        "slides": [
+          {
+            "title": "Cast globally. Confirm locally.",
+            "subtitle": "A bilingual, production-safe casting runway so clients, creatives, and talent move in sync.",
+            "pulse": "Live campaigns in motion"
+          },
+          {
+            "title": "From treatment to call sheet in days.",
+            "subtitle": "Allure bridges creative intent with vetted faces, rehearsals, and approvals in one place.",
+            "pulse": "Producers love our calm"
+          },
+          {
+            "title": "One roster. Infinite stories.",
+            "subtitle": "Segment talents, co-manage profiles, and preview looks with instant, production-ready reels.",
+            "pulse": "Signal, not noise"
+          }
+        ],
+        "ctaRegister": "Register as talent",
+        "ctaLogin": "Login",
+        "ctaDashboard": "Go to your jobs",
+        "ctaBrowse": "Find Jobs",
+        "metrics": {
+          "speed": "From brief to shortlist",
+          "profiles": "Profiles curated by humans",
+          "success": "Booking confidence"
+        }
+      },
+      "professions": {
+        "kicker": "Disciplines",
+        "title": "Explore professions ready for immediate casting.",
+        "subtitle": "Swipe through the roles we source daily. Tap to land on a pre-filtered roster.",
+        "helper": "Tap any card to filter talents by that profession",
+        "hint": "Instant filter",
+        "label": "Profession",
+        "card": "Curated shortlists built for speed",
+        "cta": "View Talents",
+        "loading": "Loading professions…",
+        "empty": "No professions found right now."
+      },
+      "jobs": {
+        "kicker": "Upcoming Jobs",
+        "title": "Your next bookings are lining up.",
+        "subtitle": "Stay ahead of callbacks, fittings, and deadlines with a calm, visual queue.",
+        "viewAll": "Open jobs dashboard",
+        "loading": "Loading your upcoming jobs…",
+        "empty": "No upcoming jobs yet. We’ll surface them here once you’re shortlisted.",
+        "badge": "Priority",
+        "timeline": "This week",
+        "defaultLocation": "Remote"
+      },
+      "welcome": {
+        "kicker": "Welcome to Allure Agency",
+        "title": "Boutique care meets platform-grade control.",
+        "subtitle": "We were born in Beirut and refined in Dubai. Today we run a casting OS trusted by global brands across MENA.",
+        "pillars": {
+          "craft": {
+            "title": "Creative craft",
+            "desc": "Bookers that translate treatments into human-centered shortlists."
+          },
+          "data": {
+            "title": "Data clarity",
+            "desc": "Availability, reels, and usage in one transparent layer."
+          },
+          "support": {
+            "title": "Production support",
+            "desc": "On-set and remote support from briefing to wrap."
+          },
+          "network": {
+            "title": "Regional network",
+            "desc": "Tri-city presence across Beirut, Dubai, and Abu Dhabi."
+          }
+        },
+        "badges": {
+          "casting": "Casting rooms and digitals",
+          "production": "Production-safe approvals",
+          "delivery": "Delivery without friction"
+        },
+        "ribbon": "Since 2009",
+        "ribbonTitle": "Regional casting with global standards.",
+        "ribbonTag": "Trusted by producers"
+      },
+      "talents": {
+        "kicker": "Allure Talents",
+        "title": "Every look, Every Age, Every Story",
+        "subtitle": "Find the right talent for your campaign, shoot, or production.",
+        "viewAll": "Browse all talents",
+        "book": "View profile",
+        "tags": {
+          "height": "178cm stature",
+          "languages": "Arabic + English",
+          "availability": "SS25 ready",
+          "camera": "Camera confident",
+          "voice": "Voice trained",
+          "motion": "Movement ready",
+          "hosting": "Hosting & live",
+          "bilingual": "Bilingual",
+          "ready": "On-hold friendly"
+        },
+        "cards": [
+          { "focus": "Runway & editorial" },
+          { "focus": "Commercial & lifestyle" },
+          { "focus": "Hosts & presenters" }
+        ]
+      },
+      "twins": {
+        "kicker": "SPECIAL CATEGORY",
+        "title": "TWINS MODELS",
+        "subtitle": "Double the charm, double the impact. Perfect for events, shoots, and standout campaigns. Book now!",
+        "cta": "View Twins Models"
+      },
+      "partners": {
+        "kicker": "Partners",
+        "title": "Partners",
+        "subtitle": "We have worked with some of the best names in the market. Be one of them!",
+        "cta": "Always in good company"
+      }
     }
   }
 }

@@ -38,7 +38,6 @@ export default function ProfessionsSection({
   subtitle,
   helper,
   hint,
-  label,
   cta,
   loadingText,
   emptyText,

@@ -1,98 +1,100 @@
 {
-  "hero": {
-    "badge": "About Allure",
-    "title": "Crafting Excellence in Talent Representation",
-    "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East since 2009."
-  },
-  "stats": {
-    "established": {
-      "value": "2009",
-      "label": "Established"
+  "about": {
+    "hero": {
+      "badge": "About Allure",
+      "title": "Crafting Excellence in Talent Representation",
+      "subtitle": "A distinguished casting and modeling agency celebrated for excellence, creativity, and superior service across the Middle East since 2009."
     },
-    "branches": {
-      "value": "3",
-      "label": "Branches"
+    "stats": {
+      "established": {
+        "value": "2009",
+        "label": "Established"
+      },
+      "branches": {
+        "value": "3",
+        "label": "Branches"
+      },
+      "talents": {
+        "value": "500+",
+        "label": "Talents"
+      },
+      "projects": {
+        "value": "1000+",
+        "label": "Projects"
+      }
     },
-    "talents": {
-      "value": "500+",
-      "label": "Talents"
+    "story": {
+      "badge": "Our Story",
+      "title": "Welcome to Allure Media Agency",
+      "subtitle": "From humble beginnings to regional excellence",
+      "paragraph1": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
+      "paragraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
+      "paragraph3": "We understand the dynamic nature of the entertainment and advertising industries. That's why we're committed to staying ahead of trends, continuously updating our talent pool, and providing innovative solutions that exceed expectations.",
+      "ctaPrimary": "Meet our talents",
+      "ctaSecondary": "Book a call"
     },
-    "projects": {
-      "value": "1000+",
-      "label": "Projects"
+    "expansion": {
+      "badge": "Our Growth",
+      "title": "Expanding Across the Region",
+      "subtitle": "Building bridges between talent and opportunity",
+      "paragraph1": "Responding to growing regional demand we expanded to Dubai and later Abu Dhabi—forming a tri-city presence that gives productions diverse talent pools with on-the-ground support.",
+      "paragraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow that reduces friction from first brief to final usage.",
+      "paragraph3": "Our strategic locations enable us to serve clients across the GCC with unmatched efficiency and local expertise.",
+      "ctaPrimary": "Hire talent",
+      "ctaSecondary": "See our reach"
+    },
+    "values": {
+      "badge": "OUR VALUES",
+      "title": "What Defines Our Work",
+      "subtitle": "The principles that shape how we cast, represent, and collaborate",
+      "excellence": {
+        "title": "Talent First",
+        "description": "We put talent at the center of everything we do carefully selecting, guiding, and positioning individuals for the right opportunities."
+      },
+      "creativity": {
+        "title": "Industry Expertise",
+        "description": "Casting is more than matching faces. We understand briefs, brands, and markets to deliver talent that truly fits the project."
+      },
+      "integrity": {
+        "title": "Transparency",
+        "description": "Clear communication, honest feedback, and professional conduct guide our relationships with both talents and clients."
+      },
+      "diversity": {
+        "title": "Diversity & Inclusion",
+        "description": "We proudly represent talents of all looks, backgrounds, and abilities, creating inclusive casting opportunities across the region."
+      }
+    },
+    "services": {
+      "badge": "WHAT WE DO",
+      "title": "End-to-End Casting & Talent Solutions",
+      "subtitle": "Connecting exceptional talent with leading brands and productions",
+      "casting": {
+        "title": "Casting Direction",
+        "description": "We specialize in identifying, curating, and presenting the right talent for commercials, fashion campaigns, TV, and digital projects aligned precisely with each brief."
+      },
+      "management": {
+        "title": "Talent Representation",
+        "description": "We represent models, actors, and professional talents, managing their careers with a focus on positioning, visibility, and long-term growth."
+      },
+      "production": {
+        "title": "Talent Coordination",
+        "description": "From shortlisting to availability checks and booking management, we handle the full casting process with efficiency, clarity, and professionalism."
+      },
+      "consultation": {
+        "title": "Casting & Brand Consultation",
+        "description": "We advise brands and agencies on casting strategy, talent selection, and campaign alignment to ensure authentic and impactful results."
+      }
+    },
+    "team": {
+      "badge": "Our Team",
+      "title": "Meet the People Behind Allure",
+      "subtitle": "Experienced professionals dedicated to your success"
+    },
+    "partners": {
+      "badge": "Trusted By",
+      "title": "Partners & Clients",
+      "subtitle": "We have worked with some of the best names in the market. Be one of them!",
+      "noPartners": "Loading our partners..."
     }
-  },
-  "story": {
-    "badge": "Our Story",
-    "title": "Welcome to Allure Media Agency",
-    "subtitle": "From humble beginnings to regional excellence",
-    "paragraph1": "Founded in Lebanon in 2009, Allure evolved from a boutique roster into a regional casting and modeling partner trusted for disciplined scouting, creative collaboration, and production reliability.",
-    "paragraph2": "Our multidisciplinary team—casting directors, production crew, editors, photographers, and videographers—translates briefs into polished selections supported by refreshed digitals, reels, and transparent availability.",
-    "paragraph3": "We understand the dynamic nature of the entertainment and advertising industries. That's why we're committed to staying ahead of trends, continuously updating our talent pool, and providing innovative solutions that exceed expectations.",
-    "ctaPrimary": "Meet our talents",
-    "ctaSecondary": "Book a call"
-  },
-  "expansion": {
-    "badge": "Our Growth",
-    "title": "Expanding Across the Region",
-    "subtitle": "Building bridges between talent and opportunity",
-    "paragraph1": "Responding to growing regional demand we expanded to Dubai and later Abu Dhabi—forming a tri-city presence that gives productions diverse talent pools with on-the-ground support.",
-    "paragraph2": "Each new branch strengthens our promise: curated representation, faster booking cycles, and a unified workflow that reduces friction from first brief to final usage.",
-    "paragraph3": "Our strategic locations enable us to serve clients across the GCC with unmatched efficiency and local expertise.",
-    "ctaPrimary": "Hire talent",
-    "ctaSecondary": "See our reach"
-  },
-  "values": {
-    "badge": "OUR VALUES",
-    "title": "What Defines Our Work",
-    "subtitle": "The principles that shape how we cast, represent, and collaborate",
-    "excellence": {
-      "title": "Talent First",
-      "description": "We put talent at the center of everything we do carefully selecting, guiding, and positioning individuals for the right opportunities."
-    },
-    "creativity": {
-      "title": "Industry Expertise",
-      "description": "Casting is more than matching faces. We understand briefs, brands, and markets to deliver talent that truly fits the project."
-    },
-    "integrity": {
-      "title": "Transparency",
-      "description": "Clear communication, honest feedback, and professional conduct guide our relationships with both talents and clients."
-    },
-    "diversity": {
-      "title": "Diversity & Inclusion",
-      "description": "We proudly represent talents of all looks, backgrounds, and abilities, creating inclusive casting opportunities across the region."
-    }
-  },
-  "services": {
-    "badge": "WHAT WE DO",
-    "title": "End-to-End Casting & Talent Solutions",
-    "subtitle": "Connecting exceptional talent with leading brands and productions",
-    "casting": {
-      "title": "Casting Direction",
-      "description": "We specialize in identifying, curating, and presenting the right talent for commercials, fashion campaigns, TV, and digital projects aligned precisely with each brief."
-    },
-    "management": {
-      "title": "Talent Representation",
-      "description": "We represent models, actors, and professional talents, managing their careers with a focus on positioning, visibility, and long-term growth."
-    },
-    "production": {
-      "title": "Talent Coordination",
-      "description": "From shortlisting to availability checks and booking management, we handle the full casting process with efficiency, clarity, and professionalism."
-    },
-    "consultation": {
-      "title": "Casting & Brand Consultation",
-      "description": "We advise brands and agencies on casting strategy, talent selection, and campaign alignment to ensure authentic and impactful results."
-    }
-  },
-  "team": {
-    "badge": "Our Team",
-    "title": "Meet the People Behind Allure",
-    "subtitle": "Experienced professionals dedicated to your success"
-  },
-  "partners": {
-    "badge": "Trusted By",
-    "title": "Partners & Clients",
-    "subtitle": "We have worked with some of the best names in the market. Be one of them!",
-    "noPartners": "Loading our partners..."
   }
 }

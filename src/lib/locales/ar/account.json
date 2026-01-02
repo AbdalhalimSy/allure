@@ -1,12 +1,4 @@
 {
-  "auth": {
-    "login": "تسجيل الدخول",
-    "register": "التسجيل",
-    "forgotPassword": "نسيت كلمة المرور",
-    "rememberMe": "تذكرني",
-    "dontHaveAccount": "ليس لديك حساب؟",
-    "alreadyHaveAccount": "لديك حساب بالفعل؟"
-  },
   "account": {
     "title": "إعدادات الحساب",
     "subtitle": "إدارة إعدادات وتفضيلات حسابك",

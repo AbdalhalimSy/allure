@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Play,
   Sparkles,
-  Waves,
 } from "lucide-react";
 
 interface HeroSlide {
@@ -44,7 +43,6 @@ export default function HeroBanner({
   ctaRegister,
   ctaDashboard,
   ctaBrowse,
-  metrics,
 }: HeroBannerProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 

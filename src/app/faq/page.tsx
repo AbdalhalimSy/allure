@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useI18n } from "@/contexts/I18nContext";
 import {
   HelpCircle,
-  Users,
   ChevronDown,
 } from "lucide-react";
 
@@ -13,16 +12,8 @@ type Category = "talents";
 
 export default function FAQPage() {
   const { t, locale } = useI18n();
-  const [activeCategory, setActiveCategory] = useState<Category>("talents");
+  const [activeCategory] = useState<Category>("talents");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const categories = [
-    {
-      id: "talents" as Category,
-      icon: Users,
-      label: t("faq.categories.talents"),
-    },
-  ];
 
   // Get questions for active category
   const getQuestions = (

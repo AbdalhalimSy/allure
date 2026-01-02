@@ -73,15 +73,6 @@
     "verificationFailed": "Verification failed",
     "required": "Required",
     "registrationFailed": "Registration failed",
-    "unauthorized": "Unauthorized",
-    "createAccount": "Create Account",
-    "role": "I am a",
-    "roleTalent": "Talent / Model",
-    "roleClient": "Client / Brand",
-    "accountRecovery": "Account Recovery",
-    "logoutConfirm": "Are you sure you want to logout?",
-    "loggedOut": "Logged out successfully",
-    "logoutFailed": "Failed to logout",
-    "loginFailed": "Login failed after verification"
+    "unauthorized": "Unauthorized"
   }
 }
