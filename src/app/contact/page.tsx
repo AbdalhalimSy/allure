@@ -133,12 +133,12 @@ export default function ContactPage() {
         "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
     },
     {
-      name: t("contact.locations.abuDhabi.name"),
-      address: t("contact.locations.abuDhabi.address"),
-      phone: t("contact.locations.abuDhabi.phone"),
-      email: t("contact.locations.abuDhabi.email"),
+      name: t("contact.locations.riyadh.name"),
+      address: t("contact.locations.riyadh.address"),
+      phone: t("contact.locations.riyadh.phone"),
+      email: t("contact.locations.riyadh.email"),
       image:
-        "https://images.unsplash.com/photo-1624317937315-0ced8736c9e9?q=80&w=2402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1506795213373-430e921fe2ed?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: t("contact.locations.lebanon.name"),

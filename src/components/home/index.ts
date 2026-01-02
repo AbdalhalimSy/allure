@@ -5,3 +5,4 @@ export { default as HomeJobsSection } from "./HomeJobsSection";
 export { default as WelcomeSectionNew } from "./WelcomeSectionNew";
 export { default as TalentsSection } from "./TalentsSection";
 export { default as PartnersSection } from "./PartnersSection";
+export { default as TwinsSection } from "./TwinsSection";

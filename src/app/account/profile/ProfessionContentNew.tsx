@@ -25,24 +25,27 @@ export default function ProfessionContent({
   const { fetchProfile } = useAuth();
   const { t } = useI18n();
 
-  const translate = useCallback((
-    key: string,
-    fallback: string,
-    options?: Record<string, string | number>
-  ) => {
-    let value = t(key);
-    if (!value || value === key) value = fallback;
-    
-    // Interpolate variables like {{index}}, {{count}}, etc.
-    if (options) {
-      Object.keys(options).forEach((optionKey) => {
-        const regex = new RegExp(`\\{\\{${optionKey}\\}\\}`, 'g');
-        value = value.replace(regex, String(options[optionKey]));
-      });
-    }
-    
-    return value;
-  }, [t]);
+  const translate = useCallback(
+    (
+      key: string,
+      fallback: string,
+      options?: Record<string, string | number>
+    ) => {
+      let value = t(key);
+      if (!value || value === key) value = fallback;
+
+      // Interpolate variables like {{index}}, {{count}}, etc.
+      if (options) {
+        Object.keys(options).forEach((optionKey) => {
+          const regex = new RegExp(`\\{\\{${optionKey}\\}\\}`, "g");
+          value = value.replace(regex, String(options[optionKey]));
+        });
+      }
+
+      return value;
+    },
+    [t]
+  );
 
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [entries, setEntries] = useState<ProfessionEntry[]>([]);
@@ -262,7 +265,12 @@ export default function ProfessionContent({
 
   if (loading) {
     return (
-      <AccountPageLoader message={translate("account.profession.loading", "Loading professions...")} />
+      <AccountPageLoader
+        message={translate(
+          "account.profession.loading",
+          "Loading professions..."
+        )}
+      />
     );
   }
 
@@ -275,27 +283,27 @@ export default function ProfessionContent({
       )}
     >
       <div className="space-y-6">
- <div className="rounded-2xl border border-[#c49a47]/30 bg-linear-to-r from-white via-[#fefaf3] to-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-[#c49a47]/30 bg-linear-to-r from-white via-[#fefaf3] to-white p-5 shadow-sm">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="space-y-1">
- <p className="text-sm font-semibold text-[#c49a47] uppercase tracking-wide">
+              <p className="text-sm font-semibold text-[#c49a47] uppercase tracking-wide">
                 {translate(
                   "account.profession.sectionLabel",
                   "Professional Profile"
                 )}
               </p>
- <p className="text-lg font-semibold text-gray-900 ">
+              <p className="text-lg font-semibold text-gray-900 ">
                 {entryCountLabel}
               </p>
- <p className="text-sm text-gray-600 ">
+              <p className="text-sm text-gray-600 ">
                 {translate(
                   "account.profession.helper",
                   "Requirements adapt based on each profession and sub-profession."
                 )}
               </p>
             </div>
- <div className="flex flex-wrap gap-2 text-xs text-gray-700 ">
- <span className="inline-flex items-center gap-2 rounded-full border border-[#c49a47]/40 bg-white px-3 py-2 ">
+            <div className="flex flex-wrap gap-2 text-xs text-gray-700 ">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#c49a47]/40 bg-white px-3 py-2 ">
                 <TbInfoCircle className="h-4 w-4 text-[#c49a47]" />
                 {translate(
                   "account.profession.mediaHint",
@@ -307,17 +315,17 @@ export default function ProfessionContent({
         </div>
 
         {entries.length === 0 ? (
- <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center ">
- <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c49a47]/10 text-[#c49a47] ">
+          <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center ">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c49a47]/10 text-[#c49a47] ">
               <TbPlus className="h-7 w-7" />
             </div>
- <p className="text-lg font-semibold text-gray-900 ">
+            <p className="text-lg font-semibold text-gray-900 ">
               {translate(
                 "account.profession.emptyTitle",
                 "Add your first profession"
               )}
             </p>
- <p className="mt-2 text-sm text-gray-600 ">
+            <p className="mt-2 text-sm text-gray-600 ">
               {translate(
                 "account.profession.emptyDesc",
                 "Start with your main role, then add supporting roles or specialties."
@@ -356,7 +364,7 @@ export default function ProfessionContent({
                 type="button"
                 onClick={handleAddEntry}
                 disabled={saving || professions.length === 0}
- className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] "
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:border-[#c49a47] hover:text-[#c49a47] "
               >
                 <TbPlus className="h-4 w-4" />
                 {translate(
@@ -368,8 +376,8 @@ export default function ProfessionContent({
           </div>
         )}
 
- <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 md:flex-row md:items-center md:justify-between">
- <div className="text-sm text-gray-600 ">
+        <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 md:flex-row md:items-center md:justify-between">
+          <div className="text-sm text-gray-600 ">
             {translate(
               "account.profession.footerHint",
               "You can update your professional information at any time."

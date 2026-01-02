@@ -36,21 +36,12 @@ export default function TalentsSection({
       <section className="px-6 py-16 lg:px-12">
         <div className="mx-auto max-w-7xl">
           {/* Header */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-primary ">
-                {kicker}
-              </p>
-              <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
-              <p className="text-gray-700 ">{subtitle}</p>
-            </div>
-            <Link
-              href="/talents"
-              className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary hover:text-primary "
-            >
-              {viewAll}
-              <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
-            </Link>
+          <div className="space-y-3">
+            <p className="text-sm uppercase tracking-[0.3em] text-primary">
+              {kicker}
+            </p>
+            <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
+            <p className="text-gray-700 ">{subtitle}</p>
           </div>
 
           {/* Talents grid */}
@@ -70,8 +61,8 @@ export default function TalentsSection({
             {!loading && talents.length > 0 && (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {talents.map((talent) => (
-                  <TalentCard 
-                    key={talent.profile.id} 
+                  <TalentCard
+                    key={talent.profile.id}
                     talent={talent}
                     onClick={() => {
                       setSelectedTalent(talent);
@@ -81,6 +72,17 @@ export default function TalentsSection({
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Centered Browse All Talents Button */}
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/talents"
+              className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary hover:text-primary "
+            >
+              {viewAll}
+              <ArrowRight className="h-4 w-4 rtl:scale-x-[-1]" />
+            </Link>
           </div>
         </div>
       </section>

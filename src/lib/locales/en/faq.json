@@ -5,89 +5,24 @@
     "subtitle": "Find answers to common questions about working with Allure Agency"
   },
   "categories": {
-    "general": "General",
-    "talents": "For Talents",
-    "clients": "For Clients",
-    "bookings": "Bookings & Payments"
-  },
-  "general": {
-    "q1": {
-      "question": "What is Allure Agency?",
-      "answer": "Allure is a distinguished casting and modeling agency established in 2009. We specialize in connecting exceptional talent with leading brands and productions across the Middle East. Our comprehensive services include talent management, casting, and production support."
-    },
-    "q2": {
-      "question": "Where are your offices located?",
-      "answer": "We have offices in three strategic locations: our head office in Beirut, Lebanon, and branches in Dubai and Abu Dhabi, UAE. This tri-city presence allows us to serve clients throughout the region effectively."
-    },
-    "q3": {
-      "question": "What types of talent do you represent?",
-      "answer": "We represent a diverse roster of professionals including models, actors, athletes, musicians, voice-over artists, entertainers, influencers, presenters, hosts, promoters, and dancers. Each talent category has specific requirements and portfolio needs."
-    }
+    "talents": "For Talents"
   },
   "talents": {
     "q1": {
-      "question": "How can I join Allure as a talent?",
-      "answer": "You can apply through our website by creating an account and completing your profile with professional photos, measurements, and relevant experience. Our team reviews all applications and will contact you if your profile matches our current needs."
+      "question": "How Can I Join Allure as a Talent?",
+      "answer": "You can apply through our mobile app or website by creating an account and completing your profile with professional media and measurements.\nAll applications are carefully reviewed by our team, and profiles that meet our standards and requirements are approved."
     },
     "q2": {
-      "question": "What are the requirements to join?",
-      "answer": "Requirements vary by category. Generally, you need to be at least 18 years old (or have parental consent), have professional photos or portfolio materials, and meet specific physical or skill requirements for your category. Check the registration page for detailed requirements."
+      "question": "What Are the Requirements to Join?",
+      "answer": "Requirements vary by category. In general, applicants are expected to complete their profile with accurate personal details, physical appearance information, and clear photos. A general casting video is also required.\nIf you have a specific skill or special talent, you can select your profession from the available categories and upload a relevant video showcasing your ability."
     },
     "q3": {
-      "question": "Is there a fee to join Allure?",
-      "answer": "No, registration with Allure is completely free. We earn our commission only when you get booked for paid work. We never charge upfront fees for representation."
+      "question": "Is There a Fee to Join Allure?",
+      "answer": "No, registration with Allure is completely free. We do not charge any upfront fees for representation.\nWe believe in equal opportunities, allowing talents to apply to all suitable jobs without restrictions."
     },
     "q4": {
-      "question": "How long does the application process take?",
-      "answer": "Our team reviews applications within 5-7 business days. If your profile matches our current needs, we'll contact you to discuss next steps. Due to high volume, we can only respond to applications that meet our criteria."
-    },
-    "q5": {
-      "question": "Can I update my portfolio after joining?",
-      "answer": "Yes! We encourage all talents to keep their profiles updated with fresh photos, new skills, and recent work experience. You can update your portfolio anytime through your account dashboard."
-    },
-    "q6": {
-      "question": "How often will I get work opportunities?",
-      "answer": "Work frequency varies based on demand, your category, look, and availability. Some talents work several times a month, while others may have fewer bookings. We actively promote all our talents to clients and casting directors."
-    }
-  },
-  "clients": {
-    "q1": {
-      "question": "How do I book talent for my project?",
-      "answer": "Browse our talent roster on the website and shortlist talents you're interested in. Contact us with your project details including dates, budget, and requirements. Our team will arrange casting sessions or provide availability confirmations."
-    },
-    "q2": {
-      "question": "What information do you need for a booking?",
-      "answer": "We need project details including shoot dates, location, usage rights, budget, and specific requirements. The more information you provide, the better we can match you with suitable talent and provide accurate quotes."
-    },
-    "q3": {
-      "question": "Do you handle contracts and payments?",
-      "answer": "Yes, we manage all contracts between clients and talents, ensuring clear terms and legal protection for both parties. We also handle invoicing and payments, making the process smooth and professional."
-    },
-    "q4": {
-      "question": "Can you provide production services?",
-      "answer": "Absolutely! Beyond talent booking, we offer comprehensive production support including photographers, videographers, editors, and production crew. We can handle your entire creative production needs."
-    },
-    "q5": {
-      "question": "What are your payment terms?",
-      "answer": "Payment terms vary by project size and client relationship. Typically, we require a deposit upon booking confirmation with the balance due upon project completion. We accept bank transfers and can provide detailed invoices."
-    }
-  },
-  "bookings": {
-    "q1": {
-      "question": "How far in advance should I book?",
-      "answer": "We recommend booking at least 2-3 weeks in advance for best talent availability. However, we can often accommodate last-minute requests depending on talent schedules and project requirements."
-    },
-    "q2": {
-      "question": "What is your cancellation policy?",
-      "answer": "Cancellation policies depend on timing. Cancellations made 7+ days before the shoot typically incur no fees. Later cancellations may incur charges to compensate talents who have held dates. Contact us for specific cases."
-    },
-    "q3": {
-      "question": "Do talents travel for projects?",
-      "answer": "Yes, many of our talents are available for travel assignments. Travel bookings require additional planning for transportation, accommodation, and per diem expenses. We handle all logistics coordination."
-    },
-    "q4": {
-      "question": "How are usage rights handled?",
-      "answer": "Usage rights (commercial, editorial, social media, duration, territory) are negotiated and clearly specified in the contract. Different uses have different rates. We ensure all parties understand and agree to the terms upfront."
+      "question": "How Long Does the Application Process Take?",
+      "answer": "Our team reviews applications within 1–3 business days. If all required information and media are submitted correctly, your account will be approved.\nIf the review process takes longer than three business days, please contact our talent support team via WhatsApp at +971 52 342 9898."
     }
   },
   "cta": {

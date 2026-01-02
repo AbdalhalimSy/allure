@@ -161,6 +161,7 @@
       "profession": "Profession",
       "experience": "Experience",
       "portfolio": "Portfolio",
+      "photos": "Profile Photos",
       "security": "Security & Privacy",
       "notifications": "Notifications",
       "billing": "Billing & Plans"
@@ -528,6 +529,59 @@
     "pending": "Pending",
     "approved": "Approved",
     "profilePicture": "Profile Picture"
+  },
+  "profilePhotos": {
+    "title": "Manage Photos",
+    "description": "Upload and manage your profile pictures. All photos require admin approval before becoming visible.",
+    "sidebar": {
+      "activeStatus": "Active Profile Picture",
+      "noPhoto": "No profile picture yet",
+      "totalPhotos": "Total",
+      "approvedPhotos": "Approved",
+      "pendingPhotos": "Pending",
+      "guidelines": "Photo Guidelines",
+      "guidelinesText": "All photos require admin approval. Max 5MB, JPEG/PNG/GIF formats supported."
+    },
+    "upload": {
+      "label": "Click to upload",
+      "dragDrop": "or drag and drop",
+      "fileFormat": "JPEG, PNG, JPG or GIF (MAX. 5MB)",
+      "uploading": "Uploading...",
+      "placeholder": "Drag and drop your photo here"
+    },
+    "messages": {
+      "uploadSuccess": "Photo uploaded! Waiting for admin approval.",
+      "deleteSuccess": "Photo deleted successfully",
+      "errorJpegOnly": "Only JPEG, PNG, JPG, and GIF images are allowed",
+      "errorFileSize": "File size must not exceed 5MB"
+    },
+    "photos": {
+      "current": "Current Profile Picture",
+      "currentDesc": "This is your active profile picture visible to everyone",
+      "pending": "Pending Approval",
+      "pendingDesc": "Waiting for admin review. Once approved, this will replace your current profile picture.",
+      "deletePhoto": "Delete Photo",
+      "delete": "Delete"
+    },
+    "rejected": {
+      "title": "Rejected Photos",
+      "empty": "No rejected photos"
+    },
+    "empty": {
+      "title": "No photos yet",
+      "description": "Upload your first profile photo to get started. Your photo will be reviewed by our team before becoming visible."
+    },
+    "badges": {
+      "active": "Active",
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "info": {
+      "title": "📸 Photo Replacement Process",
+      "description": "Once your pending photo is approved, it will automatically replace your current profile picture, and the old photo will be permanently removed from the system."
+    },
+    "confirmDelete": "Are you sure you want to delete this photo?"
   },
   "basicInformation": {
     "firstName": "First Name",

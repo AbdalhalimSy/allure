@@ -110,11 +110,14 @@ export default function HeroBanner({
       <div className="relative z-10 flex min-h-[calc(100vh-80px)] items-center px-12 py-20 lg:px-12 rad">
         <div className="mx-auto w-full max-w-7xl text-center justify-center items-center flex">
           <div className="max-w-3xl space-y-8 animate-fade-in">
-            {/* Kicker badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/20 px-4 py-2 text-sm font-medium text-white shadow-lg backdrop-blur-md">
+            {/* Kicker badge - Find Talents link */}
+            <Link
+              href="/talents"
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/20 px-4 py-2 text-sm font-medium text-white shadow-lg backdrop-blur-md transition-all hover:bg-white/30 hover:border-white/60 hover:scale-105"
+            >
               <Sparkles className="h-4 w-4 text-primary" />
               <span>{kicker}</span>
-            </div>
+            </Link>
 
             {/* Slide badge */}
             <p className="text-sm uppercase tracking-[0.3em] text-white/90">
@@ -162,33 +165,6 @@ export default function HeroBanner({
                 <Play className="h-5 w-5" />
                 {ctaBrowse}
               </Link>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid gap-4 pt-4 sm:grid-cols-3">
-              {[
-                { value: "48h", label: metrics.speed },
-                { value: "12k", label: metrics.profiles },
-                { value: "92%", label: metrics.success },
-              ].map((metric, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-2xl border border-white/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/30"
-                >
-                  <p className="text-3xl font-bold text-primary">
-                    {metric.value}
-                  </p>
-                  <p className="text-sm text-white/90">{metric.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Pulse indicator */}
-            <div className="flex items-center gap-2 text-white/80 justify-center">
-              <Waves className="h-4 w-4 animate-pulse" />
-              <span className="text-sm uppercase tracking-[0.2em]">
-                {slides[currentSlide].pulse}
-              </span>
             </div>
           </div>
         </div>

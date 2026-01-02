@@ -31,14 +31,11 @@ export default function HomeJobsSection({
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-12">
-          <div className="flex-1">
-            <div className="inline-flex items-center gap-2 mb-3">
-              <div className="h-1 w-6 rounded-full bg-primary"></div>
-              <p className="text-sm uppercase tracking-widest font-semibold text-primary">
-                {kicker}
-              </p>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 leading-tight">
+          <div className="flex-1 space-y-3">
+            <p className="text-sm uppercase tracking-[0.3em] text-primary">
+              {kicker}
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
               {title}
             </h2>
             <p className="text-base sm:text-lg text-gray-600 max-w-lg">

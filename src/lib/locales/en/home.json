@@ -238,7 +238,7 @@
   },
   "homeNew": {
     "hero": {
-      "kicker": "Modern Casting OS",
+      "kicker": "Find Talents",
       "badgeCampaigns": "Campaign Acceleration",
       "badgeProduction": "On-Set Support",
       "badgePlatform": "Platform Precision",
@@ -262,7 +262,7 @@
       "ctaRegister": "Register as talent",
       "ctaLogin": "Login",
       "ctaDashboard": "Go to your jobs",
-      "ctaBrowse": "Preview roster",
+      "ctaBrowse": "Find Jobs",
       "metrics": {
         "speed": "From brief to shortlist",
         "profiles": "Profiles curated by humans",
@@ -277,7 +277,7 @@
       "hint": "Instant filter",
       "label": "Profession",
       "card": "Curated shortlists built for speed",
-      "cta": "Open filtered roster",
+      "cta": "View Talents",
       "loading": "Loading professions…",
       "empty": "No professions found right now."
     },
@@ -313,8 +313,8 @@
     },
     "talents": {
       "kicker": "Allure Talents",
-      "title": "Signature faces. Real availability.",
-      "subtitle": "Profiles prepped with digitals, reels, and ready-to-book availability.",
+      "title": "Every look, Every Age, Every Story",
+      "subtitle": "Find the right talent for your campaign, shoot, or production.",
       "viewAll": "Browse all talents",
       "book": "View profile",
       "tags": {
@@ -334,10 +334,16 @@
         { "focus": "Hosts & presenters" }
       ]
     },
+    "twins": {
+      "kicker": "SPECIAL CATEGORY",
+      "title": "TWINS MODELS",
+      "subtitle": "Double the charm, double the impact. Perfect for events, shoots, and standout campaigns. Book now!",
+      "cta": "View Twins Models"
+    },
     "partners": {
       "kicker": "Partners",
-      "title": "Trusted by producers and brands across MENA.",
-      "subtitle": "We pair boutique attention with enterprise-grade delivery.",
+      "title": "Partners",
+      "subtitle": "We have worked with some of the best names in the market. Be one of them!",
       "cta": "Always in good company"
     }
   }

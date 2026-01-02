@@ -6,6 +6,7 @@ import {
   TbPhoto,
   TbShieldCheck,
   TbCreditCard,
+  TbCamera,
 } from "react-icons/tb";
 import { ProfileData } from "@/contexts/AuthContext";
 import {
@@ -50,6 +51,12 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         label: "Portfolio",
         labelKey: "account.nav.portfolio",
         icon: <TbPhoto />,
+      },
+      {
+        id: "photos",
+        label: "Profile Photos",
+        labelKey: "account.nav.photos",
+        icon: <TbCamera />,
       },
       { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
       { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },

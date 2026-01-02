@@ -13,6 +13,7 @@ import {
   WelcomeSectionNew,
   TalentsSection,
   PartnersSection,
+  TwinsSection,
 } from "@/components/home";
 import type { Talent } from "@/types/talent";
 import type { Job } from "@/types/job";
@@ -160,12 +161,18 @@ export default function HomePage() {
         }
 
         const res = await fetch(
-          `${usePublic ? "/api/public/jobs" : "/api/jobs"}?${params.toString()}`,
+          `${
+            usePublic ? "/api/public/jobs" : "/api/jobs"
+          }?${params.toString()}`,
           {
             headers: {
               ...(usePublic
                 ? {}
-                : { Authorization: `Bearer ${localStorage.getItem("auth_token") || ""}` }),
+                : {
+                    Authorization: `Bearer ${
+                      localStorage.getItem("auth_token") || ""
+                    }`,
+                  }),
               "Accept-Language": locale,
             },
           }
@@ -208,7 +215,7 @@ export default function HomePage() {
   };
 
   return (
- <div className="bg-white text-gray-900 ">
+    <div className="bg-white text-gray-900 ">
       {/* Hero Banner */}
       <HeroBanner
         slides={slides}
@@ -292,6 +299,15 @@ export default function HomePage() {
         viewAll={t("homeNew.talents.viewAll")}
         loadingText={t("homeNew.talents.loading") || "Loading talents..."}
         emptyText={t("homeNew.talents.empty") || "No talents available"}
+      />
+
+      {/* Twins Section */}
+      <TwinsSection
+        kicker={t("homeNew.twins.kicker")}
+        title={t("homeNew.twins.title")}
+        subtitle={t("homeNew.twins.subtitle")}
+        cta={t("homeNew.twins.cta")}
+        backgroundImage="https://plus.unsplash.com/premium_photo-1681492310064-b835a82d5c1c?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       />
 
       {/* Partners Section */}

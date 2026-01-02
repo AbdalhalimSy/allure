@@ -43,45 +43,45 @@
     "ctaSecondary": "See our reach"
   },
   "values": {
-    "badge": "Our Values",
-    "title": "What Drives Us Forward",
-    "subtitle": "The principles that guide every decision we make",
+    "badge": "OUR VALUES",
+    "title": "What Defines Our Work",
+    "subtitle": "The principles that shape how we cast, represent, and collaborate",
     "excellence": {
-      "title": "Excellence",
-      "description": "We maintain the highest standards in every aspect of our work, from talent selection to client service."
+      "title": "Talent First",
+      "description": "We put talent at the center of everything we do carefully selecting, guiding, and positioning individuals for the right opportunities."
     },
     "creativity": {
-      "title": "Creativity",
-      "description": "Innovation is at our core. We bring fresh perspectives and creative solutions to every project."
+      "title": "Industry Expertise",
+      "description": "Casting is more than matching faces. We understand briefs, brands, and markets to deliver talent that truly fits the project."
     },
     "integrity": {
-      "title": "Integrity",
-      "description": "Transparency and honesty guide our relationships with both talents and clients."
+      "title": "Transparency",
+      "description": "Clear communication, honest feedback, and professional conduct guide our relationships with both talents and clients."
     },
     "diversity": {
-      "title": "Diversity",
-      "description": "We celebrate diverse talents from all backgrounds, creating inclusive opportunities for everyone."
+      "title": "Diversity & Inclusion",
+      "description": "We proudly represent talents of all looks, backgrounds, and abilities, creating inclusive casting opportunities across the region."
     }
   },
   "services": {
-    "badge": "What We Do",
-    "title": "Comprehensive Talent Solutions",
-    "subtitle": "End-to-end services for productions of all sizes",
+    "badge": "WHAT WE DO",
+    "title": "End-to-End Casting & Talent Solutions",
+    "subtitle": "Connecting exceptional talent with leading brands and productions",
     "casting": {
-      "title": "Casting Services",
-      "description": "Professional casting directors who understand your vision and deliver the perfect talent for every role."
+      "title": "Casting Direction",
+      "description": "We specialize in identifying, curating, and presenting the right talent for commercials, fashion campaigns, TV, and digital projects aligned precisely with each brief."
     },
     "management": {
-      "title": "Talent Management",
-      "description": "Comprehensive career support for our talents, from portfolio development to contract negotiation."
+      "title": "Talent Representation",
+      "description": "We represent models, actors, and professional talents, managing their careers with a focus on positioning, visibility, and long-term growth."
     },
     "production": {
-      "title": "Production Support",
-      "description": "Full production crew including photographers, videographers, and editors for your creative needs."
+      "title": "Talent Coordination",
+      "description": "From shortlisting to availability checks and booking management, we handle the full casting process with efficiency, clarity, and professionalism."
     },
     "consultation": {
-      "title": "Creative Consultation",
-      "description": "Expert guidance on talent selection, creative direction, and campaign strategy."
+      "title": "Casting & Brand Consultation",
+      "description": "We advise brands and agencies on casting strategy, talent selection, and campaign alignment to ensure authentic and impactful results."
     }
   },
   "team": {

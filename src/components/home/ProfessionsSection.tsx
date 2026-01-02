@@ -55,7 +55,7 @@ export default function ProfessionsSection({
       <div className="relative mx-auto max-w-7xl">
         {/* Header */}
         <div className="mx-auto max-w-3xl space-y-4 text-center">
- <p className="inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-primary ">
+          <p className="text-sm uppercase tracking-[0.3em] text-primary ">
             {kicker}
           </p>
           <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
@@ -119,9 +119,6 @@ export default function ProfessionsSection({
                       />
                     </div>
                     <div className="flex-1 space-y-1">
- <p className="text-xs uppercase tracking-[0.2em] text-primary ">
-                        {label}
-                      </p>
                       <p className="text-lg font-semibold leading-tight">
                         {profession.name}
                       </p>

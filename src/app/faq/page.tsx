@@ -6,40 +6,21 @@ import { useI18n } from "@/contexts/I18nContext";
 import {
   HelpCircle,
   Users,
-  Briefcase,
-  Calendar,
-  Search,
   ChevronDown,
 } from "lucide-react";
 
-type Category = "general" | "talents" | "clients" | "bookings";
+type Category = "talents";
 
 export default function FAQPage() {
   const { t, locale } = useI18n();
-  const [activeCategory, setActiveCategory] = useState<Category>("general");
+  const [activeCategory, setActiveCategory] = useState<Category>("talents");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
-    {
-      id: "general" as Category,
-      icon: HelpCircle,
-      label: t("faq.categories.general"),
-    },
     {
       id: "talents" as Category,
       icon: Users,
       label: t("faq.categories.talents"),
-    },
-    {
-      id: "clients" as Category,
-      icon: Briefcase,
-      label: t("faq.categories.clients"),
-    },
-    {
-      id: "bookings" as Category,
-      icon: Calendar,
-      label: t("faq.categories.bookings"),
     },
   ];
 
@@ -48,10 +29,7 @@ export default function FAQPage() {
     category: Category
   ): Array<{ question: string; answer: string }> => {
     const questionCounts: Record<Category, number> = {
-      general: 3,
-      talents: 6,
-      clients: 5,
-      bookings: 4,
+      talents: 4,
     };
 
     const count = questionCounts[category];
@@ -71,13 +49,6 @@ export default function FAQPage() {
   };
 
   const currentQuestions = getQuestions(activeCategory);
-
-  // Filter questions by search
-  const filteredQuestions = currentQuestions.filter(
-    (item: any) =>
-      item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const toggleQuestion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -114,88 +85,16 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Search Bar */}
-      <div className="container mx-auto -mt-8 px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl">
-          <div className="relative">
-            <Search className="absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t("faq.search.placeholder")}
-              className={`w-full rounded-2xl border border-gray-200 bg-white ${
-                locale === "ar" ? "pr-12 pl-6" : "pl-12 pr-6"
-              } py-4 text-gray-900 shadow-lg transition-all focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20`}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Category Tabs */}
-      <div className="container mx-auto px-6 py-12 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id);
-                    setOpenIndex(null);
-                  }}
-                  className={`group relative overflow-hidden rounded-2xl border p-6 transition-all ${
-                    activeCategory === category.id
-                      ? "border-[#c49a47] bg-linear-to-br from-[#c49a47]/10 to-[#d4a855]/5 shadow-lg"
-                      : "border-gray-200 bg-white hover:border-[#c49a47]/50 hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex flex-col items-center gap-3 text-center">
-                    <div
-                      className={`rounded-full p-3 transition-colors ${
-                        activeCategory === category.id
-                          ? "bg-linear-to-br from-[#c49a47] to-[#d4a855] text-white"
-                          : "bg-gray-100 text-gray-600 group-hover:bg-[#c49a47]/10 group-hover:text-[#c49a47]"
-                      }`}
-                    >
-                      <Icon
-                        className={`h-6 w-6 ${
-                          locale === "ar" ? "scale-x-[-1]" : ""
-                        }`}
-                      />
-                    </div>
-                    <span
-                      className={`text-sm font-medium ${
-                        activeCategory === category.id
-                          ? "text-[#c49a47]"
-                          : "text-gray-700 "
-                      }`}
-                    >
-                      {category.label}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
       {/* FAQ Accordion */}
-      <div className="container mx-auto px-6 pb-16 lg:px-8">
+      <div className="container mx-auto px-6 py-16 lg:px-12">
         <div className="mx-auto max-w-4xl">
-          {filteredQuestions.length === 0 ? (
+          {currentQuestions.length === 0 ? (
             <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-              <Search className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-4 text-xl font-semibold text-gray-900 ">
-                {t("faq.search.noResults")}
-              </h3>
-              <p className="mt-2 text-gray-600 ">{t("faq.search.tryAgain")}</p>
+              <p className="text-gray-600">{t("faq.search.noResults")}</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {filteredQuestions.map((item: any, index: number) => {
+              {currentQuestions.map((item: any, index: number) => {
                 const isOpen = openIndex === index;
                 return (
                   <div

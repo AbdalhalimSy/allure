@@ -10,8 +10,10 @@ import {
   ArrowRight,
   Sparkles,
   AlertCircle,
+  Briefcase,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useI18n } from "@/contexts/I18nContext";
 import { getSubscriptionPackages } from "@/lib/api/subscriptions";
 import { initiatePayment, redirectToPaymentGateway } from "@/lib/api/payments";
 import type { SubscriptionPackage } from "@/types/subscription";
@@ -22,6 +24,7 @@ import Button from "@/components/ui/Button";
 export default function PackagesPage() {
   const router = useRouter();
   const { data: user } = useAuth();
+  const { t } = useI18n();
   const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -123,23 +126,11 @@ export default function PackagesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
+      <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white">
         <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-6">
           <div className="text-center">
             <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#c49a47]" />
-            <p className="mt-4 text-gray-600 ">Loading packages...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
-        <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-6">
-          <div className="text-center">
-            <p className="text-red-600 ">{error}</p>
+            <p className="mt-4 text-gray-600">{t("common.loading")}</p>
           </div>
         </div>
       </div>
@@ -147,26 +138,31 @@ export default function PackagesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white via-gray-50 to-white ">
+    <div className="bg-white text-gray-900">
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-gray-200 bg-linear-to-br from-white via-[#fff8ec] to-white ">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] " />
-        <div className="container relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-          <div className="text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#c49a47]/30 bg-[#c49a47]/10 px-4 py-2 text-sm font-semibold text-[#c49a47]">
+      <section className="relative overflow-hidden bg-linear-to-br from-[rgba(196,154,71,0.05)] via-white to-emerald-50">
+        {/* Background decorations */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -start-10 top-10 h-96 w-96 rounded-full bg-[rgba(196,154,71,0.15)] blur-3xl" />
+          <div className="absolute -end-10 bottom-0 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
+        </div>
+
+        <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-12 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge */}
+            <p className="mb-6 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.12)] px-4 py-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary">
               <Crown className="h-4 w-4" />
-              Premium Membership
-            </div>
-            <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
-              Unlock Your{" "}
-              <span className="bg-linear-to-r from-[#c49a47] to-[#d4a855] bg-clip-text text-transparent">
-                Full Potential
-              </span>
+              {t("packages.hero.badge")}
+            </p>
+
+            {/* Title */}
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+              {t("packages.hero.title")}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-gray-600 md:text-xl">
-              Join thousands of professionals who have elevated their careers
-              with our premium membership. Get exclusive access to premium
-              features, priority support, and unlimited opportunities.
+
+            {/* Subtitle */}
+            <p className="text-lg text-gray-600 sm:text-xl">
+              {t("packages.hero.subtitle")}
             </p>
           </div>
 
@@ -175,36 +171,34 @@ export default function PackagesPage() {
             {[
               {
                 icon: <CheckCircle className="h-6 w-6" />,
-                title: "Immediate Payments",
-                description: "Get paid instantly for your work",
+                key: "payments",
               },
               {
                 icon: <Sparkles className="h-6 w-6" />,
-                title: "Featured Profile",
-                description: "Stand out with highlighted visibility",
+                key: "featured",
               },
               {
                 icon: <Crown className="h-6 w-6" />,
-                title: "Premium Content",
-                description: "Upload more photos, videos & audio",
+                key: "content",
               },
               {
-                icon: <ArrowRight className="h-6 w-6 rtl:scale-x-[-1]" />,
-                title: "Priority Support",
-                description: "24/7 dedicated customer service",
+                icon: <Briefcase className="h-6 w-6" />,
+                key: "support",
               },
-            ].map((benefit, idx) => (
+            ].map((benefit) => (
               <div
-                key={idx}
-                className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-[#c49a47] hover:shadow-lg "
+                key={benefit.key}
+                className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-[#c49a47] hover:shadow-lg"
               >
                 <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-[#c49a47] to-[#d4a855] text-white shadow-lg shadow-[#c49a47]/20">
                   {benefit.icon}
                 </div>
-                <h3 className="mb-2 font-semibold text-gray-900 ">
-                  {benefit.title}
+                <h3 className="mb-2 font-semibold text-gray-900">
+                  {t(`packages.benefits.${benefit.key}.title`)}
                 </h3>
-                <p className="text-sm text-gray-600 ">{benefit.description}</p>
+                <p className="text-sm text-gray-600">
+                  {t(`packages.benefits.${benefit.key}.description`)}
+                </p>
               </div>
             ))}
           </div>
@@ -212,21 +206,20 @@ export default function PackagesPage() {
       </section>
 
       {/* Packages Section */}
-      <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+      <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-12 lg:py-24">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 ">
-            Choose Your Plan
+          <h2 className="mb-4 text-4xl font-bold text-gray-900">
+            {t("packages.plans.title")}
           </h2>
-          <p className="text-lg text-gray-600 ">
-            Select the perfect package for your needs. All plans include full
-            access to platform features.
+          <p className="text-lg text-gray-600">
+            {t("packages.plans.subtitle")}
           </p>
         </div>
 
         {packages.length === 0 ? (
-          <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center ">
-            <p className="text-gray-600 ">
-              No packages available at this time. Please check back later.
+          <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
+            <p className="text-gray-600">
+              {t("packages.plans.empty")}
             </p>
           </div>
         ) : (
@@ -245,33 +238,33 @@ export default function PackagesPage() {
         {/* Payment Section */}
         {packages.length > 0 && user && selectedPackage && (
           <div className="mt-12 mx-auto max-w-2xl">
-            <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg ">
-              <h3 className="mb-6 text-2xl font-bold text-gray-900 ">
-                Complete Your Purchase
+            <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
+              <h3 className="mb-6 text-2xl font-bold text-gray-900">
+                {t("packages.plans.title")}
               </h3>
 
               {/* Error Display */}
               {error && (
-                <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 ">
+                <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
                   <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
-                  <p className="text-sm text-red-800 ">{error}</p>
+                  <p className="text-sm text-red-800">{error}</p>
                 </div>
               )}
 
               {/* Selected Package Info */}
-              <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 ">
+              <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-600 ">
-                    Selected Package
+                  <span className="text-sm font-medium text-gray-600">
+                    {t("packages.plans.selectedPackage")}
                   </span>
                   <button
                     onClick={() => setSelectedPackageId(null)}
                     className="text-sm text-[#c49a47] hover:underline"
                   >
-                    Change
+                    {t("packages.plans.change")}
                   </button>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 ">
+                <h4 className="text-lg font-semibold text-gray-900">
                   {selectedPackage.title}
                 </h4>
                 <p className="text-sm text-gray-600 mt-1">
@@ -292,22 +285,22 @@ export default function PackagesPage() {
               </div>
 
               {/* Price Summary */}
-              <div className="mb-6 space-y-2 border-t border-gray-200 pt-4 ">
+              <div className="mb-6 space-y-2 border-t border-gray-200 pt-4">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 ">Original Price</span>
-                  <span className="font-medium text-gray-900 ">
+                  <span className="text-gray-600">{t("packages.plans.originalPrice")}</span>
+                  <span className="font-medium text-gray-900">
                     AED {selectedPackage.price.toFixed(2)}
                   </span>
                 </div>
                 {couponDiscount && (
-                  <div className="flex items-center justify-between text-sm text-green-600 ">
-                    <span>Discount</span>
+                  <div className="flex items-center justify-between text-sm text-green-600">
+                    <span>{t("packages.plans.discount")}</span>
                     <span>-AED {couponDiscount.toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex items-center justify-between border-t border-gray-200 pt-2 ">
-                  <span className="text-lg font-bold text-gray-900 ">
-                    Total
+                <div className="flex items-center justify-between border-t border-gray-200 pt-2">
+                  <span className="text-lg font-bold text-gray-900">
+                    {t("packages.plans.total")}
                   </span>
                   <span className="text-2xl font-bold text-[#c49a47]">
                     AED {finalPrice.toFixed(2)}
@@ -324,18 +317,18 @@ export default function PackagesPage() {
                 {processingPayment ? (
                   <>
                     <Loader2 className="me-2 h-4 w-4 animate-spin" />
-                    Processing...
+                    {t("packages.plans.processing")}
                   </>
                 ) : (
                   <>
-                    Proceed to Payment
+                    {t("packages.plans.proceedToPayment")}
                     <ArrowRight className="ms-2 h-4 w-4 rtl:scale-x-[-1]" />
                   </>
                 )}
               </Button>
 
-              <p className="mt-4 text-center text-xs text-gray-500 ">
-                Secure payment powered by CCAvenue
+              <p className="mt-4 text-center text-xs text-gray-500">
+                {t("packages.plans.securePayment")}
               </p>
             </div>
           </div>
@@ -345,72 +338,55 @@ export default function PackagesPage() {
         {packages.length > 0 && !user && (
           <div className="mt-16 rounded-2xl border border-[#c49a47]/30 bg-linear-to-br from-[#fff8ec] to-[#f7e6c2] p-8 text-center lg:p-12">
             <h3 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
-              Ready to Get Started?
+              {t("packages.cta.title")}
             </h3>
-            <p className="mb-6 text-gray-700 ">
-              Sign up now to choose your package and unlock all premium
-              features.
+            <p className="mb-6 text-gray-700">
+              {t("packages.cta.subtitle")}
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/register">
                 <Button className="min-w-[180px] bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40">
-                  Create Account
+                  {t("packages.cta.createAccount")}
                   <ArrowRight className="ms-2 h-4 w-4 rtl:scale-x-[-1]" />
                 </Button>
               </Link>
               <Link href="/login">
                 <Button variant="secondary" className="min-w-[180px]">
-                  Sign In
+                  {t("packages.cta.signIn")}
                 </Button>
               </Link>
             </div>
-            <p className="mt-6 text-sm text-gray-600 ">
-              Already have an account?{" "}
+            <p className="mt-6 text-sm text-gray-600">
+              {t("packages.cta.haveAccount")}{" "}
               <Link
                 href="/login"
                 className="font-semibold text-[#c49a47] hover:underline"
               >
-                Log in
-              </Link>{" "}
-              to subscribe
+                {t("packages.cta.logIn")}
+              </Link>
             </p>
           </div>
         )}
       </section>
 
       {/* FAQ Section */}
-      <section className="border-t border-gray-200 bg-gray-50 ">
-        <div className="container mx-auto max-w-4xl px-6 py-16 lg:px-8 lg:py-24">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 ">
-            Frequently Asked Questions
+      <section className="border-t border-gray-200 bg-gray-50">
+        <div className="container mx-auto max-w-4xl px-6 py-16 lg:px-12 lg:py-24">
+          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
+            {t("packages.faq.title")}
           </h2>
           <div className="space-y-6">
-            {[
-              {
-                q: "How does the subscription work?",
-                a: "Choose a package that fits your needs, create an account or log in, complete the payment, and instantly unlock all premium features for the duration of your subscription.",
-              },
-              {
-                q: "Can I cancel my subscription?",
-                a: "Yes, you can manage your subscription from your account settings at any time. Your access will continue until the end of your billing period.",
-              },
-              {
-                q: "What payment methods do you accept?",
-                a: "We accept all major credit cards, debit cards, and bank transfers for your convenience.",
-              },
-              {
-                q: "Do you offer refunds?",
-                a: "Please contact our support team within 7 days of purchase to discuss refund eligibility based on our refund policy.",
-              },
-            ].map((faq, idx) => (
+            {["q1", "q2", "q3", "q4"].map((key) => (
               <details
-                key={idx}
-                className="group rounded-xl border border-gray-200 bg-white p-6 "
+                key={key}
+                className="group rounded-xl border border-gray-200 bg-white p-6"
               >
-                <summary className="cursor-pointer text-lg font-semibold text-gray-900 ">
-                  {faq.q}
+                <summary className="cursor-pointer text-lg font-semibold text-gray-900">
+                  {t(`packages.faq.${key}.question`)}
                 </summary>
-                <p className="mt-4 text-gray-600 ">{faq.a}</p>
+                <p className="mt-4 text-gray-600">
+                  {t(`packages.faq.${key}.answer`)}
+                </p>
               </details>
             ))}
           </div>

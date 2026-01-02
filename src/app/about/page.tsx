@@ -77,13 +77,13 @@ export default function AboutPage() {
 
   const values = [
     {
-      icon: Sparkles,
+      icon: UserCheck,
       title: t("about.values.excellence.title"),
       description: t("about.values.excellence.description"),
       color: "from-[var(--primary)] to-[#a57b30]",
     },
     {
-      icon: Palette,
+      icon: Briefcase,
       title: t("about.values.creativity.title"),
       description: t("about.values.creativity.description"),
       color: "from-emerald-400 to-teal-500",
@@ -116,7 +116,7 @@ export default function AboutPage() {
       color: "from-cyan-400 to-indigo-500",
     },
     {
-      icon: Megaphone,
+      icon: Users,
       title: t("about.services.production.title"),
       description: t("about.services.production.description"),
       color: "from-[rgba(196,154,71,0.85)] to-[var(--primary)]",

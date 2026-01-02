@@ -28,34 +28,28 @@ export default function WelcomeSectionNew({
   ribbonTag,
 }: WelcomeSectionProps) {
   return (
- <section className="overflow-hidden bg-linear-to-br from-gray-50 via-white to-[rgba(196,154,71,0.08)] px-6 py-16 lg:px-12">
+    <section className="overflow-hidden bg-linear-to-br from-gray-50 via-white to-[rgba(196,154,71,0.08)] px-6 py-16 lg:px-12">
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
         {/* Left column - Content */}
-        <div className="space-y-6">
- <p className="text-sm uppercase tracking-[0.3em] text-primary ">
+        <div className="space-y-3">
+          <p className="text-sm uppercase tracking-[0.3em] text-primary ">
             {kicker}
           </p>
-          <h2 className="text-2xl font-bold sm:text-3xl">
-            {title}
-          </h2>
- <p className="text-lg text-gray-700 ">
-            {subtitle}
-          </p>
+          <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
+          <p className="text-lg text-gray-700 ">{subtitle}</p>
 
           {/* Pillars grid */}
           <div className="grid gap-4 sm:grid-cols-2">
             {Object.entries(pillars).map(([key, pillar]) => (
               <div
                 key={key}
- className="rounded-2xl border border-gray-200 bg-white/80 p-5 shadow-lg backdrop-blur transition hover:-translate-y-1 hover:shadow-xl "
+                className="rounded-2xl border border-gray-200 bg-white/80 p-5 shadow-lg backdrop-blur transition hover:-translate-y-1 hover:shadow-xl "
               >
- <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.1)] px-3 py-1 text-xs font-semibold text-primary ">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[rgba(196,154,71,0.1)] px-3 py-1 text-xs font-semibold text-primary ">
                   <Sparkles className="h-4 w-4" />
                   {pillar.title}
                 </div>
- <p className="text-sm text-gray-700 ">
-                  {pillar.desc}
-                </p>
+                <p className="text-sm text-gray-700 ">{pillar.desc}</p>
               </div>
             ))}
           </div>
@@ -65,7 +59,7 @@ export default function WelcomeSectionNew({
 
         {/* Right column - Image */}
         <div className="relative">
- <div className="relative overflow-hidden rounded-[28px] border border-gray-100 bg-white/80 shadow-2xl ring-1 ring-white/60 backdrop-blur ">
+          <div className="relative overflow-hidden rounded-[28px] border border-gray-100 bg-white/80 shadow-2xl ring-1 ring-white/60 backdrop-blur ">
             <Image
               src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1100&q=80"
               alt="Allure casting studio"
