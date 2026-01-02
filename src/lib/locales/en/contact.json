@@ -1,92 +1,94 @@
 {
-  "hero": {
-    "badge": "Contact Us",
-    "title": "Let's Start a Conversation",
-    "subtitle": "We're here to help you find the perfect talent or join our exceptional roster. Get in touch with us today."
-  },
-  "form": {
-    "title": "Send Us a Message",
-    "subtitle": "Fill out the form below and we'll get back to you within 24 hours.",
-    "name": {
-      "label": "Full Name",
-      "placeholder": "Enter your full name"
+  "contact": {
+    "hero": {
+      "badge": "Contact Us",
+      "title": "Let's Start a Conversation",
+      "subtitle": "We're here to help you find the perfect talent or join our exceptional roster. Get in touch with us today."
     },
-    "email": {
-      "label": "Email Address",
-      "placeholder": "your.email@example.com"
+    "form": {
+      "title": "Send Us a Message",
+      "subtitle": "Fill out the form below and we'll get back to you within 24 hours.",
+      "name": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "your.email@example.com"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "+971 XX XXX XXXX"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Tell us about your inquiry..."
+      },
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully! We'll get back to you soon.",
+      "error": "Failed to send message. Please try again."
     },
-    "phone": {
-      "label": "Phone Number",
-      "placeholder": "+971 XX XXX XXXX"
+    "info": {
+      "talents": {
+        "title": "For Talents",
+        "description": "Join our roster or inquire about opportunities",
+        "email": "support@allureagencys.com",
+        "phone": "+971 52 342 9898"
+      },
+      "clients": {
+        "title": "For Clients",
+        "description": "Book talent or discuss your project needs",
+        "email": "info@allureagencys.com",
+        "uae": "+971 58 180 0807",
+        "lebanon": "+961 3 727 908"
+      },
+      "address": {
+        "title": "Our Location",
+        "description": "Visit us at our Dubai office",
+        "line1": "Churchill Tower, Office 3411",
+        "line2": "Business Bay - Dubai",
+        "line3": "United Arab Emirates"
+      },
+      "hours": {
+        "title": "Opening Hours",
+        "description": "We're available during business hours",
+        "days": "Monday - Saturday",
+        "time": "09:00 - 18:00"
+      }
     },
-    "message": {
-      "label": "Message",
-      "placeholder": "Tell us about your inquiry..."
+    "social": {
+      "title": "Follow Us",
+      "subtitle": "Stay connected with us on social media"
     },
-    "submit": "Send Message",
-    "sending": "Sending...",
-    "success": "Message sent successfully! We'll get back to you soon.",
-    "error": "Failed to send message. Please try again."
-  },
-  "info": {
-    "talents": {
-      "title": "For Talents",
-      "description": "Join our roster or inquire about opportunities",
-      "email": "support@allureagencys.com",
-      "phone": "+971 52 342 9898"
+    "locations": {
+      "badge": "Our Offices",
+      "title": "Find Us Across the Region",
+      "subtitle": "We have offices in three strategic locations to serve you better",
+      "dubai": {
+        "name": "Dubai, UAE",
+        "address": "Churchill Tower, Office 3411, Business Bay",
+        "phone": "+971 58 180 0807",
+        "email": "info@allureagencys.com"
+      },
+      "riyadh": {
+        "name": "Riyadh, Kingdom of Saudi Arabia",
+        "address": "Coming Soon",
+        "phone": "+966 50 000 0000",
+        "email": "info@allureagencys.com"
+      },
+      "lebanon": {
+        "name": "Beirut, Lebanon",
+        "address": "Head Office",
+        "phone": "+961 3 727 908",
+        "email": "lebanon@allureagencys.com"
+      }
     },
-    "clients": {
-      "title": "For Clients",
-      "description": "Book talent or discuss your project needs",
-      "email": "info@allureagencys.com",
-      "uae": "+971 58 180 0807",
-      "lebanon": "+961 3 727 908"
-    },
-    "address": {
-      "title": "Our Location",
-      "description": "Visit us at our Dubai office",
-      "line1": "Churchill Tower, Office 3411",
-      "line2": "Business Bay - Dubai",
-      "line3": "United Arab Emirates"
-    },
-    "hours": {
-      "title": "Opening Hours",
-      "description": "We're available during business hours",
-      "days": "Monday - Saturday",
-      "time": "09:00 - 18:00"
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Whether you're looking to join our talent roster or book the perfect cast for your project",
+      "talentButton": "Join as Talent",
+      "clientButton": "Browse Talents"
     }
-  },
-  "social": {
-    "title": "Follow Us",
-    "subtitle": "Stay connected with us on social media"
-  },
-  "locations": {
-    "badge": "Our Offices",
-    "title": "Find Us Across the Region",
-    "subtitle": "We have offices in three strategic locations to serve you better",
-    "dubai": {
-      "name": "Dubai, UAE",
-      "address": "Churchill Tower, Office 3411, Business Bay",
-      "phone": "+971 58 180 0807",
-      "email": "info@allureagencys.com"
-    },
-    "riyadh": {
-      "name": "Riyadh, Kingdom of Saudi Arabia",
-      "address": "Coming Soon",
-      "phone": "+966 50 000 0000",
-      "email": "info@allureagencys.com"
-    },
-    "lebanon": {
-      "name": "Beirut, Lebanon",
-      "address": "Head Office",
-      "phone": "+961 3 727 908",
-      "email": "lebanon@allureagencys.com"
-    }
-  },
-  "cta": {
-    "title": "Ready to Get Started?",
-    "subtitle": "Whether you're looking to join our talent roster or book the perfect cast for your project",
-    "talentButton": "Join as Talent",
-    "clientButton": "Browse Talents"
   }
 }

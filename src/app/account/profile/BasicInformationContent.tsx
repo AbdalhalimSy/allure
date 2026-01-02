@@ -128,52 +128,52 @@ export default function BasicInformationContent({
 
     try {
       if (!formData.first_name || !formData.last_name) {
-        toast.error(t("account.basic.errors.nameRequired"));
+        toast.error(t("accountSettings.account.basic.errors.nameRequired"));
         setLoading(false);
         return;
       }
       if (!formData.mobile) {
-        toast.error(t("account.basic.errors.phoneRequired"));
+        toast.error(t("accountSettings.account.basic.errors.phoneRequired"));
         setLoading(false);
         return;
       }
       if (formData.differentWhatsApp && !formData.whatsapp) {
-        toast.error(t("account.basic.errors.save"));
+        toast.error(t("accountSettings.account.basic.errors.save"));
         setLoading(false);
         return;
       }
       if (!formData.gender) {
-        toast.error(t("account.basic.errors.genderRequired"));
+        toast.error(t("accountSettings.account.basic.errors.genderRequired"));
         setLoading(false);
         return;
       }
       if (!formData.dob) {
-        toast.error(t("account.basic.errors.dobRequired"));
+        toast.error(t("accountSettings.account.basic.errors.dobRequired"));
         setLoading(false);
         return;
       }
       if (!formData.country_id || formData.country_id === 0) {
-        toast.error(t("account.basic.errors.countryRequired"));
+        toast.error(t("accountSettings.account.basic.errors.countryRequired"));
         setLoading(false);
         return;
       }
       if (formData.nationality_ids.length === 0) {
-        toast.error(t("account.basic.errors.nationalityRequired"));
+        toast.error(t("accountSettings.account.basic.errors.nationalityRequired"));
         setLoading(false);
         return;
       }
       if (formData.nationality_ids.length > 2) {
-        toast.error(t("account.basic.errors.nationalityLimit"));
+        toast.error(t("accountSettings.account.basic.errors.nationalityLimit"));
         setLoading(false);
         return;
       }
       if (formData.ethnicity_ids.length === 0) {
-        toast.error(t("account.basic.errors.ethnicityRequired"));
+        toast.error(t("accountSettings.account.basic.errors.ethnicityRequired"));
         setLoading(false);
         return;
       }
       if (formData.ethnicity_ids.length > 2) {
-        toast.error(t("account.basic.errors.ethnicityLimit"));
+        toast.error(t("accountSettings.account.basic.errors.ethnicityLimit"));
         setLoading(false);
         return;
       }
@@ -199,16 +199,16 @@ export default function BasicInformationContent({
         payload
       );
       if (data.status === "success") {
-        toast.success(t("account.basic.success"));
+        toast.success(t("accountSettings.account.basic.success"));
         await fetchProfile();
         onNext();
       }
     } catch (error: unknown) {
       const message = getErrorMessage(
         error,
-        t("account.basic.errors.saveFailed")
+        t("accountSettings.account.basic.errors.saveFailed")
       );
-      toast.error(message || t("account.basic.errors.saveFailed"));
+      toast.error(message || t("accountSettings.account.basic.errors.saveFailed"));
     } finally {
       setLoading(false);
     }
@@ -222,27 +222,27 @@ export default function BasicInformationContent({
       ) : (
         <form onSubmit={handleSubmit}>
           <AccountSection
-            title={t("account.basic.title")}
-            description={t("account.basic.description")}
+            title={t("accountSettings.account.basic.title")}
+            description={t("accountSettings.account.basic.description")}
           >
             <div className="grid gap-6 md:grid-cols-2">
               <AccountField
-                label={t("account.basic.fields.firstName")}
+                label={t("accountSettings.account.basic.fields.firstName")}
                 required
               >
                 <Input
                   name="first_name"
-                  placeholder={t("basicInformation.johnExample") || "John"}
+                  placeholder={t("accountSettings.basicInformation.johnExample") || "John"}
                   value={formData.first_name}
                   onChange={handleChange}
                   required
                 />
               </AccountField>
 
-              <AccountField label={t("account.basic.fields.lastName")} required>
+              <AccountField label={t("accountSettings.account.basic.fields.lastName")} required>
                 <Input
                   name="last_name"
-                  placeholder={t("basicInformation.doeExample") || "Doe"}
+                  placeholder={t("accountSettings.basicInformation.doeExample") || "Doe"}
                   value={formData.last_name}
                   onChange={handleChange}
                   required
@@ -250,24 +250,24 @@ export default function BasicInformationContent({
               </AccountField>
 
               <AccountField
-                label={t("account.basic.fields.email")}
+                label={t("accountSettings.account.basic.fields.email")}
                 required
-                description={t("account.basic.fields.emailDescription")}
+                description={t("accountSettings.account.basic.fields.emailDescription")}
               >
                 <Input
                   type="email"
                   placeholder={
-                    t("basicInformation.emailExample") || "john.doe@example.com"
+                    t("accountSettings.basicInformation.emailExample") || "john.doe@example.com"
                   }
                   value={user?.email || ""}
                   disabled
                 />
               </AccountField>
 
-              <AccountField label={t("account.basic.fields.mobile")} required>
+              <AccountField label={t("accountSettings.account.basic.fields.mobile")} required>
                 <PhoneInput
                   name="mobile"
-                  placeholder={t("basicInformation.phoneExample") || "123-4567"}
+                  placeholder={t("accountSettings.basicInformation.phoneExample") || "123-4567"}
                   value={formData.mobile}
                   onChange={(value) => handlePhoneChange(value, "mobile")}
                   required
@@ -278,13 +278,13 @@ export default function BasicInformationContent({
                 <Switch
                   checked={formData.differentWhatsApp}
                   onChange={handleWhatsAppToggle}
-                  label={t("account.basic.fields.differentWhatsApp")}
+                  label={t("accountSettings.account.basic.fields.differentWhatsApp")}
                 />
               </AccountField>
 
               {formData.differentWhatsApp && (
                 <AccountField
-                  label={t("account.basic.fields.whatsapp")}
+                  label={t("accountSettings.account.basic.fields.whatsapp")}
                   required
                 >
                   <PhoneInput
@@ -297,43 +297,43 @@ export default function BasicInformationContent({
                 </AccountField>
               )}
 
-              <AccountField label={t("account.basic.fields.dob")} required>
+              <AccountField label={t("accountSettings.account.basic.fields.dob")} required>
                 <DatePicker
                   value={formData.dob}
                   onChange={(date) =>
                     setFormData((prev) => ({ ...prev, dob: date }))
                   }
-                  placeholder={t("account.basic.fields.dateOfBirth")}
+                  placeholder={t("accountSettings.account.basic.fields.dateOfBirth")}
                   maxDate={new Date().toISOString().split("T")[0]}
                 />
               </AccountField>
 
-              <AccountField label={t("account.basic.fields.gender")} required>
+              <AccountField label={t("accountSettings.account.basic.fields.gender")} required>
                 <SingleSelect
                   options={[
                     {
                       value: "male",
-                      label: t("account.basic.genderOptions.male"),
+                      label: t("accountSettings.account.basic.genderOptions.male"),
                     },
                     {
                       value: "female",
-                      label: t("account.basic.genderOptions.female"),
+                      label: t("accountSettings.account.basic.genderOptions.female"),
                     },
                     {
                       value: "other",
-                      label: t("account.basic.genderOptions.other"),
+                      label: t("accountSettings.account.basic.genderOptions.other"),
                     },
                   ]}
                   value={formData.gender}
                   onChange={(val) =>
                     setFormData((prev) => ({ ...prev, gender: String(val) }))
                   }
-                  placeholder={t("account.basic.fields.gender")}
+                  placeholder={t("accountSettings.account.basic.fields.gender")}
                   searchable={false}
                 />
               </AccountField>
 
-              <AccountField label={t("account.basic.fields.country")} required>
+              <AccountField label={t("accountSettings.account.basic.fields.country")} required>
                 <SingleSelect
                   options={countries.map((c) => ({
                     value: c.id,
@@ -346,7 +346,7 @@ export default function BasicInformationContent({
                       country_id: Number(val),
                     }))
                   }
-                  placeholder={t("account.basic.fields.country")}
+                  placeholder={t("accountSettings.account.basic.fields.country")}
                   loading={loadingLookups}
                   disabled={loadingLookups}
                 />
@@ -355,9 +355,9 @@ export default function BasicInformationContent({
 
             <div className="space-y-6">
               <AccountField
-                label={t("account.basic.fields.nationalities")}
+                label={t("accountSettings.account.basic.fields.nationalities")}
                 required
-                description={t("account.basic.fields.nationalitiesDescription")}
+                description={t("accountSettings.account.basic.fields.nationalitiesDescription")}
               >
                 <MultiSelect
                   options={nationalities}
@@ -365,17 +365,17 @@ export default function BasicInformationContent({
                   onChange={(value) =>
                     setFormData((prev) => ({ ...prev, nationality_ids: value }))
                   }
-                  placeholder={t("account.basic.fields.nationality")}
+                  placeholder={t("accountSettings.account.basic.fields.nationality")}
                   loading={loadingLookups}
                   maxSelected={2}
-                  limitMessage={t("account.basic.errors.nationalityLimit")}
+                  limitMessage={t("accountSettings.account.basic.errors.nationalityLimit")}
                 />
               </AccountField>
 
               <AccountField
-                label={t("account.basic.fields.ethnicities")}
+                label={t("accountSettings.account.basic.fields.ethnicities")}
                 required
-                description={t("account.basic.fields.ethnicitiesDescription")}
+                description={t("accountSettings.account.basic.fields.ethnicitiesDescription")}
               >
                 <MultiSelect
                   options={ethnicities}
@@ -383,10 +383,10 @@ export default function BasicInformationContent({
                   onChange={(value) =>
                     setFormData((prev) => ({ ...prev, ethnicity_ids: value }))
                   }
-                  placeholder={t("account.basic.fields.ethnicity")}
+                  placeholder={t("accountSettings.account.basic.fields.ethnicity")}
                   loading={loadingLookups}
                   maxSelected={2}
-                  limitMessage={t("account.basic.errors.ethnicityLimit")}
+                  limitMessage={t("accountSettings.account.basic.errors.ethnicityLimit")}
                 />
               </AccountField>
             </div>
@@ -394,7 +394,7 @@ export default function BasicInformationContent({
  <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 ">
               <Button type="submit" variant="primary" disabled={loading}>
                 {loading
-                  ? t("account.buttons.saving")
+                  ? t("accountSettings.account.buttons.saving")
                   : t("common.saveAndContinue")}
               </Button>
             </div>

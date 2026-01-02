@@ -83,12 +83,12 @@ export default function Header() {
     try {
       setIsSwitchingProfile(true);
       await switchProfile(profileId);
-      toast.success(t("profile.switched") || "Profile switched successfully");
+      toast.success(t("accountSettings.profile.switched") || "Profile switched successfully");
       setOpen(false);
       router.refresh();
     } catch (error) {
       logger.error("Failed to switch profile", error);
-      toast.error(t("profile.switchFailed") || "Failed to switch profile");
+      toast.error(t("accountSettings.profile.switchFailed") || "Failed to switch profile");
     } finally {
       setIsSwitchingProfile(false);
     }
@@ -258,10 +258,10 @@ export default function Header() {
                           />
                           <span className="text-xs font-medium capitalize">
                             {user.profile.approval_status === "approved"
-                              ? t("account.status.approved")
+                              ? t("accountSettings.account.status.approved")
                               : user.profile.approval_status === "pending"
-                              ? t("account.status.pending")
-                              : t("account.status.rejected")}
+                              ? t("accountSettings.account.status.pending")
+                              : t("accountSettings.account.status.rejected")}
                           </span>
                         </div>
                       )}
@@ -290,7 +290,7 @@ export default function Header() {
                               </div>
                               {profile.is_primary && (
                                 <div className="text-xs text-gray-500 ">
-                                  {t("profile.primary") || "Primary"}
+                                  {t("accountSettings.profile.primary") || "Primary"}
                                 </div>
                               )}
                             </div>
@@ -418,10 +418,10 @@ export default function Header() {
                         />
                         <span className="text-xs font-medium capitalize text-gray-600 ">
                           {user.profile.approval_status === "approved"
-                            ? t("account.status.approved")
+                            ? t("accountSettings.account.status.approved")
                             : user.profile.approval_status === "pending"
-                            ? t("account.status.pending")
-                            : t("account.status.rejected")}
+                            ? t("accountSettings.account.status.pending")
+                            : t("accountSettings.account.status.rejected")}
                         </span>
                       </div>
                     )}
@@ -432,7 +432,7 @@ export default function Header() {
                 {otherProfiles.length > 0 && (
                   <div className="mt-4 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-3 ">
                     <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 ">
-                      {t("profile.switchTo") || "Switch Profile"}
+                      {t("accountSettings.profile.switchTo") || "Switch Profile"}
                     </div>
                     {otherProfiles.map((profile) => (
                       <button
@@ -457,7 +457,7 @@ export default function Header() {
                           </div>
                           {profile.is_primary && (
                             <div className="text-xs text-gray-500 ">
-                              {t("profile.primary") || "Primary"}
+                              {t("accountSettings.profile.primary") || "Primary"}
                             </div>
                           )}
                         </div>

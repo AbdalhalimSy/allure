@@ -272,43 +272,43 @@ export default function TalentDetailPage() {
  <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
               <div className="mb-4 flex items-center gap-2">
                 <Palette className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">{t("content.physicalAttributes")}</h2>
+ <h2 className="text-xl font-bold text-gray-900 ">{t("home.content.physicalAttributes")}</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.hairColor")}</div>
+ <div className="text-gray-500 ">{t("home.content.hairColor")}</div>
  <div className="font-semibold text-gray-900 ">{profile.hair_color}</div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.hairType")}</div>
+ <div className="text-gray-500 ">{t("home.content.hairType")}</div>
  <div className="font-semibold text-gray-900 ">{profile.hair_type}</div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.eyeColor")}</div>
+ <div className="text-gray-500 ">{t("home.content.eyeColor")}</div>
  <div className="font-semibold text-gray-900 ">{profile.eye_color}</div>
                 </div>
                 {profile.chest && (
                   <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.chest")}</div>
+ <div className="text-gray-500 ">{t("home.content.chest")}</div>
  <div className="font-semibold text-gray-900 ">{profile.chest} cm</div>
                   </div>
                 )}
                 {profile.waist && (
                   <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.waist")}</div>
+ <div className="text-gray-500 ">{t("home.content.waist")}</div>
  <div className="font-semibold text-gray-900 ">{profile.waist} cm</div>
                   </div>
                 )}
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.shoeSize")}</div>
+ <div className="text-gray-500 ">{t("home.content.shoeSize")}</div>
  <div className="font-semibold text-gray-900 ">{profile.shoe_size}</div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.tshirtSize")}</div>
+ <div className="text-gray-500 ">{t("home.content.tshirtSize")}</div>
  <div className="font-semibold text-gray-900 ">{profile.tshirt_size}</div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("content.pantsSize")}</div>
+ <div className="text-gray-500 ">{t("home.content.pantsSize")}</div>
  <div className="font-semibold text-gray-900 ">{profile.pants_size}</div>
                 </div>
               </div>

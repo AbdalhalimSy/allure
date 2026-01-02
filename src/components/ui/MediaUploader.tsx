@@ -62,13 +62,13 @@ export default function MediaUploader({
   const getFileTypeLabel = () => {
     switch (type) {
       case "photo":
-        return t("account.profession.upload.photo") || "Photo";
+        return t("accountSettings.account.profession.upload.photo") || "Photo";
       case "video":
-        return t("account.profession.upload.video") || "Video";
+        return t("accountSettings.account.profession.upload.video") || "Video";
       case "audio":
-        return t("account.profession.upload.audio") || "Audio";
+        return t("accountSettings.account.profession.upload.audio") || "Audio";
       default:
-        return t("account.profession.upload.file") || "File";
+        return t("accountSettings.account.profession.upload.file") || "File";
     }
   };
 
@@ -237,7 +237,7 @@ export default function MediaUploader({
               </div>
               <div className="space-y-2">
  <p className="text-sm font-medium text-gray-700 ">
-                  {t("account.profession.upload.uploading") || "Uploading..."}
+                  {t("accountSettings.account.profession.upload.uploading") || "Uploading..."}
                 </p>
  <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                   <div
@@ -258,10 +258,10 @@ export default function MediaUploader({
               <div>
  <p className="text-sm font-medium text-gray-700 ">
  <span className="text-[#c49a47] hover:underline">
-                    {t("account.profession.upload.clickToUpload") ||
+                    {t("accountSettings.account.profession.upload.clickToUpload") ||
                       "Click to upload"}
                   </span>{" "}
-                  {t("account.profession.upload.orDragDrop") ||
+                  {t("accountSettings.account.profession.upload.orDragDrop") ||
                     "or drag and drop"}
                 </p>
  <p className="text-xs text-gray-500 mt-1">

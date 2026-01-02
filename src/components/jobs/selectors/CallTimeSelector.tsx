@@ -100,7 +100,7 @@ export default function CallTimeSelector({
  <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] " />
  <div className="text-sm text-[#c49a47] ">
           <p className="font-semibold mb-1">
-            {t("content.callTimeRequired") || "Call Time Required"}
+            {t("home.content.callTimeRequired") || "Call Time Required"}
           </p>
           <p>
             {t("jobs.jobApplication.callTimeRequired") ||

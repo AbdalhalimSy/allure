@@ -25,41 +25,41 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       {
         id: "basic",
         label: "Basic Information",
-        labelKey: "account.nav.basic",
+        labelKey: "accountSettings.account.nav.basic",
         icon: <TbUser />,
       },
       {
         id: "appearance",
         label: "Appearance",
-        labelKey: "account.nav.appearance",
+        labelKey: "accountSettings.account.nav.appearance",
         icon: <TbSparkles />,
       },
       {
         id: "profession",
         label: "Professions",
-        labelKey: "account.nav.profession",
+        labelKey: "accountSettings.account.nav.profession",
         icon: <TbBriefcase />,
       },
       {
         id: "experience",
         label: "Experience",
-        labelKey: "account.nav.experience",
+        labelKey: "accountSettings.account.nav.experience",
         icon: <TbStar />,
       },
       {
         id: "portfolio",
         label: "Portfolio",
-        labelKey: "account.nav.portfolio",
+        labelKey: "accountSettings.account.nav.portfolio",
         icon: <TbPhoto />,
       },
       {
         id: "photos",
         label: "Profile Photos",
-        labelKey: "account.nav.photos",
+        labelKey: "accountSettings.account.nav.photos",
         icon: <TbCamera />,
       },
-      { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
-      { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
+      { id: "security", label: "Security & Privacy", labelKey: "accountSettings.account.nav.security", icon: <TbShieldCheck /> },
+      { id: "billing", label: "Billing & Plans", labelKey: "accountSettings.account.nav.billing", icon: <TbCreditCard /> },
     ];
   }
 
@@ -68,11 +68,11 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
     {
       id: "profile",
       label: "Profile Setup",
-      labelKey: "account.nav.profile",
+      labelKey: "accountSettings.account.nav.profile",
       icon: <TbUser />,
     },
-    { id: "security", label: "Security & Privacy", labelKey: "account.nav.security", icon: <TbShieldCheck /> },
-    { id: "billing", label: "Billing & Plans", labelKey: "account.nav.billing", icon: <TbCreditCard /> },
+    { id: "security", label: "Security & Privacy", labelKey: "accountSettings.account.nav.security", icon: <TbShieldCheck /> },
+    { id: "billing", label: "Billing & Plans", labelKey: "accountSettings.account.nav.billing", icon: <TbCreditCard /> },
   ];
 };
 

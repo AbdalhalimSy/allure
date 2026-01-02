@@ -77,8 +77,8 @@ function SortableItem({
   const isFeatured = !!item.featured_image;
   const status =
     item.approval_status === "approved"
-      ? { label: t("portfolio.approved") || "Approved", color: "emerald" }
-      : { label: t("portfolio.pending") || "Pending", color: "amber" };
+      ? { label: t("accountSettings.portfolio.approved") || "Approved", color: "emerald" }
+      : { label: t("accountSettings.portfolio.pending") || "Pending", color: "amber" };
 
   return (
     <div ref={setNodeRef} style={style} className="group relative">
@@ -143,12 +143,12 @@ function SortableItem({
                 : "bg-white/95 text-gray-400 hover:bg-[#c49a47] hover:text-white "
             }`}
             aria-label={
-              t("portfolio.setFeaturedTooltip") || "Set as profile picture"
+              t("accountSettings.portfolio.setFeaturedTooltip") || "Set as profile picture"
             }
           >
             {isFeatured ? <TbStarFilled size={20} /> : <TbStar size={20} />}
             <span className="pointer-events-none absolute top-full mt-2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-xl transition-opacity group-hover/star:opacity-100 start-1/2 ltr:-translate-x-10/12 rtl:translate-x-10/12 ">
-              {t("portfolio.setFeaturedTooltip") || "Set as profile picture"}
+              {t("accountSettings.portfolio.setFeaturedTooltip") || "Set as profile picture"}
             </span>
           </button>
         </div>
@@ -173,7 +173,7 @@ function SortableItem({
               {...attributes}
               {...listeners}
               className="group/drag flex cursor-grab items-center justify-center rounded-lg bg-[#c49a47]/10 px-3 py-2 text-[#c49a47] transition-colors hover:bg-[#c49a47]/20 active:cursor-grabbing"
-              title={t("portfolio.dragTooltip") || "Drag to reorder"}
+              title={t("accountSettings.portfolio.dragTooltip") || "Drag to reorder"}
             >
               <TbGripVertical size={20} />
             </div>
@@ -183,7 +183,7 @@ function SortableItem({
         {/* Featured Badge Indicator */}
         {isFeatured && (
           <div className="absolute bottom-3 rounded-lg bg-[#c49a47] px-3 py-1.5 text-xs font-bold text-white shadow-lg transition-all duration-500 group-hover:bottom-18 start-3">
-            {t("portfolio.profilePicture") || "Profile Picture"}
+            {t("accountSettings.portfolio.profilePicture") || "Profile Picture"}
           </div>
         )}
       </div>
@@ -229,7 +229,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       );
       setItems(normalized);
     } catch {
-      toast.error(t("portfolio.loadFailed") || "Failed to load portfolio");
+      toast.error(t("accountSettings.portfolio.loadFailed") || "Failed to load portfolio");
     } finally {
       setLoading(false);
     }
@@ -301,7 +301,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     if (validation.length) {
       setErrors(validation);
       setSaving(false);
-      toast.error(t("portfolio.validationErrors") || "Validation errors");
+      toast.error(t("accountSettings.portfolio.validationErrors") || "Validation errors");
       return;
     }
     const normalized = items.map((i, idx) => ({ ...i, priority: idx }));
@@ -310,7 +310,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     if (result.success) {
       toast.success(
         result.message ||
-          t("portfolio.synced") ||
+          t("accountSettings.portfolio.synced") ||
           "Portfolio synced successfully."
       );
       loadInitial();
@@ -324,25 +324,25 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         ...prev,
         ...(backendErrors.length
           ? backendErrors
-          : [result.message || t("portfolio.syncFailed") || "Sync failed"]),
+          : [result.message || t("accountSettings.portfolio.syncFailed") || "Sync failed"]),
       ]);
-      toast.error(result.message || t("portfolio.syncFailed") || "Sync failed");
+      toast.error(result.message || t("accountSettings.portfolio.syncFailed") || "Sync failed");
     }
   };
 
   if (loading) {
     return (
       <AccountPageLoader
-        message={t("portfolio.loading") || "Loading portfolio..."}
+        message={t("accountSettings.portfolio.loading") || "Loading portfolio..."}
       />
     );
   }
 
   return (
     <AccountSection
-      title={t("account.nav.portfolio") || "Portfolio"}
+      title={t("accountSettings.account.nav.portfolio") || "Portfolio"}
       description={
-        t("portfolio.description") ||
+        t("accountSettings.portfolio.description") ||
         "Showcase your best work and projects. Reorder items, pick a profile photo, and sync when ready."
       }
     >
@@ -350,25 +350,25 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         <div className="rounded-3xl border border-[#c49a47]/20 bg-linear-to-br from-slate-900 via-gray-900 to-black p-6 text-white shadow-xl">
           <div className="flex flex-col gap-2">
             <p className="text-lg font-semibold">
-              {t("portfolio.heroTitle") || "Curate a standout portfolio"}
+              {t("accountSettings.portfolio.heroTitle") || "Curate a standout portfolio"}
             </p>
             <p className="text-sm text-white/70">
-              {t("portfolio.heroSubtitle") ||
+              {t("accountSettings.portfolio.heroSubtitle") ||
                 "Highlight a single photo as your public profile picture and arrange the rest for a flowing visual story."}
             </p>
             <div className="mt-3 inline-flex w-fit items-center gap-2 rounded-full bg-[#c49a47]/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-[#c49a47]">
               <span className="h-2 w-2 rounded-full bg-[#c49a47]" />
-              {items.length} {t("portfolio.items") || "items"}
+              {items.length} {t("accountSettings.portfolio.items") || "items"}
             </div>
           </div>
         </div>
         <div className="rounded-3xl border border-gray-200/60 bg-white/90 p-5 shadow-lg backdrop-blur ">
           <p className="text-sm font-semibold text-gray-900 ">
-            {t("portfolio.featuredHint") ||
+            {t("accountSettings.portfolio.featuredHint") ||
               "Tip: Star one item to set it as your public profile picture."}
           </p>
           <p className="mt-2 text-xs text-gray-600 ">
-            {t("portfolio.syncHint") ||
+            {t("accountSettings.portfolio.syncHint") ||
               "Upload multiple images or videos, drag to reorder, then sync to push changes live."}
           </p>
         </div>
@@ -382,7 +382,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           value={selectedFiles}
           onChange={handleFilesChange}
           description={
-            t("account.profession.upload.selectFiles") ||
+            t("accountSettings.account.profession.upload.selectFiles") ||
             "Click to select or drag & drop files (images/videos up to 100MB)"
           }
         />
@@ -400,7 +400,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#c49a47]">
           <TbGripVertical size={18} />
           <span>
-            {t("portfolio.dragHint") ||
+            {t("accountSettings.portfolio.dragHint") ||
               "Drag and drop to reorder your portfolio items"}
           </span>
         </div>
@@ -448,11 +448,11 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
               />
             </svg>
             <p className="mt-4 text-base font-semibold text-gray-700 ">
-              {t("portfolio.noItems") ||
+              {t("accountSettings.portfolio.noItems") ||
                 "No portfolio items yet. Upload your work above!"}
             </p>
             <p className="mt-2 text-sm text-gray-500 ">
-              {t("portfolio.emptyHint") ||
+              {t("accountSettings.portfolio.emptyHint") ||
                 "Upload a few shots, star your hero image, then sync to publish."}
             </p>
           </div>
@@ -465,7 +465,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             {t("common.back") || "Back"}
           </Button>
           <Button variant="secondary" onClick={loadInitial} disabled={saving}>
-            <TbRefresh className="me-1" /> {t("portfolio.reset") || "Reset"}
+            <TbRefresh className="me-1" /> {t("accountSettings.portfolio.reset") || "Reset"}
           </Button>
         </div>
         <Button
@@ -476,11 +476,11 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           {saving ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{" "}
-              {t("portfolio.syncing") || "Syncing..."}
+              {t("accountSettings.portfolio.syncing") || "Syncing..."}
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <TbUpload /> {t("portfolio.sync") || "Sync Portfolio"}
+              <TbUpload /> {t("accountSettings.portfolio.sync") || "Sync Portfolio"}
             </span>
           )}
         </Button>

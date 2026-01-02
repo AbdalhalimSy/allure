@@ -1,542 +1,544 @@
 {
-  "account": {
-    "title": "Account Settings",
-    "subtitle": "Manage your account settings and preferences",
-    "status": {
-      "approvedTitle": "approved",
-      "approvedDescription": "Your account has been approved and is active.",
-      "pendingTitle": "pending",
-      "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
-      "rejectedTitle": "rejected",
-      "rejectedDescription": "Your account application was not approved. Please contact support for details.",
-      "ariaLabel": "Approval status: {{status}}",
-      "approved": "approved",
-      "pending": "pending",
-      "rejected": "rejected"
-    },
-    "billing": {
+  "accountSettings": {
+    "account": {
+      "title": "Account Settings",
+      "subtitle": "Manage your account settings and preferences",
       "status": {
-        "title": "Subscription Status",
-        "description": "Your current subscription details",
-        "noActive": "No Active Subscription",
-        "noActiveDesc": "Subscribe to a package to unlock all features",
-        "expired": "Subscription Expired",
-        "renewDesc": "Renew your subscription to continue accessing premium features",
-        "active": "Active Subscription",
-        "started": "Started",
-        "expires": "Expires",
-        "daysRemaining": "days remaining",
-        "expiringSoon": "⚠️ Your subscription is expiring soon! Renew now to avoid interruption."
+        "approvedTitle": "approved",
+        "approvedDescription": "Your account has been approved and is active.",
+        "pendingTitle": "pending",
+        "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
+        "rejectedTitle": "rejected",
+        "rejectedDescription": "Your account application was not approved. Please contact support for details.",
+        "ariaLabel": "Approval status: {{status}}",
+        "approved": "approved",
+        "pending": "pending",
+        "rejected": "rejected"
       },
-      "tabs": {
-        "plans": "Available Plans",
-        "history": "Subscription History",
-        "payments": "Payment History"
-      },
-      "packages": {
-        "title": "Available Packages",
-        "description": "Choose a subscription package that fits your needs",
-        "noPackages": "No packages available at this time. Please check back later."
-      },
-      "coupon": {
-        "label": "Have a coupon code?",
-        "placeholder": "Enter coupon code",
-        "apply": "Apply",
-        "applied": "Coupon Applied",
-        "discount": "discount",
-        "off": "off",
-        "publicCoupon": "Public coupon",
-        "privateCoupon": "Private coupon",
-        "remove": "Remove",
-        "validating": "Validating...",
-        "invalid": "Invalid coupon code",
+      "billing": {
+        "status": {
+          "title": "Subscription Status",
+          "description": "Your current subscription details",
+          "noActive": "No Active Subscription",
+          "noActiveDesc": "Subscribe to a package to unlock all features",
+          "expired": "Subscription Expired",
+          "renewDesc": "Renew your subscription to continue accessing premium features",
+          "active": "Active Subscription",
+          "started": "Started",
+          "expires": "Expires",
+          "daysRemaining": "days remaining",
+          "expiringSoon": "⚠️ Your subscription is expiring soon! Renew now to avoid interruption."
+        },
+        "tabs": {
+          "plans": "Available Plans",
+          "history": "Subscription History",
+          "payments": "Payment History"
+        },
+        "packages": {
+          "title": "Available Packages",
+          "description": "Choose a subscription package that fits your needs",
+          "noPackages": "No packages available at this time. Please check back later."
+        },
+        "coupon": {
+          "label": "Have a coupon code?",
+          "placeholder": "Enter coupon code",
+          "apply": "Apply",
+          "applied": "Coupon Applied",
+          "discount": "discount",
+          "off": "off",
+          "publicCoupon": "Public coupon",
+          "privateCoupon": "Private coupon",
+          "remove": "Remove",
+          "validating": "Validating...",
+          "invalid": "Invalid coupon code",
+          "errors": {
+            "required": "Coupon code is required",
+            "invalid": "This coupon code is not valid",
+            "invalidForPackageOrProfile": "Invalid coupon code for this package or profile"
+          }
+        },
+        "order": {
+          "title": "Complete Your Order",
+          "summary": "Order Summary",
+          "package": "Package",
+          "originalPrice": "Original Price",
+          "discount": "Discount",
+          "total": "Total",
+          "youSave": "You save"
+        },
+        "subscribe": "Subscribe Now",
+        "processing": "Processing...",
         "errors": {
-          "required": "Coupon code is required",
-          "invalid": "This coupon code is not valid",
-          "invalidForPackageOrProfile": "Invalid coupon code for this package or profile"
+          "selectProfile": "Please select a profile first",
+          "load": "Failed to load subscription data",
+          "create": "Failed to create subscription"
+        },
+        "history": {
+          "title": "Subscription History",
+          "description": "View all your past and current subscriptions",
+          "noHistory": "No Subscription History",
+          "noHistoryDesc": "Your subscription history will appear here once you subscribe",
+          "active": "Active",
+          "expired": "Expired",
+          "purchased": "Purchased on"
+        },
+        "payments": {
+          "title": "Payment History",
+          "description": "View all your payment transactions",
+          "totalSpent": "Total Spent",
+          "noPayments": "No Payment History",
+          "noPaymentsDesc": "Your payment history will appear here once you make a purchase",
+          "date": "Date",
+          "package": "Package",
+          "method": "Method",
+          "reference": "Reference",
+          "amount": "Amount",
+          "status": "Status",
+          "creditCard": "Credit Card",
+          "debitCard": "Debit Card",
+          "bankTransfer": "Bank Transfer",
+          "cash": "Cash",
+          "paid": "Paid"
         }
       },
-      "order": {
-        "title": "Complete Your Order",
-        "summary": "Order Summary",
-        "package": "Package",
-        "originalPrice": "Original Price",
-        "discount": "Discount",
-        "total": "Total",
-        "youSave": "You save"
-      },
-      "subscribe": "Subscribe Now",
-      "processing": "Processing...",
-      "errors": {
-        "selectProfile": "Please select a profile first",
-        "load": "Failed to load subscription data",
-        "create": "Failed to create subscription"
-      },
-      "history": {
-        "title": "Subscription History",
-        "description": "View all your past and current subscriptions",
-        "noHistory": "No Subscription History",
-        "noHistoryDesc": "Your subscription history will appear here once you subscribe",
-        "active": "Active",
-        "expired": "Expired",
-        "purchased": "Purchased on"
-      },
-      "payments": {
-        "title": "Payment History",
-        "description": "View all your payment transactions",
-        "totalSpent": "Total Spent",
-        "noPayments": "No Payment History",
-        "noPaymentsDesc": "Your payment history will appear here once you make a purchase",
-        "date": "Date",
-        "package": "Package",
-        "method": "Method",
-        "reference": "Reference",
-        "amount": "Amount",
-        "status": "Status",
-        "creditCard": "Credit Card",
-        "debitCard": "Debit Card",
-        "bankTransfer": "Bank Transfer",
-        "cash": "Cash",
-        "paid": "Paid"
-      }
-    },
-    "nav": {
-      "profile": "Profile Setup",
-      "basic": "Basic Information",
-      "appearance": "Appearance",
-      "profession": "Profession",
-      "experience": "Experience",
-      "portfolio": "Portfolio",
-      "photos": "Profile Photos",
-      "security": "Security & Privacy",
-      "notifications": "Notifications",
-      "billing": "Billing & Plans"
-    },
-    "profession": {
-      "title": "Professional Information",
-      "description": "Select your professions and provide the required information",
-      "selector": {
-        "label": "Select Your Professions & Specializations",
-        "selected": "selected",
-        "specializations": "specializations selected",
-        "search": "Search specializations...",
-        "noResults": "No specializations found",
-        "empty": "Select professions above to get started",
+      "nav": {
+        "profile": "Profile Setup",
+        "basic": "Basic Information",
+        "appearance": "Appearance",
         "profession": "Profession",
-        "subProfession": "Sub-Profession",
-        "noneGeneral": "None (General)",
-        "placeholder": "Select profession",
-        "noSub": "No sub-professions required for this role."
+        "experience": "Experience",
+        "portfolio": "Portfolio",
+        "photos": "Profile Photos",
+        "security": "Security & Privacy",
+        "notifications": "Notifications",
+        "billing": "Billing & Plans"
       },
-      "media": {
-        "title": "Media Uploads",
-        "hint": "Keep files under 50MB; use clear, recent media.",
-        "photo": "Photo",
-        "video": "Video",
-        "audio": "Audio",
-        "languages": "Languages"
-      },
-      "uploads": {
-        "photosLabel": "Photo",
-        "photosTitle": "Click to upload photo",
-        "photosSubtitle": "PNG, JPG up to 5MB",
-        "videoLabel": "Video",
-        "videoTitle": "Click to upload video",
-        "videoSubtitle": "MP4, MOV up to 50MB",
-        "audioLabel": "Audio",
-        "audioTitle": "Click to upload audio",
-        "audioSubtitle": "MP3, WAV up to 20MB",
-        "photo": "Photo",
-        "video": "Video",
-        "audio": "Audio"
-      },
-      "languages": {
-        "label": "Language",
-        "placeholder": "Select a language...",
-        "options": {
-          "english": "English",
-          "arabic": "Arabic",
-          "french": "French",
-          "spanish": "Spanish",
-          "german": "German",
-          "italian": "Italian",
-          "portuguese": "Portuguese",
-          "russian": "Russian",
-          "chinese": "Chinese",
-          "japanese": "Japanese",
-          "korean": "Korean",
-          "hindi": "Hindi"
+      "profession": {
+        "title": "Professional Information",
+        "description": "Select your professions and provide the required information",
+        "selector": {
+          "label": "Select Your Professions & Specializations",
+          "selected": "selected",
+          "specializations": "specializations selected",
+          "search": "Search specializations...",
+          "noResults": "No specializations found",
+          "empty": "Select professions above to get started",
+          "profession": "Profession",
+          "subProfession": "Sub-Profession",
+          "noneGeneral": "None (General)",
+          "placeholder": "Select profession",
+          "noSub": "No sub-professions required for this role."
+        },
+        "media": {
+          "title": "Media Uploads",
+          "hint": "Keep files under 50MB; use clear, recent media.",
+          "photo": "Photo",
+          "video": "Video",
+          "audio": "Audio",
+          "languages": "Languages"
+        },
+        "uploads": {
+          "photosLabel": "Photo",
+          "photosTitle": "Click to upload photo",
+          "photosSubtitle": "PNG, JPG up to 5MB",
+          "videoLabel": "Video",
+          "videoTitle": "Click to upload video",
+          "videoSubtitle": "MP4, MOV up to 50MB",
+          "audioLabel": "Audio",
+          "audioTitle": "Click to upload audio",
+          "audioSubtitle": "MP3, WAV up to 20MB",
+          "photo": "Photo",
+          "video": "Video",
+          "audio": "Audio"
+        },
+        "languages": {
+          "label": "Language",
+          "placeholder": "Select a language...",
+          "options": {
+            "english": "English",
+            "arabic": "Arabic",
+            "french": "French",
+            "spanish": "Spanish",
+            "german": "German",
+            "italian": "Italian",
+            "portuguese": "Portuguese",
+            "russian": "Russian",
+            "chinese": "Chinese",
+            "japanese": "Japanese",
+            "korean": "Korean",
+            "hindi": "Hindi"
+          }
+        },
+        "sizes": {
+          "label": "Sizes in Appearance"
+        },
+        "errors": {
+          "load": "Failed to load professions",
+          "selectProfession": "Please select at least one profession with a sub-profession",
+          "photoRequired": "Please upload at least one photo for profession #{index}",
+          "videoRequired": "Please upload at least one video for profession #{index}",
+          "audioRequired": "Please upload at least one audio for profession #{index}",
+          "languageRequired": "Please select at least one language for profession #{index}",
+          "save": "Failed to save professional information",
+          "invalidEntry": "Invalid profession selected for entry {{index}}",
+          "photoFor": "Photo is required for {{label}}",
+          "videoFor": "Video is required for {{label}}",
+          "audioFor": "Audio is required for {{label}}",
+          "languageFor": "At least one language is required for {{label}}",
+          "socialFor": "At least one social media link is required for {{label}}"
+        },
+        "success": "Professional information saved successfully",
+        "buttons": {
+          "save": "Save Professional Information",
+          "saving": "Saving..."
+        },
+        "sectionLabel": "Professional Profile",
+        "mediaHint": "Use JPG/PNG images and MP4 videos",
+        "footerHint": "You can update your professional information at any time.",
+        "helper": "Requirements adapt based on each profession and sub-profession.",
+        "validation": {
+          "incomplete": "Complete required fields"
+        },
+        "cardTitle": "Profession {{index}}",
+        "emptyTitle": "Add your first profession",
+        "emptyDesc": "Start with your main role, then add supporting roles or specialties.",
+        "empty": "No professions added yet",
+        "count": {
+          "one": "1 profession added",
+          "other": "{{count}} professions added"
+        },
+        "addEntry": "Add Profession",
+        "addEntryDesc": "Showcase multiple talents and skills",
+        "upload": {
+          "photo": "Photo",
+          "video": "Video",
+          "audio": "Audio",
+          "clickToUpload": "Click to upload",
+          "orDragDrop": "or drag and drop",
+          "uploading": "Uploading...",
+          "fileSizeExceeds": "File size exceeds",
+          "invalidFileType": "Invalid file type. Please upload a",
+          "dragAndDrop": "Click to upload or drag and drop",
+          "selectFiles": "Click to select or drag & drop files (images/videos up to 100MB)",
+          "file": "file"
+        },
+        "languageManager": {
+          "add": "+ Add Language",
+          "empty": "No languages added yet",
+          "voiceSample": "Upload voice sample for"
+        },
+        "socials": {
+          "label": "Social Media Links",
+          "add": "Add Link",
+          "addFirst": "Add Your First Link",
+          "empty": "No social media links added yet",
+          "followers": "Followers (optional)",
+          "platform": {
+            "instagram": "Instagram",
+            "facebook": "Facebook",
+            "twitter": "Twitter/X",
+            "youtube": "YouTube",
+            "linkedin": "LinkedIn",
+            "tiktok": "TikTok",
+            "other": "Other"
+          }
         }
       },
-      "sizes": {
-        "label": "Sizes in Appearance"
-      },
-      "errors": {
-        "load": "Failed to load professions",
-        "selectProfession": "Please select at least one profession with a sub-profession",
-        "photoRequired": "Please upload at least one photo for profession #{index}",
-        "videoRequired": "Please upload at least one video for profession #{index}",
-        "audioRequired": "Please upload at least one audio for profession #{index}",
-        "languageRequired": "Please select at least one language for profession #{index}",
-        "save": "Failed to save professional information",
-        "invalidEntry": "Invalid profession selected for entry {{index}}",
-        "photoFor": "Photo is required for {{label}}",
-        "videoFor": "Video is required for {{label}}",
-        "audioFor": "Audio is required for {{label}}",
-        "languageFor": "At least one language is required for {{label}}",
-        "socialFor": "At least one social media link is required for {{label}}"
-      },
-      "success": "Professional information saved successfully",
-      "buttons": {
-        "save": "Save Professional Information",
-        "saving": "Saving..."
-      },
-      "sectionLabel": "Professional Profile",
-      "mediaHint": "Use JPG/PNG images and MP4 videos",
-      "footerHint": "You can update your professional information at any time.",
-      "helper": "Requirements adapt based on each profession and sub-profession.",
-      "validation": {
-        "incomplete": "Complete required fields"
-      },
-      "cardTitle": "Profession {{index}}",
-      "emptyTitle": "Add your first profession",
-      "emptyDesc": "Start with your main role, then add supporting roles or specialties.",
-      "empty": "No professions added yet",
-      "count": {
-        "one": "1 profession added",
-        "other": "{{count}} professions added"
-      },
-      "addEntry": "Add Profession",
-      "addEntryDesc": "Showcase multiple talents and skills",
-      "upload": {
-        "photo": "Photo",
-        "video": "Video",
-        "audio": "Audio",
-        "clickToUpload": "Click to upload",
-        "orDragDrop": "or drag and drop",
-        "uploading": "Uploading...",
-        "fileSizeExceeds": "File size exceeds",
-        "invalidFileType": "Invalid file type. Please upload a",
-        "dragAndDrop": "Click to upload or drag and drop",
-        "selectFiles": "Click to select or drag & drop files (images/videos up to 100MB)",
-        "file": "file"
-      },
-      "languageManager": {
-        "add": "+ Add Language",
-        "empty": "No languages added yet",
-        "voiceSample": "Upload voice sample for"
-      },
-      "socials": {
-        "label": "Social Media Links",
-        "add": "Add Link",
-        "addFirst": "Add Your First Link",
-        "empty": "No social media links added yet",
-        "followers": "Followers (optional)",
-        "platform": {
-          "instagram": "Instagram",
-          "facebook": "Facebook",
-          "twitter": "Twitter/X",
-          "youtube": "YouTube",
-          "linkedin": "LinkedIn",
-          "tiktok": "TikTok",
-          "other": "Other"
-        }
-      }
-    },
-    "experience": {
-      "title": "Work Experience",
-      "description": "Add your professional experience entries",
-      "cardTitle": "Experience {{index}}",
-      "empty": "No experiences added yet",
-      "loading": "Loading experiences...",
-      "count": {
-        "one": "1 experience added",
-        "other": "{{count}} experiences added"
-      },
-      "fields": {
-        "title": "Title",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "current": "Current",
-        "description": "Description",
-        "attachment": "Attachment (optional)"
-      },
-      "success": "Experiences saved successfully",
-      "placeholders": {
-        "title": "e.g., Photographer",
-        "description": "Brief description of your role"
-      },
-      "validation": {
-        "incomplete": "Complete required fields"
-      },
-      "errors": {
-        "titleRequired": "Title is required",
-        "endDateRequired": "End date is required for past experiences",
-        "dateOrder": "Start date must be before or equal to end date",
-        "yearLimit": "Year must not be greater than 2025",
-        "futureDate": "Date cannot be in the future",
-        "load": "Failed to load experiences",
-        "save": "Failed to save experiences"
-      },
-      "buttons": {
-        "save": "Save Experience",
-        "saving": "Saving..."
-      },
-      "addEntry": "Add Experience"
-    },
-    "basic": {
-      "title": "Basic Information",
-      "description": "Update your personal details and contact information",
-      "success": "Profile updated successfully",
-      "errors": {
-        "lookups": "Failed to load form options",
-        "nameRequired": "First name and last name are required",
-        "phoneRequired": "Mobile and WhatsApp numbers are required",
-        "genderRequired": "Gender is required",
-        "dobRequired": "Date of birth is required",
-        "countryRequired": "Country of residence is required",
-        "nationalityRequired": "Select at least one nationality",
-        "nationalityLimit": "You can select up to 2 nationalities",
-        "ethnicityRequired": "Select at least one ethnicity",
-        "ethnicityLimit": "You can select up to 2 ethnicities",
-        "saveFailed": "Failed to update profile"
-      },
-      "fields": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email Address",
-        "emailDescription": "Your primary email for notifications",
-        "mobile": "Mobile Number",
-        "whatsapp": "WhatsApp Number",
-        "differentWhatsApp": "Different number for WhatsApp",
-        "dob": "Date of Birth",
-        "gender": "Gender",
-        "country": "Country of Residence",
-        "nationalities": "Nationalities",
-        "nationalitiesDescription": "Select up to 2 nationalities",
-        "nationality": "Select nationality",
-        "ethnicities": "Ethnicities",
-        "ethnicitiesDescription": "Select up to 2 ethnicities",
-        "ethnicity": "Select ethnicity"
-      },
-      "placeholders": {
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "john.doe@example.com",
-        "phone": "52 342 9898",
-        "selectGender": "Select gender",
-        "selectCountry": "Select country",
-        "selectNationalities": "Select nationalities...",
-        "selectEthnicities": "Select ethnicities..."
-      },
-      "genderOptions": {
-        "male": "Male",
-        "female": "Female",
-        "other": "Other",
-        "preferNot": "Prefer not to say"
-      }
-    },
-    "appearance": {
-      "title": "Appearance",
-      "description": "Provide your physical appearance and measurements",
-      "loading": "Loading Appearance...",
-      "fields": {
-        "hairColor": "Hair Color",
-        "hairType": "Hair Type",
-        "hairLength": "Hair Length",
-        "eyeColor": "Eye Color",
-        "height": "Height",
-        "shoeSize": "Shoe Size",
-        "tshirtSize": "T-Shirt Size",
-        "pantsSize": "Pants Size",
-        "jacketSize": "Jacket Size",
-        "chest": "Chest",
-        "bust": "Bust",
-        "waist": "Waist"
-      },
-      "placeholders": {
-        "selectHairColor": "Select hair color",
-        "selectHairType": "Select hair type",
-        "selectHairLength": "Select hair length",
-        "selectEyeColor": "Select eye color",
-        "height": "e.g., 175.5",
-        "shoe": "e.g., 43.5",
-        "selectSize": "Select size",
-        "pants": "e.g., 32/32 or M",
-        "jacket": "e.g., 50 EU or L",
-        "chest": "e.g., 95.5",
-        "bust": "e.g., 88.5",
-        "waist": "e.g., 72.5"
-      },
-      "errors": {
-        "loadFailed": "Failed to load appearance options",
-        "requiredField": "Please fill {{field}}",
-        "profileMissing": "Profile ID missing",
-        "saveFailed": "Failed to update appearance"
-      },
-      "success": "Appearance updated"
-    },
-    "notifications": {
-      "title": "Notification Preferences",
-      "description": "Choose how you want to be notified about activity",
-      "channels": {
-        "email": "Email",
-        "push": "Push"
-      },
-      "categories": {
-        "activity": "Account Activity",
-        "projects": "Projects & Updates",
-        "marketing": "Marketing"
-      },
-      "items": {
-        "login": "Login from new device",
-        "password": "Password changes",
-        "settings": "Account settings updates",
-        "projectAssigned": "New project assigned",
-        "projectStatus": "Project status changes",
-        "comments": "Comments on your work",
-        "productUpdates": "Product updates and news",
-        "tips": "Tips and tutorials",
-        "offers": "Special offers"
-      }
-    },
-    "security": {
-      "password": {
-        "title": "Change Password",
-        "description": "Update your password regularly to keep your account secure",
+      "experience": {
+        "title": "Work Experience",
+        "description": "Add your professional experience entries",
+        "cardTitle": "Experience {{index}}",
+        "empty": "No experiences added yet",
+        "loading": "Loading experiences...",
+        "count": {
+          "one": "1 experience added",
+          "other": "{{count}} experiences added"
+        },
         "fields": {
-          "current": "Current Password",
-          "new": "New Password",
-          "confirm": "Confirm New Password"
+          "title": "Title",
+          "startDate": "Start Date",
+          "endDate": "End Date",
+          "current": "Current",
+          "description": "Description",
+          "attachment": "Attachment (optional)"
+        },
+        "success": "Experiences saved successfully",
+        "placeholders": {
+          "title": "e.g., Photographer",
+          "description": "Brief description of your role"
+        },
+        "validation": {
+          "incomplete": "Complete required fields"
+        },
+        "errors": {
+          "titleRequired": "Title is required",
+          "endDateRequired": "End date is required for past experiences",
+          "dateOrder": "Start date must be before or equal to end date",
+          "yearLimit": "Year must not be greater than 2025",
+          "futureDate": "Date cannot be in the future",
+          "load": "Failed to load experiences",
+          "save": "Failed to save experiences"
+        },
+        "buttons": {
+          "save": "Save Experience",
+          "saving": "Saving..."
+        },
+        "addEntry": "Add Experience"
+      },
+      "basic": {
+        "title": "Basic Information",
+        "description": "Update your personal details and contact information",
+        "success": "Profile updated successfully",
+        "errors": {
+          "lookups": "Failed to load form options",
+          "nameRequired": "First name and last name are required",
+          "phoneRequired": "Mobile and WhatsApp numbers are required",
+          "genderRequired": "Gender is required",
+          "dobRequired": "Date of birth is required",
+          "countryRequired": "Country of residence is required",
+          "nationalityRequired": "Select at least one nationality",
+          "nationalityLimit": "You can select up to 2 nationalities",
+          "ethnicityRequired": "Select at least one ethnicity",
+          "ethnicityLimit": "You can select up to 2 ethnicities",
+          "saveFailed": "Failed to update profile"
+        },
+        "fields": {
+          "firstName": "First Name",
+          "lastName": "Last Name",
+          "email": "Email Address",
+          "emailDescription": "Your primary email for notifications",
+          "mobile": "Mobile Number",
+          "whatsapp": "WhatsApp Number",
+          "differentWhatsApp": "Different number for WhatsApp",
+          "dob": "Date of Birth",
+          "gender": "Gender",
+          "country": "Country of Residence",
+          "nationalities": "Nationalities",
+          "nationalitiesDescription": "Select up to 2 nationalities",
+          "nationality": "Select nationality",
+          "ethnicities": "Ethnicities",
+          "ethnicitiesDescription": "Select up to 2 ethnicities",
+          "ethnicity": "Select ethnicity"
         },
         "placeholders": {
-          "current": "Enter current password",
-          "new": "Enter new password",
-          "confirm": "Confirm new password"
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "52 342 9898",
+          "selectGender": "Select gender",
+          "selectCountry": "Select country",
+          "selectNationalities": "Select nationalities...",
+          "selectEthnicities": "Select ethnicities..."
         },
-        "update": "Update Password"
+        "genderOptions": {
+          "male": "Male",
+          "female": "Female",
+          "other": "Other",
+          "preferNot": "Prefer not to say"
+        }
       },
-      "twoFactor": {
-        "title": "Two-Factor Authentication",
-        "description": "Add an extra layer of security to your account",
-        "method": "Authenticator App",
-        "status": "Not enabled",
-        "enable": "Enable"
+      "appearance": {
+        "title": "Appearance",
+        "description": "Provide your physical appearance and measurements",
+        "loading": "Loading Appearance...",
+        "fields": {
+          "hairColor": "Hair Color",
+          "hairType": "Hair Type",
+          "hairLength": "Hair Length",
+          "eyeColor": "Eye Color",
+          "height": "Height",
+          "shoeSize": "Shoe Size",
+          "tshirtSize": "T-Shirt Size",
+          "pantsSize": "Pants Size",
+          "jacketSize": "Jacket Size",
+          "chest": "Chest",
+          "bust": "Bust",
+          "waist": "Waist"
+        },
+        "placeholders": {
+          "selectHairColor": "Select hair color",
+          "selectHairType": "Select hair type",
+          "selectHairLength": "Select hair length",
+          "selectEyeColor": "Select eye color",
+          "height": "e.g., 175.5",
+          "shoe": "e.g., 43.5",
+          "selectSize": "Select size",
+          "pants": "e.g., 32/32 or M",
+          "jacket": "e.g., 50 EU or L",
+          "chest": "e.g., 95.5",
+          "bust": "e.g., 88.5",
+          "waist": "e.g., 72.5"
+        },
+        "errors": {
+          "loadFailed": "Failed to load appearance options",
+          "requiredField": "Please fill {{field}}",
+          "profileMissing": "Profile ID missing",
+          "saveFailed": "Failed to update appearance"
+        },
+        "success": "Appearance updated"
       },
-      "sessions": {
-        "title": "Active Sessions",
-        "description": "Manage devices where you're currently logged in",
-        "mac": "Chrome on macOS",
-        "iphone": "Safari on iPhone",
-        "location": "Los Angeles, CA",
-        "active": "Active now",
-        "revoke": "Revoke"
+      "notifications": {
+        "title": "Notification Preferences",
+        "description": "Choose how you want to be notified about activity",
+        "channels": {
+          "email": "Email",
+          "push": "Push"
+        },
+        "categories": {
+          "activity": "Account Activity",
+          "projects": "Projects & Updates",
+          "marketing": "Marketing"
+        },
+        "items": {
+          "login": "Login from new device",
+          "password": "Password changes",
+          "settings": "Account settings updates",
+          "projectAssigned": "New project assigned",
+          "projectStatus": "Project status changes",
+          "comments": "Comments on your work",
+          "productUpdates": "Product updates and news",
+          "tips": "Tips and tutorials",
+          "offers": "Special offers"
+        }
       },
-      "privacy": {
-        "title": "Privacy Settings",
-        "search": "Show profile in search results",
-        "email": "Allow others to see my email",
-        "status": "Show my activity status"
+      "security": {
+        "password": {
+          "title": "Change Password",
+          "description": "Update your password regularly to keep your account secure",
+          "fields": {
+            "current": "Current Password",
+            "new": "New Password",
+            "confirm": "Confirm New Password"
+          },
+          "placeholders": {
+            "current": "Enter current password",
+            "new": "Enter new password",
+            "confirm": "Confirm new password"
+          },
+          "update": "Update Password"
+        },
+        "twoFactor": {
+          "title": "Two-Factor Authentication",
+          "description": "Add an extra layer of security to your account",
+          "method": "Authenticator App",
+          "status": "Not enabled",
+          "enable": "Enable"
+        },
+        "sessions": {
+          "title": "Active Sessions",
+          "description": "Manage devices where you're currently logged in",
+          "mac": "Chrome on macOS",
+          "iphone": "Safari on iPhone",
+          "location": "Los Angeles, CA",
+          "active": "Active now",
+          "revoke": "Revoke"
+        },
+        "privacy": {
+          "title": "Privacy Settings",
+          "search": "Show profile in search results",
+          "email": "Allow others to see my email",
+          "status": "Show my activity status"
+        }
       }
-    }
-  },
-  "profile": {
-    "switchProfile": "Switch Profile",
-    "switched": "Profile switched successfully",
-    "switchFailed": "Failed to switch profile",
-    "primary": "Primary",
-    "switchTo": "Switch to"
-  },
-  "portfolio": {
-    "description": "Showcase your best work and projects. Reorder items and sync when ready.",
-    "heroTitle": "Curate a standout portfolio",
-    "heroSubtitle": "Highlight a single photo as your public profile picture and arrange the rest for a flowing visual story.",
-    "featuredHint": "Tip: Star one item to set it as your public profile picture.",
-    "syncHint": "Upload multiple images or videos, drag to reorder, then sync to push changes live.",
-    "items": "items",
-    "emptyHint": "Upload a few shots, star your hero image, then sync to publish.",
-    "sync": "Sync Portfolio",
-    "syncing": "Syncing...",
-    "synced": "Portfolio synced",
-    "reset": "Reset",
-    "dragHint": "Drag and drop to reorder your portfolio items",
-    "dragTooltip": "Drag to reorder",
-    "setFeatured": "Set as profile picture",
-    "setFeaturedTooltip": "Set as profile picture",
-    "noItems": "No portfolio items yet. Upload your work above!",
-    "validationErrors": "Validation errors",
-    "syncFailed": "Sync failed",
-    "onlyOneFeatured": "Only one item can be featured",
-    "loadFailed": "Failed to load portfolio",
-    "loading": "Loading portfolio...",
-    "titlePlaceholder": "Title",
-    "descriptionPlaceholder": "Description",
-    "featured": "Profile picture",
-    "pending": "Pending",
-    "approved": "Approved",
-    "profilePicture": "Profile Picture"
-  },
-  "profilePhotos": {
-    "title": "Manage Photos",
-    "description": "Upload and manage your profile pictures. All photos require admin approval before becoming visible.",
-    "sidebar": {
-      "activeStatus": "Active Profile Picture",
-      "noPhoto": "No profile picture yet",
-      "totalPhotos": "Total",
-      "approvedPhotos": "Approved",
-      "pendingPhotos": "Pending",
-      "guidelines": "Photo Guidelines",
-      "guidelinesText": "All photos require admin approval. Max 5MB, JPEG/PNG/GIF formats supported."
     },
-    "upload": {
-      "label": "Click to upload",
-      "dragDrop": "or drag and drop",
-      "fileFormat": "JPEG, PNG, JPG or GIF (MAX. 5MB)",
-      "uploading": "Uploading...",
-      "placeholder": "Drag and drop your photo here"
+    "profile": {
+      "switchProfile": "Switch Profile",
+      "switched": "Profile switched successfully",
+      "switchFailed": "Failed to switch profile",
+      "primary": "Primary",
+      "switchTo": "Switch to"
     },
-    "messages": {
-      "uploadSuccess": "Photo uploaded! Waiting for admin approval.",
-      "deleteSuccess": "Photo deleted successfully",
-      "errorJpegOnly": "Only JPEG, PNG, JPG, and GIF images are allowed",
-      "errorFileSize": "File size must not exceed 5MB"
-    },
-    "photos": {
-      "current": "Current Profile Picture",
-      "currentDesc": "This is your active profile picture visible to everyone",
-      "pending": "Pending Approval",
-      "pendingDesc": "Waiting for admin review. Once approved, this will replace your current profile picture.",
-      "deletePhoto": "Delete Photo",
-      "delete": "Delete"
-    },
-    "rejected": {
-      "title": "Rejected Photos",
-      "empty": "No rejected photos"
-    },
-    "empty": {
-      "title": "No photos yet",
-      "description": "Upload your first profile photo to get started. Your photo will be reviewed by our team before becoming visible."
-    },
-    "badges": {
-      "active": "Active",
-      "approved": "Approved",
+    "portfolio": {
+      "description": "Showcase your best work and projects. Reorder items and sync when ready.",
+      "heroTitle": "Curate a standout portfolio",
+      "heroSubtitle": "Highlight a single photo as your public profile picture and arrange the rest for a flowing visual story.",
+      "featuredHint": "Tip: Star one item to set it as your public profile picture.",
+      "syncHint": "Upload multiple images or videos, drag to reorder, then sync to push changes live.",
+      "items": "items",
+      "emptyHint": "Upload a few shots, star your hero image, then sync to publish.",
+      "sync": "Sync Portfolio",
+      "syncing": "Syncing...",
+      "synced": "Portfolio synced",
+      "reset": "Reset",
+      "dragHint": "Drag and drop to reorder your portfolio items",
+      "dragTooltip": "Drag to reorder",
+      "setFeatured": "Set as profile picture",
+      "setFeaturedTooltip": "Set as profile picture",
+      "noItems": "No portfolio items yet. Upload your work above!",
+      "validationErrors": "Validation errors",
+      "syncFailed": "Sync failed",
+      "onlyOneFeatured": "Only one item can be featured",
+      "loadFailed": "Failed to load portfolio",
+      "loading": "Loading portfolio...",
+      "titlePlaceholder": "Title",
+      "descriptionPlaceholder": "Description",
+      "featured": "Profile picture",
       "pending": "Pending",
-      "rejected": "Rejected"
+      "approved": "Approved",
+      "profilePicture": "Profile Picture"
     },
-    "info": {
-      "title": "📸 Photo Replacement Process",
-      "description": "Once your pending photo is approved, it will automatically replace your current profile picture, and the old photo will be permanently removed from the system."
+    "profilePhotos": {
+      "title": "Manage Photos",
+      "description": "Upload and manage your profile pictures. All photos require admin approval before becoming visible.",
+      "sidebar": {
+        "activeStatus": "Active Profile Picture",
+        "noPhoto": "No profile picture yet",
+        "totalPhotos": "Total",
+        "approvedPhotos": "Approved",
+        "pendingPhotos": "Pending",
+        "guidelines": "Photo Guidelines",
+        "guidelinesText": "All photos require admin approval. Max 5MB, JPEG/PNG/GIF formats supported."
+      },
+      "upload": {
+        "label": "Click to upload",
+        "dragDrop": "or drag and drop",
+        "fileFormat": "JPEG, PNG, JPG or GIF (MAX. 5MB)",
+        "uploading": "Uploading...",
+        "placeholder": "Drag and drop your photo here"
+      },
+      "messages": {
+        "uploadSuccess": "Photo uploaded! Waiting for admin approval.",
+        "deleteSuccess": "Photo deleted successfully",
+        "errorJpegOnly": "Only JPEG, PNG, JPG, and GIF images are allowed",
+        "errorFileSize": "File size must not exceed 5MB"
+      },
+      "photos": {
+        "current": "Current Profile Picture",
+        "currentDesc": "This is your active profile picture visible to everyone",
+        "pending": "Pending Approval",
+        "pendingDesc": "Waiting for admin review. Once approved, this will replace your current profile picture.",
+        "deletePhoto": "Delete Photo",
+        "delete": "Delete"
+      },
+      "rejected": {
+        "title": "Rejected Photos",
+        "empty": "No rejected photos"
+      },
+      "empty": {
+        "title": "No photos yet",
+        "description": "Upload your first profile photo to get started. Your photo will be reviewed by our team before becoming visible."
+      },
+      "badges": {
+        "active": "Active",
+        "approved": "Approved",
+        "pending": "Pending",
+        "rejected": "Rejected"
+      },
+      "info": {
+        "title": "📸 Photo Replacement Process",
+        "description": "Once your pending photo is approved, it will automatically replace your current profile picture, and the old photo will be permanently removed from the system."
+      },
+      "confirmDelete": "Are you sure you want to delete this photo?"
     },
-    "confirmDelete": "Are you sure you want to delete this photo?"
-  },
-  "basicInformation": {
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "email": "Email",
-    "phone": "Phone",
-    "johnExample": "John",
-    "doeExample": "Doe",
-    "emailExample": "john.doe@example.com",
-    "phoneExample": "123-4567"
+    "basicInformation": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "johnExample": "John",
+      "doeExample": "Doe",
+      "emailExample": "john.doe@example.com",
+      "phoneExample": "123-4567"
+    }
   }
 }

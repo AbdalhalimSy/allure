@@ -47,24 +47,24 @@ export default function HomePage() {
   const slides = useMemo(
     () => [
       {
-        badge: t("homeNew.hero.badgeCampaigns"),
-        title: t("homeNew.hero.slides.0.title"),
-        subtitle: t("homeNew.hero.slides.0.subtitle"),
-        pulse: t("homeNew.hero.slides.0.pulse"),
+        badge: t("home.content.hero.badgeCampaigns"),
+        title: t("home.content.hero.slides.0.title"),
+        subtitle: t("home.content.hero.slides.0.subtitle"),
+        pulse: t("home.content.hero.slides.0.pulse"),
         image: heroArtwork[0],
       },
       {
-        badge: t("homeNew.hero.badgeProduction"),
-        title: t("homeNew.hero.slides.1.title"),
-        subtitle: t("homeNew.hero.slides.1.subtitle"),
-        pulse: t("homeNew.hero.slides.1.pulse"),
+        badge: t("home.content.hero.badgeProduction"),
+        title: t("home.content.hero.slides.1.title"),
+        subtitle: t("home.content.hero.slides.1.subtitle"),
+        pulse: t("home.content.hero.slides.1.pulse"),
         image: heroArtwork[1],
       },
       {
-        badge: t("homeNew.hero.badgePlatform"),
-        title: t("homeNew.hero.slides.2.title"),
-        subtitle: t("homeNew.hero.slides.2.subtitle"),
-        pulse: t("homeNew.hero.slides.2.pulse"),
+        badge: t("home.content.hero.badgePlatform"),
+        title: t("home.content.hero.slides.2.title"),
+        subtitle: t("home.content.hero.slides.2.subtitle"),
+        pulse: t("home.content.hero.slides.2.pulse"),
         image: heroArtwork[2],
       },
     ],
@@ -108,7 +108,7 @@ export default function HomePage() {
             .map((p, idx) => ({
               id: p.id,
               name: p.name,
-              description: p.description || t("homeNew.professions.card"),
+              description: p.description || t("home.content.professions.card"),
               accent: accents[idx % accents.length],
               image:
                 p.image ||
@@ -221,15 +221,15 @@ export default function HomePage() {
         slides={slides}
         isAuthenticated={isAuthenticated}
         hydrated={hydrated}
-        kicker={t("homeNew.hero.kicker")}
-        ctaRegister={t("homeNew.hero.ctaRegister")}
-        ctaLogin={t("homeNew.hero.ctaLogin")}
-        ctaDashboard={t("homeNew.hero.ctaDashboard")}
-        ctaBrowse={t("homeNew.hero.ctaBrowse")}
+        kicker={t("home.content.hero.kicker")}
+        ctaRegister={t("home.content.hero.ctaRegister")}
+        ctaLogin={t("home.content.hero.ctaLogin")}
+        ctaDashboard={t("home.content.hero.ctaDashboard")}
+        ctaBrowse={t("home.content.hero.ctaBrowse")}
         metrics={{
-          speed: t("homeNew.hero.metrics.speed"),
-          profiles: t("homeNew.hero.metrics.profiles"),
-          success: t("homeNew.hero.metrics.success"),
+          speed: t("home.content.hero.metrics.speed"),
+          profiles: t("home.content.hero.metrics.profiles"),
+          success: t("home.content.hero.metrics.success"),
         }}
       />
 
@@ -237,15 +237,15 @@ export default function HomePage() {
       <ProfessionsSection
         professions={professions}
         loading={professionsLoading}
-        kicker={t("homeNew.professions.kicker")}
-        title={t("homeNew.professions.title")}
-        subtitle={t("homeNew.professions.subtitle")}
-        helper={t("homeNew.professions.helper")}
-        hint={t("homeNew.professions.hint")}
-        label={t("homeNew.professions.label")}
-        cta={t("homeNew.professions.cta")}
-        loadingText={t("homeNew.professions.loading")}
-        emptyText={t("homeNew.professions.empty")}
+        kicker={t("home.content.professions.kicker")}
+        title={t("home.content.professions.title")}
+        subtitle={t("home.content.professions.subtitle")}
+        helper={t("home.content.professions.helper")}
+        hint={t("home.content.professions.hint")}
+        label={t("home.content.professions.label")}
+        cta={t("home.content.professions.cta")}
+        loadingText={t("home.content.professions.loading")}
+        emptyText={t("home.content.professions.empty")}
         onProfessionClick={handleProfessionClick}
       />
 
@@ -253,60 +253,60 @@ export default function HomePage() {
       <HomeJobsSection
         jobs={jobs}
         loading={jobsLoading}
-        kicker={t("homeNew.jobs.kicker")}
-        title={t("homeNew.jobs.title")}
-        subtitle={t("homeNew.jobs.subtitle")}
-        viewAll={t("homeNew.jobs.viewAll")}
-        loadingText={t("homeNew.jobs.loading")}
-        emptyText={t("homeNew.jobs.empty")}
+        kicker={t("home.content.jobs.kicker")}
+        title={t("home.content.jobs.title")}
+        subtitle={t("home.content.jobs.subtitle")}
+        viewAll={t("home.content.jobs.viewAll")}
+        loadingText={t("home.content.jobs.loading")}
+        emptyText={t("home.content.jobs.empty")}
       />
 
       {/* Welcome Section */}
       <WelcomeSectionNew
-        kicker={t("homeNew.welcome.kicker")}
-        title={t("homeNew.welcome.title")}
-        subtitle={t("homeNew.welcome.subtitle")}
+        kicker={t("home.content.welcome.kicker")}
+        title={t("home.content.welcome.title")}
+        subtitle={t("home.content.welcome.subtitle")}
         pillars={{
           craft: {
-            title: t("homeNew.welcome.pillars.craft.title"),
-            desc: t("homeNew.welcome.pillars.craft.desc"),
+            title: t("home.content.welcome.pillars.craft.title"),
+            desc: t("home.content.welcome.pillars.craft.desc"),
           },
           data: {
-            title: t("homeNew.welcome.pillars.data.title"),
-            desc: t("homeNew.welcome.pillars.data.desc"),
+            title: t("home.content.welcome.pillars.data.title"),
+            desc: t("home.content.welcome.pillars.data.desc"),
           },
           support: {
-            title: t("homeNew.welcome.pillars.support.title"),
-            desc: t("homeNew.welcome.pillars.support.desc"),
+            title: t("home.content.welcome.pillars.support.title"),
+            desc: t("home.content.welcome.pillars.support.desc"),
           },
           network: {
-            title: t("homeNew.welcome.pillars.network.title"),
-            desc: t("homeNew.welcome.pillars.network.desc"),
+            title: t("home.content.welcome.pillars.network.title"),
+            desc: t("home.content.welcome.pillars.network.desc"),
           },
         }}
-        ribbon={t("homeNew.welcome.ribbon")}
-        ribbonTitle={t("homeNew.welcome.ribbonTitle")}
-        ribbonTag={t("homeNew.welcome.ribbonTag")}
+        ribbon={t("home.content.welcome.ribbon")}
+        ribbonTitle={t("home.content.welcome.ribbonTitle")}
+        ribbonTag={t("home.content.welcome.ribbonTag")}
       />
 
       {/* Talents Section */}
       <TalentsSection
         talents={talents}
         loading={talentsLoading}
-        kicker={t("homeNew.talents.kicker")}
-        title={t("homeNew.talents.title")}
-        subtitle={t("homeNew.talents.subtitle")}
-        viewAll={t("homeNew.talents.viewAll")}
-        loadingText={t("homeNew.talents.loading") || "Loading talents..."}
-        emptyText={t("homeNew.talents.empty") || "No talents available"}
+        kicker={t("home.content.talents.kicker")}
+        title={t("home.content.talents.title")}
+        subtitle={t("home.content.talents.subtitle")}
+        viewAll={t("home.content.talents.viewAll")}
+        loadingText={t("home.content.talents.loading") || "Loading talents..."}
+        emptyText={t("home.content.talents.empty") || "No talents available"}
       />
 
       {/* Twins Section */}
       <TwinsSection
-        kicker={t("homeNew.twins.kicker")}
-        title={t("homeNew.twins.title")}
-        subtitle={t("homeNew.twins.subtitle")}
-        cta={t("homeNew.twins.cta")}
+        kicker={t("home.content.twins.kicker")}
+        title={t("home.content.twins.title")}
+        subtitle={t("home.content.twins.subtitle")}
+        cta={t("home.content.twins.cta")}
         backgroundImage="https://plus.unsplash.com/premium_photo-1681492310064-b835a82d5c1c?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       />
 
@@ -314,12 +314,12 @@ export default function HomePage() {
       <PartnersSection
         partners={partners}
         loading={partnersLoading}
-        kicker={t("homeNew.partners.kicker")}
-        title={t("homeNew.partners.title")}
-        subtitle={t("homeNew.partners.subtitle")}
-        cta={t("homeNew.partners.cta")}
+        kicker={t("home.content.partners.kicker")}
+        title={t("home.content.partners.title")}
+        subtitle={t("home.content.partners.subtitle")}
+        cta={t("home.content.partners.cta")}
         noPartnersText={
-          t("homeNew.partners.noPartners") || "No partners available"
+          t("home.content.partners.noPartners") || "No partners available"
         }
         hideArrows
       />

@@ -98,7 +98,7 @@ export default function SocialManager({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
  <label className="block text-sm font-medium text-gray-700 ">
-          {t("account.profession.socials.label") || "Social Media Links"}
+          {t("accountSettings.account.profession.socials.label") || "Social Media Links"}
           {required && <span className="text-red-500 ms-1">*</span>}
         </label>
         <button
@@ -108,7 +108,7 @@ export default function SocialManager({
  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
         >
           <TbPlus className="w-4 h-4" />
-          {t("account.profession.socials.add") || "Add Link"}
+          {t("accountSettings.account.profession.socials.add") || "Add Link"}
         </button>
       </div>
 
@@ -164,7 +164,7 @@ export default function SocialManager({
                   <Input
                     type="number"
                     placeholder={
-                      t("account.profession.socials.followers") ||
+                      t("accountSettings.account.profession.socials.followers") ||
                       "Followers (optional)"
                     }
                     value={social.followers?.toString() || ""}
@@ -187,7 +187,7 @@ export default function SocialManager({
       ) : (
  <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
  <p className="text-sm text-gray-500 mb-3">
-            {t("account.profession.socials.empty") ||
+            {t("accountSettings.account.profession.socials.empty") ||
               "No social media links added yet"}
           </p>
           <button
@@ -197,7 +197,7 @@ export default function SocialManager({
  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
           >
             <TbPlus className="w-4 h-4" />
-            {t("account.profession.socials.addFirst") || "Add Your First Link"}
+            {t("accountSettings.account.profession.socials.addFirst") || "Add Your First Link"}
           </button>
         </div>
       )}

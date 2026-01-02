@@ -1,4 +1,4 @@
-import { MapPin, Building2, Globe } from "lucide-react";
+import { MapPin, Building2 } from "lucide-react";
 import { useI18n } from "@/contexts/I18nContext";
 
 interface JobDetailSidebarProps {
@@ -7,6 +7,11 @@ interface JobDetailSidebarProps {
 
 export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
   const { t } = useI18n();
+
+  // Hide if no countries
+  if (!jobCountries || jobCountries.length === 0) {
+    return null;
+  }
 
   return (
     <div className="space-y-6">
@@ -25,7 +30,7 @@ export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
           </div>
 
           <div className="space-y-2">
-            {jobCountries?.map((country, index) => (
+            {jobCountries.map((country, index) => (
               <div
                 key={index}
                 className="group flex items-center gap-3 rounded-xl bg-linear-to-br from-purple-50 to-violet-50 border border-purple-100 p-3 transition-all hover:shadow-md hover:scale-[1.02]"
@@ -35,14 +40,7 @@ export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
                   {country}
                 </span>
               </div>
-            )) || (
-              <div className="text-center py-8">
-                <Globe className="h-10 w-10 text-gray-300 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">
-                  {t("jobs.jobDetail.noLocations")}
-                </p>
-              </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -57,22 +55,22 @@ export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
               <Building2 className="h-5 w-5 text-white" />
             </div>
             <h3 className="text-lg font-bold text-gray-900">
-              Application Tips
+              {t("jobs.jobDetail.applicationTips")}
             </h3>
           </div>
 
           <ul className="space-y-3 text-sm text-gray-700">
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>Review all role requirements carefully</span>
+              <span>{t("jobs.jobDetail.tip1")}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>Update your portfolio before applying</span>
+              <span>{t("jobs.jobDetail.tip2")}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>Respond promptly to any communications</span>
+              <span>{t("jobs.jobDetail.tip3")}</span>
             </li>
           </ul>
         </div>

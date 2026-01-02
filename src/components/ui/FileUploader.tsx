@@ -34,7 +34,7 @@ export default function FileUploader({
   className = "",
 }: FileUploaderProps) {
   const { t } = useI18n();
-  const dragDropLabel = t("content.dragAndDrop") || "Click to upload or drag and drop";
+  const dragDropLabel = t("home.content.dragAndDrop") || "Click to upload or drag and drop";
   const resolvedDescription = description ?? "";
   const [isDragging, setIsDragging] = useState(false);
   const [fileItems, setFileItems] = useState<FileItem[]>([]);

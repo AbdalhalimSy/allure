@@ -1,65 +1,67 @@
 {
-  "hero": {
-    "badge": "Premium Membership",
-    "title": "Unlock Your Full Potential",
-    "subtitle": "Join thousands of professionals who have elevated their careers with our premium membership. Get exclusive access to premium features, priority support, and unlimited opportunities."
-  },
-  "benefits": {
-    "payments": {
-      "title": "Immediate Payments",
-      "description": "Get paid instantly for your work"
+  "packages": {
+    "hero": {
+      "badge": "Premium Membership",
+      "title": "Unlock Your Full Potential",
+      "subtitle": "Join thousands of professionals who have elevated their careers with our premium membership. Get exclusive access to premium features, priority support, and unlimited opportunities."
     },
-    "featured": {
-      "title": "Featured Profile",
-      "description": "Stand out with highlighted visibility"
+    "benefits": {
+      "payments": {
+        "title": "Immediate Payments",
+        "description": "Get paid instantly for your work"
+      },
+      "featured": {
+        "title": "Featured Profile",
+        "description": "Stand out with highlighted visibility"
+      },
+      "content": {
+        "title": "Premium Content",
+        "description": "Upload more photos, videos & audio"
+      },
+      "support": {
+        "title": "Priority Support",
+        "description": "24/7 dedicated customer service"
+      }
     },
-    "content": {
-      "title": "Premium Content",
-      "description": "Upload more photos, videos & audio"
+    "plans": {
+      "title": "Choose Your Plan",
+      "subtitle": "Select the perfect package for your needs. All plans include full access to platform features.",
+      "empty": "No packages available at this time. Please check back later.",
+      "selectedPackage": "Selected Package",
+      "change": "Change",
+      "originalPrice": "Original Price",
+      "discount": "Discount",
+      "total": "Total",
+      "proceedToPayment": "Proceed to Payment",
+      "processing": "Processing...",
+      "securePayment": "Secure payment powered by CCAvenue"
     },
-    "support": {
-      "title": "Priority Support",
-      "description": "24/7 dedicated customer service"
-    }
-  },
-  "plans": {
-    "title": "Choose Your Plan",
-    "subtitle": "Select the perfect package for your needs. All plans include full access to platform features.",
-    "empty": "No packages available at this time. Please check back later.",
-    "selectedPackage": "Selected Package",
-    "change": "Change",
-    "originalPrice": "Original Price",
-    "discount": "Discount",
-    "total": "Total",
-    "proceedToPayment": "Proceed to Payment",
-    "processing": "Processing...",
-    "securePayment": "Secure payment powered by CCAvenue"
-  },
-  "cta": {
-    "title": "Ready to Get Started?",
-    "subtitle": "Sign up now to choose your package and unlock all premium features.",
-    "createAccount": "Create Account",
-    "signIn": "Sign In",
-    "haveAccount": "Already have an account?",
-    "logIn": "Log in"
-  },
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "q1": {
-      "question": "How does the subscription work?",
-      "answer": "Choose a package that fits your needs, create an account or log in, complete the payment, and instantly unlock all premium features for the duration of your subscription."
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Sign up now to choose your package and unlock all premium features.",
+      "createAccount": "Create Account",
+      "signIn": "Sign In",
+      "haveAccount": "Already have an account?",
+      "logIn": "Log in"
     },
-    "q2": {
-      "question": "Can I cancel my subscription?",
-      "answer": "Yes, you can manage your subscription from your account settings at any time. Your access will continue until the end of your billing period."
-    },
-    "q3": {
-      "question": "What payment methods do you accept?",
-      "answer": "We accept all major credit cards, debit cards, and bank transfers for your convenience."
-    },
-    "q4": {
-      "question": "Do you offer refunds?",
-      "answer": "Please contact our support team within 7 days of purchase to discuss refund eligibility based on our refund policy."
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "How does the subscription work?",
+        "answer": "Choose a package that fits your needs, create an account or log in, complete the payment, and instantly unlock all premium features for the duration of your subscription."
+      },
+      "q2": {
+        "question": "Can I cancel my subscription?",
+        "answer": "Yes, you can manage your subscription from your account settings at any time. Your access will continue until the end of your billing period."
+      },
+      "q3": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards, debit cards, and bank transfers for your convenience."
+      },
+      "q4": {
+        "question": "Do you offer refunds?",
+        "answer": "Please contact our support team within 7 days of purchase to discuss refund eligibility based on our refund policy."
+      }
     }
   }
 }

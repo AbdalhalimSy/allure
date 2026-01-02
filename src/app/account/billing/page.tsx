@@ -66,7 +66,7 @@ export default function BillingPage() {
       setProfileId(Number(activeProfileId));
       loadData(Number(activeProfileId));
     } else {
-      setError(t("account.billing.errors.selectProfile"));
+      setError(t("accountSettings.account.billing.errors.selectProfile"));
       setLoading(false);
     }
   }, [t]);
@@ -109,7 +109,7 @@ export default function BillingPage() {
         setTotalSpent(paymentsRes.data.total_spent);
       } catch (err: any) {
         setError(
-          err.response?.data?.message || t("account.billing.errors.load")
+          err.response?.data?.message || t("accountSettings.account.billing.errors.load")
         );
       } finally {
         setLoading(false);
@@ -145,11 +145,11 @@ export default function BillingPage() {
           response.data.access_code
         );
       } else {
-        setError(response.message || t("account.billing.errors.create"));
+        setError(response.message || t("accountSettings.account.billing.errors.create"));
       }
     } catch (err: any) {
       setError(
-        err.response?.data?.message || t("account.billing.errors.create")
+        err.response?.data?.message || t("accountSettings.account.billing.errors.create")
       );
     } finally {
       setProcessing(false);
@@ -186,8 +186,8 @@ export default function BillingPage() {
           {/* Current Subscription Status */}
           {profileId && (
             <AccountSection
-              title={t("account.billing.status.title")}
-              description={t("account.billing.status.description")}
+              title={t("accountSettings.account.billing.status.title")}
+              description={t("accountSettings.account.billing.status.description")}
             >
               <SubscriptionStatus
                 subscription={currentSubscription}
@@ -208,7 +208,7 @@ export default function BillingPage() {
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                   }`}
                 >
-                  {t("account.billing.tabs.plans")}
+                  {t("accountSettings.account.billing.tabs.plans")}
                 </button>
               )}
               <button
@@ -219,7 +219,7 @@ export default function BillingPage() {
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                 }`}
               >
-                {t("account.billing.tabs.history")} (
+                {t("accountSettings.account.billing.tabs.history")} (
                 {subscriptions?.length || 0})
               </button>
               <button
@@ -230,7 +230,7 @@ export default function BillingPage() {
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
                 }`}
               >
-                {t("account.billing.tabs.payments")} ({payments?.length || 0})
+                {t("accountSettings.account.billing.tabs.payments")} ({payments?.length || 0})
               </button>
             </nav>
           </div>
@@ -239,8 +239,8 @@ export default function BillingPage() {
           {activeTab === "subscribe" && !hasSubscription && (
             <>
               <AccountSection
-                title={t("account.billing.packages.title")}
-                description={t("account.billing.packages.description")}
+                title={t("accountSettings.account.billing.packages.title")}
+                description={t("accountSettings.account.billing.packages.description")}
               >
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {packages?.map((pkg) => (
@@ -261,14 +261,14 @@ export default function BillingPage() {
                 {(packages?.length ?? 0) === 0 && (
  <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center ">
  <p className="text-gray-600 ">
-                      {t("account.billing.packages.noPackages")}
+                      {t("accountSettings.account.billing.packages.noPackages")}
                     </p>
                   </div>
                 )}
               </AccountSection>
 
               {selectedPackageId && profileId && (
-                <AccountSection title={t("account.billing.order.title")}>
+                <AccountSection title={t("accountSettings.account.billing.order.title")}>
                   <div className="space-y-6">
                     <CouponInput
                       profileId={profileId}
@@ -280,12 +280,12 @@ export default function BillingPage() {
                     {/* Order Summary */}
  <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
  <h3 className="font-semibold text-gray-900 ">
-                        {t("account.billing.order.summary")}
+                        {t("accountSettings.account.billing.order.summary")}
                       </h3>
                       <div className="mt-4 space-y-2">
                         <div className="flex justify-between text-sm">
  <span className="text-gray-600 ">
-                            {t("account.billing.order.package")}:
+                            {t("accountSettings.account.billing.order.package")}:
                           </span>
  <span className="font-medium text-gray-900 ">
                             {selectedPackage?.title || selectedPackage?.name}
@@ -293,7 +293,7 @@ export default function BillingPage() {
                         </div>
                         <div className="flex justify-between text-sm">
  <span className="text-gray-600 ">
-                            {t("account.billing.order.originalPrice")}:
+                            {t("accountSettings.account.billing.order.originalPrice")}:
                           </span>
                           <span
                             className={
@@ -307,14 +307,14 @@ export default function BillingPage() {
                         </div>
                         {couponDiscount > 0 && (
                           <div className="flex justify-between text-sm text-green-600">
-                            <span>{t("account.billing.order.discount")}:</span>
+                            <span>{t("accountSettings.account.billing.order.discount")}:</span>
                             <span>-{couponDiscount.toFixed(2)} AED</span>
                           </div>
                         )}
  <div className="border-t border-gray-200 pt-2 ">
                           <div className="flex justify-between">
  <span className="text-lg font-bold text-gray-900 ">
-                              {t("account.billing.order.total")}:
+                              {t("accountSettings.account.billing.order.total")}:
                             </span>
                             <span className="text-2xl font-bold text-[#c49a47]">
                               {finalPrice.toFixed(2)} AED
@@ -333,12 +333,12 @@ export default function BillingPage() {
                       {processing ? (
                         <>
                           <Loader2 className="me-2 h-5 w-5 animate-spin" />
-                          {t("account.billing.processing")}
+                          {t("accountSettings.account.billing.processing")}
                         </>
                       ) : (
                         <>
                           <ShoppingCart className="me-2 h-5 w-5" />
-                          {t("account.billing.subscribe")}
+                          {t("accountSettings.account.billing.subscribe")}
                         </>
                       )}
                     </Button>
@@ -350,8 +350,8 @@ export default function BillingPage() {
 
           {activeTab === "history" && (
             <AccountSection
-              title={t("account.billing.history.title")}
-              description={t("account.billing.history.description")}
+              title={t("accountSettings.account.billing.history.title")}
+              description={t("accountSettings.account.billing.history.description")}
             >
               <SubscriptionHistoryList subscriptions={subscriptions || []} />
             </AccountSection>
@@ -359,8 +359,8 @@ export default function BillingPage() {
 
           {activeTab === "payments" && (
             <AccountSection
-              title={t("account.billing.payments.title")}
-              description={t("account.billing.payments.description")}
+              title={t("accountSettings.account.billing.payments.title")}
+              description={t("accountSettings.account.billing.payments.description")}
             >
               <PaymentHistoryTable
                 payments={payments || []}

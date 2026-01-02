@@ -5,14 +5,14 @@
 ### 1. Icon-Only Buttons with Tooltips
 - **Star Button (Set as Profile Picture)**
   - Removed text label, showing only icon
-  - Added hover tooltip with `t("portfolio.setFeaturedTooltip")`
+  - Added hover tooltip with `t("accountSettings.portfolio.setFeaturedTooltip")`
   - Styled with brand color `#c49a47`
   - Button: `bg-[#c49a47]/20 p-2 text-[#c49a47]` with hover effect
 
 - **Drag Handle Button**
   - Removed text label "Drag to reorder" from button
   - Showing only icon
-  - Added hover tooltip with `t("portfolio.dragTooltip")`
+  - Added hover tooltip with `t("accountSettings.portfolio.dragTooltip")`
   - Styled with brand color `#c49a47`
   - Button: `bg-[#c49a47]/20 p-2 text-[#c49a47]` with hover effect
   - Tooltip appears on right with black background
@@ -75,7 +75,7 @@ Updated locations:
 Both tooltips use a consistent pattern:
 ```tsx
 <span className="absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-  {t("portfolio.tooltipKey")}
+  {t("accountSettings.portfolio.tooltipKey")}
 </span>
 ```
 

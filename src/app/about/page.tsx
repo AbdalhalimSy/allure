@@ -392,9 +392,9 @@ export default function AboutPage() {
         partners={partners}
         loading={partnersLoading}
         kicker={t("about.partners.badge")}
-        title={t("homeNew.partners.title")}
-        subtitle={t("homeNew.partners.subtitle")}
-        cta={t("homeNew.partners.cta")}
+        title={t("home.content.partners.title")}
+        subtitle={t("home.content.partners.subtitle")}
+        cta={t("home.content.partners.cta")}
         noPartnersText={t("about.partners.noPartners")}
         hideArrows
       />

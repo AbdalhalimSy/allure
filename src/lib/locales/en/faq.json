@@ -1,38 +1,40 @@
 {
-  "hero": {
-    "badge": "Help Center",
-    "title": "Frequently Asked Questions",
-    "subtitle": "Find answers to common questions about working with Allure Agency"
-  },
-  "categories": {
-    "talents": "For Talents"
-  },
-  "talents": {
-    "q1": {
-      "question": "How Can I Join Allure as a Talent?",
-      "answer": "You can apply through our mobile app or website by creating an account and completing your profile with professional media and measurements.\nAll applications are carefully reviewed by our team, and profiles that meet our standards and requirements are approved."
+  "faq": {
+    "hero": {
+      "badge": "Help Center",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions about working with Allure Agency"
     },
-    "q2": {
-      "question": "What Are the Requirements to Join?",
-      "answer": "Requirements vary by category. In general, applicants are expected to complete their profile with accurate personal details, physical appearance information, and clear photos. A general casting video is also required.\nIf you have a specific skill or special talent, you can select your profession from the available categories and upload a relevant video showcasing your ability."
+    "categories": {
+      "talents": "For Talents"
     },
-    "q3": {
-      "question": "Is There a Fee to Join Allure?",
-      "answer": "No, registration with Allure is completely free. We do not charge any upfront fees for representation.\nWe believe in equal opportunities, allowing talents to apply to all suitable jobs without restrictions."
+    "talents": {
+      "q1": {
+        "question": "How Can I Join Allure as a Talent?",
+        "answer": "You can apply through our mobile app or website by creating an account and completing your profile with professional media and measurements.\nAll applications are carefully reviewed by our team, and profiles that meet our standards and requirements are approved."
+      },
+      "q2": {
+        "question": "What Are the Requirements to Join?",
+        "answer": "Requirements vary by category. In general, applicants are expected to complete their profile with accurate personal details, physical appearance information, and clear photos. A general casting video is also required.\nIf you have a specific skill or special talent, you can select your profession from the available categories and upload a relevant video showcasing your ability."
+      },
+      "q3": {
+        "question": "Is There a Fee to Join Allure?",
+        "answer": "No, registration with Allure is completely free. We do not charge any upfront fees for representation.\nWe believe in equal opportunities, allowing talents to apply to all suitable jobs without restrictions."
+      },
+      "q4": {
+        "question": "How Long Does the Application Process Take?",
+        "answer": "Our team reviews applications within 1–3 business days. If all required information and media are submitted correctly, your account will be approved.\nIf the review process takes longer than three business days, please contact our talent support team via WhatsApp at +971 52 342 9898."
+      }
     },
-    "q4": {
-      "question": "How Long Does the Application Process Take?",
-      "answer": "Our team reviews applications within 1–3 business days. If all required information and media are submitted correctly, your account will be approved.\nIf the review process takes longer than three business days, please contact our talent support team via WhatsApp at +971 52 342 9898."
+    "cta": {
+      "title": "Still Have Questions?",
+      "subtitle": "Can't find the answer you're looking for? Our team is here to help you.",
+      "button": "Contact Us"
+    },
+    "search": {
+      "placeholder": "Search for questions...",
+      "noResults": "No questions found matching your search.",
+      "tryAgain": "Try different keywords or browse categories below."
     }
-  },
-  "cta": {
-    "title": "Still Have Questions?",
-    "subtitle": "Can't find the answer you're looking for? Our team is here to help you.",
-    "button": "Contact Us"
-  },
-  "search": {
-    "placeholder": "Search for questions...",
-    "noResults": "No questions found matching your search.",
-    "tryAgain": "Try different keywords or browse categories below."
   }
 }

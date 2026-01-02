@@ -106,13 +106,13 @@ function SortableItem({ item, index, onRemove }: SortableItemProps) {
         {item.approval_status === "pending" && (
           <div className="absolute top-2 start-2 flex items-center gap-1 bg-yellow-500/90 text-white text-xs px-2 py-1 rounded shadow">
             <TbClock size={14} />{" "}
-            <span>{t("portfolio.pending") || "Pending"}</span>
+            <span>{t("accountSettings.portfolio.pending") || "Pending"}</span>
           </div>
         )}
         {item.approval_status === "approved" && (
           <div className="absolute top-2 start-2 flex items-center gap-1 bg-green-600/90 text-white text-xs px-2 py-1 rounded shadow">
             <TbCheck size={14} />{" "}
-            <span>{t("portfolio.approved") || "Approved"}</span>
+            <span>{t("accountSettings.portfolio.approved") || "Approved"}</span>
           </div>
         )}
 
@@ -164,7 +164,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       );
       setItems(sorted.map((d) => ({ ...d, priority: d.priority ?? 0 })));
     } catch {
-      toast.error(t("portfolio.loadFailed") || "Failed to load portfolio");
+      toast.error(t("accountSettings.portfolio.loadFailed") || "Failed to load portfolio");
     } finally {
       setLoading(false);
     }
@@ -219,7 +219,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     if (validation.length) {
       setErrors(validation);
       setSaving(false);
-      toast.error(t("portfolio.validationErrors") || "Validation errors");
+      toast.error(t("accountSettings.portfolio.validationErrors") || "Validation errors");
       return;
     }
     const normalized = items.map((i, idx) => ({ ...i, priority: idx }));
@@ -227,7 +227,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     setSaving(false);
     if (result.success) {
       toast.success(
-        result.message || t("portfolio.synced") || "Portfolio synced"
+        result.message || t("accountSettings.portfolio.synced") || "Portfolio synced"
       );
       loadInitial();
     } else {
@@ -238,23 +238,23 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         ...prev,
         ...(backendErrors.length
           ? backendErrors
-          : [result.message || t("portfolio.syncFailed") || "Sync failed"]),
+          : [result.message || t("accountSettings.portfolio.syncFailed") || "Sync failed"]),
       ]);
-      toast.error(result.message || t("portfolio.syncFailed") || "Sync failed");
+      toast.error(result.message || t("accountSettings.portfolio.syncFailed") || "Sync failed");
     }
   };
 
   if (loading) {
     return (
-      <AccountPageLoader message={t("portfolio.loading") || "Loading portfolio..."} />
+      <AccountPageLoader message={t("accountSettings.portfolio.loading") || "Loading portfolio..."} />
     );
   }
 
   return (
     <AccountSection
-      title={t("account.nav.portfolio") || "Portfolio"}
+      title={t("accountSettings.account.nav.portfolio") || "Portfolio"}
       description={
-        t("portfolio.description") ||
+        t("accountSettings.portfolio.description") ||
         "Showcase your best work and projects. Reorder items and sync when ready."
       }
     >
@@ -267,7 +267,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           value={selectedFiles}
           onChange={handleFilesChange}
           description={
-            t("account.profession.upload.selectFiles") ||
+            t("accountSettings.account.profession.upload.selectFiles") ||
             "Click to select or drag & drop files (images/videos up to 100MB)"
           }
         />
@@ -284,7 +284,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       {items.length > 1 && (
         <div className="mb-2 flex items-center gap-2 text-sm text-[#c49a47] font-medium">
           <TbGripVertical size={18} />{" "}
-          {t("portfolio.dragHint") ||
+          {t("accountSettings.portfolio.dragHint") ||
             "Drag and drop to reorder your portfolio items"}
         </div>
       )}
@@ -330,7 +330,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             />
           </svg>
           <p className="mt-4 text-gray-600">
-            {t("portfolio.noItems") ||
+            {t("accountSettings.portfolio.noItems") ||
               "No portfolio items yet. Upload your work above!"}
           </p>
         </div>
@@ -342,7 +342,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             {t("common.back") || "Back"}
           </Button>
           <Button variant="secondary" onClick={loadInitial} disabled={saving}>
-            <TbRefresh className="me-1" /> {t("portfolio.reset") || "Reset"}
+            <TbRefresh className="me-1" /> {t("accountSettings.portfolio.reset") || "Reset"}
           </Button>
         </div>
         <Button
@@ -353,11 +353,11 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           {saving ? (
             <span className="flex items-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />{" "}
-              {t("portfolio.syncing") || "Syncing..."}
+              {t("accountSettings.portfolio.syncing") || "Syncing..."}
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <TbUpload /> {t("portfolio.sync") || "Sync Portfolio"}
+              <TbUpload /> {t("accountSettings.portfolio.sync") || "Sync Portfolio"}
             </span>
           )}
         </Button>
