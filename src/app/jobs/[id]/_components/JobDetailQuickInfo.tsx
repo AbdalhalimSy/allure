@@ -116,25 +116,23 @@ export function JobDetailQuickInfo({ job, roleCount }: JobDetailQuickInfoProps) 
         </div>
       </div>
 
-      {/* Locations Card - Only show if countries exist */}
-      {job.job_countries && job.job_countries.length > 0 && (
-        <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-purple-50 to-violet-50 p-5 border border-purple-100/50 transition-all hover:shadow-xl hover:scale-105">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/20 rounded-full blur-2xl"></div>
-          <div className="relative flex items-start gap-3">
-            <div className="rounded-xl bg-linear-to-br from-purple-400 to-violet-500 p-2.5 shadow-lg group-hover:scale-110 transition-transform">
-              <MapPin className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-purple-700 mb-1">
-                {t("jobs.jobDetail.locations")}
-              </p>
-              <p className="font-bold text-gray-900 text-sm">
-                {job.job_countries.length} {t("jobs.jobDetail.countries")}
-              </p>
-            </div>
+      {/* Locations Card */}
+      <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-purple-50 to-violet-50 p-5 border border-purple-100/50 transition-all hover:shadow-xl hover:scale-105">
+        <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/20 rounded-full blur-2xl"></div>
+        <div className="relative flex items-start gap-3">
+          <div className="rounded-xl bg-linear-to-br from-purple-400 to-violet-500 p-2.5 shadow-lg group-hover:scale-110 transition-transform">
+            <MapPin className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-purple-700 mb-1">
+              {t("jobs.jobDetail.locations")}
+            </p>
+            <p className="font-bold text-gray-900 text-sm">
+              {job.job_countries?.length || 0} {t("jobs.jobDetail.countries")}
+            </p>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

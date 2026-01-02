@@ -125,9 +125,9 @@
       "shootingDates": "Shooting Dates",
       "tbd": "To Be Determined",
       "applicationTips": "Application Tips",
-      "tip1": "Review all role requirements carefully",
-      "tip2": "Update your portfolio before applying",
-      "tip3": "Respond promptly to any communications"
+      "tipReviewRequirements": "Review all role requirements carefully",
+      "tipUpdatePortfolio": "Update your portfolio before applying",
+      "tipRespondPromptly": "Respond promptly to any communications"
     },
     "jobs": {
       "loading": "Loading jobs...",

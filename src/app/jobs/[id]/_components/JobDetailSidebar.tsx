@@ -8,42 +8,41 @@ interface JobDetailSidebarProps {
 export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
   const { t } = useI18n();
 
-  // Hide if no countries
-  if (!jobCountries || jobCountries.length === 0) {
-    return null;
-  }
+  const hasCountries = jobCountries && jobCountries.length > 0;
 
   return (
     <div className="space-y-6">
-      {/* Job Locations Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-gray-200/50 bg-white shadow-lg transition-all hover:shadow-2xl">
-        <div className="h-1 bg-linear-to-r from-purple-500 via-violet-500 to-purple-500" />
+      {/* Job Locations Card - Only show if countries exist */}
+      {hasCountries && (
+        <div className="relative overflow-hidden rounded-3xl border border-gray-200/50 bg-white shadow-lg transition-all hover:shadow-2xl">
+          <div className="h-1 bg-linear-to-r from-purple-500 via-violet-500 to-purple-500" />
 
-        <div className="p-6">
-          <div className="mb-5 flex items-center gap-3">
-            <div className="rounded-xl bg-linear-to-br from-purple-400 to-violet-500 p-3 shadow-lg">
-              <MapPin className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900">
-              {t("jobs.jobDetail.jobLocations")}
-            </h3>
-          </div>
-
-          <div className="space-y-2">
-            {jobCountries.map((country, index) => (
-              <div
-                key={index}
-                className="group flex items-center gap-3 rounded-xl bg-linear-to-br from-purple-50 to-violet-50 border border-purple-100 p-3 transition-all hover:shadow-md hover:scale-[1.02]"
-              >
-                <div className="shrink-0 w-2 h-2 rounded-full bg-linear-to-r from-purple-500 to-violet-500" />
-                <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                  {country}
-                </span>
+          <div className="p-6">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="rounded-xl bg-linear-to-br from-purple-400 to-violet-500 p-3 shadow-lg">
+                <MapPin className="h-6 w-6 text-white" />
               </div>
-            ))}
+              <h3 className="text-xl font-bold text-gray-900">
+                {t("jobs.jobDetail.jobLocations")}
+              </h3>
+            </div>
+
+            <div className="space-y-2">
+              {jobCountries.map((country, index) => (
+                <div
+                  key={index}
+                  className="group flex items-center gap-3 rounded-xl bg-linear-to-br from-purple-50 to-violet-50 border border-purple-100 p-3 transition-all hover:shadow-md hover:scale-[1.02]"
+                >
+                  <div className="shrink-0 w-2 h-2 rounded-full bg-linear-to-r from-purple-500 to-violet-500" />
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                    {country}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Quick Tips Card */}
       <div className="relative overflow-hidden rounded-3xl border border-blue-200/50 bg-linear-to-br from-blue-50 to-indigo-50 p-6 shadow-lg">
@@ -62,15 +61,15 @@ export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
           <ul className="space-y-3 text-sm text-gray-700">
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>{t("jobs.jobDetail.tip1")}</span>
+              <span>{t("jobs.jobDetail.tipReviewRequirements")}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>{t("jobs.jobDetail.tip2")}</span>
+              <span>{t("jobs.jobDetail.tipUpdatePortfolio")}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-500 font-bold mt-0.5">✓</span>
-              <span>{t("jobs.jobDetail.tip3")}</span>
+              <span>{t("jobs.jobDetail.tipRespondPromptly")}</span>
             </li>
           </ul>
         </div>
