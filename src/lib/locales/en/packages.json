@@ -43,25 +43,6 @@
       "signIn": "Sign In",
       "haveAccount": "Already have an account?",
       "logIn": "Log in"
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": {
-        "question": "How does the subscription work?",
-        "answer": "Choose a package that fits your needs, create an account or log in, complete the payment, and instantly unlock all premium features for the duration of your subscription."
-      },
-      "q2": {
-        "question": "Can I cancel my subscription?",
-        "answer": "Yes, you can manage your subscription from your account settings at any time. Your access will continue until the end of your billing period."
-      },
-      "q3": {
-        "question": "What payment methods do you accept?",
-        "answer": "We accept all major credit cards, debit cards, and bank transfers for your convenience."
-      },
-      "q4": {
-        "question": "Do you offer refunds?",
-        "answer": "Please contact our support team within 7 days of purchase to discuss refund eligibility based on our refund policy."
-      }
     }
   }
 }

@@ -323,7 +323,7 @@ export default function NotificationDropdown() {
       </button>
 
       <div
-        className={`absolute end-0 mt-3 w-[360px] max-w-[90vw] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl backdrop-blur transition-all duration-200 ease-in-out origin-top-right ${
+        className={`absolute -end-25 mt-3 w-[360px] max-w-[90vw] overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl backdrop-blur transition-all duration-200 ease-in-out origin-top-right ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-2 opacity-0"

@@ -110,7 +110,7 @@ const SingleSelect = forwardRef<HTMLDivElement, SingleSelectProps>(
 
         {isOpen && !loading && (
           <div
- className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg "
+ className="absolute mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg "
             id={listboxId}
             role="listbox"
           >

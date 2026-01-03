@@ -22,7 +22,7 @@ import {
 } from "react-icons/tb";
 
 export default function ProfilePhotosManager() {
-  const { user } = useAuth();
+  const { user, activeProfileId } = useAuth();
   const { t } = useI18n();
   const [photos, setPhotos] = useState<ProfilePhoto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,10 +56,10 @@ export default function ProfilePhotosManager() {
 
     // Client-side validation
     const maxSize = 5 * 1024 * 1024; // 5MB
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
 
     if (!allowedTypes.includes(file.type)) {
-      setError("Only JPEG, PNG, JPG, and GIF images are allowed");
+      setError("Only JPEG, PNG, JPG, GIF, and WEBP images are allowed");
       return;
     }
 
@@ -145,9 +145,14 @@ export default function ProfilePhotosManager() {
   const pendingPhoto = photos.find((p) => p.approval_status === "pending");
   const rejectedPhotos = photos.filter((p) => p.approval_status === "rejected");
 
-  // Get current profile picture from user.profile
+  // Get current profile's featured image
+  const currentProfileFeaturedImage = user?.talent?.profiles.find(
+    (p) => p.id === activeProfileId
+  )?.featured_image_url;
+
+  // Get current profile picture from user.profile, approved photo, or featured image
   const currentProfilePicture =
-    user?.profile?.profile_picture || approvedPhoto?.profile_picture;
+    user?.profile?.profile_picture || approvedPhoto?.profile_picture || currentProfileFeaturedImage;
   const userName = user?.profile
     ? `${user.profile.first_name} ${user.profile.last_name}`.trim()
     : user?.email || "User";
@@ -182,6 +187,20 @@ export default function ProfilePhotosManager() {
                     </div>
                   )}
                   <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Update Picture Icon on Hover */}
+                  <label
+                    htmlFor="profile-avatar-upload"
+                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="bg-white/90 dark:bg-gray-900/90 p-3 rounded-full shadow-lg">
+                        <TbCamera className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-lg">
+                        Update Photo
+                      </span>
+                    </div>
+                  </label>
                 </div>
                 {approvedPhoto && (
                   <div className="absolute -bottom-3 -right-3 bg-linear-to-r from-green-400 to-green-500 text-white p-3 rounded-xl shadow-lg">
@@ -322,7 +341,7 @@ export default function ProfilePhotosManager() {
               id="photo-upload"
               type="file"
               className="hidden"
-              accept="image/jpeg,image/png,image/jpg,image/gif"
+              accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
               onChange={handleUpload}
               disabled={uploading}
             />
@@ -488,6 +507,16 @@ export default function ProfilePhotosManager() {
             </div>
           </div>
         )}
+
+        {/* Hidden avatar upload input */}
+        <input
+          id="profile-avatar-upload"
+          type="file"
+          className="hidden"
+          accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
+          onChange={handleUpload}
+          disabled={uploading}
+        />
       </div>
     </div>
   );

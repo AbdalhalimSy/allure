@@ -7,13 +7,13 @@ import Label from "@/components/ui/Label";
 import { useState, useEffect } from "react";
 import Loader from "@/components/ui/Loader";
 import { TalentFilters } from "@/types/talent";
-import { 
-  Search, 
-  SlidersHorizontal, 
-  X, 
+import {
+  Search,
+  SlidersHorizontal,
+  X,
   ChevronDown,
   ChevronUp,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import apiClient from "@/lib/api/client";
 import { fetchWithRetry, cachedGet } from "@/lib/utils/fetchWithRetry";
@@ -36,13 +36,18 @@ interface LookupOption {
   code?: string;
 }
 
-export default function TalentFilterBar({ value, onChange, onReset, loadingResults = false }: Props) {
+export default function TalentFilterBar({
+  value,
+  onChange,
+  onReset,
+  loadingResults = false,
+}: Props) {
   const { locale, t } = useI18n();
   const [local, setLocal] = useState<TalentFilters>(value);
   const [showAdvanced, setShowAdvanced] = useState(false);
   // Debounced search text separate from filters to avoid refetch on every keystroke
   const [searchText, setSearchText] = useState<string>(value.search || "");
-  
+
   // Lookup data
   const [countries, setCountries] = useState<LookupOption[]>([]);
   const [nationalities, setNationalities] = useState<LookupOption[]>([]);
@@ -58,26 +63,31 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
       try {
         setLoadingLookups(true);
         // Avoid hammering the API; cache responses and retry on 429
-        const countriesRes = await fetchWithRetry(() => cachedGet(
-          `countries:${locale}`,
-          () => apiClient.get(`/lookups/countries?lang=${locale}`)
-        ));
-        const nationalitiesRes = await fetchWithRetry(() => cachedGet(
-          `nationalities:${locale}`,
-          () => apiClient.get(`/lookups/nationalities?lang=${locale}`)
-        ));
-        const ethnicitiesRes = await fetchWithRetry(() => cachedGet(
-          `ethnicities:${locale}`,
-          () => apiClient.get(`/lookups/ethnicities?lang=${locale}`)
-        ));
-        const professionsRes = await fetchWithRetry(() => cachedGet(
-          `professions:${locale}`,
-          () => apiClient.get(`/lookups/professions?lang=${locale}`)
-        ));
-        const appearanceRes = await fetchWithRetry(() => cachedGet(
-          `appearance:${locale}`,
-          () => apiClient.get(`/lookups/appearance-options?lang=${locale}`)
-        ));
+        const countriesRes = await fetchWithRetry(() =>
+          cachedGet(`countries:${locale}`, () =>
+            apiClient.get(`/lookups/countries?lang=${locale}`)
+          )
+        );
+        const nationalitiesRes = await fetchWithRetry(() =>
+          cachedGet(`nationalities:${locale}`, () =>
+            apiClient.get(`/lookups/nationalities?lang=${locale}`)
+          )
+        );
+        const ethnicitiesRes = await fetchWithRetry(() =>
+          cachedGet(`ethnicities:${locale}`, () =>
+            apiClient.get(`/lookups/ethnicities?lang=${locale}`)
+          )
+        );
+        const professionsRes = await fetchWithRetry(() =>
+          cachedGet(`professions:${locale}`, () =>
+            apiClient.get(`/lookups/professions?lang=${locale}`)
+          )
+        );
+        const appearanceRes = await fetchWithRetry(() =>
+          cachedGet(`appearance:${locale}`, () =>
+            apiClient.get(`/lookups/appearance-options?lang=${locale}`)
+          )
+        );
 
         if (countriesRes.data.status === "success") {
           const countriesData = countriesRes.data.data;
@@ -146,7 +156,7 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
   };
 
   // Count active filters
-  const activeFiltersCount = Object.keys(local).filter(key => {
+  const activeFiltersCount = Object.keys(local).filter((key) => {
     const value = local[key as keyof TalentFilters];
     return value !== undefined && value !== null && value !== "";
   }).length;
@@ -154,27 +164,27 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
   return (
     <div className="relative space-y-4">
       {/* Main Filters - Single Row */}
- <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-4 sm:p-6 shadow-lg backdrop-blur-xl ">
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Search Input */}
-          <div className="relative flex-1 min-w-0">
+      <div className="relative z-50 rounded-2xl border border-gray-200/80 bg-white/95 p-3 sm:p-4 lg:p-6 shadow-lg backdrop-blur-xl ">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:flex-nowrap">
+          {/* Search Input - Full width on mobile */}
+          <div className="relative w-full lg:flex-1 lg:min-w-0">
             <Search className="pointer-events-none absolute start-3 sm:start-4 top-1/2 h-4 w-4 sm:h-5 sm:w-5 -translate-y-1/2 text-gray-400" />
             <Input
-              placeholder={t('filters.searchTalents') || "Search talents..."}
+              placeholder={t("filters.searchTalents") || "Search talents..."}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="h-10 sm:h-12 ps-10 sm:ps-12 pe-10 sm:pe-12 text-sm sm:text-base"
+              className="h-9 sm:h-10 lg:h-12 ps-9 sm:ps-11 lg:ps-12 pe-9 sm:pe-11 lg:pe-12 text-xs sm:text-sm lg:text-base"
             />
             {searchText && (
               <button
                 onClick={() => setSearchText("")}
- className="absolute end-10 sm:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 "
+                className="absolute end-8 sm:end-10 lg:end-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 "
               >
                 <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
             )}
             {(loadingResults || loadingLookups) && (
-              <div className="pointer-events-none absolute end-3 sm:end-4 top-1/2 -translate-y-1/2">
+              <div className="pointer-events-none absolute end-2 sm:end-3 lg:end-4 top-1/2 -translate-y-1/2">
                 <Loader size="sm" variant="spinner" color="primary" />
               </div>
             )}
@@ -184,28 +194,37 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           <SingleSelect
             searchable={false}
             options={[
-              { value: "", label: t('filters.allGenders') },
-              { value: "male", label: t('filters.male') },
-              { value: "female", label: t('filters.female') },
-              { value: "other", label: t('filters.other') },
+              { value: "", label: t("filters.allGenders") },
+              { value: "male", label: t("filters.male") },
+              { value: "female", label: t("filters.female") },
+              { value: "other", label: t("filters.other") },
             ]}
             value={local.gender ?? ""}
-            onChange={(val) => update({ gender: val && val !== "" ? (val as "male" | "female" | "other") : undefined })}
-            className="w-28 sm:w-32 lg:w-36 shrink-0"
+            onChange={(val) =>
+              update({
+                gender:
+                  val && val !== ""
+                    ? (val as "male" | "female" | "other")
+                    : undefined,
+              })
+            }
+            className="w-24 sm:w-28 lg:w-32 xl:w-36 shrink-0 text-sm"
           />
 
           {/* Divider */}
- <div className="hidden sm:block h-8 w-px bg-gray-200 shrink-0" />
+          <div className="hidden lg:block h-8 w-px bg-gray-200 shrink-0" />
 
           {/* Advanced Filters Toggle */}
           <Button
             type="button"
             variant={showAdvanced ? "primary" : "secondary"}
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center gap-1 sm:gap-2 shrink-0 px-3 sm:px-4"
+            className="flex items-center gap-1 sm:gap-2 shrink-0 px-2 sm:px-3 lg:px-4 h-9 sm:h-10 lg:h-12 text-xs sm:text-sm"
           >
             <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="hidden sm:inline">{t('filters.filters') || 'Filters'}</span>
+            <span className="hidden sm:inline">
+              {t("filters.filters") || "Filters"}
+            </span>
             {activeFiltersCount > 0 && (
               <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-[#c49a47] text-[10px] sm:text-xs font-semibold text-white">
                 {activeFiltersCount}
@@ -221,22 +240,22 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
           {/* Reset Filters Button */}
           {activeFiltersCount > 0 && (
             <>
- <div className="hidden sm:block h-8 w-px bg-gray-200 shrink-0" />
+              <div className="hidden lg:block h-8 w-px bg-gray-200 shrink-0" />
               <Button
                 type="button"
                 variant="secondary"
                 onClick={handleReset}
- className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0"
+                className="hidden lg:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 text-sm"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>{t('filters.reset') || 'Reset'}</span>
+                <span>{t("filters.reset") || "Reset"}</span>
               </Button>
-              {/* Mobile Reset Icon Only */}
+              {/* Mobile/Tablet Reset Icon Only */}
               <Button
                 type="button"
                 variant="secondary"
                 onClick={handleReset}
- className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3"
+                className="lg:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-2.5 h-9 sm:h-10"
                 title="Reset All Filters"
               >
                 <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -250,222 +269,325 @@ export default function TalentFilterBar({ value, onChange, onReset, loadingResul
       <div
         className={`relative ${
           showAdvanced
-            ? "z-60 opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
-            : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
- } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out `}
+            ? "opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
+            : "opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
+        } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out `}
         aria-hidden={!showAdvanced}
       >
-        <div className="space-y-6 p-6">
-            {/* Demographics Section */}
-            <div className="relative z-40 space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="font-semibold text-gray-900 ">{t('filters.demographics') || 'Demographics'}</h3>
-              </div>
-              
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {/* Age Range */}
-                <div className="space-y-2">
-                  <Label>{t('filters.ageRange') || 'Age Range'}</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="number"
-                      placeholder={t('filters.min') || 'Min'}
-                      value={local.min_age || ""}
-                      onChange={(e) => update({ min_age: e.target.value ? Number(e.target.value) : undefined })}
-                      min="0"
-                      max="100"
-                    />
-                    <Input
-                      type="number"
-                      placeholder={t('filters.max') || 'Max'}
-                      value={local.max_age || ""}
-                      onChange={(e) => update({ max_age: e.target.value ? Number(e.target.value) : undefined })}
-                      min="0"
-                      max="100"
-                    />
-                  </div>
-                </div>
-
-                {/* Height Range */}
-                <div className="space-y-2">
-                  <Label>{t('filters.heightCm') || 'Height (cm)'}</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="number"
-                      placeholder={t('filters.min') || 'Min'}
-                      value={local.min_height || ""}
-                      onChange={(e) => update({ min_height: e.target.value ? Number(e.target.value) : undefined })}
-                      min="0"
-                      max="250"
-                    />
-                    <Input
-                      type="number"
-                      placeholder={t('filters.max') || 'Max'}
-                      value={local.max_height || ""}
-                      onChange={(e) => update({ max_height: e.target.value ? Number(e.target.value) : undefined })}
-                      min="0"
-                      max="250"
-                    />
-                  </div>
-                </div>
-
-                {/* Sort */}
-                <div className="space-y-2">
-                  <Label>{t('filters.sortBy') || 'Sort By'}</Label>
-                  <div className="flex gap-2">
-                    <SingleSelect
-                      searchable={false}
-                      options={[
-                        { value: "", label: t('filters.sortDefault') || 'Default' },
-                        { value: "age", label: t('filters.sortAge') || 'Age' },
-                        { value: "height", label: t('filters.sortHeight') || 'Height' },
-                        { value: "created_at", label: t('filters.sortNewest') || 'Newest' },
-                        { value: "instagram_followers", label: t('filters.sortFollowers') || 'Followers' },
-                      ]}
-                      value={local.sort_by || ""}
-                      onChange={(val) => update({ sort_by: val && val !== "" ? (val as "age" | "height" | "created_at" | "instagram_followers" | "first_name") : undefined })}
-                      className="flex-1"
-                    />
-                    <SingleSelect
-                      searchable={false}
-                      options={[
-                        { value: "asc", label: t('filters.sortAsc') || '↑ Asc' },
-                        { value: "desc", label: t('filters.sortDesc') || '↓ Desc' },
-                      ]}
-                      value={local.sort_order || "asc"}
-                      onChange={(val) => update({ sort_order: val ? (val as "asc" | "desc") : "asc" })}
-                      disabled={!local.sort_by}
-                      className="w-32"
-                    />
-                  </div>
-                </div>
-              </div>
+        <div className="space-y-4 sm:space-y-6 p-3 sm:p-4 lg:p-6">
+          {/* Demographics Section */}
+          <div className="relative z-40 space-y-4">
+            <div className="border-b border-gray-200/50 pb-2 ">
+              <h3 className="font-semibold text-gray-900 ">
+                {t("filters.demographics") || "Demographics"}
+              </h3>
             </div>
 
-            {/* Professional Section */}
-            <div className="relative z-30 space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="font-semibold text-gray-900 ">{t('filters.professional') || 'Professional'}</h3>
-              </div>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                {/* Professions */}
-                <div className="space-y-2">
-                  <Label>{t('filters.professions') || 'Professions'}</Label>
-                  <MultiSelect
-                    options={professions}
-                    value={
-                      local.profession_ids
-                        ? local.profession_ids.split(',').map(Number)
-                        : []
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Age Range */}
+              <div className="space-y-2">
+                <Label>{t("filters.ageRange") || "Age Range"}</Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="number"
+                    placeholder={t("filters.min") || "Min"}
+                    value={local.min_age || ""}
+                    onChange={(e) =>
+                      update({
+                        min_age: e.target.value
+                          ? Number(e.target.value)
+                          : undefined,
+                      })
                     }
-                    onChange={(ids) => update({ profession_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectProfessions') || "Select professions..."}
-                    loading={loadingLookups}
+                    min="0"
+                    max="100"
                   />
-                </div>
-
-                {/* Ethnicities */}
-                <div className="space-y-2">
-                  <Label>{t('filters.ethnicities') || 'Ethnicities'}</Label>
-                  <MultiSelect
-                    options={ethnicities}
-                    value={
-                      local.ethnicity_ids
-                        ? local.ethnicity_ids.split(',').map(Number)
-                        : []
+                  <Input
+                    type="number"
+                    placeholder={t("filters.max") || "Max"}
+                    value={local.max_age || ""}
+                    onChange={(e) =>
+                      update({
+                        max_age: e.target.value
+                          ? Number(e.target.value)
+                          : undefined,
+                      })
                     }
-                    onChange={(ids) => update({ ethnicity_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectEthnicities') || "Select ethnicities..."}
-                    loading={loadingLookups}
+                    min="0"
+                    max="100"
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Location Section */}
-            <div className="relative z-20 space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="font-semibold text-gray-900 ">{t('filters.locationOrigin') || 'Location & Origin'}</h3>
-              </div>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                {/* Countries */}
-                <div className="space-y-2">
-                  <Label>{t('filters.countries') || 'Countries'}</Label>
-                  <MultiSelect
-                    options={countries}
-                    value={
-                      local.country_ids
-                        ? local.country_ids.split(',').map(Number)
-                        : []
+              {/* Height Range */}
+              <div className="space-y-2">
+                <Label>{t("filters.heightCm") || "Height (cm)"}</Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="number"
+                    placeholder={t("filters.min") || "Min"}
+                    value={local.min_height || ""}
+                    onChange={(e) =>
+                      update({
+                        min_height: e.target.value
+                          ? Number(e.target.value)
+                          : undefined,
+                      })
                     }
-                    onChange={(ids) => update({ country_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectCountries') || "Select countries..."}
-                    loading={loadingLookups}
+                    min="0"
+                    max="250"
                   />
-                </div>
-
-                {/* Nationalities */}
-                <div className="space-y-2">
-                  <Label>{t('filters.nationalities') || 'Nationalities'}</Label>
-                  <MultiSelect
-                    options={nationalities}
-                    value={
-                      local.nationality_ids
-                        ? local.nationality_ids.split(',').map(Number)
-                        : []
+                  <Input
+                    type="number"
+                    placeholder={t("filters.max") || "Max"}
+                    value={local.max_height || ""}
+                    onChange={(e) =>
+                      update({
+                        max_height: e.target.value
+                          ? Number(e.target.value)
+                          : undefined,
+                      })
                     }
-                    onChange={(ids) => update({ nationality_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectNationalities') || "Select nationalities..."}
-                    loading={loadingLookups}
+                    min="0"
+                    max="250"
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Appearance Section */}
-            <div className="relative z-10 space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="font-semibold text-gray-900 ">{t('filters.appearance') || 'Appearance'}</h3>
-              </div>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                {/* Hair Colors */}
-                <div className="space-y-2">
-                  <Label>{t('filters.hairColors') || 'Hair Colors'}</Label>
-                  <MultiSelect
-                    options={hairColors}
-                    value={
-                      local.hair_color_ids
-                        ? local.hair_color_ids.split(',').map(Number)
-                        : []
+              {/* Sort */}
+              <div className="space-y-2">
+                <Label>{t("filters.sortBy") || "Sort By"}</Label>
+                <div className="flex gap-2">
+                  <SingleSelect
+                    searchable={false}
+                    options={[
+                      {
+                        value: "",
+                        label: t("filters.sortDefault") || "Default",
+                      },
+                      { value: "age", label: t("filters.sortAge") || "Age" },
+                      {
+                        value: "height",
+                        label: t("filters.sortHeight") || "Height",
+                      },
+                      {
+                        value: "created_at",
+                        label: t("filters.sortNewest") || "Newest",
+                      },
+                      {
+                        value: "instagram_followers",
+                        label: t("filters.sortFollowers") || "Followers",
+                      },
+                    ]}
+                    value={local.sort_by || ""}
+                    onChange={(val) =>
+                      update({
+                        sort_by:
+                          val && val !== ""
+                            ? (val as
+                                | "age"
+                                | "height"
+                                | "created_at"
+                                | "instagram_followers"
+                                | "first_name")
+                            : undefined,
+                      })
                     }
-                    onChange={(ids) => update({ hair_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectHairColors') || "Select hair colors..."}
-                    loading={loadingLookups}
+                    className="flex-1"
                   />
-                </div>
-
-                {/* Eye Colors */}
-                <div className="space-y-2">
-                  <Label>{t('filters.eyeColors') || 'Eye Colors'}</Label>
-                  <MultiSelect
-                    options={eyeColors}
-                    value={
-                      local.eye_color_ids
-                        ? local.eye_color_ids.split(',').map(Number)
-                        : []
+                  <SingleSelect
+                    searchable={false}
+                    options={[
+                      { value: "asc", label: t("filters.sortAsc") || "↑ Asc" },
+                      {
+                        value: "desc",
+                        label: t("filters.sortDesc") || "↓ Desc",
+                      },
+                    ]}
+                    value={local.sort_order || "asc"}
+                    onChange={(val) =>
+                      update({
+                        sort_order: val ? (val as "asc" | "desc") : "asc",
+                      })
                     }
-                    onChange={(ids) => update({ eye_color_ids: ids.length > 0 ? ids.join(',') : undefined })}
-                    placeholder={t('filters.selectEyeColors') || "Select eye colors..."}
-                    loading={loadingLookups}
+                    disabled={!local.sort_by}
+                    className="w-32"
                   />
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Professional Section */}
+          <div className="relative z-30 space-y-4">
+            <div className="border-b border-gray-200/50 pb-2 ">
+              <h3 className="font-semibold text-gray-900 ">
+                {t("filters.professional") || "Professional"}
+              </h3>
+            </div>
+
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+              {/* Professions */}
+              <div className="space-y-2">
+                <Label>{t("filters.professions") || "Professions"}</Label>
+                <MultiSelect
+                  options={professions}
+                  value={
+                    local.profession_ids
+                      ? local.profession_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      profession_ids:
+                        ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectProfessions") || "Select professions..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+
+              {/* Ethnicities */}
+              <div className="space-y-2">
+                <Label>{t("filters.ethnicities") || "Ethnicities"}</Label>
+                <MultiSelect
+                  options={ethnicities}
+                  value={
+                    local.ethnicity_ids
+                      ? local.ethnicity_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      ethnicity_ids: ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectEthnicities") || "Select ethnicities..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Location Section */}
+          <div className="relative z-20 space-y-4">
+            <div className="border-b border-gray-200/50 pb-2 ">
+              <h3 className="font-semibold text-gray-900 ">
+                {t("filters.locationOrigin") || "Location & Origin"}
+              </h3>
+            </div>
+
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+              {/* Countries */}
+              <div className="space-y-2">
+                <Label>{t("filters.countries") || "Countries"}</Label>
+                <MultiSelect
+                  options={countries}
+                  value={
+                    local.country_ids
+                      ? local.country_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      country_ids: ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectCountries") || "Select countries..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+
+              {/* Nationalities */}
+              <div className="space-y-2">
+                <Label>{t("filters.nationalities") || "Nationalities"}</Label>
+                <MultiSelect
+                  options={nationalities}
+                  value={
+                    local.nationality_ids
+                      ? local.nationality_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      nationality_ids:
+                        ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectNationalities") ||
+                    "Select nationalities..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Appearance Section */}
+          <div className="relative z-10 space-y-4">
+            <div className="border-b border-gray-200/50 pb-2 ">
+              <h3 className="font-semibold text-gray-900 ">
+                {t("filters.appearance") || "Appearance"}
+              </h3>
+            </div>
+
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+              {/* Hair Colors */}
+              <div className="space-y-2">
+                <Label>{t("filters.hairColors") || "Hair Colors"}</Label>
+                <MultiSelect
+                  options={hairColors}
+                  value={
+                    local.hair_color_ids
+                      ? local.hair_color_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      hair_color_ids:
+                        ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectHairColors") || "Select hair colors..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+
+              {/* Eye Colors */}
+              <div className="space-y-2">
+                <Label>{t("filters.eyeColors") || "Eye Colors"}</Label>
+                <MultiSelect
+                  options={eyeColors}
+                  value={
+                    local.eye_color_ids
+                      ? local.eye_color_ids.split(",").map(Number)
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      eye_color_ids: ids.length > 0 ? ids.join(",") : undefined,
+                    })
+                  }
+                  placeholder={
+                    t("filters.selectEyeColors") || "Select eye colors..."
+                  }
+                  loading={loadingLookups}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
   );
 }

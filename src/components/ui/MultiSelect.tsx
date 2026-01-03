@@ -117,7 +117,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
         </div>
 
         {isOpen && !loading && (
- <div className="absolute z-9999 mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg ">
+ <div className="absolute mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg ">
  <div className="border-b border-gray-200 p-2 ">
               <input
                 type="text"

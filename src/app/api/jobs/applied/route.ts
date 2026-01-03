@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getApiHeaders } from "@/lib/api/headers";
+import { getAuthApiHeaders } from "@/lib/api/headers";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
 
@@ -68,10 +68,7 @@ export async function GET(request: NextRequest) {
     // Forward request to backend API with proper headers
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        ...getApiHeaders(request),
-        Authorization: authHeader,
-      },
+      headers: getAuthApiHeaders(request, authHeader),
     });
 
     const data = await response.json();

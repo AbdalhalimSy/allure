@@ -368,30 +368,6 @@ export default function PackagesPage() {
           </div>
         )}
       </section>
-
-      {/* FAQ Section */}
-      <section className="border-t border-gray-200 bg-gray-50">
-        <div className="container mx-auto max-w-4xl px-6 py-16 lg:px-12 lg:py-24">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
-            {t("packages.faq.title")}
-          </h2>
-          <div className="space-y-6">
-            {["q1", "q2", "q3", "q4"].map((key) => (
-              <details
-                key={key}
-                className="group rounded-xl border border-gray-200 bg-white p-6"
-              >
-                <summary className="cursor-pointer text-lg font-semibold text-gray-900">
-                  {t(`packages.faq.${key}.question`)}
-                </summary>
-                <p className="mt-4 text-gray-600">
-                  {t(`packages.faq.${key}.answer`)}
-                </p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

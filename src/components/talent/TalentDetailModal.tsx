@@ -47,39 +47,39 @@ export default function TalentDetailModal({ talent, isOpen, onClose }: TalentDet
   return (
     <>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4"
         onClick={onClose}
       >
         <div
-          className="relative w-full max-w-5xl max-h-[95vh] rounded-3xl bg-white shadow-2xl overflow-hidden flex flex-col"
+          className="relative w-full max-w-5xl max-h-[95vh] rounded-2xl sm:rounded-3xl bg-white shadow-2xl overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="absolute top-0 end-0 z-20 p-4">
+          <div className="absolute top-0 end-0 z-20 p-2 sm:p-4">
             <button
               onClick={onClose}
-              className="rounded-full bg-white/90 p-3 backdrop-blur-sm transition-all hover:bg-white shadow-lg hover:shadow-xl"
+              className="rounded-full bg-white/90 p-2 sm:p-3 backdrop-blur-sm transition-all hover:bg-white shadow-lg hover:shadow-xl"
             >
-              <X className="h-5 w-5 text-gray-900" />
+              <X className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" />
             </button>
           </div>
 
           <div className="overflow-y-auto flex-1">
-            <div className={`relative flex gap-6 p-8 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className={`relative flex flex-col md:flex-row gap-4 sm:gap-6 p-4 sm:p-6 md:p-8 ${isRTL ? "md:flex-row-reverse" : ""}`}>
               <FeatureImage
                 featurePhoto={featurePhoto}
                 alt={`${profile.first_name} ${profile.last_name}`}
                 fallbackLabel={t("talents.noPhotos") || "No photos"}
               />
 
-              <div className="flex-1 space-y-6">
+              <div className="flex-1 space-y-4 sm:space-y-6">
                 <HeaderStats profile={profile} professions={professions} isRTL={isRTL} t={t} />
                 <ContactAndAttributes profile={profile} t={t} />
               </div>
             </div>
 
-            <div className="h-px bg-linear-to-r from-transparent via-gray-200 to-transparent my-6" />
+            <div className="h-px bg-linear-to-r from-transparent via-gray-200 to-transparent my-4 sm:my-6" />
 
-            <div className="px-8 pb-8 space-y-8">
+            <div className="px-4 pb-4 sm:px-6 sm:pb-6 md:px-8 md:pb-8 space-y-6 sm:space-y-8">
               <InfoLists profile={profile} professions={professions} languages={languagesList} t={t} />
               <ExperienceAccount profile={profile} t={t} />
 

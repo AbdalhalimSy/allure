@@ -67,16 +67,16 @@ export default function JobDetailPage() {
 
   if (error || !job) {
     return (
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
-        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center">
-          <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
-          <h3 className="mb-2 text-lg font-semibold text-red-900">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-6 sm:p-12 text-center">
+          <AlertCircle className="mb-4 h-10 w-10 sm:h-12 sm:w-12 text-red-500" />
+          <h3 className="mb-2 text-base sm:text-lg font-semibold text-red-900">
             {t("jobs.jobDetail.failedToLoad")}
           </h3>
           <p className="mb-4 text-sm text-red-700">{error}</p>
           <button
             onClick={() => router.push("/jobs")}
-            className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+            className="rounded-lg bg-red-600 px-5 py-2 sm:px-6 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             {t("jobs.jobDetail.backToJobs")}
           </button>
@@ -90,16 +90,16 @@ export default function JobDetailPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 via-white to-gray-50">
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
         <JobDetailBackButton onClick={() => router.push("/jobs")} />
         <JobDetailHeader job={job} />
         <JobDetailQuickInfo job={job} roleCount={roleCount} />
 
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+        <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                   {t("jobs.jobDetail.availableRoles")} ({roleCount})
                 </h2>
               </div>
@@ -117,7 +117,7 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          <div className="sticky top-24 self-start">
+          <div className="lg:sticky lg:top-24 lg:self-start">
             <JobDetailSidebar jobCountries={job.job_countries} />
           </div>
         </div>

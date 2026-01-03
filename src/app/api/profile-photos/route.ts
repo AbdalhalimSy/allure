@@ -60,12 +60,13 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     // Forward the request to the backend
+    const headers = getAuthApiHeaders(request, token);
+    // Remove Content-Type so fetch sets multipart boundary automatically
+    delete headers["Content-Type"];
+
     const response = await fetch(`${BACKEND_URL}/profile-photos`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
+      headers,
       body: formData,
     });
 
