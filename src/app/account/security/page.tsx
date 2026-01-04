@@ -19,9 +19,9 @@ export default function SecurityPage() {
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           <AccountSection title={t('account.security.password.title')} description={t('account.security.password.description')}>
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <AccountField label={t('account.security.password.fields.current')} required>
                 <PasswordInput placeholder={t('account.security.password.placeholders.current')} />
               </AccountField>

@@ -176,10 +176,10 @@ export default function BillingPage() {
   return (
     <ProtectedRoute requireAuth={true}>
       <AccountLayout navItems={navItems}>
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-              <p className="text-sm text-red-700">{error}</p>
+            <div className="rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4">
+              <p className="text-xs sm:text-sm text-red-700">{error}</p>
             </div>
           )}
 
@@ -198,11 +198,11 @@ export default function BillingPage() {
 
           {/* Tab Navigation */}
  <div className="border-b border-gray-200 ">
-            <nav className="-mb-px flex gap-8">
+            <nav className="-mb-px flex gap-4 sm:gap-8 overflow-x-auto scrollbar-hide">
               {!hasSubscription && (
                 <button
                   onClick={() => setActiveTab("subscribe")}
-                  className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                  className={`whitespace-nowrap border-b-2 px-1 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors ${
                     activeTab === "subscribe"
                       ? "border-[#c49a47] text-[#c49a47]"
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
@@ -213,7 +213,7 @@ export default function BillingPage() {
               )}
               <button
                 onClick={() => setActiveTab("history")}
-                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap border-b-2 px-1 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors ${
                   activeTab === "history"
                     ? "border-[#c49a47] text-[#c49a47]"
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
@@ -224,7 +224,7 @@ export default function BillingPage() {
               </button>
               <button
                 onClick={() => setActiveTab("payments")}
-                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap border-b-2 px-1 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors ${
                   activeTab === "payments"
                     ? "border-[#c49a47] text-[#c49a47]"
  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 "
@@ -242,7 +242,7 @@ export default function BillingPage() {
                 title={t("accountSettings.account.billing.packages.title")}
                 description={t("accountSettings.account.billing.packages.description")}
               >
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {packages?.map((pkg) => (
                     <PackageCard
                       key={pkg.id}
@@ -259,8 +259,8 @@ export default function BillingPage() {
                 </div>
 
                 {(packages?.length ?? 0) === 0 && (
- <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-8 text-center ">
- <p className="text-gray-600 ">
+                  <div className="rounded-lg sm:rounded-xl border-2 border-gray-200 bg-gray-50 p-4 sm:p-8 text-center ">
+                    <p className="text-xs sm:text-sm text-gray-600 ">
                       {t("accountSettings.account.billing.packages.noPackages")}
                     </p>
                   </div>
@@ -269,7 +269,7 @@ export default function BillingPage() {
 
               {selectedPackageId && profileId && (
                 <AccountSection title={t("accountSettings.account.billing.order.title")}>
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     <CouponInput
                       profileId={profileId}
                       packageId={selectedPackageId}
@@ -278,45 +278,45 @@ export default function BillingPage() {
                     />
 
                     {/* Order Summary */}
- <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
- <h3 className="font-semibold text-gray-900 ">
+                    <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-4 ">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 ">
                         {t("accountSettings.account.billing.order.summary")}
                       </h3>
-                      <div className="mt-4 space-y-2">
-                        <div className="flex justify-between text-sm">
- <span className="text-gray-600 ">
+                      <div className="mt-3 sm:mt-4 space-y-2">
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className="text-gray-600 ">
                             {t("accountSettings.account.billing.order.package")}:
                           </span>
- <span className="font-medium text-gray-900 ">
+                          <span className="font-medium text-gray-900 ">
                             {selectedPackage?.title || selectedPackage?.name}
                           </span>
                         </div>
-                        <div className="flex justify-between text-sm">
- <span className="text-gray-600 ">
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className="text-gray-600 ">
                             {t("accountSettings.account.billing.order.originalPrice")}:
                           </span>
                           <span
                             className={
                               couponDiscount > 0
- ? "text-gray-900 line-through "
- : "text-gray-900 "
+                                ? "text-gray-900 line-through "
+                                : "text-gray-900 "
                             }
                           >
                             {selectedPackage?.price.toFixed(2)} AED
                           </span>
                         </div>
                         {couponDiscount > 0 && (
-                          <div className="flex justify-between text-sm text-green-600">
+                          <div className="flex justify-between text-xs sm:text-sm text-green-600">
                             <span>{t("accountSettings.account.billing.order.discount")}:</span>
                             <span>-{couponDiscount.toFixed(2)} AED</span>
                           </div>
                         )}
- <div className="border-t border-gray-200 pt-2 ">
+                        <div className="border-t border-gray-200 pt-2 ">
                           <div className="flex justify-between">
- <span className="text-lg font-bold text-gray-900 ">
+                            <span className="text-base sm:text-lg font-bold text-gray-900 ">
                               {t("accountSettings.account.billing.order.total")}:
                             </span>
-                            <span className="text-2xl font-bold text-[#c49a47]">
+                            <span className="text-xl sm:text-2xl font-bold text-[#c49a47]">
                               {finalPrice.toFixed(2)} AED
                             </span>
                           </div>

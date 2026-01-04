@@ -56,11 +56,11 @@ export default function AccountStepper({
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-6 sm:mb-8">
       <div className="relative">
         {/* Progress Line */}
         <div
- className="absolute top-5 h-0.5 bg-gray-200 "
+          className="absolute top-4 sm:top-5 h-0.5 bg-gray-200 "
           style={{
             width: `calc(100% - ${100 / steps.length}%)`,
             insetInlineStart: `${50 / steps.length}%`,
@@ -75,7 +75,7 @@ export default function AccountStepper({
         </div>
 
         {/* Steps */}
-        <div className="relative flex  justify-between">
+        <div className="relative flex justify-between gap-1 sm:gap-0">
           {steps.map((step, index) => {
             const accessible = isStepAccessible(index);
             const completed = isStepCompleted(index);
@@ -84,39 +84,39 @@ export default function AccountStepper({
             return (
               <div
                 key={step.id}
-                className={`flex flex-1 flex-col items-center ${
+                className={`flex flex-1 flex-col items-center min-w-0 ${
                   accessible ? "cursor-pointer" : "cursor-not-allowed"
                 }`}
                 onClick={() => accessible && onStepClick(index)}
               >
                 {/* Step Circle */}
                 <div
-                  className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                  className={`relative z-10 flex h-8 sm:h-10 w-8 sm:w-10 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 ${
                     completed
                       ? "border-[#c49a47] bg-[#c49a47] text-white"
                       : active
- ? "border-[#c49a47] bg-white text-[#c49a47] "
-                      : accessible
- ? "border-gray-300 bg-white text-gray-400 "
- : "border-gray-200 bg-gray-100 text-gray-300 "
+                        ? "border-[#c49a47] bg-white text-[#c49a47] "
+                        : accessible
+                          ? "border-gray-300 bg-white text-gray-400 "
+                          : "border-gray-200 bg-gray-100 text-gray-300 "
                   }`}
                 >
                   {completed ? (
-                    <TbCheck size={20} className="font-bold" />
+                    <TbCheck size={16} className="sm:size-5 font-bold" />
                   ) : (
-                    <span className="text-lg">{step.icon}</span>
+                    <span className="text-base sm:text-lg">{step.icon}</span>
                   )}
                 </div>
 
                 {/* Step Label */}
-                <div className="mt-2 text-center">
+                <div className="mt-2 sm:mt-3 text-center min-w-0">
                   <div
-                    className={`text-sm font-medium transition-colors ${
+                    className={`text-xs sm:text-sm font-medium transition-colors truncate px-1 ${
                       active || completed
                         ? "text-[#c49a47]"
                         : accessible
- ? "text-gray-700 "
- : "text-gray-400 "
+                          ? "text-gray-700 "
+                          : "text-gray-400 "
                     }`}
                   >
                     {t(step.labelKey)}

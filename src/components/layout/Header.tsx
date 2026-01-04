@@ -78,7 +78,7 @@ export default function Header() {
           },
         ]
       : []),
-    ...(isAuthenticated ? [{ href: "/packages", label: "Packages" }] : []),
+    ...(isAuthenticated ? [{ href: "/packages", label: t("nav.packages") || "Packages" }] : []),
     { href: "/faq", label: t("nav.faq") || "FAQ" },
     { href: "/contact", label: t("nav.contact") },
   ];

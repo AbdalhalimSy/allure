@@ -20,46 +20,67 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
   const isProfileComplete = profile?.progress_step === "complete";
 
   if (isProfileComplete) {
-    // Show individual profile steps as tabs when profile is complete
+    // Show individual profile steps as tabs when profile is complete, organized by sections
     return [
+      // Profile Section
       {
         id: "basic",
         label: "Basic Information",
         labelKey: "accountSettings.account.nav.basic",
         icon: <TbUser />,
+        section: "profile",
       },
       {
         id: "appearance",
         label: "Appearance",
         labelKey: "accountSettings.account.nav.appearance",
         icon: <TbSparkles />,
+        section: "profile",
       },
+      // Professional Section
       {
         id: "profession",
         label: "Professions",
         labelKey: "accountSettings.account.nav.profession",
         icon: <TbBriefcase />,
+        section: "professional",
       },
       {
         id: "experience",
         label: "Experience",
         labelKey: "accountSettings.account.nav.experience",
         icon: <TbStar />,
+        section: "professional",
       },
       {
         id: "portfolio",
         label: "Portfolio",
         labelKey: "accountSettings.account.nav.portfolio",
         icon: <TbPhoto />,
+        section: "professional",
       },
       {
         id: "photos",
         label: "Profile Photos",
         labelKey: "accountSettings.account.nav.photos",
         icon: <TbCamera />,
+        section: "professional",
       },
-      { id: "security", label: "Security & Privacy", labelKey: "accountSettings.account.nav.security", icon: <TbShieldCheck /> },
-      { id: "billing", label: "Billing & Plans", labelKey: "accountSettings.account.nav.billing", icon: <TbCreditCard /> },
+      // Account Section
+      {
+        id: "security",
+        label: "Security & Privacy",
+        labelKey: "accountSettings.account.nav.security",
+        icon: <TbShieldCheck />,
+        section: "account",
+      },
+      {
+        id: "billing",
+        label: "Billing & Plans",
+        labelKey: "accountSettings.account.nav.billing",
+        icon: <TbCreditCard />,
+        section: "account",
+      },
     ];
   }
 
@@ -70,9 +91,22 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       label: "Profile Setup",
       labelKey: "accountSettings.account.nav.profile",
       icon: <TbUser />,
+      section: "default",
     },
-    { id: "security", label: "Security & Privacy", labelKey: "accountSettings.account.nav.security", icon: <TbShieldCheck /> },
-    { id: "billing", label: "Billing & Plans", labelKey: "accountSettings.account.nav.billing", icon: <TbCreditCard /> },
+    {
+      id: "security",
+      label: "Security & Privacy",
+      labelKey: "accountSettings.account.nav.security",
+      icon: <TbShieldCheck />,
+      section: "account",
+    },
+    {
+      id: "billing",
+      label: "Billing & Plans",
+      labelKey: "accountSettings.account.nav.billing",
+      icon: <TbCreditCard />,
+      section: "account",
+    },
   ];
 };
 

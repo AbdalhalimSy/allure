@@ -4,49 +4,49 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 export default function AccountFormSkeleton() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Section Title and Description */}
-      <div className="space-y-2 mb-6">
-        <Skeleton className="h-8 w-48 rounded" />
-        <Skeleton className="h-4 w-96 rounded" />
+      <div className="space-y-2 mb-4 sm:mb-6">
+        <Skeleton className="h-7 sm:h-8 w-40 sm:w-48 rounded" />
+        <Skeleton className="h-3 sm:h-4 w-64 sm:w-96 rounded" />
       </div>
 
       {/* Grid of Fields (2 columns) */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
         {/* Field 1 */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-10 w-full rounded-lg" />
+          <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 rounded" />
+          <Skeleton className="h-9 sm:h-10 w-full rounded-lg" />
         </div>
 
         {/* Field 2 */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-10 w-full rounded-lg" />
+          <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 rounded" />
+          <Skeleton className="h-9 sm:h-10 w-full rounded-lg" />
         </div>
 
         {/* Field 3 */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-10 w-full rounded-lg" />
+          <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 rounded" />
+          <Skeleton className="h-9 sm:h-10 w-full rounded-lg" />
         </div>
 
         {/* Field 4 */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-10 w-full rounded-lg" />
+          <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 rounded" />
+          <Skeleton className="h-9 sm:h-10 w-full rounded-lg" />
         </div>
 
         {/* Field 5 - Checkbox */}
         <div className="flex items-center gap-2">
           <Skeleton className="h-4 w-4 rounded" />
-          <Skeleton className="h-4 w-48 rounded" />
+          <Skeleton className="h-3 sm:h-4 w-40 sm:w-48 rounded" />
         </div>
 
         {/* Field 6 */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-10 w-full rounded-lg" />
+          <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 rounded" />
+          <Skeleton className="h-9 sm:h-10 w-full rounded-lg" />
         </div>
       </div>
 

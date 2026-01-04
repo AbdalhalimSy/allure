@@ -1,5 +1,62 @@
 {
+  "account": {
+    "status": {
+      "approvedTitle": "موافق عليه",
+      "pendingTitle": "قيد الانتظار",
+      "rejectedTitle": "مرفوض"
+    },
+    "appearance": {
+      "title": "المظهر",
+      "description": "قدم مظهرك الجسدي وقياساتك",
+      "loading": "جاري تحميل المظهر...",
+      "fields": {
+        "hairColor": "لون الشعر",
+        "hairType": "نوع الشعر",
+        "hairLength": "طول الشعر",
+        "eyeColor": "لون العين",
+        "height": "الطول",
+        "shoeSize": "مقاس الحذاء",
+        "tshirtSize": "مقاس القميص",
+        "pantsSize": "مقاس البنطال",
+        "jacketSize": "مقاس الجاكيت",
+        "chest": "الصدر",
+        "bust": "الصدر",
+        "waist": "الخصر"
+      },
+      "placeholders": {
+        "selectHairColor": "اختر لون الشعر",
+        "selectHairType": "اختر نوع الشعر",
+        "selectHairLength": "اختر طول الشعر",
+        "selectEyeColor": "اختر لون العين",
+        "height": "مثال: 175.5",
+        "shoe": "مثال: 43.5",
+        "selectSize": "اختر المقاس",
+        "pants": "مثال: 32/32 أو M",
+        "jacket": "مثال: 50 EU أو L",
+        "chest": "مثال: 95.5",
+        "bust": "مثال: 88.5",
+        "waist": "مثال: 72.5"
+      },
+      "errors": {
+        "loadFailed": "فشل تحميل خيارات المظهر",
+        "requiredField": "يرجى ملء {{field}}",
+        "profileMissing": "معرف الملف الشخصي مفقود",
+        "saveFailed": "فشل تحديث المظهر"
+      },
+      "success": "تم تحديث المظهر"
+    }
+  },
   "accountSettings": {
+    "sidebar": {
+      "profile": "حالة الملف الشخصي",
+      "progress": "تقدم الملف الشخصي",
+      "profileComplete": "اكتمال الملف الشخصي",
+      "section": {
+        "profile": "الملف الشخصي",
+        "professional": "المهني",
+        "account": "الحساب"
+      }
+    },
     "account": {
       "title": "إعدادات الحساب",
       "subtitle": "إدارة إعدادات وتفضيلات حسابك",

@@ -1,11 +1,10 @@
 "use client";
 
 import { ReactNode } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { TbCircleCheck, TbClock, TbAlertCircle } from "react-icons/tb";
 import { useI18n } from "@/contexts/I18nContext";
+import AccountSidebar from "./AccountSidebar";
 
 type NavItem = {
   id: string;
@@ -13,6 +12,7 @@ type NavItem = {
   labelKey?: string;
   icon: ReactNode;
   completion?: number; // 0-100 for percentage, undefined means no indicator
+  section?: string;
 };
 
 type AccountLayoutProps = {
@@ -24,18 +24,14 @@ export default function AccountLayout({
   children,
   navItems,
 }: AccountLayoutProps) {
-  const pathname = usePathname();
   const { user } = useAuth();
   const { t } = useI18n();
 
-  const isActive = (id: string) => {
-    return (
-      pathname === `/account/${id}` ||
-      (pathname === "/account" && id === "basic")
-    );
-  };
-
-  const approvalStatus = user?.profile?.approval_status;
+  const approvalStatus = user?.profile?.approval_status as
+    | "approved"
+    | "pending"
+    | "rejected"
+    | undefined;
   const statusTitleKey = approvalStatus
     ? `account.status.${approvalStatus}Title`
     : "";
@@ -43,21 +39,23 @@ export default function AccountLayout({
     statusTitleKey && t(statusTitleKey) !== statusTitleKey
       ? t(statusTitleKey)
       : approvalStatus;
+
   return (
-    <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
-      <div className={`mb-8 text-start`}>
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold text-gray-900 ">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      {/* Header Section */}
+      <div className="mb-6 sm:mb-8 text-start">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
             {t("accountSettings.account.title")}
           </h1>
           {approvalStatus && translatedStatusTitle && (
             <div
               className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${
                 approvalStatus === "approved"
-                  ? "border-green-300 bg-green-50 text-green-700 "
+                  ? "border-green-300 bg-green-50 text-green-700"
                   : approvalStatus === "pending"
-                  ? "border-yellow-300 bg-yellow-50 text-yellow-700 "
-                  : "border-red-300 bg-red-50 text-red-700 "
+                  ? "border-yellow-300 bg-yellow-50 text-yellow-700"
+                  : "border-red-300 bg-red-50 text-red-700"
               }`}
               aria-label={`Approval status: ${approvalStatus}`}
             >
@@ -68,73 +66,23 @@ export default function AccountLayout({
             </div>
           )}
         </div>
-        <p className="mt-2 text-gray-600 ">
+        <p className="mt-2 text-sm sm:text-base text-gray-600">
           {t("accountSettings.account.subtitle")}
         </p>
       </div>
 
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {/* Side Navigation */}
-        <aside className={`w-full lg:w-64 shrink-0`}>
-          <nav className="space-y-1 rounded-xl border border-gray-200 bg-white p-2 ">
-            {navItems.map((item) => {
-              const active = isActive(item.id);
-              const label =
-                typeof item.label === "string" && item.labelKey
-                  ? t(item.labelKey)
-                  : item.label;
-              return (
-                <Link
-                  key={item.id}
-                  href={`/account/${item.id}`}
-                  className={`group flex items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
-                    active
-                      ? "bg-[#c49a47] text-white"
-                      : "text-gray-700 hover:bg-gray-50 "
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center text-lg">
-                      {item.icon}
-                    </span>
-                    <span>{label}</span>
-                  </div>
-                  {item.completion !== undefined && (
-                    <div className="flex items-center">
-                      {item.completion === 100 ? (
-                        <div
-                          className={`flex h-6 w-6 items-center justify-center rounded-full ${
-                            active ? "bg-white/20" : "bg-[#c49a47]/10 "
-                          }`}
-                        >
-                          <TbCircleCheck
-                            size={16}
-                            className={active ? "text-white" : "text-[#c49a47]"}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className={`flex h-6 min-w-10 items-center justify-center rounded-full px-2 text-xs font-semibold ${
-                            active
-                              ? "bg-white/20 text-white"
-                              : "bg-[#c49a47]/10 text-[#c49a47] "
-                          }`}
-                        >
-                          {item.completion}%
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-        </aside>
+      {/* Main Content Grid */}
+      <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8 lg:flex-row">
+        {/* Sidebar Navigation */}
+        <AccountSidebar
+          navItems={navItems}
+          currentApprovalStatus={approvalStatus}
+        />
 
         {/* Main Content */}
-        <div className="flex-1 rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+        <main className="flex-1 rounded-lg sm:rounded-xl border border-gray-200 bg-white p-4 sm:p-6 lg:p-8 shadow-sm">
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );
