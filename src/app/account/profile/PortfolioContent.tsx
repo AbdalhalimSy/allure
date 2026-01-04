@@ -77,7 +77,10 @@ function SortableItem({
   const isFeatured = !!item.featured_image;
   const status =
     item.approval_status === "approved"
-      ? { label: t("account.portfolio.approved") || "Approved", color: "emerald" }
+      ? {
+          label: t("account.portfolio.approved") || "Approved",
+          color: "emerald",
+        }
       : { label: t("account.portfolio.pending") || "Pending", color: "amber" };
 
   return (
@@ -143,24 +146,26 @@ function SortableItem({
                 : "bg-white/95 text-gray-400 hover:bg-[#c49a47] hover:text-white "
             }`}
             aria-label={
-              t("account.portfolio.setFeaturedTooltip") || "Set as profile picture"
+              t("account.portfolio.setFeaturedTooltip") ||
+              "Set as profile picture"
             }
           >
             {isFeatured ? <TbStarFilled size={20} /> : <TbStar size={20} />}
             <span className="pointer-events-none absolute top-full mt-2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-xl transition-opacity group-hover/star:opacity-100 start-1/2 ltr:-translate-x-10/12 rtl:translate-x-10/12 ">
-              {t("account.portfolio.setFeaturedTooltip") || "Set as profile picture"}
+              {t("account.portfolio.setFeaturedTooltip") ||
+                "Set as profile picture"}
             </span>
           </button>
         </div>
 
-        {/* Bottom Action Bar - Visible on Hover */}
-        <div className="absolute bottom-0 start-0 end-0 translate-y-full p-3 transition-transform duration-500 group-hover:translate-y-0">
+        {/* Bottom Action Bar - Always visible on mobile, hover on desktop */}
+        <div className="absolute bottom-0 start-0 end-0 translate-y-full p-2 transition-transform duration-500 sm:group-hover:translate-y-0 sm:translate-y-full">
           <div className="flex items-center justify-between gap-2 rounded-xl bg-white/95 p-2 shadow-2xl backdrop-blur-md ">
             {/* Remove Button */}
             <button
               type="button"
               onClick={() => onRemove(item.id, item.tempKey)}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-500 hover:text-white "
+              className="inline-flex flex-1 items-center justify-center gap-1 sm:gap-2 rounded-lg bg-red-500/10 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-red-600 transition-colors hover:bg-red-500 hover:text-white "
             >
               <TbTrash size={16} />
               <span className="hidden sm:inline">
@@ -172,10 +177,10 @@ function SortableItem({
             <div
               {...attributes}
               {...listeners}
-              className="group/drag flex cursor-grab items-center justify-center rounded-lg bg-[#c49a47]/10 px-3 py-2 text-[#c49a47] transition-colors hover:bg-[#c49a47]/20 active:cursor-grabbing"
+              className="group/drag flex cursor-grab items-center justify-center rounded-lg bg-[#c49a47]/10 px-2 sm:px-3 py-1.5 sm:py-2 text-[#c49a47] transition-colors hover:bg-[#c49a47]/20 active:cursor-grabbing"
               title={t("account.portfolio.dragTooltip") || "Drag to reorder"}
             >
-              <TbGripVertical size={20} />
+              <TbGripVertical size={18} className="sm:size-5" />
             </div>
           </div>
         </div>
@@ -229,7 +234,9 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
       );
       setItems(normalized);
     } catch {
-      toast.error(t("account.portfolio.loadFailed") || "Failed to load portfolio");
+      toast.error(
+        t("account.portfolio.loadFailed") || "Failed to load portfolio"
+      );
     } finally {
       setLoading(false);
     }
@@ -301,7 +308,9 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
     if (validation.length) {
       setErrors(validation);
       setSaving(false);
-      toast.error(t("account.portfolio.validationErrors") || "Validation errors");
+      toast.error(
+        t("account.portfolio.validationErrors") || "Validation errors"
+      );
       return;
     }
     const normalized = items.map((i, idx) => ({ ...i, priority: idx }));
@@ -324,9 +333,15 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         ...prev,
         ...(backendErrors.length
           ? backendErrors
-          : [result.message || t("account.portfolio.syncFailed") || "Sync failed"]),
+          : [
+              result.message ||
+                t("account.portfolio.syncFailed") ||
+                "Sync failed",
+            ]),
       ]);
-      toast.error(result.message || t("account.portfolio.syncFailed") || "Sync failed");
+      toast.error(
+        result.message || t("account.portfolio.syncFailed") || "Sync failed"
+      );
     }
   };
 
@@ -350,7 +365,8 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
         <div className="rounded-3xl border border-[#c49a47]/20 bg-linear-to-br from-slate-900 via-gray-900 to-black p-6 text-white shadow-xl">
           <div className="flex flex-col gap-2">
             <p className="text-lg font-semibold">
-              {t("account.portfolio.heroTitle") || "Curate a standout portfolio"}
+              {t("account.portfolio.heroTitle") ||
+                "Curate a standout portfolio"}
             </p>
             <p className="text-sm text-white/70">
               {t("account.portfolio.heroSubtitle") ||
@@ -465,7 +481,8 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
             {t("common.back") || "Back"}
           </Button>
           <Button variant="secondary" onClick={loadInitial} disabled={saving}>
-            <TbRefresh className="me-1" /> {t("account.portfolio.reset") || "Reset"}
+            <TbRefresh className="me-1" />{" "}
+            {t("account.portfolio.reset") || "Reset"}
           </Button>
         </div>
         <Button

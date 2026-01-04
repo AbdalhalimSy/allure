@@ -218,9 +218,7 @@ export default function PackagesPage() {
 
         {packages.length === 0 ? (
           <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
-            <p className="text-gray-600">
-              {t("packages.plans.empty")}
-            </p>
+            <p className="text-gray-600">{t("packages.plans.empty")}</p>
           </div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -287,7 +285,9 @@ export default function PackagesPage() {
               {/* Price Summary */}
               <div className="mb-6 space-y-2 border-t border-gray-200 pt-4">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">{t("packages.plans.originalPrice")}</span>
+                  <span className="text-gray-600">
+                    {t("packages.plans.originalPrice")}
+                  </span>
                   <span className="font-medium text-gray-900">
                     AED {selectedPackage.price.toFixed(2)}
                   </span>
@@ -340,9 +340,7 @@ export default function PackagesPage() {
             <h3 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
               {t("packages.cta.title")}
             </h3>
-            <p className="mb-6 text-gray-700">
-              {t("packages.cta.subtitle")}
-            </p>
+            <p className="mb-6 text-gray-700">{t("packages.cta.subtitle")}</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/register">
                 <Button className="min-w-[180px] bg-linear-to-r from-[#c49a47] to-[#d4a855] text-white shadow-lg shadow-[#c49a47]/30 transition-all hover:shadow-xl hover:shadow-[#c49a47]/40">

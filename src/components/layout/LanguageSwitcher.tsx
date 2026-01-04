@@ -32,12 +32,12 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full border border-[#c49a47]/40 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 "
+        className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-[#c49a47]/40 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 whitespace-nowrap"
       >
-        <span>{currentLang?.flag}</span>
-        <span>{currentLang?.label}</span>
+        <span className="text-base sm:text-lg">{currentLang?.flag}</span>
+        <span className="hidden sm:inline">{currentLang?.label}</span>
         <svg
-          className={`w-4 h-4 transition-transform ${
+          className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform ${
             isOpen ? "rotate-180" : ""
           }`}
           fill="none"

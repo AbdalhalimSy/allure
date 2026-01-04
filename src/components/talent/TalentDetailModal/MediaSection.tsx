@@ -77,7 +77,7 @@ export function MediaSection({ photos, videos, audios, mediaTab, onTabChange, on
                   <div className="h-8 w-8 sm:h-10 sm:w-10 shrink-0 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center">
                     <Music2 className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
-                  <div className="text-left min-w-0">
+                  <div className="text-start min-w-0">
                     <p className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{t("talents.audio") || "Audio"}</p>
                     <p className="text-[10px] sm:text-xs text-gray-500">{t("talents.tapToPlay") || "Tap to play"}</p>
                   </div>

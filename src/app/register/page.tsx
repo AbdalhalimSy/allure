@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import Label from "@/components/ui/Label";
 import AuthShell from "@/components/layout/AuthShell";
 import VerifyEmailForm from "@/components/auth/VerifyEmailForm";
+import Switch from "@/components/ui/Switch";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -102,13 +103,19 @@ export default function RegisterPage() {
         last_name = formData.lastName;
       }
 
-      const payload = {
+      const payload: any = {
         first_name,
         last_name,
         email: formData.email,
         password: formData.password,
         password_confirmation: formData.confirmPassword,
       };
+      
+      // Add twin names if twins registration
+      if (isTwins) {
+        payload.first_twin_name = formData.firstTwinName;
+        payload.second_twin_name = formData.secondTwinName;
+      }
       const res = await apiClient.post("/auth/register", payload);
       const msg = res?.data?.message || t("auth.verifyEmailSent") || "We sent a confirmation email.";
       toast.success(msg);
@@ -163,15 +170,12 @@ export default function RegisterPage() {
       {step === 1 ? (
         <form onSubmit={submitStep1} className="space-y-6">
           {/* Twins toggle */}
- <div className="flex items-center gap-4 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-700 ">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="twinsMode" checked={!isTwins} onChange={() => setIsTwins(false)} />
-              <span>{t("auth.singleRegistration") || "Single registration"}</span>
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="twinsMode" checked={isTwins} onChange={() => setIsTwins(true)} />
-              <span>{t("auth.twinsRegistration") || "Twins registration"}</span>
-            </label>
+          <div className="flex items-center justify-between rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-700">
+            <span className="font-medium">{t("auth.twinsRegistration") || "Twins registration"}</span>
+            <Switch
+              checked={isTwins}
+              onChange={setIsTwins}
+            />
           </div>
 
           {/* Names */}

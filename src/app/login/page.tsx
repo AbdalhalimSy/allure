@@ -118,7 +118,7 @@ export default function LoginPage() {
   return (
     <AuthShell
       title={t("auth.login")}
-      description={t("hero.subtitle")}
+      description={t("auth.loginHeroSubtitle")}
       icon="↻"
       footer={<span>{t("auth.dontHaveAccount")} <Link href="/register" className="font-semibold text-[#c49a47]">{t("auth.register")}</Link></span>}
     >

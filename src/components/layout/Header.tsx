@@ -85,66 +85,77 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-[#c49a47]/30 bg-white/90 shadow-sm backdrop-blur ">
+      <header className="sticky top-0 z-50 border-b border-[#c49a47]/30 bg-white/90 shadow-sm backdrop-blur">
         <div
-          className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
+          className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 md:py-4 lg:px-8"
           suppressHydrationWarning
         >
-          <div className="flex items-center gap-4" suppressHydrationWarning>
+          {/* Left Section: Menu Button & Logo */}
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0" suppressHydrationWarning>
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg text-gray-900 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 "
+              className="md:hidden flex h-8 sm:h-9 w-8 sm:w-9 items-center justify-center rounded-lg text-gray-900 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 shrink-0"
               aria-label="Open menu"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 sm:h-6 w-5 sm:w-6" />
             </button>
 
-            <Link href="/" className="group flex items-center gap-3">
+            <Link href="/" className="group flex items-center gap-2 sm:gap-3 shrink-0">
               <Image
                 src="/logo/logo-black.svg"
                 alt="Allure Logo"
                 width={40}
                 height={40}
-                className="h-10 w-auto"
+                className="h-8 sm:h-9 md:h-10 w-auto"
                 style={{ width: "auto" }}
               />
             </Link>
           </div>
 
+          {/* Center Section: Navigation */}
           <NavItems items={navItems} />
 
-          <div className="flex items-center gap-4" suppressHydrationWarning>
-            <NotificationDropdown />
+          {/* Right Section: Actions */}
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 min-w-0" suppressHydrationWarning>
+            {/* Notification */}
+            <div className="hidden sm:block">
+              <NotificationDropdown />
+            </div>
+            
+            {/* Instagram */}
             <a
               href="https://www.instagram.com/allureagency"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 ease-in-out hover:scale-110 hover:border-transparent hover:bg-linear-to-br hover:from-purple-500 hover:via-pink-500 hover:to-red-500 hover:text-white active:scale-95"
+              className="flex h-8 sm:h-9 w-8 sm:w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 ease-in-out hover:scale-110 hover:border-transparent hover:bg-linear-to-br hover:from-purple-500 hover:via-pink-500 hover:to-red-500 hover:text-white active:scale-95 shrink-0"
             >
-              <FaInstagram className="h-5 w-5" />
+              <FaInstagram className="h-4 sm:h-5 w-4 sm:w-5" />
             </a>
-            {/* Hide on mobile, show only on md+ */}
-            <div className="hidden md:flex md:items-center md:gap-4">
+
+            {/* Country & Language - Hidden on mobile, visible on md+ */}
+            <div className="hidden md:flex md:items-center md:gap-2 lg:gap-3">
               <CountryFilter />
               <LanguageSwitcher />
             </div>
+
+            {/* Auth Section */}
             {!isAuthenticated ? (
-              <>
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <Link
                   href="/login"
-                  className="text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:text-[#c49a47] hover:-translate-y-0.5 "
+                  className="hidden sm:block text-xs sm:text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:text-[#c49a47] hover:-translate-y-0.5"
                 >
                   {t("nav.login")}
                 </Link>
                 <Link
                   href="/register"
-                  className="rounded-full bg-[#c49a47] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0"
+                  className="rounded-full bg-[#c49a47] px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0 whitespace-nowrap"
                 >
                   {t("nav.signUp")}
                 </Link>
-              </>
+              </div>
             ) : (
               <div className="relative" ref={menuRef}>
                 <UserAvatar onClick={() => setOpen((v) => !v)} />

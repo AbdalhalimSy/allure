@@ -7,7 +7,7 @@ export function Lightbox({ item, onClose }: LightboxProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[70] bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
+      className="fixed inset-0 z-70 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
       onClick={onClose}
     >
       <div
@@ -15,14 +15,14 @@ export function Lightbox({ item, onClose }: LightboxProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 rounded-full bg-white/90 p-1.5 sm:p-2 shadow hover:bg-white"
+          className="absolute top-2 end-2 sm:top-3 sm:end-3 z-10 rounded-full bg-white/90 p-1.5 sm:p-2 shadow hover:bg-white"
           onClick={onClose}
         >
           <X className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" />
         </button>
 
         {item.type === "photo" && (
-          <div className="relative w-full h-[60vh] sm:h-[70vh] min-h-[280px] sm:min-h-[320px]">
+          <div className="relative w-full h-[60vh] sm:h-[70vh] min-h-[280px] sm:min-h-80">
             <Image src={item.url} alt="Media" fill className="object-contain" />
           </div>
         )}

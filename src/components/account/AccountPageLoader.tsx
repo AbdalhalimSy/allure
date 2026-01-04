@@ -9,14 +9,14 @@ interface AccountPageLoaderProps {
 
 export default function AccountPageLoader({ message }: AccountPageLoaderProps) {
   const { t } = useI18n();
-  
+
   return (
     <div className="flex items-center justify-center min-h-[400px]">
       <Loader
         size="xl"
         variant="spinner"
         color="primary"
-        text={message || t('common.loading') || 'Loading...'}
+        text={message || t("common.loading") || "Loading..."}
         center
       />
     </div>

@@ -25,30 +25,38 @@ export default function ConfirmDialog({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+    <div className="fixed inset-0 z-60 flex items-center justify-center">
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onCancel}
+      />
 
       {/* Dialog */}
       <div
         role="dialog"
         aria-modal="true"
- className="relative z-[61] w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl "
+        className="relative z-61 w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl "
       >
         <div className="space-y-2">
- <h3 className="text-xl font-semibold text-gray-900 ">{title}</h3>
+          <h3 className="text-xl font-semibold text-gray-900 ">{title}</h3>
           {description ? (
- <p className="text-sm text-gray-600 ">{description}</p>
+            <p className="text-sm text-gray-600 ">{description}</p>
           ) : null}
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-3">
-          <Button variant="secondary" className="min-w-[96px]" onClick={onCancel} disabled={loading}>
+          <Button
+            variant="secondary"
+            className="min-w-24"
+            onClick={onCancel}
+            disabled={loading}
+          >
             {cancelText}
           </Button>
           <Button
             variant="primary"
- className="min-w-[120px] bg-rose-600 hover:bg-rose-700 "
+            className="min-w-[120px] bg-rose-600 hover:bg-rose-700 "
             onClick={onConfirm}
             isLoading={loading}
           >

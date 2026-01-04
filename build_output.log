@@ -1,0 +1,79 @@
+
+> allure@0.1.0 build
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.1 (Turbopack)
+   - Environments: .env.local, .env
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./src/lib/locales/ar/auth.json
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/src/lib/locales/ar/auth.json (json)
+
+Caused by:
+- Unable to make a module from invalid JSON: key must be a string at line 76 column 5
+
+Debug info:
+- An error occurred while generating the chunk item [project]/src/lib/locales/ar/auth.json (json)
+- Execution of <JsonChunkItem as EcmascriptChunkItem>::content failed
+- Unable to make a module from invalid JSON: key must be a string at line 76 column 5
+    at auth.?
+      72 |     "failedToResetPassword": "فشل في إعادة تعيين كلمة المرور",
+      73 |     "verificationFailed": "فشل التحقق",
+      74 |     "required": "مطلوب",
+      75 |     "registrationFailed": "فشل التسجيل",
+         |     v
+      76 +     \"unauthorized\": \"غير مصرح\",
+         |     ^
+      77 |     \"loginHeroSubtitle\": \"مرحباً بعودتك! يرجى تسجيل الدخول إلى حسابك\"
+      78 |   }
+      79 | }
+
+Import trace:
+  Client Component SSR:
+    ./src/lib/locales/ar/auth.json
+    ./src/contexts/I18nContext.tsx [Client Component SSR]
+    ./src/app/account/profile/BasicInformationContent.tsx [Client Component SSR]
+    ./src/app/account/basic/page.tsx [Client Component SSR]
+    ./src/app/account/basic/page.tsx [Server Component]
+
+
+./src/lib/locales/en/auth.json
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/src/lib/locales/en/auth.json (json)
+
+Caused by:
+- Unable to make a module from invalid JSON: key must be a string at line 85 column 5
+
+Debug info:
+- An error occurred while generating the chunk item [project]/src/lib/locales/en/auth.json (json)
+- Execution of <JsonChunkItem as EcmascriptChunkItem>::content failed
+- Unable to make a module from invalid JSON: key must be a string at line 85 column 5
+    at auth.?
+      81 |     "accountRecovery": "Account Recovery",
+      82 |     "logoutConfirm": "Are you sure you want to logout?",
+      83 |     "loggedOut": "Logged out successfully",
+      84 |     "logoutFailed": "Failed to logout",
+         |     v
+      85 +     \"loginFailed\": \"Login failed after verification\",
+         |     ^
+      86 |     \"loginHeroSubtitle\": \"Welcome back! Please login to your account\"
+      87 |   }
+      88 | }
+
+Import trace:
+  Client Component SSR:
+    ./src/lib/locales/en/auth.json
+    ./src/contexts/I18nContext.tsx [Client Component SSR]
+    ./src/app/account/profile/BasicInformationContent.tsx [Client Component SSR]
+    ./src/app/account/basic/page.tsx [Client Component SSR]
+    ./src/app/account/basic/page.tsx [Server Component]
+
+
+    at ignore-listed frames

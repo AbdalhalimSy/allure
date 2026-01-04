@@ -40,8 +40,7 @@ export default function DatePicker({
   maxDate,
   className = "",
 }: DatePickerProps) {
-  const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -236,11 +235,7 @@ export default function DatePicker({
             onClick={handlePrevMonth}
             className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
-            {isRTL ? (
-              <ChevronRight className="h-5 w-5" />
-            ) : (
-              <ChevronLeft className="h-5 w-5" />
-            )}
+            <ChevronLeft className="h-5 w-5 rtl:scale-x-[-1]" />
           </button>
 
           <div className="text-center">
@@ -254,11 +249,7 @@ export default function DatePicker({
             onClick={handleNextMonth}
             className="rounded-lg p-2 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:scale-110 active:scale-100 "
           >
-            {isRTL ? (
-              <ChevronLeft className="h-5 w-5" />
-            ) : (
-              <ChevronRight className="h-5 w-5" />
-            )}
+            <ChevronRight className="h-5 w-5 rtl:scale-x-[-1]" />
           </button>
         </div>
 

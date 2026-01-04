@@ -20,10 +20,15 @@ interface TalentDetailModalProps {
   onClose: () => void;
 }
 
-export default function TalentDetailModal({ talent, isOpen, onClose }: TalentDetailModalProps) {
-  const { t, locale } = useI18n();
-  const isRTL = locale === "ar";
-  const [mediaTab, setMediaTab] = useState<"all" | "photo" | "video" | "audio">("all");
+export default function TalentDetailModal({
+  talent,
+  isOpen,
+  onClose,
+}: TalentDetailModalProps) {
+  const { t } = useI18n();
+  const [mediaTab, setMediaTab] = useState<"all" | "photo" | "video" | "audio">(
+    "all"
+  );
   const [lightboxItem, setLightboxItem] = useState<LightboxItem | null>(null);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ export default function TalentDetailModal({ talent, isOpen, onClose }: TalentDet
           </div>
 
           <div className="overflow-y-auto flex-1">
-            <div className={`relative flex flex-col md:flex-row gap-4 sm:gap-6 p-4 sm:p-6 md:p-8 ${isRTL ? "md:flex-row-reverse" : ""}`}>
+            <div className="relative flex flex-col md:flex-row gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
               <FeatureImage
                 featurePhoto={featurePhoto}
                 alt={`${profile.first_name} ${profile.last_name}`}
@@ -72,7 +77,11 @@ export default function TalentDetailModal({ talent, isOpen, onClose }: TalentDet
               />
 
               <div className="flex-1 space-y-4 sm:space-y-6">
-                <HeaderStats profile={profile} professions={professions} isRTL={isRTL} t={t} />
+                <HeaderStats
+                  profile={profile}
+                  professions={professions}
+                  t={t}
+                />
                 <ContactAndAttributes profile={profile} t={t} />
               </div>
             </div>
@@ -80,12 +89,19 @@ export default function TalentDetailModal({ talent, isOpen, onClose }: TalentDet
             <div className="h-px bg-linear-to-r from-transparent via-gray-200 to-transparent my-4 sm:my-6" />
 
             <div className="px-4 pb-4 sm:px-6 sm:pb-6 md:px-8 md:pb-8 space-y-6 sm:space-y-8">
-              <InfoLists profile={profile} professions={professions} languages={languagesList} t={t} />
+              <InfoLists
+                profile={profile}
+                professions={professions}
+                languages={languagesList}
+                t={t}
+              />
               <ExperienceAccount profile={profile} t={t} />
 
               {hasMedia && (
                 <div className="space-y-4">
-                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">{t("talents.media")}</h3>
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">
+                    {t("talents.media")}
+                  </h3>
                   <MediaSection
                     photos={photos}
                     videos={videos}

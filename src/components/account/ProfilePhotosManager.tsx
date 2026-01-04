@@ -56,7 +56,13 @@ export default function ProfilePhotosManager() {
 
     // Client-side validation
     const maxSize = 5 * 1024 * 1024; // 5MB
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+      "image/gif",
+      "image/webp",
+    ];
 
     if (!allowedTypes.includes(file.type)) {
       setError("Only JPEG, PNG, JPG, GIF, and WEBP images are allowed");
@@ -107,7 +113,7 @@ export default function ProfilePhotosManager() {
   const getStatusBadge = (status: ApprovalStatus, isActive: boolean) => {
     if (isActive) {
       return (
-        <div className="absolute top-3 right-3 bg-linear-to-r from-yellow-400 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
+        <div className="absolute top-3 end-3 bg-linear-to-r from-yellow-400 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
           <TbStar className="w-3.5 h-3.5" />
           {t("account.profilePhotos.badges.active")}
         </div>
@@ -117,21 +123,21 @@ export default function ProfilePhotosManager() {
     switch (status) {
       case "approved":
         return (
-          <div className="absolute top-3 right-3 bg-linear-to-r from-green-400 to-green-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
+          <div className="absolute top-3 end-3 bg-linear-to-r from-green-400 to-green-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbCheck className="w-3.5 h-3.5" />
             {t("account.profilePhotos.badges.approved")}
           </div>
         );
       case "pending":
         return (
-          <div className="absolute top-3 right-3 bg-linear-to-r from-orange-400 to-orange-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
+          <div className="absolute top-3 end-3 bg-linear-to-r from-orange-400 to-orange-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbClock className="w-3.5 h-3.5" />
             {t("account.profilePhotos.badges.pending")}
           </div>
         );
       case "rejected":
         return (
-          <div className="absolute top-3 right-3 bg-linear-to-r from-red-400 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
+          <div className="absolute top-3 end-3 bg-linear-to-r from-red-400 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbX className="w-3.5 h-3.5" />
             {t("account.profilePhotos.badges.rejected")}
           </div>
@@ -152,7 +158,9 @@ export default function ProfilePhotosManager() {
 
   // Get current profile picture from user.profile, approved photo, or featured image
   const currentProfilePicture =
-    user?.profile?.profile_picture || approvedPhoto?.profile_picture || currentProfileFeaturedImage;
+    user?.profile?.profile_picture ||
+    approvedPhoto?.profile_picture ||
+    currentProfileFeaturedImage;
   const userName = user?.profile
     ? `${user.profile.first_name} ${user.profile.last_name}`.trim()
     : user?.email || "User";
@@ -203,7 +211,7 @@ export default function ProfilePhotosManager() {
                   </label>
                 </div>
                 {approvedPhoto && (
-                  <div className="absolute -bottom-3 -right-3 bg-linear-to-r from-green-400 to-green-500 text-white p-3 rounded-xl shadow-lg">
+                  <div className="absolute -bottom-3 -end-3 bg-linear-to-r from-green-400 to-green-500 text-white p-3 rounded-xl shadow-lg">
                     <TbCheck className="w-5 h-5" />
                   </div>
                 )}

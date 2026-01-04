@@ -60,7 +60,9 @@ export default function TalentDetailPage() {
       const result: TalentsResponse = await response.json();
 
       if (result.status === "success") {
-        const foundTalent = result.data.find((t) => t.profile.id === Number(params.id));
+        const foundTalent = result.data.find(
+          (t) => t.profile.id === Number(params.id)
+        );
         if (foundTalent) {
           setTalent(foundTalent);
         } else {
@@ -85,7 +87,8 @@ export default function TalentDetailPage() {
   useEffect(() => {
     if (talent) {
       const featuredPhoto =
-        talent.media.photos.find((p) => p.featured_image) || talent.media.photos[0];
+        talent.media.photos.find((p) => p.featured_image) ||
+        talent.media.photos[0];
       if (featuredPhoto && !selectedPhoto) {
         setSelectedPhoto(featuredPhoto);
       }
@@ -103,10 +106,12 @@ export default function TalentDetailPage() {
   if (error || !talent) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
- <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center ">
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-red-300 bg-red-50 p-12 text-center ">
           <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
- <h3 className="mb-2 text-lg font-semibold text-red-900 ">{t("talents.failedToLoad")}</h3>
- <p className="mb-4 text-sm text-red-700 ">{error}</p>
+          <h3 className="mb-2 text-lg font-semibold text-red-900 ">
+            {t("talents.failedToLoad")}
+          </h3>
+          <p className="mb-4 text-sm text-red-700 ">{error}</p>
           <button
             onClick={() => router.push("/talents")}
             className="rounded-lg bg-red-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
@@ -121,27 +126,27 @@ export default function TalentDetailPage() {
   const { profile, professions, sub_professions, media } = talent;
 
   return (
- <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         {/* Back Button */}
         <button
           onClick={() => router.push("/talents")}
- className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] "
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-[#c49a47] "
         >
           <ArrowLeft className="h-4 w-4" />
           {t("talents.backToTalents")}
         </button>
 
         {/* Header Section (mirrors Job header card) */}
- <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg ">
+        <div className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg ">
           <div className="h-2 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
           <div className="p-8">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
- <h1 className="mb-2 text-3xl font-bold text-gray-900 ">
+                <h1 className="mb-2 text-3xl font-bold text-gray-900 ">
                   {profile.first_name} {profile.last_name}
                 </h1>
- <div className="flex flex-wrap items-center gap-3 text-gray-600 ">
+                <div className="flex flex-wrap items-center gap-3 text-gray-600 ">
                   <span className="flex items-center gap-1.5 text-sm">
                     <Calendar className="h-4 w-4" />
                     {profile.age} {t("talents.years")}
@@ -164,7 +169,7 @@ export default function TalentDetailPage() {
                     </span>
                   ))}
                   {professions.length > 3 && (
- <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 ">
+                    <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 ">
                       +{professions.length - 3} more
                     </span>
                   )}
@@ -174,32 +179,48 @@ export default function TalentDetailPage() {
 
             {/* Quick Info Grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <User className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">{t('content.gender')}</p>
- <p className="font-semibold text-gray-900 ">{t(`filters.${profile.gender}`)}</p>
+                  <p className="text-xs text-gray-600 ">
+                    {t("content.gender")}
+                  </p>
+                  <p className="font-semibold text-gray-900 ">
+                    {t(`filters.${profile.gender}`)}
+                  </p>
                 </div>
               </div>
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Ruler className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">{t("talents.height")}</p>
- <p className="font-semibold text-gray-900 ">{profile.height} cm</p>
+                  <p className="text-xs text-gray-600 ">
+                    {t("talents.height")}
+                  </p>
+                  <p className="font-semibold text-gray-900 ">
+                    {profile.height} cm
+                  </p>
                 </div>
               </div>
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Globe className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">{t("talents.nationalities")}</p>
- <p className="font-semibold text-gray-900 ">{profile.nationalities.length}</p>
+                  <p className="text-xs text-gray-600 ">
+                    {t("talents.nationalities")}
+                  </p>
+                  <p className="font-semibold text-gray-900 ">
+                    {profile.nationalities.length}
+                  </p>
                 </div>
               </div>
- <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
+              <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 ">
                 <Users className="h-5 w-5 text-[#c49a47]" />
                 <div>
- <p className="text-xs text-gray-600 ">{t("talents.professions")}</p>
- <p className="font-semibold text-gray-900 ">{professions.length}</p>
+                  <p className="text-xs text-gray-600 ">
+                    {t("talents.professions")}
+                  </p>
+                  <p className="font-semibold text-gray-900 ">
+                    {professions.length}
+                  </p>
                 </div>
               </div>
             </div>
@@ -210,10 +231,12 @@ export default function TalentDetailPage() {
           {/* Main Content (left, 2 cols) */}
           <div className="space-y-6 lg:col-span-2">
             {/* Photo Section */}
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
               <div className="mb-4 flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">{t("talents.portfolio")}</h2>
+                <h2 className="text-xl font-bold text-gray-900 ">
+                  {t("talents.portfolio")}
+                </h2>
               </div>
               <div className="grid gap-4 lg:grid-cols-2">
                 {/* Main Photo */}
@@ -229,7 +252,12 @@ export default function TalentDetailPage() {
                     />
                     {selectedPhoto.featured_image && (
                       <div className="absolute start-3 top-3">
-                        <AccentTag variant="primary" icon={<Sparkles className="h-3 w-3" />}>{t("talents.featured")}</AccentTag>
+                        <AccentTag
+                          variant="primary"
+                          icon={<Sparkles className="h-3 w-3" />}
+                        >
+                          {t("talents.featured")}
+                        </AccentTag>
                       </div>
                     )}
                     <button
@@ -250,7 +278,7 @@ export default function TalentDetailPage() {
                         onClick={() => setSelectedPhoto(photo)}
                         className={`relative aspect-square overflow-hidden rounded-lg transition-all ${
                           selectedPhoto?.id === photo.id
- ? "ring-2 ring-[#c49a47] ring-offset-2 ring-offset-white "
+                            ? "ring-2 ring-[#c49a47] ring-offset-2 ring-offset-white "
                             : "opacity-80 hover:opacity-100"
                         }`}
                       >
@@ -269,59 +297,98 @@ export default function TalentDetailPage() {
             </div>
 
             {/* Physical Attributes */}
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
               <div className="mb-4 flex items-center gap-2">
                 <Palette className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">{t("home.content.physicalAttributes")}</h2>
+                <h2 className="text-xl font-bold text-gray-900 ">
+                  {t("home.content.physicalAttributes")}
+                </h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.hairColor")}</div>
- <div className="font-semibold text-gray-900 ">{profile.hair_color}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.hairColor")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.hair_color}
+                  </div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.hairType")}</div>
- <div className="font-semibold text-gray-900 ">{profile.hair_type}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.hairType")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.hair_type}
+                  </div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.eyeColor")}</div>
- <div className="font-semibold text-gray-900 ">{profile.eye_color}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.eyeColor")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.eye_color}
+                  </div>
                 </div>
                 {profile.chest && (
                   <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.chest")}</div>
- <div className="font-semibold text-gray-900 ">{profile.chest} cm</div>
+                    <div className="text-gray-500 ">
+                      {t("home.content.chest")}
+                    </div>
+                    <div className="font-semibold text-gray-900 ">
+                      {profile.chest} cm
+                    </div>
                   </div>
                 )}
                 {profile.waist && (
                   <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.waist")}</div>
- <div className="font-semibold text-gray-900 ">{profile.waist} cm</div>
+                    <div className="text-gray-500 ">
+                      {t("home.content.waist")}
+                    </div>
+                    <div className="font-semibold text-gray-900 ">
+                      {profile.waist} cm
+                    </div>
                   </div>
                 )}
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.shoeSize")}</div>
- <div className="font-semibold text-gray-900 ">{profile.shoe_size}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.shoeSize")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.shoe_size}
+                  </div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.tshirtSize")}</div>
- <div className="font-semibold text-gray-900 ">{profile.tshirt_size}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.tshirtSize")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.tshirt_size}
+                  </div>
                 </div>
                 <div className="space-y-1 text-sm">
- <div className="text-gray-500 ">{t("home.content.pantsSize")}</div>
- <div className="font-semibold text-gray-900 ">{profile.pants_size}</div>
+                  <div className="text-gray-500 ">
+                    {t("home.content.pantsSize")}
+                  </div>
+                  <div className="font-semibold text-gray-900 ">
+                    {profile.pants_size}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Background */}
-            {(profile.nationalities.length > 0 || profile.ethnicities.length > 0) && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
- <h2 className="mb-4 text-xl font-bold text-gray-900 ">{t("talents.background")}</h2>
+            {(profile.nationalities.length > 0 ||
+              profile.ethnicities.length > 0) && (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+                <h2 className="mb-4 text-xl font-bold text-gray-900 ">
+                  {t("talents.background")}
+                </h2>
                 <div className="space-y-6">
                   {profile.nationalities.length > 0 && (
                     <div>
- <div className="mb-2 text-sm font-medium text-gray-500 ">{t("talents.nationalities")}</div>
+                      <div className="mb-2 text-sm font-medium text-gray-500 ">
+                        {t("talents.nationalities")}
+                      </div>
                       <div className="flex flex-wrap gap-2">
                         {profile.nationalities.map((nat) => (
                           <AccentTag key={nat.id}>{nat.name}</AccentTag>
@@ -331,7 +398,9 @@ export default function TalentDetailPage() {
                   )}
                   {profile.ethnicities.length > 0 && (
                     <div>
- <div className="mb-2 text-sm font-medium text-gray-500 ">{t("talents.ethnicities")}</div>
+                      <div className="mb-2 text-sm font-medium text-gray-500 ">
+                        {t("talents.ethnicities")}
+                      </div>
                       <div className="flex flex-wrap gap-2">
                         {profile.ethnicities.map((eth) => (
                           <AccentTag key={eth.id}>{eth.name}</AccentTag>
@@ -345,15 +414,24 @@ export default function TalentDetailPage() {
 
             {/* Videos */}
             {media.videos.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
                 <div className="mb-4 flex items-center gap-2">
                   <PlayCircle className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-bold text-gray-900 ">{t("talents.videos")}</h2>
+                  <h2 className="text-xl font-bold text-gray-900 ">
+                    {t("talents.videos")}
+                  </h2>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                   {media.videos.map((video) => (
-                    <div key={video.id} className="relative aspect-video overflow-hidden rounded-xl bg-gray-900">
-                      <video src={video.url} controls className="h-full w-full object-cover" />
+                    <div
+                      key={video.id}
+                      className="relative aspect-video overflow-hidden rounded-xl bg-gray-900"
+                    >
+                      <video
+                        src={video.url}
+                        controls
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                   ))}
                 </div>
@@ -364,12 +442,14 @@ export default function TalentDetailPage() {
           {/* Sidebar (right) */}
           <div className="space-y-6">
             {/* Location */}
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#c49a47]" />
- <h3 className="text-lg font-bold text-gray-900 ">{t("talents.location")}</h3>
+                <h3 className="text-lg font-bold text-gray-900 ">
+                  {t("talents.location")}
+                </h3>
               </div>
- <div className="flex items-center gap-2 text-sm text-gray-700 ">
+              <div className="flex items-center gap-2 text-sm text-gray-700 ">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#c49a47]" />
                 {profile.country.name}
               </div>
@@ -377,10 +457,12 @@ export default function TalentDetailPage() {
 
             {/* Professions */}
             {professions.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
                 <div className="mb-4 flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-[#c49a47]" />
- <h3 className="text-lg font-bold text-gray-900 ">{t("talents.professions")}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 ">
+                    {t("talents.professions")}
+                  </h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {professions.map((profession) => (
@@ -397,11 +479,16 @@ export default function TalentDetailPage() {
 
             {/* Specializations */}
             {sub_professions.length > 0 && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
- <h3 className="mb-4 text-lg font-bold text-gray-900 ">{t("talents.specializations")}</h3>
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+                <h3 className="mb-4 text-lg font-bold text-gray-900 ">
+                  {t("talents.specializations")}
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {sub_professions.map((subProf) => (
- <span key={subProf.id} className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 ">
+                    <span
+                      key={subProf.id}
+                      className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 "
+                    >
                       {subProf.name}
                     </span>
                   ))}
@@ -410,54 +497,76 @@ export default function TalentDetailPage() {
             )}
 
             {/* Social Summary */}
-            {(profile.instagram_followers || profile.youtube_followers || profile.tiktok_followers || profile.facebook_followers) && (
- <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
- <h3 className="mb-4 text-lg font-bold text-gray-900 ">{t("talents.socialMedia")}</h3>
+            {(profile.instagram_followers ||
+              profile.youtube_followers ||
+              profile.tiktok_followers ||
+              profile.facebook_followers) && (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ">
+                <h3 className="mb-4 text-lg font-bold text-gray-900 ">
+                  {t("talents.socialMedia")}
+                </h3>
                 <div className="space-y-4">
-                  {profile.instagram_followers && profile.instagram_followers > 0 && (
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-pink-500 to-purple-600">
-                          <Instagram className="h-5 w-5 text-white" />
+                  {profile.instagram_followers &&
+                    profile.instagram_followers > 0 && (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-pink-500 to-purple-600">
+                            <Instagram className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="text-sm text-gray-700 ">
+                            Instagram
+                          </span>
                         </div>
- <span className="text-sm text-gray-700 ">Instagram</span>
+                        <span className="text-sm font-semibold text-gray-900 ">
+                          {profile.instagram_followers.toLocaleString()}
+                        </span>
                       </div>
- <span className="text-sm font-semibold text-gray-900 ">{profile.instagram_followers.toLocaleString()}</span>
-                    </div>
-                  )}
-                  {profile.youtube_followers && profile.youtube_followers > 0 && (
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
-                          <Youtube className="h-5 w-5 text-white" />
+                    )}
+                  {profile.youtube_followers &&
+                    profile.youtube_followers > 0 && (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
+                            <Youtube className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="text-sm text-gray-700 ">
+                            YouTube
+                          </span>
                         </div>
- <span className="text-sm text-gray-700 ">YouTube</span>
+                        <span className="text-sm font-semibold text-gray-900 ">
+                          {profile.youtube_followers.toLocaleString()}
+                        </span>
                       </div>
- <span className="text-sm font-semibold text-gray-900 ">{profile.youtube_followers.toLocaleString()}</span>
-                    </div>
-                  )}
+                    )}
                   {profile.tiktok_followers && profile.tiktok_followers > 0 && (
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
- <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-900 ">
- <Music2 className="h-5 w-5 text-white " />
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-900 ">
+                          <Music2 className="h-5 w-5 text-white " />
                         </div>
- <span className="text-sm text-gray-700 ">TikTok</span>
+                        <span className="text-sm text-gray-700 ">TikTok</span>
                       </div>
- <span className="text-sm font-semibold text-gray-900 ">{profile.tiktok_followers.toLocaleString()}</span>
+                      <span className="text-sm font-semibold text-gray-900 ">
+                        {profile.tiktok_followers.toLocaleString()}
+                      </span>
                     </div>
                   )}
-                  {profile.facebook_followers && profile.facebook_followers > 0 && (
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600">
-                          <Facebook className="h-5 w-5 text-white" />
+                  {profile.facebook_followers &&
+                    profile.facebook_followers > 0 && (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600">
+                            <Facebook className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="text-sm text-gray-700 ">
+                            Facebook
+                          </span>
                         </div>
- <span className="text-sm text-gray-700 ">Facebook</span>
+                        <span className="text-sm font-semibold text-gray-900 ">
+                          {profile.facebook_followers.toLocaleString()}
+                        </span>
                       </div>
- <span className="text-sm font-semibold text-gray-900 ">{profile.facebook_followers.toLocaleString()}</span>
-                    </div>
-                  )}
+                    )}
                 </div>
               </div>
             )}
@@ -477,7 +586,7 @@ export default function TalentDetailPage() {
           >
             <X className="h-6 w-6" />
           </button>
-          
+
           <div className="relative max-h-[90vh] max-w-7xl">
             <Image
               src={selectedPhoto.url}
@@ -487,15 +596,20 @@ export default function TalentDetailPage() {
               className="h-auto max-h-[90vh] w-auto rounded-lg object-contain"
               onClick={(e) => e.stopPropagation()}
             />
-            
+
             {/* Navigation */}
             {media.photos.length > 1 && (
               <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-4">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    const currentIndex = media.photos.findIndex(p => p.id === selectedPhoto.id);
-                    const prevIndex = currentIndex > 0 ? currentIndex - 1 : media.photos.length - 1;
+                    const currentIndex = media.photos.findIndex(
+                      (p) => p.id === selectedPhoto.id
+                    );
+                    const prevIndex =
+                      currentIndex > 0
+                        ? currentIndex - 1
+                        : media.photos.length - 1;
                     setSelectedPhoto(media.photos[prevIndex]);
                   }}
                   className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -505,8 +619,13 @@ export default function TalentDetailPage() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    const currentIndex = media.photos.findIndex(p => p.id === selectedPhoto.id);
-                    const nextIndex = currentIndex < media.photos.length - 1 ? currentIndex + 1 : 0;
+                    const currentIndex = media.photos.findIndex(
+                      (p) => p.id === selectedPhoto.id
+                    );
+                    const nextIndex =
+                      currentIndex < media.photos.length - 1
+                        ? currentIndex + 1
+                        : 0;
                     setSelectedPhoto(media.photos[nextIndex]);
                   }}
                   className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -515,10 +634,11 @@ export default function TalentDetailPage() {
                 </button>
               </div>
             )}
-            
+
             {/* Photo Counter */}
             <div className="absolute bottom-4 start-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
-              {media.photos.findIndex(p => p.id === selectedPhoto.id) + 1} / {media.photos.length}
+              {media.photos.findIndex((p) => p.id === selectedPhoto.id) + 1} /{" "}
+              {media.photos.length}
             </div>
           </div>
         </div>

@@ -97,7 +97,7 @@ export default function SocialManager({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
- <label className="block text-sm font-medium text-gray-700 ">
+        <label className="block text-sm font-medium text-gray-700 ">
           {t("account.profession.socials.label") || "Social Media Links"}
           {required && <span className="text-red-500 ms-1">*</span>}
         </label>
@@ -105,7 +105,7 @@ export default function SocialManager({
           type="button"
           onClick={handleAdd}
           disabled={disabled}
- className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
         >
           <TbPlus className="w-4 h-4" />
           {t("account.profession.socials.add") || "Add Link"}
@@ -117,7 +117,7 @@ export default function SocialManager({
           {socials.map((social, index) => (
             <div
               key={index}
- className="p-4 border border-gray-200 rounded-lg bg-white space-y-3"
+              className="p-4 border border-gray-200 rounded-lg bg-white space-y-3"
             >
               <div className="flex items-start gap-3">
                 {/* Platform Selector */}
@@ -140,7 +140,7 @@ export default function SocialManager({
                 <div className="flex-1">
                   <Input
                     type="url"
-                    placeholder={t('forms.https') || "https://..."}
+                    placeholder={t("forms.https") || "https://..."}
                     value={social.url}
                     onChange={(e) => handleUpdate(index, "url", e.target.value)}
                     disabled={disabled}
@@ -152,7 +152,7 @@ export default function SocialManager({
                   type="button"
                   onClick={() => handleRemove(index)}
                   disabled={disabled}
- className="shrink-0 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                  className="shrink-0 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                 >
                   <TbX className="w-5 h-5" />
                 </button>
@@ -185,8 +185,8 @@ export default function SocialManager({
           ))}
         </div>
       ) : (
- <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
- <p className="text-sm text-gray-500 mb-3">
+        <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
+          <p className="text-sm text-gray-500 mb-3">
             {t("account.profession.socials.empty") ||
               "No social media links added yet"}
           </p>
@@ -194,7 +194,7 @@ export default function SocialManager({
             type="button"
             onClick={handleAdd}
             disabled={disabled}
- className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#c49a47] hover:bg-[#c49a47]/10 rounded-lg transition-colors disabled:opacity-50"
           >
             <TbPlus className="w-4 h-4" />
             {t("account.profession.socials.addFirst") || "Add Your First Link"}
