@@ -11,8 +11,10 @@ import type {
 /**
  * Get all available subscription packages
  */
-export async function getSubscriptionPackages(): Promise<PackagesResponse> {
-  const response = await apiClient.get<PackagesResponse>('/subscriptions/packages');
+export async function getSubscriptionPackages(locale?: string): Promise<PackagesResponse> {
+  const response = await apiClient.get<PackagesResponse>('/subscriptions/packages', {
+    headers: locale ? { 'Accept-Language': locale } : undefined,
+  });
   return response.data;
 }
 

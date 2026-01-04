@@ -1,7 +1,6 @@
 export interface ExperienceEntry {
   id?: number;
   title: string;
-  start_date?: string | null;
   end_date?: string | null;
   is_current?: boolean;
   description?: string;
@@ -12,7 +11,6 @@ export interface ExperienceResponseItem {
   id: number;
   profile_id: number;
   title: string;
-  start_date?: string | null;
   end_date?: string | null;
   is_current?: boolean;
   description?: string;

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Bell, BellOff, CheckCheck, Loader2 } from "lucide-react";
+import { Bell, BellOff, CheckCheck, Loader2, AlertCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
 import apiClient from "@/lib/api/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -44,7 +44,7 @@ function formatTimestamp(value: string | undefined, locale: string) {
 }
 
 export default function NotificationDropdown() {
-  const { isAuthenticated, activeProfileId, hydrated } = useAuth();
+  const { isAuthenticated, activeProfileId, hydrated, user } = useAuth();
   const { t, locale } = useI18n();
   const { notification: incomingNotification } = useNotifications();
 
@@ -56,14 +56,18 @@ export default function NotificationDropdown() {
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const hasUnread = unreadCount > 0;
+  const isProfileIncomplete = user?.profile?.progress_step !== "complete";
+  const hasUnread = unreadCount > 0 || isProfileIncomplete;
+  const totalUnreadCount = unreadCount + (isProfileIncomplete ? 1 : 0);
+  
   const unreadText = useMemo(() => {
     const template = t("common.notifications.unread");
+    const count = totalUnreadCount;
     if (template && template.includes("{{count}}")) {
-      return template.replace("{{count}}", String(unreadCount));
+      return template.replace("{{count}}", String(count));
     }
-    return template || `${unreadCount} unread`;
-  }, [t, unreadCount]);
+    return template || `${count} unread`;
+  }, [t, totalUnreadCount]);
 
   const fetchNotifications = useCallback(async () => {
     if (!activeProfileId) return;
@@ -247,8 +251,43 @@ export default function NotificationDropdown() {
       );
     }
 
+    const isProfileIncomplete = user?.profile?.progress_step !== "complete";
+
     return (
       <div className="space-y-2">
+        {/* Profile Completion Notification */}
+        {isProfileIncomplete && (
+          <Link
+            href="/account/profile"
+            onClick={() => setOpen(false)}
+            className="group relative flex w-full items-start gap-3 rounded-xl border border-amber-400/50 bg-linear-to-r from-amber-50 via-yellow-50 to-amber-50 p-4 text-start transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-lg shadow-amber-200/50"
+          >
+            <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/20 text-amber-600">
+              <AlertCircle className="h-5 w-5" />
+            </div>
+            <div className="flex-1 space-y-1">
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-sm font-bold text-gray-900 line-clamp-1">
+                  {t("common.notifications.profileIncomplete") || "Complete Your Profile"}
+                </p>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span
+                    className="inline-flex h-2 w-2 animate-pulse rounded-full bg-amber-500"
+                    aria-hidden
+                  />
+                  <span className="inline-flex rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-amber-600">
+                    {t("common.notifications.new") || "New"}
+                  </span>
+                </div>
+              </div>
+              <p className="text-sm text-gray-700 line-clamp-2">
+                {t("common.notifications.profileIncompleteBody") || "Finish setting up your profile to unlock all features and increase your visibility."}
+              </p>
+            </div>
+          </Link>
+        )}
+        
+        {/* Regular Notifications */}
         {items.map((item) => (
           <button
             key={item.id}
@@ -299,7 +338,7 @@ export default function NotificationDropdown() {
         ))}
       </div>
     );
-  }, [error, items, loading, locale, markAsRead, t]);
+  }, [error, items, loading, locale, markAsRead, t, user]);
 
   if (!hydrated || !isAuthenticated || !activeProfileId) {
     return null;
@@ -316,8 +355,8 @@ export default function NotificationDropdown() {
         <Bell className="h-5 w-5" />
         {hasUnread && (
           <span className="absolute -end-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c49a47] px-1 text-[11px] font-semibold text-white shadow-lg">
-            {Math.min(unreadCount, 9)}
-            {unreadCount > 9 ? "+" : ""}
+            {Math.min(totalUnreadCount, 9)}
+            {totalUnreadCount > 9 ? "+" : ""}
           </span>
         )}
       </button>

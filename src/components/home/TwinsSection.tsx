@@ -52,7 +52,7 @@ export default function TwinsSection({
 
         {/* CTA Button */}
         <Link
-          href="/talents?twins=true"
+          href="/talents?is_twin=true"
           className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47] bg-size-200 bg-pos-0 px-8 py-4 text-base font-medium text-white shadow-lg transition-all duration-500 hover:bg-pos-100 hover:shadow-xl hover:scale-105"
         >
           {cta}

@@ -156,6 +156,7 @@ export interface TalentFilters {
   // Basic filters
   gender?: "male" | "female" | "other";
   search?: string;
+  is_twin?: boolean;
   
   // Age filters
   min_age?: number;

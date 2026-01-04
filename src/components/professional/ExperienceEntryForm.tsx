@@ -79,8 +79,8 @@ export default function ExperienceEntryForm({
     ? entry.title
     : translate('account.experience.placeholders.title', 'e.g., Photographer');
 
-  const dateRange = entry.start_date || entry.end_date || entry.is_current
-    ? `${entry.start_date || '...'} - ${entry.is_current ? translate('account.experience.fields.current', 'Current') : entry.end_date || '...'}`
+  const dateRange = entry.end_date || entry.is_current
+    ? entry.is_current ? translate('account.experience.fields.current', 'Current') : entry.end_date || '...'
     : null;
 
   return (
@@ -166,18 +166,8 @@ export default function ExperienceEntryForm({
           </div>
 
           {/* Date Fields */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div>
-              <DatePicker
-                label={translate('account.experience.fields.startDate', 'Start Date')}
-                value={entry.start_date || ''}
-                onChange={(date) => update({ start_date: date })}
-                placeholder={translate('ui.selectDate', 'Select date')}
-                maxDate={new Date().toISOString().split('T')[0]}
-              />
-            </div>
-            <div>
-              <div className="mb-1 flex items-center justify-between">
+          <div>
+            <div className="mb-1 flex items-center justify-between">
  <label className="block text-sm font-medium text-gray-800 ">
                   {translate('account.experience.fields.endDate', 'End Date')}
                   {!entry.is_current && <span className="text-red-500"> *</span>}
@@ -203,7 +193,6 @@ export default function ExperienceEntryForm({
                   maxDate={new Date().toISOString().split('T')[0]}
                 />
               </div>
-            </div>
           </div>
 
           {/* Description */}

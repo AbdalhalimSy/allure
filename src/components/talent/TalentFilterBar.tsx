@@ -4,6 +4,7 @@ import SingleSelect from "@/components/ui/SingleSelect";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
 import Label from "@/components/ui/Label";
+import Switch from "@/components/ui/Switch";
 import { useState, useEffect } from "react";
 import Loader from "@/components/ui/Loader";
 import { TalentFilters } from "@/types/talent";
@@ -211,6 +212,18 @@ export default function TalentFilterBar({
             className="w-24 sm:w-28 lg:w-32 xl:w-36 shrink-0 text-sm"
           />
 
+          {/* Twins Filter */}
+          <Switch
+            checked={local.is_twin ?? false}
+            onChange={(checked) =>
+              update({
+                is_twin: checked ? true : undefined,
+              })
+            }
+            label={t("filters.twinsOnly") || "Twins"}
+            className="shrink-0"
+          />
+
           {/* Divider */}
           <div className="hidden lg:block h-8 w-px bg-gray-200 shrink-0" />
 
@@ -245,20 +258,11 @@ export default function TalentFilterBar({
                 type="button"
                 variant="secondary"
                 onClick={handleReset}
-                className="hidden lg:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 text-sm"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>{t("filters.reset") || "Reset"}</span>
-              </Button>
-              {/* Mobile/Tablet Reset Icon Only */}
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={handleReset}
-                className="lg:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-2.5 h-9 sm:h-10"
+                className="flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3 lg:px-4 h-9 sm:h-10 lg:h-12 text-xs sm:text-sm"
                 title="Reset All Filters"
               >
-                <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
+                <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4 lg:h-4 lg:w-4" />
+                <span className="hidden sm:inline">{t("filters.reset") || "Reset"}</span>
               </Button>
             </>
           )}

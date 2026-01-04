@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactNode, useState, useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { TbCircleCheck, TbMenu2, TbX } from "react-icons/tb";
+import { TbCircleCheck } from "react-icons/tb";
 import { useI18n } from "@/contexts/I18nContext";
 
 type NavItem = {
@@ -40,7 +40,7 @@ export default function AccountSidebar({
 }: AccountSidebarProps) {
   const pathname = usePathname();
   const { t } = useI18n();
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  // const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   // Group nav items by section if defined
   const groupedItems = useMemo(() => {
@@ -79,7 +79,6 @@ export default function AccountSidebar({
     return (
       <Link
         href={`/account/${item.id}`}
-        onClick={() => setMobileDrawerOpen(false)}
         className={`
           group flex items-center justify-between gap-3 
           px-4 py-3 rounded-xl 
@@ -279,36 +278,15 @@ export default function AccountSidebar({
         </div>
       </aside>
 
-      {/* Mobile Drawer Button */}
-      <div className="lg:hidden mb-4 flex items-center gap-2">
-        <button
-          onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 font-medium text-sm hover:bg-gray-50 transition-colors"
-          aria-label={mobileDrawerOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileDrawerOpen}
-        >
-          {mobileDrawerOpen ? (
-            <>
-              <TbX size={20} />
-              Close
-            </>
-          ) : (
-            <>
-              <TbMenu2 size={20} />
-              Menu
-            </>
-          )}
-        </button>
-      </div>
+      {/* Mobile Drawer Button - Hidden, always show content */}
+      <div className="lg:hidden hidden" />
 
-      {/* Mobile Drawer */}
-      {mobileDrawerOpen && (
-        <div className="lg:hidden mb-4 rounded-2xl border border-gray-200 bg-white shadow-lg overflow-hidden">
-          <div className="p-2 max-h-96 overflow-y-auto">
-            <SidebarContent />
-          </div>
+      {/* Mobile Navigation - Always visible */}
+      <div className="lg:hidden mb-4 rounded-2xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+        <div className="p-2">
+          <SidebarContent />
         </div>
-      )}
+      </div>
     </>
   );
 }

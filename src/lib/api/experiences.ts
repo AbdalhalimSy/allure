@@ -15,11 +15,7 @@ export function buildSyncExperiencesPayload(
     formData.append(`${prefix}[title]`, exp.title);
     if (typeof exp.is_current === 'boolean') formData.append(`${prefix}[is_current]`, exp.is_current ? '1' : '0');
 
-    // Only send dates if they have values
-    if (exp.start_date) {
-      console.log(`[Experience ${index}] Sending start_date:`, exp.start_date);
-      formData.append(`${prefix}[start_date]`, exp.start_date);
-    }
+    // Only send end_date if it has a value
     if (exp.end_date) {
       console.log(`[Experience ${index}] Sending end_date:`, exp.end_date);
       formData.append(`${prefix}[end_date]`, exp.end_date);
@@ -61,7 +57,6 @@ export function mapApiResponseToEntries(apiData: ExperienceResponseItem[]): Expe
   return (apiData || []).map((item) => ({
     id: item.id,
     title: item.title,
-    start_date: item.start_date ?? null,
     end_date: item.end_date ?? null,
     is_current: !!item.is_current,
     description: item.description,

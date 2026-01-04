@@ -44,13 +44,13 @@ export default function AccountLayout({
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
       {/* Header Section */}
       <div className="mb-6 sm:mb-8 text-start">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3 items-start">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
             {t("account.title")}
           </h1>
           {approvalStatus && translatedStatusTitle && (
             <div
-              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs self font-medium ${
                 approvalStatus === "approved"
                   ? "border-green-300 bg-green-50 text-green-700"
                   : approvalStatus === "pending"

@@ -28,7 +28,9 @@
       "unread": "{{count}} unread",
       "fetchError": "Couldn't load notifications",
       "markAllFailed": "Failed to mark all as read",
-      "markOneFailed": "Failed to mark notification as read"
+      "markOneFailed": "Failed to mark notification as read",
+      "profileIncomplete": "Complete Your Profile",
+      "profileIncompleteBody": "Finish setting up your profile to unlock all features and increase your visibility to casting directors."
     }
   },
   "ui": {
@@ -88,6 +90,7 @@
     "demographics": "Demographics",
     "ageRange": "Age Range",
     "heightCm": "Height (cm)",
+    "twinsOnly": "Twins Only",
     "sortBy": "Sort By",
     "sortDefault": "Default",
     "sortAge": "Age",

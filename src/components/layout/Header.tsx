@@ -69,15 +69,18 @@ export default function Header() {
     { href: "/", label: t("nav.home") || "Home" },
     { href: "/about", label: t("nav.about") },
     { href: "/talents", label: t("nav.talents") },
-    { href: "/jobs", label: t("nav.jobs") || "Jobs" },
-    ...(isAuthenticated
-      ? [
-          {
-            href: "/jobs/applied",
-            label: t("nav.appliedJobs") || "Applied Jobs",
-          },
-        ]
-      : []),
+    {
+      href: "/jobs",
+      label: t("nav.jobs") || "Jobs",
+      dropdown: isAuthenticated
+        ? [
+            {
+              href: "/jobs/applied",
+              label: t("nav.appliedJobs") || "Applied Jobs",
+            },
+          ]
+        : [],
+    },
     ...(isAuthenticated ? [{ href: "/packages", label: t("nav.packages") || "Packages" }] : []),
     { href: "/faq", label: t("nav.faq") || "FAQ" },
     { href: "/contact", label: t("nav.contact") },

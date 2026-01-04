@@ -46,7 +46,7 @@ export function JobDetailSidebar({ jobCountries }: JobDetailSidebarProps) {
 
       {/* Quick Tips Card */}
       <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-blue-200/50 bg-linear-to-br from-blue-50 to-indigo-50 p-4 sm:p-6 shadow-lg">
-        <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-blue-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 end-0 w-24 h-24 sm:w-32 sm:h-32 bg-blue-200/30 rounded-full blur-3xl"></div>
 
         <div className="relative">
           <div className="mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">

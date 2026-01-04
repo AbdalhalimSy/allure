@@ -24,18 +24,12 @@ export function ExperienceAccount({ profile, t }: ExperienceAccountProps) {
                     </span>
                   )}
                 </div>
-                {(exp.start_date || exp.end_date) && (
+                {(exp.end_date || exp.is_current) && (
                   <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
                     <Calendar className="h-3 w-3 shrink-0" />
                     <span className="truncate">
-                      {exp.start_date && new Date(exp.start_date).toLocaleDateString()}
-                      {exp.end_date && !exp.is_current && (
-                        <>
-                          {" - "}
-                          {new Date(exp.end_date).toLocaleDateString()}
-                        </>
-                      )}
-                      {exp.is_current && ` - ${t("talents.present")}`}
+                      {exp.end_date && !exp.is_current && new Date(exp.end_date).toLocaleDateString()}
+                      {exp.is_current && t("talents.present")}
                     </span>
                   </div>
                 )}

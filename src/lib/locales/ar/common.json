@@ -28,7 +28,9 @@
       "unread": "{{count}} غير مقروء",
       "fetchError": "تعذر تحميل الإشعارات",
       "markAllFailed": "فشل تحديد الكل كمقروء",
-      "markOneFailed": "فشل تحديد الإشعار كمقروء"
+      "markOneFailed": "فشل تحديد الإشعار كمقروء",
+      "profileIncomplete": "أكمل ملفك الشخصي",
+      "profileIncompleteBody": "أنهِ إعداد ملفك الشخصي لفتح جميع الميزات وزيادة ظهورك لمديري الاختيار."
     }
   },
   "ui": {
@@ -88,6 +90,7 @@
     "demographics": "المعلومات الديموغرافية",
     "ageRange": "نطاق العمر",
     "heightCm": "الارتفاع (سم)",
+    "twinsOnly": "التوأم فقط",
     "sortBy": "ترتيب حسب",
     "sortDefault": "الافتراضي",
     "sortAge": "العمر",

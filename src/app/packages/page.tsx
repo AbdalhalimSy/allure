@@ -24,7 +24,7 @@ import Button from "@/components/ui/Button";
 export default function PackagesPage() {
   const router = useRouter();
   const { data: user } = useAuth();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -45,12 +45,12 @@ export default function PackagesPage() {
         setActiveProfileId(parseInt(profileId));
       }
     }
-  }, []);
+  }, [locale]);
 
   const loadPackages = async () => {
     try {
       setLoading(true);
-      const response = await getSubscriptionPackages();
+      const response = await getSubscriptionPackages(locale);
       if (response.status === "success" && Array.isArray(response.data)) {
         setPackages(response.data);
         // Auto-select the first package if available

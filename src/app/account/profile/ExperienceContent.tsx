@@ -77,7 +77,6 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
   const addEntry = () => {
     const newEntry: ExperienceEntry = {
       title: '',
-      start_date: null,
       end_date: null,
       is_current: false,
       description: '',
@@ -124,15 +123,6 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
       }
       
       // Validate year limits (must not be greater than current year/2025)
-      if (e.start_date) {
-        const startYear = new Date(e.start_date).getFullYear();
-        const startDate = new Date(e.start_date);
-        if (startYear > currentYear || startDate > maxDate) {
-          toast.error(translate('account.experience.errors.futureDate', 'Date cannot be in the future'));
-          return false;
-        }
-      }
-      
       if (e.end_date) {
         const endYear = new Date(e.end_date).getFullYear();
         const endDate = new Date(e.end_date);
@@ -140,14 +130,6 @@ export default function ExperienceContent({ onNext, onBack }: ExperienceContentP
           toast.error(translate('account.experience.errors.yearLimit', `Year must not be greater than ${currentYear}`));
           return false;
         }
-      }
-      
-      // Validate date order: start must be before or equal to end
-      const start = e.start_date;
-      const end = e.end_date;
-      if (start && end && new Date(start) > new Date(end)) {
-        toast.error(translate('account.experience.errors.dateOrder', 'Start date must be before or equal to end date'));
-        return false;
       }
     }
     return true;

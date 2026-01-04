@@ -30,7 +30,7 @@ import { getActiveProfileId } from "@/lib/api/client";
 
 export default function BillingPage() {
   const { user } = useAuth();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const navItems = useMemo(
     () => getAccountNavItems(user?.profile),
     [user?.profile?.progress_step]
@@ -69,7 +69,7 @@ export default function BillingPage() {
       setError(t("account.billing.errors.selectProfile"));
       setLoading(false);
     }
-  }, [t]);
+  }, [t, locale]);
 
   useEffect(() => {
     if (hasSubscription) {
@@ -84,7 +84,7 @@ export default function BillingPage() {
         setLoading(true);
         const [packagesRes, statusRes, historyRes, paymentsRes] =
           await Promise.all([
-            getSubscriptionPackages(),
+            getSubscriptionPackages(locale),
             getSubscriptionStatus(profId),
             getSubscriptionHistory(profId),
             getPaymentHistory(profId),
@@ -115,7 +115,7 @@ export default function BillingPage() {
         setLoading(false);
       }
     },
-    [t]
+    [t, locale]
   );
 
   const handleSubscribe = async () => {
