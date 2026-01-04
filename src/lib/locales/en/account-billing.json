@@ -1,0 +1,87 @@
+{
+  "loading": "Loading billing information...",
+  "status": {
+    "title": "Subscription Status",
+    "description": "Your current subscription details",
+    "noActive": "No Active Subscription",
+    "noActiveDesc": "Subscribe to a package to unlock all features",
+    "expired": "Subscription Expired",
+    "renewDesc": "Renew your subscription to continue accessing premium features",
+    "active": "Active Subscription",
+    "started": "Started",
+    "expires": "Expires",
+    "daysRemaining": "days remaining",
+    "expiringSoon": "⚠️ Your subscription is expiring soon! Renew now to avoid interruption."
+  },
+  "tabs": {
+    "plans": "Available Plans",
+    "history": "Subscription History",
+    "payments": "Payment History"
+  },
+  "packages": {
+    "title": "Available Packages",
+    "description": "Choose a subscription package that fits your needs",
+    "noPackages": "No packages available at this time. Please check back later."
+  },
+  "coupon": {
+    "label": "Have a coupon code?",
+    "placeholder": "Enter coupon code",
+    "apply": "Apply",
+    "applied": "Coupon Applied",
+    "discount": "discount",
+    "off": "off",
+    "publicCoupon": "Public coupon",
+    "privateCoupon": "Private coupon",
+    "remove": "Remove",
+    "validating": "Validating...",
+    "invalid": "Invalid coupon code",
+    "errors": {
+      "required": "Coupon code is required",
+      "invalid": "This coupon code is not valid",
+      "invalidForPackageOrProfile": "Invalid coupon code for this package or profile"
+    }
+  },
+  "order": {
+    "title": "Complete Your Order",
+    "summary": "Order Summary",
+    "package": "Package",
+    "originalPrice": "Original Price",
+    "discount": "Discount",
+    "total": "Total",
+    "youSave": "You save"
+  },
+  "subscribe": "Subscribe Now",
+  "processing": "Processing...",
+  "errors": {
+    "selectProfile": "Please select a profile first",
+    "load": "Failed to load subscription data",
+    "create": "Failed to create subscription"
+  },
+  "history": {
+    "title": "Subscription History",
+    "description": "View all your past and current subscriptions",
+    "noHistory": "No Subscription History",
+    "noHistoryDesc": "Your subscription history will appear here once you subscribe",
+    "active": "Active",
+    "expired": "Expired",
+    "purchased": "Purchased on"
+  },
+  "payments": {
+    "title": "Payment History",
+    "description": "View all your payment transactions",
+    "totalSpent": "Total Spent",
+    "noPayments": "No Payment History",
+    "noPaymentsDesc": "Your payment history will appear here once you make a purchase",
+    "date": "Date",
+    "package": "Package",
+    "method": "Method",
+    "reference": "Reference",
+    "amount": "Amount",
+    "status": "Status",
+    "creditCard": "Credit Card",
+    "debitCard": "Debit Card",
+    "bankTransfer": "Bank Transfer",
+    "cash": "Cash",
+    "paid": "Paid"
+  }
+}

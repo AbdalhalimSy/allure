@@ -1,0 +1,40 @@
+{
+  "title": "المظهر",
+  "description": "شارك تفاصيل مظهرك وقياساتك",
+  "loading": "جاري تحميل المظهر...",
+  "success": "تم تحديث بيانات المظهر",
+  "errors": {
+    "loadFailed": "تعذر تحميل خيارات المظهر",
+    "requiredField": "يرجى تعبئة {{field}}",
+    "profileMissing": "معرّف الملف غير متوفر",
+    "saveFailed": "تعذر تحديث بيانات المظهر"
+  },
+  "fields": {
+    "hairColor": "لون الشعر",
+    "hairType": "نوع الشعر",
+    "hairLength": "طول الشعر",
+    "eyeColor": "لون العينين",
+    "height": "الطول",
+    "shoeSize": "مقاس الحذاء",
+    "tshirtSize": "مقاس القميص",
+    "pantsSize": "مقاس البنطال",
+    "jacketSize": "مقاس السترة",
+    "chest": "الصدر",
+    "bust": "القياس",
+    "waist": "الخصر"
+  },
+  "placeholders": {
+    "selectHairColor": "اختر لون الشعر",
+    "selectHairType": "اختر نوع الشعر",
+    "selectHairLength": "اختر طول الشعر",
+    "selectEyeColor": "اختر لون العينين",
+    "height": "مثال: 175.5",
+    "shoe": "مثال: 43.5",
+    "selectSize": "اختر المقاس",
+    "pants": "مثال: 32/32 أو M",
+    "jacket": "مثال: 50 EU أو L",
+    "chest": "مثال: 95.5",
+    "bust": "مثال: 88.5",
+    "waist": "مثال: 72.5"
+  }
+}

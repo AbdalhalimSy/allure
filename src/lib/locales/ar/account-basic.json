@@ -1,0 +1,57 @@
+{
+  "title": "المعلومات الأساسية",
+  "description": "حدّث بياناتك الشخصية ومعلومات التواصل",
+  "loading": "جاري تحميل المعلومات الأساسية...",
+  "success": "تم تحديث الملف بنجاح",
+  "errors": {
+    "lookups": "تعذر تحميل بيانات النموذج",
+    "nameRequired": "الاسم الأول واسم العائلة مطلوبان",
+    "phoneRequired": "رقما الجوال والواتساب مطلوبان",
+    "genderRequired": "النوع مطلوب",
+    "dobRequired": "تاريخ الميلاد مطلوب",
+    "countryRequired": "بلد الإقامة مطلوب",
+    "nationalityRequired": "يرجى اختيار جنسية واحدة على الأقل",
+    "nationalityLimit": "يمكنك اختيار حتى جنسيتين",
+    "ethnicityRequired": "يرجى اختيار أصل واحد على الأقل",
+    "ethnicityLimit": "يمكنك اختيار حتى أصلين",
+    "saveFailed": "تعذر تحديث الملف"
+  },
+  "fields": {
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "emailDescription": "البريد المعتمد للتنبيهات",
+    "mobile": "رقم الجوال",
+    "whatsapp": "رقم الواتساب",
+    "differentWhatsApp": "رقم واتساب مختلف",
+    "dob": "تاريخ الميلاد",
+    "gender": "النوع",
+    "country": "بلد الإقامة",
+    "nationalities": "الجنسيات",
+    "nationalitiesDescription": "يمكنك اختيار حتى جنسيتين",
+    "nationality": "اختر الجنسية",
+    "ethnicities": "الأصول",
+    "ethnicitiesDescription": "يمكنك اختيار حتى أصلين",
+    "ethnicity": "اختر الأصل"
+  },
+  "placeholders": {
+    "firstName": "أحمد",
+    "lastName": "علي",
+    "email": "you@example.com",
+    "phone": "52 342 9898",
+    "selectGender": "اختر النوع",
+    "selectCountry": "اختر الدولة",
+    "selectNationalities": "اختر الجنسيات...",
+    "selectEthnicities": "اختر الأصول..."
+  },
+  "johnExample": "أحمد",
+  "doeExample": "علي",
+  "emailExample": "ahmed.ali@example.com",
+  "phoneExample": "123-4567",
+  "genderOptions": {
+    "male": "ذكر",
+    "female": "أنثى",
+    "other": "آخر",
+    "preferNot": "أفضل عدم التحديد"
+  }
+}

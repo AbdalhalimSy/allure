@@ -1,0 +1,63 @@
+{
+  "title": "Account Settings",
+  "subtitle": "Manage your account settings and preferences",
+  "profile": "Profile",
+  "progress": "Progress",
+  "profileComplete": "Profile Complete",
+  "buttons": {
+    "saving": "Saving..."
+  },
+  "section": {
+    "profile": "Profile Setup",
+    "professional": "Professional Information",
+    "account": "Account & Security"
+  },
+  "status": {
+    "approvedTitle": "approved",
+    "approvedDescription": "Your account has been approved and is active.",
+    "pendingTitle": "pending",
+    "pendingDescription": "Your account is pending review. We'll notify you once it's approved.",
+    "rejectedTitle": "rejected",
+    "rejectedDescription": "Your account application was not approved. Please contact support for details.",
+    "ariaLabel": "Approval status: {{status}}",
+    "approved": "approved",
+    "pending": "pending",
+    "rejected": "rejected"
+  },
+  "nav": {
+    "profile": "Profile Setup",
+    "basic": "Basic Information",
+    "appearance": "Appearance",
+    "profession": "Profession",
+    "experience": "Experience",
+    "portfolio": "Portfolio",
+    "photos": "Profile Photos",
+    "security": "Security & Privacy",
+    "notifications": "Notifications",
+    "billing": "Billing & Plans"
+  },
+  "notifications": {
+    "title": "Notification Preferences",
+    "description": "Choose how you want to be notified about activity",
+    "channels": {
+      "email": "Email",
+      "push": "Push"
+    },
+    "categories": {
+      "activity": "Account Activity",
+      "projects": "Projects & Updates",
+      "marketing": "Marketing"
+    },
+    "items": {
+      "login": "Login from new device",
+      "password": "Password changes",
+      "settings": "Account settings updates",
+      "projectAssigned": "New project assigned",
+      "projectStatus": "Project status changes",
+      "comments": "Comments on your work",
+      "productUpdates": "Product updates and news",
+      "tips": "Tips and tutorials",
+      "offers": "Special offers"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "loading": "Loading security settings...",
+  "password": {
+    "title": "Change Password",
+    "description": "Update your password regularly to keep your account secure",
+    "fields": {
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm New Password"
+    },
+    "placeholders": {
+      "current": "Enter current password",
+      "new": "Enter new password",
+      "confirm": "Confirm new password"
+    },
+    "update": "Update Password"
+  },
+  "twoFactor": {
+    "title": "Two-Factor Authentication",
+    "description": "Add an extra layer of security to your account",
+    "method": "Authenticator App",
+    "status": "Not enabled",
+    "enable": "Enable"
+  },
+  "sessions": {
+    "title": "Active Sessions",
+    "description": "Manage devices where you're currently logged in",
+    "mac": "Chrome on macOS",
+    "iphone": "Safari on iPhone",
+    "location": "Los Angeles, CA",
+    "active": "Active now",
+    "revoke": "Revoke"
+  },
+  "privacy": {
+    "title": "Privacy Settings",
+    "search": "Show profile in search results",
+    "email": "Allow others to see my email",
+    "status": "Show my activity status"
+  }
+}

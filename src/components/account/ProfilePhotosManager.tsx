@@ -88,7 +88,7 @@ export default function ProfilePhotosManager() {
   };
 
   const handleDelete = async (photoId: number) => {
-    if (!confirm(t("accountSettings.profilePhotos.confirmDelete"))) return;
+    if (!confirm(t("account.profilePhotos.confirmDelete"))) return;
 
     try {
       setError(null);
@@ -109,7 +109,7 @@ export default function ProfilePhotosManager() {
       return (
         <div className="absolute top-3 right-3 bg-linear-to-r from-yellow-400 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
           <TbStar className="w-3.5 h-3.5" />
-          {t("accountSettings.profilePhotos.badges.active")}
+          {t("account.profilePhotos.badges.active")}
         </div>
       );
     }
@@ -119,21 +119,21 @@ export default function ProfilePhotosManager() {
         return (
           <div className="absolute top-3 right-3 bg-linear-to-r from-green-400 to-green-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbCheck className="w-3.5 h-3.5" />
-            {t("accountSettings.profilePhotos.badges.approved")}
+            {t("account.profilePhotos.badges.approved")}
           </div>
         );
       case "pending":
         return (
           <div className="absolute top-3 right-3 bg-linear-to-r from-orange-400 to-orange-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbClock className="w-3.5 h-3.5" />
-            {t("accountSettings.profilePhotos.badges.pending")}
+            {t("account.profilePhotos.badges.pending")}
           </div>
         );
       case "rejected":
         return (
           <div className="absolute top-3 right-3 bg-linear-to-r from-red-400 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm">
             <TbX className="w-3.5 h-3.5" />
-            {t("accountSettings.profilePhotos.badges.rejected")}
+            {t("account.profilePhotos.badges.rejected")}
           </div>
         );
     }
@@ -215,8 +215,8 @@ export default function ProfilePhotosManager() {
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   {approvedPhoto
-                    ? t("accountSettings.profilePhotos.sidebar.activeStatus")
-                    : t("accountSettings.profilePhotos.sidebar.noPhoto")}
+                    ? t("account.profilePhotos.sidebar.activeStatus")
+                    : t("account.profilePhotos.sidebar.noPhoto")}
                 </p>
               </div>
             </div>
@@ -229,7 +229,7 @@ export default function ProfilePhotosManager() {
                     {photos.length}
                   </div>
                   <div className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("accountSettings.profilePhotos.sidebar.totalPhotos")}
+                    {t("account.profilePhotos.sidebar.totalPhotos")}
                   </div>
                 </div>
                 <div>
@@ -240,7 +240,7 @@ export default function ProfilePhotosManager() {
                     }
                   </div>
                   <div className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("accountSettings.profilePhotos.sidebar.approvedPhotos")}
+                    {t("account.profilePhotos.sidebar.approvedPhotos")}
                   </div>
                 </div>
                 <div>
@@ -251,7 +251,7 @@ export default function ProfilePhotosManager() {
                     }
                   </div>
                   <div className="text-xs text-gray-600 dark:text-gray-400">
-                    {t("accountSettings.profilePhotos.sidebar.pendingPhotos")}
+                    {t("account.profilePhotos.sidebar.pendingPhotos")}
                   </div>
                 </div>
               </div>
@@ -268,10 +268,10 @@ export default function ProfilePhotosManager() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
-                  {t("accountSettings.profilePhotos.sidebar.guidelines")}
+                  {t("account.profilePhotos.sidebar.guidelines")}
                 </p>
                 <p className="text-xs text-blue-700 dark:text-blue-300">
-                  {t("accountSettings.profilePhotos.sidebar.guidelinesText")}
+                  {t("account.profilePhotos.sidebar.guidelinesText")}
                 </p>
               </div>
             </div>
@@ -284,10 +284,10 @@ export default function ProfilePhotosManager() {
         {/* Header */}
         <div>
           <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-            {t("accountSettings.profilePhotos.title")}
+            {t("account.profilePhotos.title")}
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            {t("accountSettings.profilePhotos.description")}
+            {t("account.profilePhotos.description")}
           </p>
         </div>
 
@@ -323,18 +323,18 @@ export default function ProfilePhotosManager() {
               </div>
               <p className="mb-2 text-base font-semibold text-gray-700 dark:text-gray-200">
                 {uploading ? (
-                  t("accountSettings.profilePhotos.upload.uploading")
+                  t("account.profilePhotos.upload.uploading")
                 ) : (
                   <>
                     <span className="text-primary">
-                      {t("accountSettings.profilePhotos.upload.label")}
+                      {t("account.profilePhotos.upload.label")}
                     </span>{" "}
-                    {t("accountSettings.profilePhotos.upload.dragDrop")}
+                    {t("account.profilePhotos.upload.dragDrop")}
                   </>
                 )}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t("accountSettings.profilePhotos.upload.fileFormat")}
+                {t("account.profilePhotos.upload.fileFormat")}
               </p>
             </div>
             <input
@@ -387,17 +387,17 @@ export default function ProfilePhotosManager() {
                 <div className="p-5">
                   <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                     <TbStar className="w-5 h-5 text-yellow-500" />
-                    {t("accountSettings.profilePhotos.photos.current")}
+                    {t("account.profilePhotos.photos.current")}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    {t("accountSettings.profilePhotos.photos.currentDesc")}
+                    {t("account.profilePhotos.photos.currentDesc")}
                   </p>
                   <button
                     onClick={() => handleDelete(approvedPhoto.id)}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
                   >
                     <TbTrash className="w-4 h-4" />
-                    {t("accountSettings.profilePhotos.photos.deletePhoto")}
+                    {t("profilePhotos.photos.deletePhoto")}
                   </button>
                 </div>
               </div>
@@ -418,17 +418,17 @@ export default function ProfilePhotosManager() {
                 <div className="p-5">
                   <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                     <TbClock className="w-5 h-5 text-orange-500" />
-                    {t("accountSettings.profilePhotos.photos.pending")}
+                    {t("account.profilePhotos.photos.pending")}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    {t("accountSettings.profilePhotos.photos.pendingDesc")}
+                    {t("account.profilePhotos.photos.pendingDesc")}
                   </p>
                   <button
                     onClick={() => handleDelete(pendingPhoto.id)}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
                   >
                     <TbTrash className="w-4 h-4" />
-                    {t("accountSettings.profilePhotos.photos.deletePhoto")}
+                    {t("account.profilePhotos.photos.deletePhoto")}
                   </button>
                 </div>
               </div>
@@ -441,7 +441,7 @@ export default function ProfilePhotosManager() {
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <TbX className="w-6 h-6 text-red-500" />
-              {t("accountSettings.profilePhotos.rejected.title")}
+              {t("account.profilePhotos.rejected.title")}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {rejectedPhotos.map((photo) => (
@@ -463,7 +463,7 @@ export default function ProfilePhotosManager() {
                       className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
                     >
                       <TbTrash className="w-4 h-4" />
-                      {t("accountSettings.profilePhotos.photos.delete")}
+                      {t("account.profilePhotos.photos.delete")}
                     </button>
                   </div>
                 </div>
@@ -479,10 +479,10 @@ export default function ProfilePhotosManager() {
               <TbCamera className="w-16 h-16 text-gray-400 dark:text-gray-500" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              {t("accountSettings.profilePhotos.empty.title")}
+              {t("account.profilePhotos.empty.title")}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-              {t("accountSettings.profilePhotos.empty.description")}
+              {t("account.profilePhotos.empty.description")}
             </p>
           </div>
         )}
@@ -498,10 +498,10 @@ export default function ProfilePhotosManager() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                  {t("accountSettings.profilePhotos.info.title")}
+                  {t("account.profilePhotos.info.title")}
                 </p>
                 <p className="text-sm text-blue-800 dark:text-blue-200">
-                  {t("accountSettings.profilePhotos.info.description")}
+                  {t("account.profilePhotos.info.description")}
                 </p>
               </div>
             </div>

@@ -34,14 +34,14 @@ export default function UserMenu({
       setIsSwitchingProfile(true);
       await switchProfile(profileId);
       toast.success(
-        t("accountSettings.profile.switched") || "Profile switched successfully"
+        t("profile.switched") || "Profile switched successfully"
       );
       onClose();
       router.refresh();
     } catch (error) {
       logger.error("Failed to switch profile", error);
       toast.error(
-        t("accountSettings.profile.switchFailed") || "Failed to switch profile"
+        t("profile.switchFailed") || "Failed to switch profile"
       );
     } finally {
       setIsSwitchingProfile(false);
@@ -86,10 +86,10 @@ export default function UserMenu({
               />
               <span className="text-xs font-medium capitalize">
                 {user.profile.approval_status === "approved"
-                  ? t("accountSettings.account.status.approved")
+                  ? t("account.status.approved")
                   : user.profile.approval_status === "pending"
-                  ? t("accountSettings.account.status.pending")
-                  : t("accountSettings.account.status.rejected")}
+                  ? t("account.status.pending")
+                  : t("account.status.rejected")}
               </span>
             </div>
           )}
@@ -118,7 +118,7 @@ export default function UserMenu({
                   </div>
                   {profile.is_primary && (
                     <div className="text-xs text-gray-500 ">
-                      {t("accountSettings.profile.primary") || "Primary"}
+                      {t("profile.primary") || "Primary"}
                     </div>
                   )}
                 </div>

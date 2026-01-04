@@ -1,0 +1,40 @@
+{
+  "title": "Work Experience",
+  "description": "Add your professional experience entries",
+  "loading": "Loading experiences...",
+  "empty": "No experiences added yet",
+  "count": {
+    "one": "1 experience added",
+    "other": "{{count}} experiences added"
+  },
+  "addEntry": "Add Experience",
+  "cardTitle": "Experience {{index}}",
+  "fields": {
+    "title": "Title",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "current": "Current",
+    "description": "Description",
+    "attachment": "Attachment (optional)"
+  },
+  "placeholders": {
+    "title": "e.g., Photographer",
+    "description": "Brief description of your role"
+  },
+  "validation": {
+    "incomplete": "Complete required fields"
+  },
+  "buttons": {
+    "saving": "Saving..."
+  },
+  "errors": {
+    "load": "Failed to load experiences",
+    "save": "Failed to save experiences",
+    "titleRequired": "Title is required",
+    "endDateRequired": "End date is required for past experiences",
+    "futureDate": "Date cannot be in the future",
+    "yearLimit": "Year must not be greater than {{year}}",
+    "dateOrder": "Start date must be before or equal to end date"
+  },
+  "success": "Experiences saved successfully!"
+}

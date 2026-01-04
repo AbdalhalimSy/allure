@@ -238,6 +238,7 @@
       "placeholderDeadline": "2025-12-01"
     },
     "content": {
+      "dragAndDrop": "Click to upload or drag and drop",
       "hero": {
         "kicker": "Find Talents",
         "badgeCampaigns": "Campaign Acceleration",

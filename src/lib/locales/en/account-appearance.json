@@ -1,0 +1,40 @@
+{
+  "title": "Appearance",
+  "description": "Provide your physical appearance and measurements",
+  "loading": "Loading Appearance...",
+  "success": "Appearance updated",
+  "errors": {
+    "loadFailed": "Failed to load appearance options",
+    "requiredField": "Please fill {{field}}",
+    "profileMissing": "Profile ID missing",
+    "saveFailed": "Failed to update appearance"
+  },
+  "fields": {
+    "hairColor": "Hair Color",
+    "hairType": "Hair Type",
+    "hairLength": "Hair Length",
+    "eyeColor": "Eye Color",
+    "height": "Height",
+    "shoeSize": "Shoe Size",
+    "tshirtSize": "T-Shirt Size",
+    "pantsSize": "Pants Size",
+    "jacketSize": "Jacket Size",
+    "chest": "Chest",
+    "bust": "Bust",
+    "waist": "Waist"
+  },
+  "placeholders": {
+    "selectHairColor": "Select hair color",
+    "selectHairType": "Select hair type",
+    "selectHairLength": "Select hair length",
+    "selectEyeColor": "Select eye color",
+    "height": "e.g., 175.5",
+    "shoe": "e.g., 43.5",
+    "selectSize": "Select size",
+    "pants": "e.g., 32/32 or M",
+    "jacket": "e.g., 50 EU or L",
+    "chest": "e.g., 95.5",
+    "bust": "e.g., 88.5",
+    "waist": "e.g., 72.5"
+  }
+}

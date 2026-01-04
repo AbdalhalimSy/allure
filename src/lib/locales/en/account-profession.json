@@ -1,0 +1,132 @@
+{
+  "title": "Professional Information",
+  "description": "Select your professions and provide the required information",
+  "loading": "Loading professional information...",
+  "selector": {
+    "label": "Select Your Professions & Specializations",
+    "selected": "selected",
+    "specializations": "specializations selected",
+    "search": "Search specializations...",
+    "noResults": "No specializations found",
+    "empty": "Select professions above to get started",
+    "profession": "Profession",
+    "subProfession": "Sub-Profession",
+    "noneGeneral": "None (General)",
+    "placeholder": "Select profession",
+    "noSub": "No sub-professions required for this role."
+  },
+  "media": {
+    "title": "Media Uploads",
+    "hint": "Keep files under 50MB; use clear, recent media.",
+    "photo": "Photo",
+    "video": "Video",
+    "audio": "Audio",
+    "languages": "Languages"
+  },
+  "uploads": {
+    "photosLabel": "Photo",
+    "photosTitle": "Click to upload photo",
+    "photosSubtitle": "PNG, JPG up to 5MB",
+    "videoLabel": "Video",
+    "videoTitle": "Click to upload video",
+    "videoSubtitle": "MP4, MOV up to 50MB",
+    "audioLabel": "Audio",
+    "audioTitle": "Click to upload audio",
+    "audioSubtitle": "MP3, WAV up to 20MB",
+    "photo": "Photo",
+    "video": "Video",
+    "audio": "Audio"
+  },
+  "languages": {
+    "label": "Language",
+    "placeholder": "Select a language...",
+    "options": {
+      "english": "English",
+      "arabic": "Arabic",
+      "french": "French",
+      "spanish": "Spanish",
+      "german": "German",
+      "italian": "Italian",
+      "portuguese": "Portuguese",
+      "russian": "Russian",
+      "chinese": "Chinese",
+      "japanese": "Japanese",
+      "korean": "Korean",
+      "hindi": "Hindi"
+    }
+  },
+  "sizes": {
+    "label": "Sizes in Appearance"
+  },
+  "errors": {
+    "load": "Failed to load professions",
+    "selectProfession": "Please select at least one profession with a sub-profession",
+    "photoRequired": "Please upload at least one photo for profession #{index}",
+    "videoRequired": "Please upload at least one video for profession #{index}",
+    "audioRequired": "Please upload at least one audio for profession #{index}",
+    "languageRequired": "Please select at least one language for profession #{index}",
+    "save": "Failed to save professional information",
+    "invalidEntry": "Invalid profession selected for entry {{index}}",
+    "photoFor": "Photo is required for {{label}}",
+    "videoFor": "Video is required for {{label}}",
+    "audioFor": "Audio is required for {{label}}",
+    "languageFor": "At least one language is required for {{label}}",
+    "socialFor": "At least one social media link is required for {{label}}"
+  },
+  "success": "Professional information saved successfully",
+  "buttons": {
+    "save": "Save Professional Information",
+    "saving": "Saving..."
+  },
+  "sectionLabel": "Professional Profile",
+  "mediaHint": "Use JPG/PNG images and MP4 videos",
+  "footerHint": "You can update your professional information at any time.",
+  "helper": "Requirements adapt based on each profession and sub-profession.",
+  "validation": {
+    "incomplete": "Complete required fields"
+  },
+  "cardTitle": "Profession {{index}}",
+  "emptyTitle": "Add your first profession",
+  "emptyDesc": "Start with your main role, then add supporting roles or specialties.",
+  "empty": "No professions added yet",
+  "count": {
+    "one": "1 profession added",
+    "other": "{{count}} professions added"
+  },
+  "addEntry": "Add Profession",
+  "addEntryDesc": "Showcase multiple talents and skills",
+  "upload": {
+    "photo": "Photo",
+    "video": "Video",
+    "audio": "Audio",
+    "clickToUpload": "Click to upload",
+    "orDragDrop": "or drag and drop",
+    "uploading": "Uploading...",
+    "fileSizeExceeds": "File size exceeds",
+    "invalidFileType": "Invalid file type. Please upload a",
+    "dragAndDrop": "Click to upload or drag and drop",
+    "selectFiles": "Click to select or drag & drop files (images/videos up to 100MB)",
+    "file": "file"
+  },
+  "languageManager": {
+    "add": "+ Add Language",
+    "empty": "No languages added yet",
+    "voiceSample": "Upload voice sample for"
+  },
+  "socials": {
+    "label": "Social Media Links",
+    "add": "Add Link",
+    "addFirst": "Add Your First Link",
+    "empty": "No social media links added yet",
+    "followers": "Followers (optional)",
+    "platform": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter/X",
+      "youtube": "YouTube",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok",
+      "other": "Other"
+    }
+  }
+}

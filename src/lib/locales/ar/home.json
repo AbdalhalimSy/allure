@@ -238,6 +238,7 @@
       "placeholderDeadline": "2025-12-01"
     },
     "content": {
+      "dragAndDrop": "انقر لرفع الملفات أو اسحب وأسقط",
       "hero": {
         "kicker": "منصة كاستينج حديثة",
         "badgeCampaigns": "تسريع الحملات",

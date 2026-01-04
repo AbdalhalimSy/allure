@@ -1,0 +1,57 @@
+{
+  "title": "Basic Information",
+  "description": "Update your personal details and contact information",
+  "loading": "Loading basic information...",
+  "success": "Profile updated successfully",
+  "errors": {
+    "lookups": "Failed to load form options",
+    "nameRequired": "First name and last name are required",
+    "phoneRequired": "Mobile and WhatsApp numbers are required",
+    "genderRequired": "Gender is required",
+    "dobRequired": "Date of birth is required",
+    "countryRequired": "Country of residence is required",
+    "nationalityRequired": "Select at least one nationality",
+    "nationalityLimit": "You can select up to 2 nationalities",
+    "ethnicityRequired": "Select at least one ethnicity",
+    "ethnicityLimit": "You can select up to 2 ethnicities",
+    "saveFailed": "Failed to update profile"
+  },
+  "fields": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "emailDescription": "Your primary email for notifications",
+    "mobile": "Mobile Number",
+    "whatsapp": "WhatsApp Number",
+    "differentWhatsApp": "Different number for WhatsApp",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "country": "Country of Residence",
+    "nationalities": "Nationalities",
+    "nationalitiesDescription": "Select up to 2 nationalities",
+    "nationality": "Select nationality",
+    "ethnicities": "Ethnicities",
+    "ethnicitiesDescription": "Select up to 2 ethnicities",
+    "ethnicity": "Select ethnicity"
+  },
+  "placeholders": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "52 342 9898",
+    "selectGender": "Select gender",
+    "selectCountry": "Select country",
+    "selectNationalities": "Select nationalities...",
+    "selectEthnicities": "Select ethnicities..."
+  },
+  "johnExample": "John",
+  "doeExample": "Doe",
+  "emailExample": "john.doe@example.com",
+  "phoneExample": "123-4567",
+  "genderOptions": {
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "preferNot": "Prefer not to say"
+  }
+}

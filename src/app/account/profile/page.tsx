@@ -77,31 +77,31 @@ export default function ProfilePage() {
       {
         id: "basic",
         label: "Basic Information",
-        labelKey: "accountSettings.account.nav.basic",
+        labelKey: "account.nav.basic",
         icon: <TbUser />,
       },
       {
         id: "appearance",
         label: "Appearance",
-        labelKey: "accountSettings.account.nav.appearance",
+        labelKey: "account.nav.appearance",
         icon: <TbSparkles />,
       },
       {
         id: "profession",
         label: "Professions",
-        labelKey: "accountSettings.account.nav.profession",
+        labelKey: "account.nav.profession",
         icon: <TbBriefcase />,
       },
       {
         id: "experience",
         label: "Experience",
-        labelKey: "accountSettings.account.nav.experience",
+        labelKey: "account.nav.experience",
         icon: <TbStar />,
       },
       {
         id: "portfolio",
         label: "Portfolio",
-        labelKey: "accountSettings.account.nav.portfolio",
+        labelKey: "account.nav.portfolio",
         icon: <TbPhoto />,
       },
     ];

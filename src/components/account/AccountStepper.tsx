@@ -91,14 +91,14 @@ export default function AccountStepper({
               >
                 {/* Step Circle */}
                 <div
-                  className={`relative z-10 flex h-8 sm:h-10 w-8 sm:w-10 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 ${
+                  className={`relative z-10 flex h-8 sm:h-10 w-8 sm:w-10 items-center justify-center rounded-full border-2 transition-all duration-300 shrink-0 ${
                     completed
                       ? "border-[#c49a47] bg-[#c49a47] text-white"
                       : active
-                        ? "border-[#c49a47] bg-white text-[#c49a47] "
-                        : accessible
-                          ? "border-gray-300 bg-white text-gray-400 "
-                          : "border-gray-200 bg-gray-100 text-gray-300 "
+                      ? "border-[#c49a47] bg-white text-[#c49a47] "
+                      : accessible
+                      ? "border-gray-300 bg-white text-gray-400 "
+                      : "border-gray-200 bg-gray-100 text-gray-300 "
                   }`}
                 >
                   {completed ? (
@@ -115,8 +115,8 @@ export default function AccountStepper({
                       active || completed
                         ? "text-[#c49a47]"
                         : accessible
-                          ? "text-gray-700 "
-                          : "text-gray-400 "
+                        ? "text-gray-700 "
+                        : "text-gray-400 "
                     }`}
                   >
                     {t(step.labelKey)}

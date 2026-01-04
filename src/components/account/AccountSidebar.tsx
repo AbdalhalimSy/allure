@@ -88,7 +88,7 @@ export default function AccountSidebar({
           relative overflow-hidden
           ${
             active
-              ? "bg-gradient-to-r from-[#c49a47] to-[#d4af57] text-white shadow-md"
+              ? "bg-linear-to-r from-[#c49a47] to-[#d4af57] text-white shadow-md"
               : "text-gray-700 hover:bg-gray-50 active:bg-gray-100"
           }
         `}
@@ -162,21 +162,21 @@ export default function AccountSidebar({
       role="navigation"
       aria-label="Account settings navigation"
     >
-      {Object.entries(groupedItems).map(([section, items]) => (
+      {Object.entries(groupedItems).map(([section, items], index) => (
         <div key={section}>
-          {/* Section Header (only show if not default section) */}
           {section !== "default" && (
-            <div className="px-4 py-3 first:pt-0">
+            <div
+              className={`px-4 py-3 ${
+                index !== 0 ? "pt-4 border-t border-gray-100" : ""
+              }`}
+            >
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                {t(`accountSettings.sidebar.section.${section}`) || section}
+                {t(`account.section.${section}`) || section}
               </h3>
             </div>
           )}
 
-          {/* Section Items */}
-          <div
-            className={`space-y-1 ${section !== "default" ? "pl-2" : ""}`}
-          >
+          <div className={`space-y-1 ${section !== "default" ? "pl-2" : ""}`}>
             {items.map((item) => (
               <NavItemComponent key={item.id} item={item} />
             ))}
@@ -201,9 +201,10 @@ export default function AccountSidebar({
             {currentApprovalStatus && (
               <div className="border-b border-gray-100 px-4 py-3 bg-gray-50/50">
                 <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
-                  {t("accountSettings.sidebar.profile")}
+                  {t("account.profile")}
                 </p>
-                <div className={`
+                <div
+                  className={`
                   inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium
                   ${
                     currentApprovalStatus === "approved"
@@ -212,8 +213,10 @@ export default function AccountSidebar({
                       ? "bg-yellow-50 text-yellow-700 border border-yellow-200"
                       : "bg-red-50 text-red-700 border border-red-200"
                   }
-                `}>
-                  <span className={`
+                `}
+                >
+                  <span
+                    className={`
                     h-2 w-2 rounded-full
                     ${
                       currentApprovalStatus === "approved"
@@ -222,7 +225,8 @@ export default function AccountSidebar({
                         ? "bg-yellow-500"
                         : "bg-red-500"
                     }
-                  `} />
+                  `}
+                  />
                   <span className="capitalize">
                     {t(`account.status.${currentApprovalStatus}Title`) ||
                       currentApprovalStatus}
@@ -240,27 +244,32 @@ export default function AccountSidebar({
           {/* Quick Stats/Info Card (Optional - for future enhancement) */}
           <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 hidden xl:block">
             <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-3">
-              {t("accountSettings.sidebar.progress")}
+              {t("account.progress")}
             </p>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700">
-                  {t("accountSettings.sidebar.profileComplete")}
+                  {t("account.profileComplete")}
                 </span>
                 <span className="text-sm font-semibold text-[#c49a47]">
                   {Math.round(
-                    navItems.reduce((sum, item) => sum + (item.completion || 0), 0) /
-                      navItems.length
-                  )}%
+                    navItems.reduce(
+                      (sum, item) => sum + (item.completion || 0),
+                      0
+                    ) / navItems.length
+                  )}
+                  %
                 </span>
               </div>
               <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#c49a47] to-[#d4af57] rounded-full transition-all duration-500"
+                  className="h-full bg-linear-to-r from-[#c49a47] to-[#d4af57] rounded-full transition-all duration-500"
                   style={{
                     width: `${Math.round(
-                      navItems.reduce((sum, item) => sum + (item.completion || 0), 0) /
-                        navItems.length
+                      navItems.reduce(
+                        (sum, item) => sum + (item.completion || 0),
+                        0
+                      ) / navItems.length
                     )}%`,
                   }}
                 />

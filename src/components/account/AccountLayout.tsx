@@ -46,7 +46,7 @@ export default function AccountLayout({
       <div className="mb-6 sm:mb-8 text-start">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-            {t("accountSettings.account.title")}
+            {t("account.title")}
           </h1>
           {approvalStatus && translatedStatusTitle && (
             <div
@@ -67,7 +67,7 @@ export default function AccountLayout({
           )}
         </div>
         <p className="mt-2 text-sm sm:text-base text-gray-600">
-          {t("accountSettings.account.subtitle")}
+          {t("account.subtitle")}
         </p>
       </div>
 

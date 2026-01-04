@@ -1,0 +1,63 @@
+{
+  "title": "إعدادات الحساب",
+  "subtitle": "إدارة إعدادات وتفضيلات حسابك",
+  "profile": "الملف الشخصي",
+  "progress": "التقدم",
+  "profileComplete": "اكتمال الملف الشخصي",
+  "buttons": {
+    "saving": "جارٍ الحفظ..."
+  },
+  "section": {
+    "profile": "إعداد الملف الشخصي",
+    "professional": "المعلومات المهنية",
+    "account": "الحساب والأمان"
+  },
+  "status": {
+    "approvedTitle": "موافق عليه",
+    "approvedDescription": "تمت الموافقة على حسابك وهو نشط.",
+    "pendingTitle": "قيد الانتظار",
+    "pendingDescription": "حسابك قيد المراجعة. سنخطرك عند الموافقة.",
+    "rejectedTitle": "مرفوض",
+    "rejectedDescription": "لم يتم قبول طلب حسابك. يرجى التواصل مع الدعم للمزيد من التفاصيل.",
+    "ariaLabel": "حالة الموافقة: {{status}}",
+    "approved": "موافق عليه",
+    "pending": "قيد الانتظار",
+    "rejected": "مرفوض"
+  },
+  "nav": {
+    "profile": "إعداد الملف الشخصي",
+    "basic": "المعلومات الأساسية",
+    "appearance": "المظهر",
+    "profession": "المهنة",
+    "experience": "الخبرة",
+    "portfolio": "الأعمال",
+    "photos": "صور الملف الشخصي",
+    "security": "الأمان والخصوصية",
+    "notifications": "الإشعارات",
+    "billing": "الفوترة والباقات"
+  },
+  "notifications": {
+    "title": "تفضيلات الإشعارات",
+    "description": "اختر طريقة وصول التنبيهات إليك",
+    "channels": {
+      "email": "بريد إلكتروني",
+      "push": "إشعارات دفعية"
+    },
+    "categories": {
+      "activity": "نشاط الحساب",
+      "projects": "المشاريع والتحديثات",
+      "marketing": "التسويق"
+    },
+    "items": {
+      "login": "تسجيل الدخول من جهاز جديد",
+      "password": "تغييرات كلمة المرور",
+      "settings": "تعديلات إعدادات الحساب",
+      "projectAssigned": "تعيين مشروع جديد",
+      "projectStatus": "تغييرات حالة المشروع",
+      "comments": "تعليقات على عملك",
+      "productUpdates": "تحديثات المنتجات والأخبار",
+      "tips": "نصائح ودروس",
+      "offers": "عروض خاصة"
+    }
+  }
+}

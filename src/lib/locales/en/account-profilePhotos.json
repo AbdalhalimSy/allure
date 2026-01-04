@@ -1,0 +1,45 @@
+{
+  "title": "Profile Photos",
+  "description": "Upload and manage your profile photos. Your primary photo will be visible to others.",
+  "confirmDelete": "Are you sure you want to delete this photo?",
+  "badges": {
+    "active": "Active",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected"
+  },
+  "sidebar": {
+    "activeStatus": "Profile Picture Active",
+    "noPhoto": "No Approved Photos",
+    "totalPhotos": "Total Photos",
+    "approvedPhotos": "Approved",
+    "pendingPhotos": "Pending",
+    "guidelines": "Photo Guidelines",
+    "guidelinesText": "Use clear, well-lit photos with a plain background. Ensure your face is clearly visible."
+  },
+  "upload": {
+    "uploading": "Uploading...",
+    "label": "Click to upload",
+    "dragDrop": "or drag & drop",
+    "fileFormat": "JPEG, PNG, JPG, GIF or WEBP (max 5MB)"
+  },
+  "photos": {
+    "current": "Current Profile Picture",
+    "currentDesc": "This is your active profile picture visible to others",
+    "pending": "Pending Approval",
+    "pendingDesc": "This photo is waiting for admin approval",
+    "delete": "Delete Photo",
+    "deletePhoto": "Delete Photo"
+  },
+  "rejected": {
+    "title": "Rejected Photos"
+  },
+  "empty": {
+    "title": "No Photos Yet",
+    "description": "Upload your first photo to get started"
+  },
+  "info": {
+    "title": "Professional Photo Tips",
+    "description": "Use professional, clear photos where your face is clearly visible. Avoid group photos or heavily filtered images."
+  }
+}
