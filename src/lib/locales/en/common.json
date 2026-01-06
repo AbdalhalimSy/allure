@@ -62,6 +62,12 @@
     "terms": "Terms",
     "privacy": "Privacy Policy"
   },
+  "profile": {
+    "switched": "Profile switched successfully",
+    "switchFailed": "Failed to switch profile",
+    "primary": "Primary",
+    "switchTo": "Switch Profile"
+  },
   "languages": {
     "english": "English",
     "arabic": "Arabic"

@@ -10,17 +10,9 @@ import {
   Play,
   Sparkles,
 } from "lucide-react";
-
-interface HeroSlide {
-  title: string;
-  subtitle: string;
-  badge: string;
-  image: string;
-  pulse: string;
-}
+import { getBanners, type Banner } from "@/lib/api/banners";
 
 interface HeroBannerProps {
-  slides: HeroSlide[];
   isAuthenticated: boolean;
   hydrated: boolean;
   kicker: string;
@@ -36,7 +28,6 @@ interface HeroBannerProps {
 }
 
 export default function HeroBanner({
-  slides,
   isAuthenticated,
   hydrated,
   kicker,
@@ -44,65 +35,117 @@ export default function HeroBanner({
   ctaDashboard,
   ctaBrowse,
 }: HeroBannerProps) {
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Fetch banners from API
   useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await getBanners();
+        if (response.success && response.data && response.data.length > 0) {
+          setBanners(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to load banners:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
+  // Auto-play banners
+  useEffect(() => {
+    if (banners.length <= 1) return;
+    
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % banners.length);
     }, 6800);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [banners.length]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prev) => (prev + 1) % banners.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="relative min-h-[90vh] overflow-hidden bg-gray-900">
+        <div className="flex h-[90vh] items-center justify-center">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        </div>
+      </section>
+    );
+  }
+
+  // If no banners, don't render
+  if (banners.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative min-h-[90vh] overflow-hidden">
-      {/* Full-width background image */}
+      {/* Full-width background image/video */}
       <div className="absolute inset-0">
-        {slides.map((slide, idx) => (
+        {banners.map((banner, idx) => (
           <div
-            key={idx}
+            key={banner.id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
               idx === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="object-cover"
-              priority={idx === 0}
-              quality={90}
-            />
+            {banner.media_type === "video" ? (
+              <video
+                src={banner.media_url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Image
+                src={banner.media_url}
+                alt={banner.title || "Banner"}
+                fill
+                className="object-cover"
+                priority={idx === 0}
+                quality={90}
+              />
+            )}
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/60 to-black/30" />
           </div>
         ))}
       </div>
 
-      {/* Navigation arrows */}
-      <div className="absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 justify-between px-3 lg:px-6">
-        <button
-          aria-label="Previous slide"
-          onClick={prevSlide}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
-        >
-          <ChevronLeft className="h-6 w-6 rtl:scale-x-[-1]" />
-        </button>
-        <button
-          aria-label="Next slide"
-          onClick={nextSlide}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
-        >
-          <ChevronRight className="h-6 w-6 rtl:scale-x-[-1]" />
-        </button>
-      </div>
+      {/* Navigation arrows - only show if more than 1 banner */}
+      {banners.length > 1 && (
+        <div className="absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 justify-between px-3 lg:px-6">
+          <button
+            aria-label="Previous slide"
+            onClick={prevSlide}
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
+          >
+            <ChevronLeft className="h-6 w-6 rtl:scale-x-[-1]" />
+          </button>
+          <button
+            aria-label="Next slide"
+            onClick={nextSlide}
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white shadow-xl backdrop-blur-md transition hover:bg-white/30 hover:scale-110"
+          >
+            <ChevronRight className="h-6 w-6 rtl:scale-x-[-1]" />
+          </button>
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[calc(100vh-80px)] items-center px-12 py-20 lg:px-12 rad">
@@ -117,20 +160,12 @@ export default function HeroBanner({
               <span>{kicker}</span>
             </Link>
 
-            {/* Slide badge */}
-            <p className="text-sm uppercase tracking-[0.3em] text-white/90">
-              {slides[currentSlide].badge}
-            </p>
-
-            {/* Main heading */}
-            <h1 className="text-3xl font-bold leading-tight text-white sm:text-3xl xl:text-4xl">
-              {slides[currentSlide].title}
-            </h1>
-
-            {/* Subtitle */}
-            <p className="max-w-2xl text-xl text-white/90">
-              {slides[currentSlide].subtitle}
-            </p>
+            {/* Banner title */}
+            {banners[currentSlide]?.title && (
+              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl xl:text-5xl">
+                {banners[currentSlide].title}
+              </h1>
+            )}
 
             {/* Call to action buttons */}
             <div className="flex flex-wrap items-center gap-4 justify-center">
@@ -168,21 +203,23 @@ export default function HeroBanner({
         </div>
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-8 start-1/2 z-20 flex ltr:-translate-x-1/2 rtl:translate-x-1/2 gap-2">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentSlide(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
-            className={`h-2 rounded-full transition-all ${
-              idx === currentSlide
-                ? "w-8 bg-primary"
-                : "w-2 bg-white/50 hover:bg-white/80"
-            }`}
-          />
-        ))}
-      </div>
+      {/* Slide indicators - only show if more than 1 banner */}
+      {banners.length > 1 && (
+        <div className="absolute bottom-8 start-1/2 z-20 flex ltr:-translate-x-1/2 rtl:translate-x-1/2 gap-2">
+          {banners.map((banner, idx) => (
+            <button
+              key={banner.id}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Go to banner ${idx + 1}`}
+              className={`h-2 rounded-full transition-all ${
+                idx === currentSlide
+                  ? "w-8 bg-primary"
+                  : "w-2 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

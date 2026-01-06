@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
@@ -30,44 +30,11 @@ type Partner = {
   logo: string;
 };
 
-const heroArtwork = [
-  "https://images.unsplash.com/photo-1539782993767-cd2b2804c3d6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?q=80&w=2001&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1622839238991-d5a092234365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-];
-
 export default function HomePage() {
   // const router = useRouter();
   const { isAuthenticated, hydrated, activeProfileId } = useAuth();
   const { t, locale } = useI18n();
   const { getCountryId } = useCountryFilter();
-
-  const slides = useMemo(
-    () => [
-      {
-        badge: t("home.content.hero.badgeCampaigns"),
-        title: t("home.content.hero.slides.0.title"),
-        subtitle: t("home.content.hero.slides.0.subtitle"),
-        pulse: t("home.content.hero.slides.0.pulse"),
-        image: heroArtwork[0],
-      },
-      {
-        badge: t("home.content.hero.badgeProduction"),
-        title: t("home.content.hero.slides.1.title"),
-        subtitle: t("home.content.hero.slides.1.subtitle"),
-        pulse: t("home.content.hero.slides.1.pulse"),
-        image: heroArtwork[1],
-      },
-      {
-        badge: t("home.content.hero.badgePlatform"),
-        title: t("home.content.hero.slides.2.title"),
-        subtitle: t("home.content.hero.slides.2.subtitle"),
-        pulse: t("home.content.hero.slides.2.pulse"),
-        image: heroArtwork[2],
-      },
-    ],
-    [t]
-  );
 
   // const [professions, setProfessions] = useState<Profession[]>([]);
   // const [professionsLoading, setProfessionsLoading] = useState(false);
@@ -220,7 +187,6 @@ export default function HomePage() {
     <div className="bg-white text-gray-900 ">
       {/* Hero Banner */}
       <HeroBanner
-        slides={slides}
         isAuthenticated={isAuthenticated}
         hydrated={hydrated}
         kicker={t("home.content.hero.kicker")}

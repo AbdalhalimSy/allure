@@ -30,6 +30,7 @@ export default function TalentDetailModal({
     "all"
   );
   const [lightboxItem, setLightboxItem] = useState<LightboxItem | null>(null);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState<number>(0);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
@@ -48,6 +49,35 @@ export default function TalentDetailModal({
   const featurePhoto = photos.find((p) => p.featured_image) || photos[0];
   const languagesList = normalizeLanguages(profile.languages_spoken);
   const hasMedia = photos.length + videos.length + audios.length > 0;
+
+  // Build complete media list for lightbox navigation
+  const allMediaItems: LightboxItem[] = [
+    ...photos.map(p => ({ type: "photo" as const, url: p.url, thumbnail: null })),
+    ...videos.map(v => ({ type: "video" as const, url: v.url, thumbnail: (v as any).thumbnail_url || null })),
+    ...audios.map(a => ({ type: "audio" as const, url: a.url, thumbnail: null }))
+  ];
+
+  const handleOpenLightbox = (item: LightboxItem) => {
+    const index = allMediaItems.findIndex(m => m.url === item.url && m.type === item.type);
+    setCurrentMediaIndex(index >= 0 ? index : 0);
+    setLightboxItem(item);
+  };
+
+  const handleNextMedia = () => {
+    if (currentMediaIndex < allMediaItems.length - 1) {
+      const nextIndex = currentMediaIndex + 1;
+      setCurrentMediaIndex(nextIndex);
+      setLightboxItem(allMediaItems[nextIndex]);
+    }
+  };
+
+  const handlePreviousMedia = () => {
+    if (currentMediaIndex > 0) {
+      const prevIndex = currentMediaIndex - 1;
+      setCurrentMediaIndex(prevIndex);
+      setLightboxItem(allMediaItems[prevIndex]);
+    }
+  };
 
   return (
     <>
@@ -108,7 +138,7 @@ export default function TalentDetailModal({
                     audios={audios}
                     mediaTab={mediaTab}
                     onTabChange={setMediaTab}
-                    onOpenLightbox={setLightboxItem}
+                    onOpenLightbox={handleOpenLightbox}
                     t={t}
                   />
                 </div>
@@ -118,7 +148,14 @@ export default function TalentDetailModal({
         </div>
       </div>
 
-      <Lightbox item={lightboxItem} onClose={() => setLightboxItem(null)} />
+      <Lightbox 
+        item={lightboxItem} 
+        onClose={() => setLightboxItem(null)}
+        onPrevious={handlePreviousMedia}
+        onNext={handleNextMedia}
+        hasPrevious={currentMediaIndex > 0}
+        hasNext={currentMediaIndex < allMediaItems.length - 1}
+      />
     </>
   );
 }

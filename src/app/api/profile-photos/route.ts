@@ -5,7 +5,9 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureporta
 
 /**
  * GET /api/profile-photos
- * Fetch all profile photos for the authenticated user
+ * Fetch all profile photos for a specific profile
+ * 
+ * BREAKING CHANGE: Now requires profile_id query parameter
  */
 export async function GET(request: NextRequest) {
   try {
@@ -19,7 +21,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const response = await fetch(`${BACKEND_URL}/profile-photos`, {
+    // Get query parameters including profile_id (REQUIRED)
+    const { searchParams } = new URL(request.url);
+    const queryString = searchParams.toString();
+
+    const url = queryString
+      ? `${BACKEND_URL}/profile-photos?${queryString}`
+      : `${BACKEND_URL}/profile-photos`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: getAuthApiHeaders(request, token),
     });
@@ -43,6 +53,8 @@ export async function GET(request: NextRequest) {
 /**
  * POST /api/profile-photos
  * Upload a new profile photo
+ * 
+ * BREAKING CHANGE: Now requires profile_id in the request body
  */
 export async function POST(request: NextRequest) {
   try {

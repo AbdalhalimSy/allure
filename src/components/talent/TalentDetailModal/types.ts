@@ -10,6 +10,15 @@ export interface LightboxItem {
   thumbnail?: string | null;
 }
 
+export interface LightboxProps {
+  item: LightboxItem | null;
+  onClose: () => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  hasPrevious?: boolean;
+  hasNext?: boolean;
+}
+
 export interface BaseSectionProps {
   t: (key: string) => string;
   isRTL?: boolean;

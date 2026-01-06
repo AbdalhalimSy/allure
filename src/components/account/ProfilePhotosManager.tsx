@@ -32,14 +32,18 @@ export default function ProfilePhotosManager() {
 
   useEffect(() => {
     fetchPhotos();
-  }, []);
+  }, [activeProfileId]);
 
   const fetchPhotos = async () => {
     try {
       setLoading(true);
       setError(null);
+      if (!activeProfileId) {
+        setError("No active profile selected");
+        return;
+      }
       const token = localStorage.getItem("auth_token") || "";
-      const response = await getProfilePhotos(token);
+      const response = await getProfilePhotos(activeProfileId, token);
       if (response.success) {
         setPhotos(response.data);
       }
@@ -78,8 +82,12 @@ export default function ProfilePhotosManager() {
       setUploading(true);
       setError(null);
       setSuccessMessage(null);
+      if (!activeProfileId) {
+        setError("No active profile selected");
+        return;
+      }
       const token = localStorage.getItem("auth_token") || "";
-      const response = await uploadProfilePhoto(file, token);
+      const response = await uploadProfilePhoto(file, activeProfileId, token);
 
       if (response.success) {
         setSuccessMessage("Photo uploaded! Waiting for admin approval.");
