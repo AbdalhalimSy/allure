@@ -50,7 +50,7 @@ export async function POST(
     // Validate JSON responses early to provide clear feedback
     try {
       JSON.parse(responsesJson as string);
-    } catch (err) {
+    } catch {
       return NextResponse.json(
         {
           status: "error",

@@ -73,10 +73,14 @@ export async function uploadProfilePhoto(
  * Once approved by admin, the new photo becomes the profile picture automatically.
  */
 export async function markAsProfilePicture(
-  _photoId: number,
-  _token: string
+  photoId: number,
+  token: string
 ): Promise<UpdatePhotoResponse> {
-  // This endpoint is deprecated - return error
+  // Deprecated: log the attempted usage for debugging while keeping signature intact
+  console.warn("markAsProfilePicture is deprecated; upload a new photo instead", {
+    photoId,
+    hasToken: Boolean(token),
+  });
   throw new Error(
     "This endpoint is deprecated. To update your profile photo, please upload a new one using uploadProfilePhoto(). Your current photo will remain active until the new one is approved."
   );

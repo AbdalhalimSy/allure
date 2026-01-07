@@ -11,7 +11,7 @@ import { getAccountNavItems } from "@/lib/utils/accountNavItems";
 export default function BasicInformationPage() {
   const { user } = useAuth();
   const router = useRouter();
-  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile?.progress_step]);
+  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
 
   // Redirect to profile setup if profile is not complete
   useEffect(() => {

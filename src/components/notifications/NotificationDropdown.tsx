@@ -88,6 +88,7 @@ export default function NotificationDropdown() {
       setItems(payload?.notifications ?? []);
       setUnreadCount(payload?.unread_count ?? 0);
     } catch (err) {
+      console.error("Failed to fetch notifications", err);
       const fallback =
         t("common.notifications.fetchError") || "Could not load notifications";
       setError(fallback);
@@ -125,6 +126,7 @@ export default function NotificationDropdown() {
           }
         );
       } catch (err) {
+        console.error("Failed to mark notification as read", err);
         // Revert on failure
         setItems((prev) =>
           prev.map((item) =>
@@ -167,6 +169,7 @@ export default function NotificationDropdown() {
         }
       );
     } catch (err) {
+      console.error("Failed to mark all notifications as read", err);
       setItems(snapshot);
       setUnreadCount(snapshotUnread);
       toast.error(

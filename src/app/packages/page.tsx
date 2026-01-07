@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -36,18 +36,7 @@ export default function PackagesPage() {
   const [processingPayment, setProcessingPayment] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState<number | null>(null);
 
-  useEffect(() => {
-    loadPackages();
-    // Get active profile ID from localStorage
-    if (typeof window !== "undefined") {
-      const profileId = localStorage.getItem("active_profile_id");
-      if (profileId) {
-        setActiveProfileId(parseInt(profileId));
-      }
-    }
-  }, [locale]);
-
-  const loadPackages = async () => {
+  const loadPackages = useCallback(async () => {
     try {
       setLoading(true);
       const response = await getSubscriptionPackages(locale);
@@ -63,7 +52,18 @@ export default function PackagesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [locale]);
+
+  useEffect(() => {
+    loadPackages();
+    // Get active profile ID from localStorage
+    if (typeof window !== "undefined") {
+      const profileId = localStorage.getItem("active_profile_id");
+      if (profileId) {
+        setActiveProfileId(parseInt(profileId));
+      }
+    }
+  }, [loadPackages]);
 
   const handleProceedToPayment = async () => {
     if (!user) {

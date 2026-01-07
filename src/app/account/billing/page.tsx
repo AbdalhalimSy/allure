@@ -33,7 +33,7 @@ export default function BillingPage() {
   const { t, locale } = useI18n();
   const navItems = useMemo(
     () => getAccountNavItems(user?.profile),
-    [user?.profile?.progress_step]
+    [user?.profile]
   );
 
   const [profileId, setProfileId] = useState<number | null>(null);
@@ -59,24 +59,6 @@ export default function BillingPage() {
   // Coupon state
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
-
-  useEffect(() => {
-    const activeProfileId = getActiveProfileId();
-    if (activeProfileId) {
-      setProfileId(Number(activeProfileId));
-      loadData(Number(activeProfileId));
-    } else {
-      setError(t("account.billing.errors.selectProfile"));
-      setLoading(false);
-    }
-  }, [t, locale]);
-
-  useEffect(() => {
-    if (hasSubscription) {
-      setActiveTab((prev) => (prev === "subscribe" ? "history" : prev));
-      setSelectedPackageId(null);
-    }
-  }, [hasSubscription]);
 
   const loadData = useCallback(
     async (profId: number) => {
@@ -117,6 +99,24 @@ export default function BillingPage() {
     },
     [t, locale]
   );
+
+  useEffect(() => {
+    const activeProfileId = getActiveProfileId();
+    if (activeProfileId) {
+      setProfileId(Number(activeProfileId));
+      loadData(Number(activeProfileId));
+    } else {
+      setError(t("account.billing.errors.selectProfile"));
+      setLoading(false);
+    }
+  }, [t, locale, loadData]);
+
+  useEffect(() => {
+    if (hasSubscription) {
+      setActiveTab((prev) => (prev === "subscribe" ? "history" : prev));
+      setSelectedPackageId(null);
+    }
+  }, [hasSubscription]);
 
   const handleSubscribe = async () => {
     if (!selectedPackageId || !profileId) return;

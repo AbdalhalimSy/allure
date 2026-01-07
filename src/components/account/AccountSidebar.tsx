@@ -24,6 +24,144 @@ type GroupedNavItems = {
   [key: string]: NavItem[];
 };
 
+type TranslateFn = (key: string) => string | undefined;
+
+type SidebarContentProps = {
+  groupedItems: GroupedNavItems;
+  isActive: (id: string) => boolean;
+  t: TranslateFn;
+  getCompletionColor: (completion?: number) => string;
+};
+
+type NavItemComponentProps = {
+  item: NavItem;
+  isActive: (id: string) => boolean;
+  t: TranslateFn;
+  getCompletionColor: (completion?: number) => string;
+};
+
+function NavItemComponent({ item, isActive, t, getCompletionColor }: NavItemComponentProps) {
+  const active = isActive(item.id);
+  const label =
+    typeof item.label === "string" && item.labelKey ? t(item.labelKey) : item.label;
+
+  return (
+    <Link
+      href={`/account/${item.id}`}
+      className={`
+          group flex items-center justify-between gap-3 
+          px-4 py-3 rounded-xl 
+          font-medium text-sm
+          transition-all duration-200 ease-out
+          relative overflow-hidden
+          ${
+            active
+              ? "bg-linear-to-r from-[#c49a47] to-[#d4af57] text-white shadow-md"
+              : "text-gray-700 hover:bg-gray-50 active:bg-gray-100"
+          }
+        `}
+      role="menuitem"
+      aria-current={active ? "page" : undefined}
+    >
+      {/* Animated background for active state */}
+      {active && (
+        <div className="absolute inset-0 bg-white/10 animate-pulse rounded-xl" />
+      )}
+
+      {/* Icon and Label */}
+      <div className="flex items-center gap-3 min-w-0 relative z-10">
+        <span
+          className={`
+              flex h-6 w-6 items-center justify-center shrink-0
+              transition-transform duration-200 ease-out
+              ${active ? "scale-110" : "group-hover:scale-105"}
+            `}
+          aria-hidden="true"
+        >
+          {item.icon}
+        </span>
+        <span className="truncate font-medium">{label}</span>
+      </div>
+
+      {/* Completion Indicator */}
+      {item.completion !== undefined && (
+        <div className="flex items-center shrink-0 relative z-10">
+          {item.completion === 100 ? (
+            <div
+              className={`
+                  flex h-6 w-6 items-center justify-center rounded-full
+                  transition-all duration-200
+                  ${
+                    active
+                      ? "bg-white/30 text-white"
+                      : "bg-green-50 text-green-600"
+                  }
+                `}
+              aria-label={`${label} - Complete`}
+            >
+              <TbCircleCheck size={18} className="stroke-current" />
+            </div>
+          ) : (
+            <div
+              className={`
+                  flex h-6 w-6 items-center justify-center rounded-full
+                  text-xs font-bold
+                  transition-all duration-200
+                  ${
+                    active
+                      ? "bg-white/30 text-white"
+                      : `bg-opacity-10 ${getCompletionColor(item.completion)}`
+                  }
+                `}
+              aria-label={`${label} - ${item.completion}% complete`}
+            >
+              {item.completion}%
+            </div>
+          )}
+        </div>
+      )}
+    </Link>
+  );
+}
+
+function SidebarContent({ groupedItems, isActive, t, getCompletionColor }: SidebarContentProps) {
+  return (
+    <nav
+      className="space-y-1"
+      role="navigation"
+      aria-label="Account settings navigation"
+    >
+      {Object.entries(groupedItems).map(([section, items], index) => (
+        <div key={section}>
+          {section !== "default" && (
+            <div
+              className={`px-4 py-3 ${
+                index !== 0 ? "pt-4 border-t border-gray-100" : ""
+              }`}
+            >
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                {t(`account.section.${section}`) || section}
+              </h3>
+            </div>
+          )}
+
+          <div className={`space-y-1 ${section !== "default" ? "pl-2" : ""}`}>
+            {items.map((item) => (
+              <NavItemComponent
+                key={item.id}
+                item={item}
+                isActive={isActive}
+                t={t}
+                getCompletionColor={getCompletionColor}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </nav>
+  );
+}
+
 /**
  * AccountSidebar - Modern, accessible navigation sidebar for account settings
  * Features:
@@ -68,122 +206,6 @@ export default function AccountSidebar({
     if (completion >= 50) return "text-amber-500";
     return "text-orange-500";
   };
-
-  const NavItemComponent = ({ item }: { item: NavItem }) => {
-    const active = isActive(item.id);
-    const label =
-      typeof item.label === "string" && item.labelKey
-        ? t(item.labelKey)
-        : item.label;
-
-    return (
-      <Link
-        href={`/account/${item.id}`}
-        className={`
-          group flex items-center justify-between gap-3 
-          px-4 py-3 rounded-xl 
-          font-medium text-sm
-          transition-all duration-200 ease-out
-          relative overflow-hidden
-          ${
-            active
-              ? "bg-linear-to-r from-[#c49a47] to-[#d4af57] text-white shadow-md"
-              : "text-gray-700 hover:bg-gray-50 active:bg-gray-100"
-          }
-        `}
-        role="menuitem"
-        aria-current={active ? "page" : undefined}
-      >
-        {/* Animated background for active state */}
-        {active && (
-          <div className="absolute inset-0 bg-white/10 animate-pulse rounded-xl" />
-        )}
-
-        {/* Icon and Label */}
-        <div className="flex items-center gap-3 min-w-0 relative z-10">
-          <span
-            className={`
-              flex h-6 w-6 items-center justify-center shrink-0
-              transition-transform duration-200 ease-out
-              ${active ? "scale-110" : "group-hover:scale-105"}
-            `}
-            aria-hidden="true"
-          >
-            {item.icon}
-          </span>
-          <span className="truncate font-medium">{label}</span>
-        </div>
-
-        {/* Completion Indicator */}
-        {item.completion !== undefined && (
-          <div className="flex items-center shrink-0 relative z-10">
-            {item.completion === 100 ? (
-              <div
-                className={`
-                  flex h-6 w-6 items-center justify-center rounded-full
-                  transition-all duration-200
-                  ${
-                    active
-                      ? "bg-white/30 text-white"
-                      : "bg-green-50 text-green-600"
-                  }
-                `}
-                aria-label={`${label} - Complete`}
-              >
-                <TbCircleCheck size={18} className="stroke-current" />
-              </div>
-            ) : (
-              <div
-                className={`
-                  flex h-6 w-6 items-center justify-center rounded-full
-                  text-xs font-bold
-                  transition-all duration-200
-                  ${
-                    active
-                      ? "bg-white/30 text-white"
-                      : `bg-opacity-10 ${getCompletionColor(item.completion)}`
-                  }
-                `}
-                aria-label={`${label} - ${item.completion}% complete`}
-              >
-                {item.completion}%
-              </div>
-            )}
-          </div>
-        )}
-      </Link>
-    );
-  };
-
-  const SidebarContent = () => (
-    <nav
-      className="space-y-1"
-      role="navigation"
-      aria-label="Account settings navigation"
-    >
-      {Object.entries(groupedItems).map(([section, items], index) => (
-        <div key={section}>
-          {section !== "default" && (
-            <div
-              className={`px-4 py-3 ${
-                index !== 0 ? "pt-4 border-t border-gray-100" : ""
-              }`}
-            >
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                {t(`account.section.${section}`) || section}
-              </h3>
-            </div>
-          )}
-
-          <div className={`space-y-1 ${section !== "default" ? "pl-2" : ""}`}>
-            {items.map((item) => (
-              <NavItemComponent key={item.id} item={item} />
-            ))}
-          </div>
-        </div>
-      ))}
-    </nav>
-  );
 
   return (
     <>
@@ -236,7 +258,12 @@ export default function AccountSidebar({
 
             {/* Navigation Items */}
             <div className="p-2">
-              <SidebarContent />
+              <SidebarContent
+                groupedItems={groupedItems}
+                isActive={isActive}
+                t={t}
+                getCompletionColor={getCompletionColor}
+              />
             </div>
           </div>
 
@@ -284,7 +311,12 @@ export default function AccountSidebar({
       {/* Mobile Navigation - Always visible */}
       <div className="lg:hidden mb-4 rounded-2xl border border-gray-200 bg-white shadow-lg overflow-hidden">
         <div className="p-2">
-          <SidebarContent />
+          <SidebarContent
+            groupedItems={groupedItems}
+            isActive={isActive}
+            t={t}
+            getCompletionColor={getCompletionColor}
+          />
         </div>
       </div>
     </>
