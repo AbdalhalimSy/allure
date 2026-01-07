@@ -44,7 +44,7 @@ export default function HomeJobsSection({
           </div>
           <Link
             href="/jobs"
-            className="inline-flex items-center gap-2 rounded-lg border-2 border-primary bg-white px-6 py-3 text-base font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-lg whitespace-nowrap sm:ml-4"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary hover:text-primary "
           >
             {viewAll}
             <ArrowRight className="h-5 w-5 transition-transform rtl:scale-x-[-1]" />

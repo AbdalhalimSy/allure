@@ -1,4 +1,5 @@
 export { default as HeroBanner } from "./HeroBanner";
+export { default as MobileAppSection } from "./MobileAppSection";
 export { default as ProfessionsSection } from "./ProfessionsSection";
 export { default as JobsSection } from "./JobsSection";
 export { default as HomeJobsSection } from "./HomeJobsSection";

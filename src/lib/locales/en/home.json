@@ -358,7 +358,20 @@
         "kicker": "Partners",
         "title": "Partners",
         "subtitle": "We have worked with some of the best names in the market. Be one of them!",
-        "cta": "Always in good company"
+        "cta": "Always in good company",
+        "noPartners": "No partners available"
+      },
+      "mobileApp": {
+        "title": "Allure. Wherever You Are.",
+        "subtitle": "An exclusive space for castings and opportunities, designed for ease.",
+        "appStore": {
+          "label": "Download on the",
+          "title": "App Store"
+        },
+        "googlePlay": {
+          "label": "GET IT ON",
+          "title": "Google Play"
+        }
       }
     }
   }

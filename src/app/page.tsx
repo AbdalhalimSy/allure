@@ -7,6 +7,7 @@ import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import apiClient from "@/lib/api/client";
 import {
   HeroBanner,
+  MobileAppSection,
   HomeJobsSection,
   WelcomeSectionNew,
   TalentsSection,
@@ -200,6 +201,9 @@ export default function HomePage() {
           success: t("home.content.hero.metrics.success"),
         }}
       />
+
+      {/* Mobile App Section */}
+      <MobileAppSection />
 
       {/* Professions Section */}
       {/* TODO: Add Disciplines section here if needed */}
