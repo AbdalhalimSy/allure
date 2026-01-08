@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
 import AccountFormSkeleton from "@/components/account/AccountFormSkeleton";
@@ -41,12 +41,20 @@ export default function BasicInformationContent({
 }: BasicInformationContentProps) {
   const { user, fetchProfile } = useAuth();
   const { t } = useI18n();
-  const { data: lookupData, loading: loadingLookups } = useLookupData({
-    fetchNationalities: true,
-    fetchEthnicities: true,
-    fetchCountries: true,
-    showError: true,
-  });
+
+  // Memoize lookup options to prevent unnecessary re-fetches
+  const lookupOptions = useMemo(
+    () => ({
+      fetchNationalities: true,
+      fetchEthnicities: true,
+      fetchCountries: true,
+      showError: true,
+    }),
+    []
+  );
+
+  const { data: lookupData, loading: loadingLookups } =
+    useLookupData(lookupOptions);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<BasicInfoFormState>({
     profile_id: 0,
@@ -391,7 +399,7 @@ export default function BasicInformationContent({
               </AccountField>
             </div>
 
- <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 ">
+            <div className="flex justify-end gap-3 border-t border-gray-200 pt-6 ">
               <Button type="submit" variant="primary" disabled={loading}>
                 {loading
                   ? t("account.buttons.saving")

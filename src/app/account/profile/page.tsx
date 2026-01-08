@@ -18,11 +18,11 @@ import {
 } from "react-icons/tb";
 
 // Import the content components
-import BasicInformationContent from "./BasicInformationContent";
-import AppearanceContent from "./AppearanceContent";
-import ProfessionContent from "./ProfessionContentNew";
-import ExperienceContent from "./ExperienceContent";
-import PortfolioContent from "./PortfolioContent";
+import BasicInformationContent from "../_components/BasicInformationContent";
+import AppearanceContent from "../_components/AppearanceContent";
+import ProfessionContent from "../_components/ProfessionContent";
+import ExperienceContent from "../_components/ExperienceContent";
+import PortfolioContent from "../_components/PortfolioContent";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -66,7 +66,7 @@ export default function ProfilePage() {
     } else if (user !== null) {
       setTimeout(() => setIsLoadingProfile(false), 0);
     }
-  }, [profileStep, currentStep, user]);
+  }, [profileStep, user]);
 
   // Get nav items
   const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);

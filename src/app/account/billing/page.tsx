@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import AccountLayout from "@/components/account/AccountLayout";
+import AccountPageWrapper from "../_lib/AccountPageWrapper";
 import AccountSection from "@/components/account/AccountSection";
 import Button from "@/components/ui/Button";
-import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
-import { getAccountNavItems } from "@/lib/utils/accountNavItems";
 import { PackageCard } from "@/components/subscriptions/PackageCard";
 import { CouponInput } from "@/components/subscriptions/CouponInput";
 import { SubscriptionStatus } from "@/components/subscriptions/SubscriptionStatus";
@@ -29,12 +26,7 @@ import type {
 import { getActiveProfileId } from "@/lib/api/client";
 
 export default function BillingPage() {
-  const { user } = useAuth();
   const { t, locale } = useI18n();
-  const navItems = useMemo(
-    () => getAccountNavItems(user?.profile),
-    [user?.profile]
-  );
 
   const [profileId, setProfileId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<
@@ -158,13 +150,11 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <ProtectedRoute requireAuth={true}>
-        <AccountLayout navItems={navItems}>
-          <div className="flex min-h-[400px] items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-[#c49a47]" />
-          </div>
-        </AccountLayout>
-      </ProtectedRoute>
+      <AccountPageWrapper requireCompleteProfile={false}>
+        <div className="flex min-h-[400px] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-[#c49a47]" />
+        </div>
+      </AccountPageWrapper>
     );
   }
 
@@ -174,14 +164,13 @@ export default function BillingPage() {
     : 0;
 
   return (
-    <ProtectedRoute requireAuth={true}>
-      <AccountLayout navItems={navItems}>
-        <div className="space-y-6 sm:space-y-8">
-          {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4">
-              <p className="text-xs sm:text-sm text-red-700">{error}</p>
-            </div>
-          )}
+    <AccountPageWrapper requireCompleteProfile={false}>
+      <div className="space-y-6 sm:space-y-8">
+        {error && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4">
+            <p className="text-xs sm:text-sm text-red-700">{error}</p>
+          </div>
+        )}
 
           {/* Current Subscription Status */}
           {profileId && (
@@ -370,7 +359,6 @@ export default function BillingPage() {
             </AccountSection>
           )}
         </div>
-      </AccountLayout>
-    </ProtectedRoute>
-  );
-}
+      </AccountPageWrapper>
+    );
+  }

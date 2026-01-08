@@ -1,6 +1,12 @@
 "use client";
 
-import { MutableRefObject, forwardRef, useState, useRef, useEffect } from "react";
+import {
+  MutableRefObject,
+  forwardRef,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 import Loader from "./Loader";
 import { useI18n } from "@/contexts/I18nContext";
 
@@ -23,7 +29,20 @@ interface MultiSelectProps {
 }
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
-  ({ options, value, onChange, placeholder, error, className = "", loading = false, maxSelected, limitMessage }, ref) => {
+  (
+    {
+      options,
+      value,
+      onChange,
+      placeholder,
+      error,
+      className = "",
+      loading = false,
+      maxSelected,
+      limitMessage,
+    },
+    ref
+  ) => {
     const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -40,20 +59,26 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        if (
+          containerRef.current &&
+          !containerRef.current.contains(event.target as Node)
+        ) {
           setIsOpen(false);
         }
       };
 
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     const filteredOptions = options.filter((option) =>
       option.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const selectedOptions = options.filter((option) => value.includes(option.id));
+    const selectedOptions = options.filter((option) =>
+      value.includes(option.id)
+    );
 
     const toggleOption = (optionId: number) => {
       if (value.includes(optionId)) {
@@ -62,7 +87,11 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       } else {
         if (maxSelected && value.length >= maxSelected) {
           const maxMsg = t("ui.maxSelected");
-          const warningMsg = limitMessage || (maxMsg.includes("{{count}}") ? maxMsg.replace("{{count}}", maxSelected.toString()) : `You can select up to ${maxSelected}`);
+          const warningMsg =
+            limitMessage ||
+            (maxMsg.includes("{{count}}")
+              ? maxMsg.replace("{{count}}", maxSelected.toString())
+              : `You can select up to ${maxSelected}`);
           setLimitWarning(warningMsg);
           return;
         }
@@ -78,17 +107,17 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     return (
       <div ref={setRefs} className="relative w-full">
         <div
- className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] ${
-            error
-              ? "border-red-500"
- : "border-gray-300 "
+          className={`min-h-12 w-full rounded-lg border bg-white px-4 py-2 text-black transition-all focus-within:border-[#c49a47] focus-within:ring-[#c49a47] ${
+            error ? "border-red-500" : "border-gray-300 "
           } ${className}`}
           onClick={() => !loading && setIsOpen(true)}
         >
           {loading ? (
             <div className="flex items-center gap-2 py-1">
               <Loader size="sm" variant="spinner" color="primary" />
-              <span className="text-sm text-gray-500">{t("common.loading")}</span>
+              <span className="text-sm text-gray-500">
+                {t("common.loading")}
+              </span>
             </div>
           ) : selectedOptions.length > 0 ? (
             <div className="flex flex-wrap gap-2">
@@ -112,19 +141,21 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               ))}
             </div>
           ) : (
-            <div className="py-1 text-sm text-gray-500">{placeholder || t("ui.select")}</div>
+            <div className="py-1 text-sm text-gray-500">
+              {placeholder || t("ui.select")}
+            </div>
           )}
         </div>
 
         {isOpen && !loading && (
- <div className="absolute mt-2 max-h-60 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg ">
- <div className="border-b border-gray-200 p-2 ">
+          <div className="absolute mt-2 max-h-60 w-full z-10 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg ">
+            <div className="border-b border-gray-200 p-2 ">
               <input
                 type="text"
                 placeholder={t("ui.search")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
- className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none "
+                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-black focus:border-[#c49a47] focus:outline-none "
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -138,13 +169,19 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                       e.stopPropagation();
                       toggleOption(option.id);
                     }}
- className={`flex w-full items-center justify-between px-4 py-2 text-start text-sm transition-colors hover:bg-gray-100 ${
- value.includes(option.id) ? "bg-[#c49a47]/10 text-[#c49a47]" : "text-gray-900 "
+                    className={`flex w-full items-center justify-between px-4 py-2 text-start text-sm transition-colors hover:bg-gray-100 ${
+                      value.includes(option.id)
+                        ? "bg-[#c49a47]/10 text-[#c49a47]"
+                        : "text-gray-900 "
                     }`}
                   >
                     <span>{option.name}</span>
                     {value.includes(option.id) && (
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="h-5 w-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -155,7 +192,9 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-center text-sm text-gray-500">{t("ui.noResults")}</div>
+                <div className="px-4 py-3 text-center text-sm text-gray-500">
+                  {t("ui.noResults")}
+                </div>
               )}
             </div>
           </div>

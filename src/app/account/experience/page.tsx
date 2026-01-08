@@ -1,30 +1,12 @@
 "use client";
 
-import { useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import AccountLayout from "@/components/account/AccountLayout";
-import ExperienceContent from "../profile/ExperienceContent";
-import { useAuth } from "@/contexts/AuthContext";
-import { getAccountNavItems } from "@/lib/utils/accountNavItems";
+import AccountPageWrapper from "../_lib/AccountPageWrapper";
+import ExperienceContent from "../_components/ExperienceContent";
 
 export default function ExperiencePage() {
-  const { user } = useAuth();
-  const router = useRouter();
-  const navItems = useMemo(() => getAccountNavItems(user?.profile), [user?.profile]);
-
-  // Redirect to profile setup if profile is not complete
-  useEffect(() => {
-    if (user?.profile && user.profile.progress_step !== "complete") {
-      router.replace("/account/profile");
-    }
-  }, [user?.profile, router]);
-
   return (
-    <ProtectedRoute requireAuth={true}>
-      <AccountLayout navItems={navItems}>
-        <ExperienceContent onNext={() => {}} onBack={() => {}} />
-      </AccountLayout>
-    </ProtectedRoute>
+    <AccountPageWrapper>
+      <ExperienceContent onNext={() => {}} onBack={() => {}} />
+    </AccountPageWrapper>
   );
 }
