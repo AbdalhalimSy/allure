@@ -8,7 +8,7 @@ export default function MobileAppSection() {
   const { t } = useI18n();
 
   return (
-    <section className="bg-[#c49a47]/5 px-6 pt-16 lg:px-12 overflow-hidden">
+    <section className="bg-linear-to-br from-[#c49a4760] to-[#c49a4710] px-6 pt-16 lg:px-12 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col-reverse md:flex-row  justify-between gap-8 items-center">
           {/* Left: Mobile App Image */}

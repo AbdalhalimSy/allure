@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
@@ -13,17 +14,18 @@ import {
   TalentsSection,
   PartnersSection,
   TwinsSection,
+  ProfessionsSection,
 } from "@/components/home";
 import type { Talent } from "@/types/talent";
 import type { Job } from "@/types/job";
 
-// type Profession = {
-//   id: number;
-//   name: string;
-//   description: string;
-//   accent: string;
-//   image: string;
-// };
+type Profession = {
+  id: number;
+  name: string;
+  description: string;
+  accent: string;
+  image: string;
+};
 
 type Partner = {
   id: number;
@@ -32,13 +34,13 @@ type Partner = {
 };
 
 export default function HomePage() {
-  // const router = useRouter();
+  const router = useRouter();
   const { isAuthenticated, hydrated, activeProfileId } = useAuth();
   const { t, locale } = useI18n();
   const { getCountryId } = useCountryFilter();
 
-  // const [professions, setProfessions] = useState<Profession[]>([]);
-  // const [professionsLoading, setProfessionsLoading] = useState(false);
+  const [professions, setProfessions] = useState<Profession[]>([]);
+  const [professionsLoading, setProfessionsLoading] = useState(false);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [jobsLoading, setJobsLoading] = useState(false);
   const [talents, setTalents] = useState<Talent[]>([]);
@@ -46,58 +48,58 @@ export default function HomePage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [partnersLoading, setPartnersLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchProfessions = async () => {
-  //     try {
-  //       setProfessionsLoading(true);
-  //       const res = await apiClient.get(`/lookups/professions?lang=${locale}`);
-  //       if (res.data?.status === "success") {
-  //         const accents = [
-  //           "from-[var(--primary)] to-[#a57b30]",
-  //           "from-sky-400 to-blue-600",
-  //           "from-emerald-400 to-teal-500",
-  //           "from-fuchsia-400 to-purple-500",
-  //           "from-rose-400 to-red-500",
-  //           "from-cyan-400 to-indigo-500",
-  //           "from-[rgba(196,154,71,0.85)] to-[var(--primary)]",
-  //           "from-slate-400 to-slate-600",
-  //         ];
-  //         const curated = (
-  //           res.data.data as Array<{
-  //             id: number;
-  //             name: string;
-  //             description: string | null;
-  //             image: string | null;
-  //           }>
-  //         )
-  //           .slice(0, 8)
-  //           .map((p, idx) => ({
-  //             id: p.id,
-  //             name: p.name,
-  //             description: p.description || t("home.content.professions.card"),
-  //             accent: accents[idx % accents.length],
-  //             image:
-  //               p.image ||
-  //               `https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=70&sig=${idx}`,
-  //           }));
-  //         setProfessions(curated);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to load professions", error);
-  //     } finally {
-  //       setProfessionsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchProfessions = async () => {
+      try {
+        setProfessionsLoading(true);
+        const res = await apiClient.get(`/lookups/professions?lang=${locale}`);
+        if (res.data?.status === "success") {
+          const accents = [
+            "from-[var(--primary)] to-[#a57b30]",
+            "from-sky-400 to-blue-600",
+            "from-emerald-400 to-teal-500",
+            "from-fuchsia-400 to-purple-500",
+            "from-rose-400 to-red-500",
+            "from-cyan-400 to-indigo-500",
+            "from-[rgba(196,154,71,0.85)] to-[var(--primary)]",
+            "from-slate-400 to-slate-600",
+          ];
+          const curated = (
+            res.data.data as Array<{
+              id: number;
+              name: string;
+              description: string | null;
+              image: string | null;
+            }>
+          )
+            .slice(0, 8)
+            .map((p, idx) => ({
+              id: p.id,
+              name: p.name,
+              description: p.description || t("home.content.professions.card"),
+              accent: accents[idx % accents.length],
+              image:
+                p.image ||
+                `https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=70&sig=${idx}`,
+            }));
+          setProfessions(curated);
+        }
+      } catch (error) {
+        console.error("Failed to load professions", error);
+      } finally {
+        setProfessionsLoading(false);
+      }
+    };
 
-  //   fetchProfessions();
-  // }, [locale, t]);
+    fetchProfessions();
+  }, [locale, t]);
 
   useEffect(() => {
     const fetchPartners = async () => {
       try {
         setPartnersLoading(true);
         const res = await apiClient.get(`/lookups/partners`, {
-          headers: { 'Accept-Language': locale },
+          headers: { "Accept-Language": locale },
         });
         if (res.data?.status === "success") {
           setPartners(res.data.data || []);
@@ -165,7 +167,7 @@ export default function HomePage() {
       try {
         setTalentsLoading(true);
         const res = await apiClient.get("/talents?per_page=8", {
-          headers: { 'Accept-Language': locale },
+          headers: { "Accept-Language": locale },
         });
         if (res.data?.status === "success") {
           setTalents(res.data.data || []);
@@ -180,9 +182,9 @@ export default function HomePage() {
     fetchTalents();
   }, [locale]);
 
-  // const handleProfessionClick = (id: number) => {
-  //   router.push(`/talents?profession_ids=${id}`);
-  // };
+  const handleProfessionClick = (id: number) => {
+    router.push(`/talents?profession_ids=${id}`);
+  };
 
   return (
     <div className="bg-white text-gray-900 ">
@@ -190,6 +192,7 @@ export default function HomePage() {
       <HeroBanner
         isAuthenticated={isAuthenticated}
         hydrated={hydrated}
+        locale={locale}
         kicker={t("home.content.hero.kicker")}
         ctaRegister={t("home.content.hero.ctaRegister")}
         ctaLogin={t("home.content.hero.ctaLogin")}
@@ -206,8 +209,7 @@ export default function HomePage() {
       <MobileAppSection />
 
       {/* Professions Section */}
-      {/* TODO: Add Disciplines section here if needed */}
-      {/* <ProfessionsSection
+      <ProfessionsSection
         professions={professions}
         loading={professionsLoading}
         kicker={t("home.content.professions.kicker")}
@@ -220,7 +222,7 @@ export default function HomePage() {
         loadingText={t("home.content.professions.loading")}
         emptyText={t("home.content.professions.empty")}
         onProfessionClick={handleProfessionClick}
-      /> */}
+      />
 
       {/* Jobs Section - For all users - Horizontal cards in 2-column grid */}
       <HomeJobsSection

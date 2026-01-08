@@ -6,7 +6,7 @@ import { useI18n } from "@/contexts/I18nContext";
 
 export default function CountryFilter() {
   const { selectedCountry, setSelectedCountry } = useCountryFilter();
-  const { locale } = useI18n();
+  const { locale, setLocale } = useI18n();
   const isRTL = locale === "ar";
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -59,7 +59,7 @@ export default function CountryFilter() {
       </button>
 
       <div
-        className={`absolute rtl:start-0 ltr:end-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl transition-all duration-200 ease-in-out ltr:origin-top-right ${
+        className={`fixed inset-x-4 bottom-24 sm:bottom-auto sm:inset-auto sm:absolute rtl:sm:start-0 ltr:sm:end-0 z-50 sm:mt-2 w-auto sm:w-48 max-h-[60vh] sm:max-h-none overflow-y-auto sm:overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl transition-all duration-200 ease-in-out sm:ltr:origin-top-right sm:rtl:origin-top-left ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
@@ -70,6 +70,10 @@ export default function CountryFilter() {
             key={country.code || "all"}
             onClick={() => {
               setSelectedCountry(country.code);
+              // Auto-switch to Arabic when KSA is selected
+              if (country.code === "SA" && locale !== "ar") {
+                setLocale("ar");
+              }
               setIsOpen(false);
             }}
             className={`flex w-full items-center gap-3 px-4 py-3 text-sm transition-all duration-200 ease-in-out hover:bg-[#c49a47]/10 ${

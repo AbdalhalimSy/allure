@@ -14,6 +14,7 @@ interface JobsGridProps {
   loadingMore: boolean;
   hasMore: boolean;
   observerTargetRef: React.RefObject<HTMLDivElement | null>;
+  onJobSelect?: (job: Job) => void;
 }
 
 export function JobsGrid({
@@ -22,6 +23,7 @@ export function JobsGrid({
   loadingMore,
   hasMore,
   observerTargetRef,
+  onJobSelect,
 }: JobsGridProps) {
   const { t } = useI18n();
 
@@ -50,7 +52,11 @@ export function JobsGrid({
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
+          <JobCard
+            key={job.id}
+            job={job}
+            onViewDetails={onJobSelect ? () => onJobSelect(job) : undefined}
+          />
         ))}
       </div>
 

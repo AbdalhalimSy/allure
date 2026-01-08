@@ -9,12 +9,15 @@ import { JobsLoadingState } from "./_components/JobsLoadingState";
 import { JobsErrorState } from "./_components/JobsErrorState";
 import { JobsEmptyState } from "./_components/JobsEmptyState";
 import { JobsGrid } from "./_components/JobsGrid";
+import JobDetailModal from "@/components/jobs/modals/JobDetailModal";
 import { useJobs } from "./_hooks/useJobs";
 
 export default function JobsPage() {
   const { activeProfileId, isAuthenticated } = useAuth();
   const [showEligibleOnly, setShowEligibleOnly] = useState(false);
   const [switching, setSwitching] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+  const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const observerTargetRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -90,6 +93,16 @@ export default function JobsPage() {
     setFilters({});
   };
 
+  const handleJobSelect = (jobId: number) => {
+    setSelectedJobId(jobId);
+    setIsJobModalOpen(true);
+  };
+
+  const handleCloseJobModal = () => {
+    setIsJobModalOpen(false);
+    setSelectedJobId(null);
+  };
+
   return (
     <div className="bg-white">
       <JobsHero />
@@ -125,9 +138,16 @@ export default function JobsPage() {
             loadingMore={loadingMore}
             hasMore={hasMore}
             observerTargetRef={observerTargetRef}
+            onJobSelect={(job) => handleJobSelect(job.id)}
           />
         )}
       </section>
+
+      <JobDetailModal
+        jobId={selectedJobId}
+        isOpen={isJobModalOpen}
+        onClose={handleCloseJobModal}
+      />
     </div>
   );
 }

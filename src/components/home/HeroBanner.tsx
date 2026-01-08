@@ -20,6 +20,7 @@ interface HeroBannerProps {
   ctaLogin: string;
   ctaDashboard: string;
   ctaBrowse: string;
+  locale: string;
   metrics: {
     speed: string;
     profiles: string;
@@ -34,6 +35,7 @@ export default function HeroBanner({
   ctaRegister,
   ctaDashboard,
   ctaBrowse,
+  locale,
 }: HeroBannerProps) {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +45,8 @@ export default function HeroBanner({
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await getBanners();
+        setLoading(true);
+        const response = await getBanners(locale);
         if (response.success && response.data && response.data.length > 0) {
           setBanners(response.data);
         }
@@ -55,12 +58,12 @@ export default function HeroBanner({
     };
 
     fetchBanners();
-  }, []);
+  }, [locale]);
 
   // Auto-play banners
   useEffect(() => {
     if (banners.length <= 1) return;
-    
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % banners.length);
     }, 6800);
@@ -122,7 +125,7 @@ export default function HeroBanner({
               />
             )}
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/60 to-black/30" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/20 via-black/30 to-black/10" />
           </div>
         ))}
       </div>

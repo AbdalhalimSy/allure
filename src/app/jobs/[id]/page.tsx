@@ -1,61 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
 import Loader from "@/components/ui/Loader";
 import JobApplicationModal from "@/components/jobs/modals/JobApplicationModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { AlertCircle } from "lucide-react";
-import { DetailedRole } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
 import { useJobDetail } from "../_hooks/useJobDetail";
-import { JobDetailBackButton } from "./_components/JobDetailBackButton";
-import { JobDetailHeader } from "./_components/JobDetailHeader";
-import { JobDetailQuickInfo } from "./_components/JobDetailQuickInfo";
-import { JobDetailSidebar } from "./_components/JobDetailSidebar";
-import { JobRoleCard } from "./_components/JobRoleCard";
+import { useJobApply } from "../_hooks/useJobApply";
+import { JobDetailContent } from "./_components/JobDetailContent";
 
 export default function JobDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { activeProfileId, isAuthenticated } = useAuth();
   const { t } = useI18n();
-  const [selectedRole, setSelectedRole] = useState<DetailedRole | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { job, loading, error, fetchJob } = useJobDetail(params.id as string);
+  const { selectedRole, isApplicationOpen, handleApply, closeApplicationModal } =
+    useJobApply(job);
 
   useEffect(() => {
     fetchJob();
   }, [params.id, activeProfileId, fetchJob]);
-
-  const handleApply = (role: DetailedRole) => {
-    const alreadyApplied = role.has_applied || job?.has_applied;
-
-    if (alreadyApplied) {
-      toast.error(
-        t("jobs.jobDetail.alreadyApplied") || "You already applied for this role"
-      );
-      return;
-    }
-
-    if (!isAuthenticated || !activeProfileId) {
-      toast.error(t("jobs.jobDetail.loginToApply") || "Please log in to apply");
-      router.push("/login");
-      return;
-    }
-
-    if (role.can_apply !== false) {
-      setSelectedRole(role);
-      setIsModalOpen(true);
-    } else {
-      toast.error(
-        t("jobs.jobDetail.notEligibleToApply") ||
-          "You don't meet the requirements for this role"
-      );
-    }
-  };
 
   if (loading) {
     return (
@@ -85,56 +53,26 @@ export default function JobDetailPage() {
     );
   }
 
-  const roles = Array.isArray(job.roles) ? job.roles : [];
-  const roleCount = roles.length;
-
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 via-white to-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-        <JobDetailBackButton onClick={() => router.push("/jobs")} />
-        <JobDetailHeader job={job} />
-        <JobDetailQuickInfo job={job} roleCount={roleCount} />
-
-        <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            <div className="space-y-3 sm:space-y-4">
-              <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <h2 className="text-2xl sm:text-3xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  {t("jobs.jobDetail.availableRoles")} ({roleCount})
-                </h2>
-              </div>
-
-              {roles.map((role) => (
-                <JobRoleCard
-                  key={role.id}
-                  role={role}
-                  job={job}
-                  onApply={() => handleApply(role)}
-                  isAuthenticated={isAuthenticated}
-                  activeProfileId={activeProfileId}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            <JobDetailSidebar jobCountries={job.job_countries} />
-          </div>
-        </div>
-      </div>
+    <>
+      <JobDetailContent
+        job={job}
+        onBack={() => router.push("/jobs")}
+        onApply={handleApply}
+        isAuthenticated={isAuthenticated}
+        activeProfileId={activeProfileId}
+        variant="page"
+      />
 
       {selectedRole && (
         <JobApplicationModal
-          isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false);
-            setSelectedRole(null);
-          }}
+          isOpen={isApplicationOpen}
+          onClose={closeApplicationModal}
           jobId={job.id}
           role={selectedRole}
           profileId={activeProfileId || undefined}
         />
       )}
-    </div>
+    </>
   );
 }
