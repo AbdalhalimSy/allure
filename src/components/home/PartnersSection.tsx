@@ -28,7 +28,6 @@ export default function PartnersSection({
   title,
   subtitle,
   noPartnersText,
-  hideArrows = false,
 }: PartnersSectionProps) {
   return (
     <section className="px-6 pb-20 lg:px-12">
@@ -54,7 +53,7 @@ export default function PartnersSection({
                 data: p,
               }))}
               renderItem={({ data }) => (
-                <div className="flex h-32 w-60 items-center justify-center rounded-2xl border border-gray-200 bg-white/70 px-4 py-3 shadow-md transition hover:-translate-y-1 hover:border-[rgba(196,154,71,0.35)] hover:shadow-xl ">
+                <div className="flex h-32 w-60 mt-2 mb-12 items-center justify-center rounded-2xl border border-gray-200 bg-white/70 px-4 py-3 shadow-md transition hover:-translate-y-1 hover:border-[rgba(196,154,71,0.35)] hover:shadow-xl ">
                   <Image
                     src={data.logo}
                     alt={data.title}
@@ -64,11 +63,9 @@ export default function PartnersSection({
                   />
                 </div>
               )}
-              autoScroll
-              autoScrollPxPerSecond={50}
-              arrows={!hideArrows}
-              loop
-              itemGap={24}
+              speedPxPerSecond={100}
+              gap={24}
+              gradientFades
             />
           ) : (
             <div className="py-8 text-center text-gray-500 ">

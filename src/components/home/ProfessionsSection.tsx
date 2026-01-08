@@ -97,7 +97,7 @@ export default function ProfessionsSection({
               renderItem={({ data: profession }) => (
                 <button
                   onClick={() => onProfessionClick(profession.id)}
-                  className="group relative min-w-72 shrink-0 rounded-3xl border border-gray-100 bg-white/90 p-6 text-start shadow-lg transition hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary "
+                  className="group relative w-72 shrink-0 mt-6 mb-12 rounded-3xl border border-gray-100 bg-white/90 p-6 text-start shadow-lg transition hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   {/* Content */}
                   <div className="flex items-center gap-4">
@@ -113,7 +113,7 @@ export default function ProfessionsSection({
                       <p className="text-lg font-semibold leading-tight">
                         {profession.name}
                       </p>
-                      <p className="text-sm text-gray-600 ">
+                      <p className="text-sm text-gray-600 line-clamp-1">
                         {profession.description}
                       </p>
                       {/* CTA badge */}
@@ -125,10 +125,7 @@ export default function ProfessionsSection({
                   </div>
                 </button>
               )}
-              autoScroll
-              autoScrollPxPerSecond={50}
-              arrows={false}
-              loop
+              speedPxPerSecond={100}
             />
           )}
         </div>

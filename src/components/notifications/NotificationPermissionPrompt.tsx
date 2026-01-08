@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useNotifications } from "@/contexts/NotificationContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 
 const DISMISS_KEY = "notification-prompt-dismissed";
 
@@ -10,6 +11,7 @@ export default function NotificationPermissionPrompt() {
   const { isSupported, requestPermission, sendTokenToBackend } =
     useNotifications();
   const { isAuthenticated } = useAuth();
+  const { t } = useI18n();
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -53,11 +55,10 @@ export default function NotificationPermissionPrompt() {
         </div>
         <div className="flex-1">
           <h3 className="mb-1 font-semibold text-gray-900 ">
-            Enable notifications
+            {t("common.notifications.promptTitle")}
           </h3>
           <p className="mb-3 text-sm text-gray-600 ">
-            Stay updated with job matches, payments, and account alerts in real
-            time.
+            {t("common.notifications.promptDescription")}
           </p>
           <div className="flex gap-2">
             <button
@@ -66,14 +67,16 @@ export default function NotificationPermissionPrompt() {
               disabled={isSubmitting}
               className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-400"
             >
-              {isSubmitting ? "Enabling..." : "Enable"}
+              {isSubmitting
+                ? t("common.notifications.promptEnabling")
+                : t("common.notifications.promptEnable")}
             </button>
             <button
               type="button"
               onClick={handleDismiss}
               className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200 "
             >
-              Maybe later
+              {t("common.notifications.promptMaybeLater")}
             </button>
           </div>
         </div>

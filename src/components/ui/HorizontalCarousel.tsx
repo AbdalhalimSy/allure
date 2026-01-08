@@ -1,234 +1,358 @@
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type TouchEvent,
+} from "react";
+import { useI18n } from "@/contexts/I18nContext";
 
 export interface HorizontalCarouselItem<T> {
   key: string | number;
   data: T;
 }
 
+type Direction = "left" | "right";
+
 interface HorizontalCarouselProps<T> {
   items: HorizontalCarouselItem<T>[];
   renderItem: (item: HorizontalCarouselItem<T>) => React.ReactNode;
   className?: string;
-  itemGap?: number; // px
-  autoScroll?: boolean;
-  autoScrollPxPerSecond?: number; // speed
+  gap?: number;
+  speedPxPerSecond?: number;
+  direction?: Direction;
   pauseOnHover?: boolean;
-  arrows?: boolean;
-  loop?: boolean; // duplicate items for seamless loop
+  isDraggable?: boolean;
+  autoPlay?: boolean;
+  gradientFades?: boolean;
+  ariaLabel?: string;
 }
 
 export default function HorizontalCarousel<T = unknown>({
-  items = [],
+  items,
   renderItem,
   className = "",
-  itemGap = 24,
-  autoScroll = true,
-  autoScrollPxPerSecond = 60,
+  gap = 24,
+  speedPxPerSecond = 80,
+  direction,
   pauseOnHover = true,
-  arrows = true,
-  loop = true,
+  isDraggable = true,
+  autoPlay = true,
+  gradientFades = false,
+  ariaLabel,
 }: HorizontalCarouselProps<T>) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<number | null>(null);
-  const [isPaused, setPaused] = useState(false);
+  const { locale } = useI18n();
+  const isRTL = locale === "ar";
+  
+  // Auto-detect direction based on RTL/LTR if not explicitly provided
+  const effectiveDirection = direction ?? (isRTL ? "right" : "left");
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const primaryRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+
+  const [segmentWidth, setSegmentWidth] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [isRTL, setIsRTL] = useState(false);
+
+  // Keep animation state in refs to avoid rerenders
+  const offsetRef = useRef(0);
+  const pausedRef = useRef(false);
+  const visibleRef = useRef(true);
+  const dragStartXRef = useRef(0);
+  const dragStartOffsetRef = useRef(0);
+
+  const [cursorState, setCursorState] = useState<"grab" | "grabbing" | "">("");
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      setIsRTL(document.documentElement.dir === "rtl");
-    }
+    setIsMounted(true);
   }, []);
 
-  // Initialize scroll position for RTL
+  // Measure the width of a single set of items
   useEffect(() => {
-    if (isRTL && scrollRef.current && loop) {
-      // Start from the middle for RTL to show correct items initially
-      const halfWidth = scrollRef.current.scrollWidth / 2;
-      scrollRef.current.scrollLeft = -halfWidth;
-    }
-  }, [isRTL, loop]);
+    if (!isMounted) return;
 
-  // Prepare loop items if needed
-  const displayItems = loop ? [...items, ...items] : items;
-
-  const step = autoScrollPxPerSecond / 60; // px per frame at ~60fps
-  const scrollStep = isRTL ? -step : step; // Invert for RTL
-
-  const animate = useCallback(() => {
-    const tick = () => {
-      if (!autoScroll || isPaused) return;
-      const el = scrollRef.current;
-      if (!el) return;
-      el.scrollLeft += scrollStep;
-      if (loop) {
-        const halfWidth = el.scrollWidth / 2;
-        if (isRTL) {
-          if (el.scrollLeft <= -halfWidth) {
-            el.scrollLeft += halfWidth;
-          }
-        } else {
-          if (el.scrollLeft >= halfWidth) {
-            el.scrollLeft -= halfWidth;
-          }
-        }
-      } else if (el.scrollLeft + el.clientWidth >= el.scrollWidth) {
-        el.scrollLeft = 0;
-      }
-      frameRef.current = requestAnimationFrame(tick);
+    const measure = () => {
+      const width = primaryRef.current?.scrollWidth ?? 0;
+      setSegmentWidth(width);
     };
-    tick();
-  }, [autoScroll, isPaused, scrollStep, loop, isRTL]);
 
-  useEffect(() => {
-    if (autoScroll) {
-      frameRef.current = requestAnimationFrame(animate);
+    measure();
+
+    const handleResize = () => measure();
+    window.addEventListener("resize", handleResize);
+
+    let resizeObserver: ResizeObserver | undefined;
+    if (typeof ResizeObserver !== "undefined" && primaryRef.current) {
+      resizeObserver = new ResizeObserver(measure);
+      resizeObserver.observe(primaryRef.current);
     }
+
     return () => {
-      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
     };
-  }, [animate, autoScroll]);
+  }, [items, gap, isMounted]);
 
-  const scrollBy = (dx: number) => {
-    setPaused(true);
-    const el = scrollRef.current;
-    if (!el) return;
-    // If looping, ensure seamless wrap when navigating with arrows
-    if (loop) {
-      const halfWidth = el.scrollWidth / 2;
-      if (isRTL) {
-        // In RTL: wrap when scrolling right (positive) or left (negative)
-        if (dx > 0 && el.scrollLeft + dx >= 0) {
-          el.scrollLeft = el.scrollLeft - halfWidth;
-        }
-        if (dx < 0 && el.scrollLeft + dx <= -halfWidth) {
-          el.scrollLeft = el.scrollLeft + halfWidth;
-        }
-      } else {
-        // Wrap from the start to the cloned set when moving left
-        if (dx < 0 && el.scrollLeft + dx <= 0) {
-          el.scrollLeft = el.scrollLeft + halfWidth;
-        }
-        // Wrap from the end back to original when moving right
-        if (dx > 0 && el.scrollLeft + dx >= halfWidth) {
-          el.scrollLeft = el.scrollLeft - halfWidth;
-        }
-      }
+  // Pause animation when out of view
+  useEffect(() => {
+    if (!autoPlay || !isMounted) return;
+    if (!containerRef.current || typeof IntersectionObserver === "undefined") {
+      visibleRef.current = true;
+      return;
     }
-    el.scrollBy({ left: dx, behavior: "smooth" });
-    // Resume after short delay
-    setTimeout(() => setPaused(false), 2500);
-  };
 
-  const handleScroll = useCallback(() => {
-    if (!loop) return;
-    const el = scrollRef.current;
-    if (!el) return;
-    const halfWidth = el.scrollWidth / 2;
-    // Seamless wrap for manual/user scroll
-    if (isRTL) {
-      if (el.scrollLeft >= 0) {
-        el.scrollLeft -= halfWidth;
-      } else if (el.scrollLeft <= -halfWidth) {
-        el.scrollLeft += halfWidth;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
+  }, [autoPlay, isMounted]);
+
+  // Animation loop
+  useEffect(() => {
+    if (!trackRef.current || segmentWidth <= 0 || !isMounted) return;
+
+    const loopDistance = segmentWidth + gap;
+    let lastTimestamp = 0;
+
+    const animate = (timestamp: number) => {
+      if (!trackRef.current) return;
+
+      if (!lastTimestamp) {
+        lastTimestamp = timestamp;
       }
-    } else {
-      if (el.scrollLeft >= halfWidth) {
-        el.scrollLeft -= halfWidth;
-      } else if (el.scrollLeft <= 0) {
-        el.scrollLeft += halfWidth;
+
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      const active =
+        autoPlay &&
+        !pausedRef.current &&
+        !isDragging &&
+        visibleRef.current &&
+        items.length > 0;
+
+      if (active) {
+        const directionSign = effectiveDirection === "left" ? -1 : 1;
+
+        offsetRef.current += speedPxPerSecond * delta * directionSign;
+
+        while (offsetRef.current <= -loopDistance)
+          offsetRef.current += loopDistance;
+        while (offsetRef.current >= loopDistance)
+          offsetRef.current -= loopDistance;
       }
-    }
-  }, [loop, isRTL]);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setIsDragging(true);
-    setPaused(true);
-    setStartX(e.pageX - el.offsetLeft);
-    setScrollLeft(el.scrollLeft);
-  };
+      trackRef.current.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
 
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    if (pauseOnHover) setPaused(false);
-  };
+      animationRef.current = requestAnimationFrame(animate);
+    };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setPaused(false);
-  };
+    animationRef.current = requestAnimationFrame(animate);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [
+    autoPlay,
+    segmentWidth,
+    gap,
+    speedPxPerSecond,
+    effectiveDirection,
+    isMounted,
+    isDragging,
+    items.length,
+  ]);
+
+  // Dragging
+  const startDrag = useCallback(
+    (clientX: number) => {
+      if (!isDraggable) return;
+
+      setIsDragging(true);
+      setCursorState("grabbing");
+      dragStartXRef.current = clientX;
+      dragStartOffsetRef.current = offsetRef.current;
+
+      if (containerRef.current) {
+        containerRef.current.style.userSelect = "none";
+      }
+    },
+    [isDraggable]
+  );
+
+  const moveDrag = useCallback(
+    (clientX: number) => {
+      if (!isDragging || !isDraggable) return;
+
+      const loopDistance = segmentWidth + gap;
+      const delta = clientX - dragStartXRef.current;
+      let nextOffset = dragStartOffsetRef.current + delta;
+
+      while (nextOffset <= -loopDistance) nextOffset += loopDistance;
+      while (nextOffset >= loopDistance) nextOffset -= loopDistance;
+
+      offsetRef.current = nextOffset;
+
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translate3d(${nextOffset}px, 0, 0)`;
+      }
+    },
+    [isDragging, isDraggable, segmentWidth, gap]
+  );
+
+  const endDrag = useCallback(() => {
     if (!isDragging) return;
-    e.preventDefault();
-    const el = scrollRef.current;
-    if (!el) return;
-    const x = e.pageX - el.offsetLeft;
-    const walk = (x - startX) * 2; // scroll speed multiplier
-    el.scrollLeft = scrollLeft - walk;
-  };
+
+    setIsDragging(false);
+    setCursorState(isDraggable ? "grab" : "");
+
+    if (containerRef.current) {
+      containerRef.current.style.userSelect = "";
+    }
+  }, [isDragging, isDraggable]);
+
+  // Mouse events
+  const handleMouseDown = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault();
+      startDrag(e.clientX);
+    },
+    [startDrag]
+  );
+
+  // Global window listeners use DOM event types to avoid React synthetic mismatch
+  const handleWindowMouseMove = useCallback(
+    (e: globalThis.MouseEvent) => moveDrag(e.clientX),
+    [moveDrag]
+  );
+
+  const handleWindowMouseUp = useCallback(() => endDrag(), [endDrag]);
+
+  // Touch events
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        startDrag(e.touches[0].clientX);
+      }
+    },
+    [startDrag]
+  );
+
+  const handleWindowTouchMove = useCallback(
+    (e: globalThis.TouchEvent) => {
+      if (e.touches.length === 1) {
+        e.preventDefault();
+        moveDrag(e.touches[0].clientX);
+      }
+    },
+    [moveDrag]
+  );
+
+  const handleWindowTouchEnd = useCallback(() => endDrag(), [endDrag]);
+
+  // Global listeners while dragging
+  useEffect(() => {
+    if (!isDragging) return;
+
+    window.addEventListener("mousemove", handleWindowMouseMove);
+    window.addEventListener("mouseup", handleWindowMouseUp);
+    window.addEventListener("touchmove", handleWindowTouchMove, {
+      passive: false,
+    });
+    window.addEventListener("touchend", handleWindowTouchEnd);
+
+    return () => {
+      window.removeEventListener("mousemove", handleWindowMouseMove);
+      window.removeEventListener("mouseup", handleWindowMouseUp);
+      window.removeEventListener("touchmove", handleWindowTouchMove);
+      window.removeEventListener("touchend", handleWindowTouchEnd);
+    };
+  }, [
+    isDragging,
+    handleWindowMouseMove,
+    handleWindowMouseUp,
+    handleWindowTouchMove,
+    handleWindowTouchEnd,
+  ]);
+
+  // Hover pause
+  const handleMouseEnter = useCallback(() => {
+    if (pauseOnHover && autoPlay) pausedRef.current = true;
+    if (isDraggable && !isDragging) setCursorState("grab");
+  }, [pauseOnHover, autoPlay, isDraggable, isDragging]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (pauseOnHover && autoPlay) pausedRef.current = false;
+    if (!isDragging) setCursorState("");
+    endDrag();
+  }, [pauseOnHover, autoPlay, isDragging, endDrag]);
+
+  if (items.length === 0) return null;
+
+  const cursorClass =
+    cursorState === "grab"
+      ? "cursor-grab"
+      : cursorState === "grabbing"
+      ? "cursor-grabbing"
+      : "";
 
   return (
     <div
-      className={`relative ${className}`}
-      onMouseEnter={() => pauseOnHover && setPaused(true)}
+      ref={containerRef}
+      className={`relative overflow-hidden ${className}`}
+      aria-label={ariaLabel}
+      role="region"
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {arrows && (
+      {gradientFades && (
         <>
-          <button
-            aria-label="Scroll left"
-            onClick={() => scrollBy(-480)}
-            className="absolute start-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block "
-          >
-            <ChevronLeft className="h-5 w-5 rtl:scale-x-[-1]" />
-          </button>
-          <button
-            aria-label="Scroll right"
-            onClick={() => scrollBy(480)}
-            className="absolute end-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow ring-1 ring-black/5 backdrop-blur hover:bg-white md:block "
-          >
-            <ChevronRight className="h-5 w-5 rtl:scale-x-[-1]" />
-          </button>
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-white via-white/70 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-white via-white/70 to-transparent" />
         </>
       )}
+
       <div
-        ref={scrollRef}
-        className="no-scrollbar flex overflow-x-auto scroll-px-6 pt-2 pb-10 cursor-grab active:cursor-grabbing" // Ensures no native scrollbar is visible
-        style={{ gap: itemGap, userSelect: isDragging ? "none" : "auto" }}
-        onScroll={handleScroll}
+        ref={trackRef}
+        data-carousel-track
+        className={`flex ${cursorClass}`}
+        style={{ gap: `${gap}px`, willChange: "transform" }}
         onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
       >
-        {displayItems.map((item, idx) => {
-          const duplicateIndex =
-            loop && idx >= items.length ? idx - items.length : idx;
-          const keySuffix = loop
-            ? `-${idx >= items.length ? "clone" : "orig"}-${duplicateIndex}`
-            : "";
-          return (
-            <div key={`${item.key}${keySuffix}`} className="shrink-0">
-              {renderItem(item)}
-            </div>
-          );
-        })}
+        {Array.from({ length: autoPlay ? 2 : 1 }).map((_, segmentIndex) => (
+          <div
+            key={`segment-${segmentIndex}`}
+            ref={segmentIndex === 0 ? primaryRef : undefined}
+            aria-hidden={segmentIndex > 0 && autoPlay}
+            className="flex items-stretch"
+            style={{ gap: `${gap}px` }}
+          >
+            {items.map((item) => (
+              <div
+                key={`${item.key}-${segmentIndex}`}
+                className="shrink-0 select-none"
+                draggable={false}
+              >
+                {renderItem(item)}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-      <style jsx>{`
-        .no-scrollbar {
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* IE 10+ */
-        }
-        .no-scrollbar::-webkit-scrollbar {
-          display: none; /* Chrome, Safari, Opera */
-        }
-      `}</style>
     </div>
   );
 }
