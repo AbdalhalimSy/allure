@@ -19,7 +19,13 @@ import { useI18n } from "@/contexts/I18nContext";
 interface Condition {
   id: number;
   label: string;
-  input_type: "yes_no" | "textarea" | "checkbox" | "radio" | "text" | "media_upload";
+  input_type:
+    | "yes_no"
+    | "textarea"
+    | "checkbox"
+    | "radio"
+    | "text"
+    | "media_upload";
   options: Array<{ value: string; label: string }>;
   is_required: boolean;
 }
@@ -39,7 +45,6 @@ interface JobApplicationModalProps {
   role: Role;
   profileId?: number;
 }
-
 
 export default function JobApplicationModal({
   isOpen,
@@ -99,13 +104,17 @@ export default function JobApplicationModal({
         if (condition.input_type === "media_upload") {
           // For media upload, check mediaFiles
           if (!mediaFiles[condition.id]) {
-            toast.error(`${t("jobs.jobApplication.answerRequired")}: ${condition.label}`);
+            toast.error(
+              `${t("jobs.jobApplication.answerRequired")}: ${condition.label}`
+            );
             return false;
           }
         } else {
           const response = responses[condition.id];
           if (!response || (Array.isArray(response) && response.length === 0)) {
-            toast.error(`${t("jobs.jobApplication.answerRequired")}: ${condition.label}`);
+            toast.error(
+              `${t("jobs.jobApplication.answerRequired")}: ${condition.label}`
+            );
             return false;
           }
         }
@@ -164,7 +173,11 @@ export default function JobApplicationModal({
       );
 
       const result = await response.json();
-      const isSuccess = response.ok && (result.status === "success" || result.status === true || result.success === true);
+      const isSuccess =
+        response.ok &&
+        (result.status === "success" ||
+          result.status === true ||
+          result.success === true);
 
       if (isSuccess) {
         toast.success(result.message || t("jobs.jobApplication.submitted"));
@@ -205,7 +218,7 @@ export default function JobApplicationModal({
                 }
                 className="peer sr-only"
               />
- <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                 {responses[condition.id] === "yes" ? (
                   <CheckCircle2 className="h-4 w-4" />
                 ) : (
@@ -225,7 +238,7 @@ export default function JobApplicationModal({
                 }
                 className="peer sr-only"
               />
- <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                 {responses[condition.id] === "no" ? (
                   <CheckCircle2 className="h-4 w-4" />
                 ) : (
@@ -243,7 +256,7 @@ export default function JobApplicationModal({
             type="text"
             value={responses[condition.id] || ""}
             onChange={(e) => handleInputChange(condition.id, e.target.value)}
-            placeholder={t('forms.enterYourAnswer') || "Enter your answer"}
+            placeholder={t("forms.enterYourAnswer") || "Enter your answer"}
           />
         );
 
@@ -253,7 +266,7 @@ export default function JobApplicationModal({
             value={responses[condition.id] || ""}
             onChange={(e) => handleInputChange(condition.id, e.target.value)}
             rows={4}
-            placeholder={t('forms.enterYourAnswer') || "Enter your answer"}
+            placeholder={t("forms.enterYourAnswer") || "Enter your answer"}
           />
         );
 
@@ -275,7 +288,7 @@ export default function JobApplicationModal({
                   }
                   className="peer sr-only"
                 />
- <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 peer-checked:border-[#c49a47] peer-checked:bg-[#c49a47]/10 peer-checked:text-[#c49a47] peer-checked:ring-2 peer-checked:ring-[#c49a47]/20 ">
                   {responses[condition.id] === option.value ? (
                     <CheckCircle2 className="h-4 w-4" />
                   ) : (
@@ -313,9 +326,9 @@ export default function JobApplicationModal({
                     className="peer sr-only"
                   />
                   <span
- className={`inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 ${
+                    className={`inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all hover:bg-gray-50 ${
                       isChecked
- ? "border-[#c49a47] bg-[#c49a47]/10 text-[#c49a47] ring-2 ring-[#c49a47]/20 "
+                        ? "border-[#c49a47] bg-[#c49a47]/10 text-[#c49a47] ring-2 ring-[#c49a47]/20 "
                         : ""
                     }`}
                   >
@@ -355,7 +368,10 @@ export default function JobApplicationModal({
           <FileUploader
             accept="image/*,video/*,.pdf"
             maxSize={20 * 1024 * 1024}
-            description={t("jobs.jobApplication.uploadDescription") || "Upload images, videos, or PDF (max 20MB)"}
+            description={
+              t("jobs.jobApplication.uploadDescription") ||
+              "Upload images, videos, or PDF (max 20MB)"
+            }
             onChange={(files) => {
               if (files.length > 0 && files[0] instanceof File) {
                 handleFileChange(condition.id, files[0]);
@@ -371,11 +387,13 @@ export default function JobApplicationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
- <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl ">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl ">
         {/* Header */}
- <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 ">
+        <div className="flex items-center justify-between border-b border-gray-200 bg-linear-to-r from-[#c49a47] to-[#d4a855] p-6 ">
           <div>
-            <h2 className="text-2xl font-bold text-white">{t("jobs.jobApplication.applyForRole")}</h2>
+            <h2 className="text-2xl font-bold text-white">
+              {t("jobs.jobApplication.applyForRole")}
+            </h2>
             <p className="text-sm text-white/90">{role.name}</p>
           </div>
           <button
@@ -393,9 +411,7 @@ export default function JobApplicationModal({
           className="max-h-[calc(90vh-180px)] overflow-y-auto p-6"
         >
           <div className="mb-6">
- <p className="text-sm text-gray-600 ">
-              {role.description}
-            </p>
+            <p className="text-sm text-gray-600 ">{role.description}</p>
           </div>
 
           <div className="space-y-6">
@@ -425,12 +441,12 @@ export default function JobApplicationModal({
           </div>
 
           {/* Info Box */}
- <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] ">
- <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] " />
- <p className="text-sm text-[#c49a47] ">
+          <div className="mt-6 flex items-start gap-3 rounded-lg border p-4 border-[#c49a47] bg-linear-to-r from-[#fff8ec] to-[#f7e6c2] ">
+            <AlertCircle className="h-5 w-5 shrink-0 text-[#c49a47] " />
+            <p className="text-sm text-[#c49a47] ">
               {t("jobs.jobApplication.infoBox")}
               {role.call_time_enabled && (
- <span className="mt-1 block text-xs text-[#b3822f] ">
+                <span className="mt-1 block text-xs text-[#b3822f] ">
                   {t("jobs.jobApplication.callTimeShortlistNotice") ||
                     "If shortlisted, you will be asked to choose a call time."}
                 </span>
@@ -440,7 +456,7 @@ export default function JobApplicationModal({
         </form>
 
         {/* Footer */}
- <div className="border-t border-gray-200 bg-gray-50 p-6 ">
+        <div className="border-t border-gray-200 bg-gray-50 p-6 ">
           <div className="flex gap-3">
             <Button
               type="button"

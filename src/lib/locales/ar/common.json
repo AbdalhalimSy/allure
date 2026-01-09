@@ -141,5 +141,12 @@
   },
   "auth": {
     "switchingUser": "تبديل المستخدم"
+  },
+  "countryDetection": {
+    "badge": "تحديد الموقع الذكي",
+    "title": "لاحظنا بلداً مختلفاً",
+    "body": "الدولة المختارة حالياً هي {{current}}. اكتشفنا أنك تتصفح من {{detected}}. هل تودّ التبديل لتحصل على نتائج أدق؟",
+    "keepCurrent": "الإبقاء على {{current}}",
+    "switchToDetected": "التبديل إلى {{detected}}"
   }
 }

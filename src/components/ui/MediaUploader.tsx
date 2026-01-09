@@ -34,7 +34,7 @@ export default function MediaUploader({
   const getAcceptTypes = () => {
     switch (type) {
       case "photo":
-        return "image/jpeg,image/png,image/jpg";
+        return "image/jpeg,image/png,image/jpg,image/webp";
       case "video":
         return "video/mp4,video/quicktime,video/x-msvideo";
       case "audio":

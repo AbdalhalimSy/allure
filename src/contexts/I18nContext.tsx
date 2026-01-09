@@ -153,7 +153,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   return (
     <I18nContext.Provider value={{ locale, setLocale: changeLocale, t }}>
-      <div dir={locale === 'ar' ? 'rtl' : 'ltr'} lang={locale}>{children}</div>
+      <div dir={locale === 'ar' ? 'rtl' : 'ltr'} lang={locale} suppressHydrationWarning>
+        {children}
+      </div>
     </I18nContext.Provider>
   );
 }

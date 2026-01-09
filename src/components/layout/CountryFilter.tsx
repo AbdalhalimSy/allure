@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useCountryFilter, CountryCode } from "@/contexts/CountryFilterContext";
 import { useI18n } from "@/contexts/I18nContext";
+import { detectCountryCode } from "@/lib/utils/geo";
+import CountryDetectModal from "./CountryDetectModal";
 
 export default function CountryFilter() {
   const { selectedCountry, setSelectedCountry } = useCountryFilter();
@@ -10,6 +12,8 @@ export default function CountryFilter() {
   const isRTL = locale === "ar";
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [showDetectModal, setShowDetectModal] = useState(false);
+  const [detectedCountry, setDetectedCountry] = useState<CountryCode>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -33,8 +37,71 @@ export default function CountryFilter() {
 
   const currentCountry = countries.find((c) => c.code === selectedCountry);
 
+  // 1) Detect on mount only; cache dedupes concurrent calls
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const detected = await detectCountryCode();
+      if (cancelled) return;
+      setDetectedCountry(detected);
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  // 2) React to selectedCountry and detectedCountry changes without re-fetching
+  useEffect(() => {
+    if (!detectedCountry) return;
+
+    // If user never picked a country, default to detected
+    if (selectedCountry === null) {
+      setSelectedCountry(detectedCountry);
+      if (detectedCountry === "SA" && locale !== "ar") setLocale("ar");
+      return;
+    }
+
+    // If user has a preference and it differs from detected, prompt on next visit
+    try {
+      const lastPromptAt = Number(localStorage.getItem("countryDetectPromptAt") || 0);
+      const lastPromptFor = localStorage.getItem("countryDetectPromptFor");
+      const DAY = 24 * 60 * 60 * 1000;
+      const shouldPrompt = detectedCountry && selectedCountry && detectedCountry !== selectedCountry && (
+        Date.now() - lastPromptAt > DAY || lastPromptFor !== detectedCountry
+      );
+      if (shouldPrompt) {
+        setShowDetectModal(true);
+      }
+    } catch {}
+  }, [selectedCountry, detectedCountry]);
+
+  const handleKeep = () => {
+    try {
+      localStorage.setItem("countryDetectPromptAt", String(Date.now()));
+      if (detectedCountry) localStorage.setItem("countryDetectPromptFor", detectedCountry);
+    } catch {}
+    setShowDetectModal(false);
+  };
+
+  const handleSwitch = () => {
+    if (!detectedCountry) return handleKeep();
+    setSelectedCountry(detectedCountry);
+    if (detectedCountry === "SA" && locale !== "ar") setLocale("ar");
+    try {
+      localStorage.setItem("countryDetectPromptAt", String(Date.now()));
+      localStorage.setItem("countryDetectPromptFor", detectedCountry);
+    } catch {}
+    setShowDetectModal(false);
+  };
+
   return (
     <div className="relative" ref={dropdownRef}>
+      <CountryDetectModal
+        open={showDetectModal}
+        currentLabel={currentCountry?.label || (isRTL ? "الكل" : "All")}
+        detectedLabel={countries.find(c => c.code === detectedCountry)?.label || (isRTL ? "الكل" : "All")}
+        onKeep={handleKeep}
+        onSwitch={handleSwitch}
+        onClose={() => setShowDetectModal(false)}
+      />
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-[#c49a47]/40 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-900 transition-all duration-200 ease-in-out hover:border-[#c49a47]/80 hover:shadow-md hover:scale-105 active:scale-100 whitespace-nowrap"
@@ -59,6 +126,7 @@ export default function CountryFilter() {
       </button>
 
       <div
+        suppressHydrationWarning
         className={`fixed inset-x-4 bottom-24 sm:bottom-auto sm:inset-auto sm:absolute rtl:sm:start-0 ltr:sm:end-0 z-50 sm:mt-2 w-auto sm:w-48 max-h-[60vh] sm:max-h-none overflow-y-auto sm:overflow-hidden rounded-2xl border border-[#c49a47]/40 bg-white shadow-2xl transition-all duration-200 ease-in-out sm:ltr:origin-top-right sm:rtl:origin-top-left ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"

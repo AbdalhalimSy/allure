@@ -14,6 +14,8 @@ import {
   calculateAppearanceCompletion,
   calculateProfessionCompletion,
   calculateExperienceCompletion,
+  calculatePortfolioCompletion,
+  calculatePhotosCompletion,
 } from "./profileCompletion";
 
 export const getAccountNavItems = (profile: ProfileData | undefined) => {
@@ -29,6 +31,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.basic",
         icon: <TbUser />,
         section: "profile",
+        completion: calculateBasicCompletion(profile),
       },
       {
         id: "appearance",
@@ -36,6 +39,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.appearance",
         icon: <TbSparkles />,
         section: "profile",
+        completion: calculateAppearanceCompletion(profile),
       },
       // Professional Section
       {
@@ -44,6 +48,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.profession",
         icon: <TbBriefcase />,
         section: "professional",
+        completion: calculateProfessionCompletion(profile),
       },
       {
         id: "experience",
@@ -51,6 +56,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.experience",
         icon: <TbStar />,
         section: "professional",
+        completion: calculateExperienceCompletion(profile),
       },
       {
         id: "portfolio",
@@ -58,6 +64,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.portfolio",
         icon: <TbPhoto />,
         section: "professional",
+        completion: calculatePortfolioCompletion(profile),
       },
       {
         id: "photos",
@@ -65,6 +72,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.photos",
         icon: <TbCamera />,
         section: "professional",
+        // No completion field - photo gallery management page
       },
       // Account Section
       {
@@ -73,6 +81,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.security",
         icon: <TbShieldCheck />,
         section: "account",
+        // No completion field - these are informational pages
       },
       {
         id: "billing",
@@ -80,11 +89,22 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         labelKey: "account.nav.billing",
         icon: <TbCreditCard />,
         section: "account",
+        // No completion field - these are informational pages
       },
     ];
   }
 
-  // Show Profile Setup during onboarding
+  // Show Profile Setup during onboarding with completion percentages
+  const basicCompletion = calculateBasicCompletion(profile);
+  const appearanceCompletion = calculateAppearanceCompletion(profile);
+  const professionCompletion = calculateProfessionCompletion(profile);
+  const experienceCompletion = calculateExperienceCompletion(profile);
+
+  // Calculate overall profile completion (average of the 4 main steps)
+  const overallCompletion = Math.round(
+    (basicCompletion + appearanceCompletion + professionCompletion + experienceCompletion) / 4
+  );
+
   return [
     {
       id: "profile",
@@ -92,6 +112,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       labelKey: "account.nav.profile",
       icon: <TbUser />,
       section: "default",
+      completion: overallCompletion,
     },
     {
       id: "security",
@@ -99,6 +120,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       labelKey: "account.nav.security",
       icon: <TbShieldCheck />,
       section: "account",
+      // No completion field - informational page
     },
     {
       id: "billing",
@@ -106,6 +128,7 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       labelKey: "account.nav.billing",
       icon: <TbCreditCard />,
       section: "account",
+      // No completion field - informational page
     },
   ];
 };

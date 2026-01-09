@@ -40,10 +40,17 @@ type NavItemComponentProps = {
   getCompletionColor: (completion?: number) => string;
 };
 
-function NavItemComponent({ item, isActive, t, getCompletionColor }: NavItemComponentProps) {
+function NavItemComponent({
+  item,
+  isActive,
+  t,
+  getCompletionColor,
+}: NavItemComponentProps) {
   const active = isActive(item.id);
   const label =
-    typeof item.label === "string" && item.labelKey ? t(item.labelKey) : item.label;
+    typeof item.label === "string" && item.labelKey
+      ? t(item.labelKey)
+      : item.label;
 
   return (
     <Link
@@ -124,7 +131,12 @@ function NavItemComponent({ item, isActive, t, getCompletionColor }: NavItemComp
   );
 }
 
-function SidebarContent({ groupedItems, isActive, t, getCompletionColor }: SidebarContentProps) {
+function SidebarContent({
+  groupedItems,
+  isActive,
+  t,
+  getCompletionColor,
+}: SidebarContentProps) {
   return (
     <nav
       className="space-y-1"
@@ -278,12 +290,20 @@ export default function AccountSidebar({
                   {t("account.profileComplete")}
                 </span>
                 <span className="text-sm font-semibold text-[#c49a47]">
-                  {Math.round(
-                    navItems.reduce(
+                  {(() => {
+                    // Only count items that have meaningful completion tracking (exclude security and billing)
+                    const trackableItems = navItems.filter(
+                      (item) =>
+                        item.completion !== undefined &&
+                        !["security", "billing"].includes(item.id)
+                    );
+                    if (trackableItems.length === 0) return 0;
+                    const totalCompletion = trackableItems.reduce(
                       (sum, item) => sum + (item.completion || 0),
                       0
-                    ) / navItems.length
-                  )}
+                    );
+                    return Math.round(totalCompletion / trackableItems.length);
+                  })()}
                   %
                 </span>
               </div>
@@ -291,12 +311,21 @@ export default function AccountSidebar({
                 <div
                   className="h-full bg-linear-to-r from-[#c49a47] to-[#d4af57] rounded-full transition-all duration-500"
                   style={{
-                    width: `${Math.round(
-                      navItems.reduce(
+                    width: `${(() => {
+                      const trackableItems = navItems.filter(
+                        (item) =>
+                          item.completion !== undefined &&
+                          !["security", "billing"].includes(item.id)
+                      );
+                      if (trackableItems.length === 0) return 0;
+                      const totalCompletion = trackableItems.reduce(
                         (sum, item) => sum + (item.completion || 0),
                         0
-                      ) / navItems.length
-                    )}%`,
+                      );
+                      return Math.round(
+                        totalCompletion / trackableItems.length
+                      );
+                    })()}%`,
                   }}
                 />
               </div>

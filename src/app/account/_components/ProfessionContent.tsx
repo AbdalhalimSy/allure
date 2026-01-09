@@ -307,7 +307,7 @@ export default function ProfessionContent({
                 <TbInfoCircle className="h-4 w-4 text-[#c49a47]" />
                 {translate(
                   "account.profession.mediaHint",
-                  "Use JPG/PNG images and MP4 videos"
+                  "Use JPG/PNG/WEPB images and MP4 videos"
                 )}
               </span>
             </div>

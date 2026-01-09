@@ -79,7 +79,7 @@
     "saving": "Saving..."
   },
   "sectionLabel": "Professional Profile",
-  "mediaHint": "Use JPG/PNG images and MP4 videos",
+  "mediaHint": "Use JPG/PNG/WEBP images and MP4 videos",
   "footerHint": "You can update your professional information at any time.",
   "helper": "Requirements adapt based on each profession and sub-profession.",
   "validation": {

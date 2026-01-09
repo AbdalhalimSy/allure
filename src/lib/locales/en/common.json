@@ -141,5 +141,12 @@
   },
   "auth": {
     "switchingUser": "Switching user"
+  },
+  "countryDetection": {
+    "badge": "Smart Location",
+    "title": "We found a different location",
+    "body": "Your selected country is {{current}}. We detected you're browsing from {{detected}}. Would you like to switch your country for better results?",
+    "keepCurrent": "Keep {{current}}",
+    "switchToDetected": "Switch to {{detected}}"
   }
 }
