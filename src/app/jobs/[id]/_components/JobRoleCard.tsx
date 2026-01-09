@@ -14,7 +14,12 @@ import {
   Target,
   HelpCircle,
 } from "lucide-react";
-import { DetailedJob, DetailedRole, Profession, SubProfession } from "@/types/job";
+import {
+  DetailedJob,
+  DetailedRole,
+  Profession,
+  SubProfession,
+} from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
 
 interface JobRoleCardProps {
@@ -37,7 +42,7 @@ const getProfessionName = (prof: string | Profession): string => {
 
 // Helper function to get profession description
 const getProfessionDescription = (prof: string | Profession): string | null => {
-  return typeof prof === "string" ? null : (prof.description || null);
+  return typeof prof === "string" ? null : prof.description || null;
 };
 
 // Helper function to check if sub-profession is an object
@@ -51,8 +56,10 @@ const getSubProfessionName = (subProf: string | SubProfession): string => {
 };
 
 // Helper function to get sub-profession description
-const getSubProfessionDescription = (subProf: string | SubProfession): string | null => {
-  return typeof subProf === "string" ? null : (subProf.description || null);
+const getSubProfessionDescription = (
+  subProf: string | SubProfession
+): string | null => {
+  return typeof subProf === "string" ? null : subProf.description || null;
 };
 
 export function JobRoleCard({
@@ -63,8 +70,12 @@ export function JobRoleCard({
   activeProfileId,
 }: JobRoleCardProps) {
   const { t } = useI18n();
-  const [activeTab, setActiveTab] = useState<"overview" | "requirements" | "details">("overview");
-  const [expandedProfession, setExpandedProfession] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "requirements" | "details"
+  >("overview");
+  const [expandedProfession, setExpandedProfession] = useState<number | null>(
+    null
+  );
 
   const alreadyApplied = role.has_applied || job.has_applied;
   const isDisabled =
@@ -75,21 +86,35 @@ export function JobRoleCard({
     !activeProfileId;
 
   const tabs = [
-    { id: "overview" as const, label: t("jobs.jobDetail.overview") || "Overview", icon: FileText },
-    { id: "requirements" as const, label: t("jobs.jobDetail.requirements") || "Requirements", icon: Target },
-    { id: "details" as const, label: t("jobs.jobDetail.details") || "Details", icon: Info },
+    {
+      id: "overview" as const,
+      label: t("jobs.jobDetail.overview") || "Overview",
+      icon: FileText,
+    },
+    {
+      id: "requirements" as const,
+      label: t("jobs.jobDetail.requirements") || "Requirements",
+      icon: Target,
+    },
+    {
+      id: "details" as const,
+      label: t("jobs.jobDetail.details") || "Details",
+      icon: Info,
+    },
   ];
 
   return (
     <div className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-gray-200/50 bg-white shadow-lg transition-all hover:shadow-2xl">
       {/* Gradient Top Border */}
       <div className="h-1 bg-linear-to-r from-[#c49a47] via-[#d4a855] to-[#c49a47]" />
-      
+
       <div className="p-4 sm:p-6 md:p-8">
         {/* Header Section */}
         <div className="mb-4 sm:mb-6">
           <div className="flex flex-wrap items-start justify-between gap-2 sm:gap-3 mb-2 sm:mb-3">
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 flex-1">{role.name}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 flex-1">
+              {role.name}
+            </h3>
             {role.has_applied && (
               <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-linear-to-r from-emerald-500 to-green-500 px-3 py-1.5 sm:px-4 sm:py-2 shadow-lg">
                 <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
@@ -99,14 +124,17 @@ export function JobRoleCard({
               </div>
             )}
           </div>
-          
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-2 sm:mb-3">{role.description}</p>
-          
+
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-2 sm:mb-3">
+            {role.description}
+          </p>
+
           <div className="flex flex-wrap gap-2">
             {role.call_time_enabled && (
               <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full bg-linear-to-r from-indigo-50 to-purple-50 border border-indigo-200 px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs font-semibold text-indigo-700">
                 <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                {t("jobs.appliedJobs.details.callTimeEnabled") || "Call time required"}
+                {t("jobs.appliedJobs.details.callTimeEnabled") ||
+                  "Call time required"}
               </span>
             )}
             {role.budget && (
@@ -156,7 +184,8 @@ export function JobRoleCard({
                       <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
                       <div>
                         <span className="text-sm font-semibold text-emerald-700">
-                          {t("jobs.jobDetail.alreadyApplied") || "You already applied for this role"}
+                          {t("jobs.jobDetail.alreadyApplied") ||
+                            "You already applied for this role"}
                         </span>
                       </div>
                     </div>
@@ -185,7 +214,10 @@ export function JobRoleCard({
                         {role.reasons && role.reasons.length > 0 && (
                           <ul className="space-y-1.5">
                             {role.reasons.map((reason, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm text-red-600">
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-sm text-red-600"
+                              >
                                 <span className="mt-1 text-red-400">•</span>
                                 <span>{reason}</span>
                               </li>
@@ -194,7 +226,8 @@ export function JobRoleCard({
                         )}
                         {(!role.reasons || role.reasons.length === 0) && (
                           <div className="text-sm text-red-600">
-                            {t("jobs.jobDetail.eligibility")}: {role.eligibility_score || 0}%
+                            {t("jobs.jobDetail.eligibility")}:{" "}
+                            {role.eligibility_score || 0}%
                           </div>
                         )}
                       </div>
@@ -210,8 +243,12 @@ export function JobRoleCard({
                     <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">{t("jobs.jobDetail.gender")}</p>
-                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">{t(`filters.${role.gender}`)}</p>
+                    <p className="text-xs text-gray-600 mb-0.5">
+                      {t("jobs.jobDetail.gender")}
+                    </p>
+                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
+                      {t(`filters.${role.gender}`)}
+                    </p>
                   </div>
                 </div>
 
@@ -220,9 +257,12 @@ export function JobRoleCard({
                     <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">{t("jobs.jobDetail.ageRange")}</p>
+                    <p className="text-xs text-gray-600 mb-0.5">
+                      {t("jobs.jobDetail.ageRange")}
+                    </p>
                     <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
-                      {role.start_age} - {role.end_age} {t("jobs.jobDetail.years")}
+                      {role.start_age} - {role.end_age}{" "}
+                      {t("jobs.jobDetail.years")}
                     </p>
                   </div>
                 </div>
@@ -232,9 +272,13 @@ export function JobRoleCard({
                     <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">{t("jobs.jobDetail.ethnicity")}</p>
+                    <p className="text-xs text-gray-600 mb-0.5">
+                      {t("jobs.jobDetail.ethnicity")}
+                    </p>
                     <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
-                      {Array.isArray(role.ethnicity) ? role.ethnicity.join(", ") : role.ethnicity}
+                      {Array.isArray(role.ethnicity)
+                        ? role.ethnicity.join(", ")
+                        : role.ethnicity}
                     </p>
                   </div>
                 </div>
@@ -244,8 +288,12 @@ export function JobRoleCard({
                     <DollarSign className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">{t("jobs.jobDetail.paymentTerms")}</p>
-                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">{role.payment_terms_days} days</p>
+                    <p className="text-xs text-gray-600 mb-0.5">
+                      {t("jobs.jobDetail.paymentTerms")}
+                    </p>
+                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
+                      {role.payment_terms_days} days
+                    </p>
                   </div>
                 </div>
               </div>
@@ -268,9 +316,10 @@ export function JobRoleCard({
                       <div className="space-y-2">
                         {role.professions.map((profession, idx) => {
                           const name = getProfessionName(profession);
-                          const description = getProfessionDescription(profession);
+                          const description =
+                            getProfessionDescription(profession);
                           const isObj = isProfessionObject(profession);
-                          
+
                           return (
                             <div key={idx} className="space-y-1.5">
                               <div className="flex items-center justify-between gap-2">
@@ -291,14 +340,16 @@ export function JobRoleCard({
                                   </button>
                                 )}
                               </div>
-                              {isObj && description && expandedProfession === idx && (
-                                <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-amber-100">
-                                  <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                                    Description
-                                  </p>
-                                  <p>{description}</p>
-                                </div>
-                              )}
+                              {isObj &&
+                                description &&
+                                expandedProfession === idx && (
+                                  <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-amber-100">
+                                    <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                                      Description
+                                    </p>
+                                    <p>{description}</p>
+                                  </div>
+                                )}
                             </div>
                           );
                         })}
@@ -315,10 +366,11 @@ export function JobRoleCard({
                       <div className="space-y-2">
                         {role.sub_professions.map((subProf, idx) => {
                           const name = getSubProfessionName(subProf);
-                          const description = getSubProfessionDescription(subProf);
+                          const description =
+                            getSubProfessionDescription(subProf);
                           const isObj = isSubProfessionObject(subProf);
                           const baseIdx = (role.professions?.length ?? 0) + idx;
-                          
+
                           return (
                             <div key={idx} className="space-y-1.5">
                               <div className="flex items-center justify-between gap-2">
@@ -329,7 +381,9 @@ export function JobRoleCard({
                                   <button
                                     onClick={() =>
                                       setExpandedProfession(
-                                        expandedProfession === baseIdx ? null : baseIdx
+                                        expandedProfession === baseIdx
+                                          ? null
+                                          : baseIdx
                                       )
                                     }
                                     className="p-1.5 hover:bg-indigo-100 rounded-lg transition-colors"
@@ -339,14 +393,16 @@ export function JobRoleCard({
                                   </button>
                                 )}
                               </div>
-                              {isObj && description && expandedProfession === baseIdx && (
-                                <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-indigo-100">
-                                  <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                                    Description
-                                  </p>
-                                  <p>{description}</p>
-                                </div>
-                              )}
+                              {isObj &&
+                                description &&
+                                expandedProfession === baseIdx && (
+                                  <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-indigo-100">
+                                    <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                                      Description
+                                    </p>
+                                    <p>{description}</p>
+                                  </div>
+                                )}
                             </div>
                           );
                         })}
@@ -354,24 +410,26 @@ export function JobRoleCard({
                     </div>
                   )}
 
-                  {role.talent_based_countries && role.talent_based_countries.length > 0 && (
-                    <div className="rounded-2xl bg-linear-to-br from-blue-50 to-cyan-50 border border-blue-200 p-5">
-                      <h4 className="mb-3 flex items-center gap-2 font-bold text-gray-900">
-                        <MapPin className="h-5 w-5 text-blue-600" />
-                        {t("jobs.jobDetail.talentLocation") || "Talent Must Be Based In"}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {role.talent_based_countries.map((country, idx) => (
-                          <span
-                            key={idx}
-                            className="rounded-xl bg-white border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm hover:shadow-md transition-shadow"
-                          >
-                            {country}
-                          </span>
-                        ))}
+                  {role.talent_based_countries &&
+                    role.talent_based_countries.length > 0 && (
+                      <div className="rounded-2xl bg-linear-to-br from-blue-50 to-cyan-50 border border-blue-200 p-5">
+                        <h4 className="mb-3 flex items-center gap-2 font-bold text-gray-900">
+                          <MapPin className="h-5 w-5 text-blue-600" />
+                          {t("jobs.jobDetail.talentLocation") ||
+                            "Talent Must Be Based In"}
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {role.talent_based_countries.map((country, idx) => (
+                            <span
+                              key={idx}
+                              className="rounded-xl bg-white border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm hover:shadow-md transition-shadow"
+                            >
+                              {country}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               )}
 
@@ -384,7 +442,10 @@ export function JobRoleCard({
                   </h4>
                   <div className="space-y-2">
                     {role.conditions.map((condition) => (
-                      <div key={condition.id} className="flex items-start gap-3 text-sm bg-white rounded-xl p-3 border border-gray-200">
+                      <div
+                        key={condition.id}
+                        className="flex items-start gap-3 text-sm bg-white rounded-xl p-3 border border-gray-200"
+                      >
                         {condition.is_required ? (
                           <CheckCircle className="h-5 w-5 shrink-0 text-[#c49a47] mt-0.5" />
                         ) : (
@@ -392,7 +453,11 @@ export function JobRoleCard({
                         )}
                         <span className="text-gray-700 flex-1">
                           {condition.label}
-                          {condition.is_required && <span className="ms-1 text-red-500 font-bold">*</span>}
+                          {condition.is_required && (
+                            <span className="ms-1 text-red-500 font-bold">
+                              *
+                            </span>
+                          )}
                         </span>
                       </div>
                     ))}
@@ -412,33 +477,43 @@ export function JobRoleCard({
                     {t("jobs.jobDetail.physicalRequirements")}
                   </h4>
                   <div className="grid gap-3 sm:grid-cols-2">
-                    {Object.entries(role.meta_conditions[0]).map(([key, value]) => {
-                      const attrKeyMap: Record<string, string> = {
-                        hair_color: "content.hairColor",
-                        hair_length: "content.hairLength",
-                        hair_type: "content.hairType",
-                        eye_color: "content.eyeColor",
-                        height: "content.height",
-                        weight: "content.weight",
-                        shoe_size: "content.shoeSize",
-                        pants_size: "content.pantsSize",
-                        tshirt_size: "content.tshirtSize",
-                        tattoos: "content.tattoos",
-                        piercings: "content.piercings",
-                      };
-                      const translationKey = attrKeyMap[key as keyof typeof attrKeyMap];
-                      return (
-                        value !== null &&
-                        value !== undefined && (
-                          <div key={key} className="flex justify-between items-center px-4 py-3 bg-white rounded-xl border border-violet-200">
-                            <span className="text-sm text-gray-600 font-medium">
-                              {translationKey ? t(translationKey) : key.replace(/_/g, " ")}
-                            </span>
-                            <span className="text-sm font-bold text-gray-900">{value}</span>
-                          </div>
-                        )
-                      );
-                    })}
+                    {Object.entries(role.meta_conditions[0]).map(
+                      ([key, value]) => {
+                        const attrKeyMap: Record<string, string> = {
+                          hair_color: "content.hairColor",
+                          hair_length: "content.hairLength",
+                          hair_type: "content.hairType",
+                          eye_color: "content.eyeColor",
+                          height: "content.height",
+                          weight: "content.weight",
+                          shoe_size: "content.shoeSize",
+                          pants_size: "content.pantsSize",
+                          tshirt_size: "content.tshirtSize",
+                          tattoos: "content.tattoos",
+                          piercings: "content.piercings",
+                        };
+                        const translationKey =
+                          attrKeyMap[key as keyof typeof attrKeyMap];
+                        return (
+                          value !== null &&
+                          value !== undefined && (
+                            <div
+                              key={key}
+                              className="flex justify-between items-center px-4 py-3 bg-white rounded-xl border border-violet-200"
+                            >
+                              <span className="text-sm text-gray-600 font-medium">
+                                {translationKey
+                                  ? t(translationKey)
+                                  : key.replace(/_/g, " ")}
+                              </span>
+                              <span className="text-sm font-bold text-gray-900">
+                                {value}
+                              </span>
+                            </div>
+                          )
+                        );
+                      }
+                    )}
                   </div>
                 </div>
               )}
@@ -446,7 +521,9 @@ export function JobRoleCard({
               {role.meta_conditions.length === 0 && (
                 <div className="text-center py-12">
                   <Info className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No additional physical requirements specified</p>
+                  <p className="text-gray-500">
+                    {t("jobs.roleCard.noPhysicalRequirements")}
+                  </p>
                 </div>
               )}
             </div>
@@ -474,7 +551,9 @@ export function JobRoleCard({
                 ? t("jobs.jobDetail.loginToApply") || "Login to apply"
                 : role.can_apply === false
                 ? t("jobs.jobDetail.canNotApply") || "Cannot apply"
-                : (t("jobs.jobDetail.applyFor") || "Apply for") + " " + role.name}
+                : (t("jobs.jobDetail.applyFor") || "Apply for") +
+                  " " +
+                  role.name}
             </span>
           </button>
           {role.can_apply === false && !alreadyApplied && (

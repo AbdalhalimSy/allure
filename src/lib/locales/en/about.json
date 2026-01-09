@@ -85,15 +85,8 @@
         "description": "We advise brands and agencies on casting strategy, talent selection, and campaign alignment to ensure authentic and impactful results."
       }
     },
-    "team": {
-      "badge": "Our Team",
-      "title": "Meet the People Behind Allure",
-      "subtitle": "Experienced professionals dedicated to your success"
-    },
     "partners": {
       "badge": "Trusted By",
-      "title": "Partners & Clients",
-      "subtitle": "We have worked with some of the best names in the market. Be one of them!",
       "noPartners": "Loading our partners..."
     }
   }

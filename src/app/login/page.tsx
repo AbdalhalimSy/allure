@@ -51,7 +51,7 @@ export default function LoginPage() {
       
       // Check if email verification is required
       if (data?.status === "error" && isEmailVerificationError(data?.message)) {
-        toast.error(data.message || t("auth.verifyEmailBeforeLogin") || "Please verify your email before logging in.");
+        toast.error(data.message || t("auth.verifyEmailBeforeLogin"));
         // Redirect to verify-email page with email and password
         router.push(`/verify-email?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
         return;
@@ -85,14 +85,14 @@ export default function LoginPage() {
         // Step 4: Fetch full profile data (now profile_id is set in localStorage)
         await fetchProfile();
         
-        toast.success(data?.message || t("auth.loginSuccessful") || "Login successful!");
+        toast.success(data?.message || t("auth.loginSuccessful"));
         router.push("/");
       } else {
-        toast.error(t("auth.loginFailedNoToken") || "Login failed: No token returned");
+        toast.error(t("auth.loginFailedNoToken"));
       }
     } catch (err) {
       console.error("Login failed", err);
-      const message = getErrorMessage(err, t("auth.unauthorized") || "Unauthorized");
+      const message = getErrorMessage(err, t("auth.unauthorized"));
       
       // Check if the error is about email verification
       if (isEmailVerificationError(err)) {
@@ -107,7 +107,7 @@ export default function LoginPage() {
   };
 
   if (!hydrated) {
-    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
+    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading")}</div>;
   }
 
   if (isAuthenticated) {
@@ -131,7 +131,7 @@ export default function LoginPage() {
           <Input
             id="email"
             type="email"
-            placeholder={t('forms.youExampleCom') || "you@example.com"}
+            placeholder={t('forms.youExampleCom')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

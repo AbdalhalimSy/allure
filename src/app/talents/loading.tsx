@@ -2,8 +2,10 @@
 
 import Loader from "@/components/ui/Loader";
 import TalentCardSkeleton from "@/components/talent/TalentCardSkeleton";
+import { useI18n } from "@/contexts/I18nContext";
 
 export default function LoadingTalents() {
+  const { t } = useI18n();
   return (
     <section className="container mx-auto max-w-7xl px-6 py-16 lg:px-8">
       <div className="mb-6 flex items-center justify-between">
@@ -13,7 +15,7 @@ export default function LoadingTalents() {
         </div>
  <div className="flex items-center gap-2 text-sm text-gray-600 ">
           <Loader className="h-4 w-4" />
-          <span>Loading talents...</span>
+          <span>{t('content.loadingTalents')}</span>
         </div>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

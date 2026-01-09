@@ -150,7 +150,7 @@ export default function ProfilePage() {
               size="xl"
               variant="spinner"
               color="primary"
-              text={t('common.loading') || 'Loading...'}
+              text={t('common.loading')}
               center
             />
           </div>

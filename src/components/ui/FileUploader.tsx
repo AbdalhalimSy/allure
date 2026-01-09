@@ -268,7 +268,7 @@ export default function FileUploader({
                 {item.status === "uploading" && (
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs mb-1">
- <span className="text-gray-600 ">Uploading...</span>
+ <span className="text-gray-600 ">{t('content.uploading')}</span>
  <span className="text-gray-600 ">{item.progress}%</span>
                     </div>
  <div className="w-full bg-gray-200 rounded-full h-1.5">
@@ -373,7 +373,7 @@ export default function FileUploader({
  <p className="text-sm font-medium text-gray-900 truncate">
                     Existing file: {filename}
                   </p>
- <p className="text-xs text-gray-500 ">Previously uploaded</p>
+ <p className="text-xs text-gray-500 ">{t('content.previouslyUploaded')}</p>
                 </div>
                 <button
                   type="button"

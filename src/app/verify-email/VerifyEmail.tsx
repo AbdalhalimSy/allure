@@ -29,7 +29,7 @@ export default function VerifyEmail() {
 
   return (
     <AuthShell
-      title={t("auth.verifyEmail") || "Verify your email"}
+      title={t("auth.verifyEmail")}
       description={
         t("auth.verifyEmailDescription") ||
         "We sent a link and an OTP code to your email."

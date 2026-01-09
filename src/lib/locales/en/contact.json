@@ -17,8 +17,7 @@
         "placeholder": "your.email@example.com"
       },
       "phone": {
-        "label": "Phone Number",
-        "placeholder": "+971 XX XXX XXXX"
+        "label": "Phone Number"
       },
       "message": {
         "label": "Message",
@@ -83,12 +82,6 @@
         "phone": "+961 3 727 908",
         "email": "lebanon@allureagencys.com"
       }
-    },
-    "cta": {
-      "title": "Ready to Get Started?",
-      "subtitle": "Whether you're looking to join our talent roster or book the perfect cast for your project",
-      "talentButton": "Join as Talent",
-      "clientButton": "Browse Talents"
     }
   }
 }

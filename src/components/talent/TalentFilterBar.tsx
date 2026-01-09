@@ -561,7 +561,7 @@ export default function TalentFilterBar({
                     })
                   }
                   placeholder={
-                    t("filters.selectHairColors") || "Select hair colors..."
+                    t("filters.selectHairColors")
                   }
                   loading={loadingLookups}
                 />
@@ -583,7 +583,7 @@ export default function TalentFilterBar({
                     })
                   }
                   placeholder={
-                    t("filters.selectEyeColors") || "Select eye colors..."
+                    t("filters.selectEyeColors")
                   }
                   loading={loadingLookups}
                 />

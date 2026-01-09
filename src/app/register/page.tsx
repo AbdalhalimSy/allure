@@ -52,17 +52,18 @@ export default function RegisterPage() {
   if (!hydrated) {
     return (
       <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">
-        {t("auth.loading") || "Loading..."}
+        {t("auth.loading")}
       </div>
     );
   }
   if (isAuthenticated) return null;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const submitStep1 = async (e: React.FormEvent) => {
@@ -70,21 +71,27 @@ export default function RegisterPage() {
     setErrors({});
 
     // Validation
-    if (!formData.email) return setErrors({ email: t("auth.required") || "Required" });
-    if (!formData.password) return setErrors({ password: t("auth.required") || "Required" });
+    if (!formData.email) return setErrors({ email: t("auth.required") });
+    if (!formData.password) return setErrors({ password: t("auth.required") });
     if (formData.password !== formData.confirmPassword) {
-      return setErrors({ confirmPassword: t("auth.passwordsMismatch") || "Passwords do not match" });
+      return setErrors({ confirmPassword: t("auth.passwordsMismatch") });
     }
     if (!formData.acceptTerms) {
-      return setErrors({ acceptTerms: t("auth.acceptTermsError") || "Please accept the terms" });
+      return setErrors({ acceptTerms: t("auth.acceptTermsError") });
     }
     if (isTwins) {
-      if (!formData.firstTwinName || !formData.secondTwinName || !formData.twinLastName) {
-        return setErrors({ name: t("auth.missingNames") || "Please fill twin names and last name" });
+      if (
+        !formData.firstTwinName ||
+        !formData.secondTwinName ||
+        !formData.twinLastName
+      ) {
+        return setErrors({ name: t("auth.missingNames") });
       }
     } else {
-      if (!formData.firstName) return setErrors({ firstName: t("auth.required") || "Required" });
-      if (!formData.lastName) return setErrors({ lastName: t("auth.required") || "Required" });
+      if (!formData.firstName)
+        return setErrors({ firstName: t("auth.required") });
+      if (!formData.lastName)
+        return setErrors({ lastName: t("auth.required") });
     }
 
     try {
@@ -92,7 +99,7 @@ export default function RegisterPage() {
       // Call internal API -> forwards to backend /auth/register
       let first_name = "";
       let last_name = "";
-      
+
       if (isTwins) {
         // For twins: combine both twin names as first_name
         first_name = `${formData.firstTwinName} & ${formData.secondTwinName}`;
@@ -110,14 +117,14 @@ export default function RegisterPage() {
         password: formData.password,
         password_confirmation: formData.confirmPassword,
       };
-      
+
       // Add twin names if twins registration
       if (isTwins) {
         payload.first_twin_name = formData.firstTwinName;
         payload.second_twin_name = formData.secondTwinName;
       }
       const res = await apiClient.post("/auth/register", payload);
-      const msg = res?.data?.message || t("auth.verifyEmailSent") || "We sent a confirmation email.";
+      const msg = res?.data?.message || t("auth.verifyEmailSent");
       toast.success(msg);
       setStep(2);
     } catch (err) {
@@ -133,8 +140,6 @@ export default function RegisterPage() {
     }
   };
 
-
-
   const footer = (
     <>
       {t("auth.alreadyHaveAccount")}{" "}
@@ -146,23 +151,33 @@ export default function RegisterPage() {
 
   // Simple non-emoji icons for AuthShell
   const RegisterIcon = (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor">
-      <path d="M16 11V7a4 4 0 1 0-8 0v4H6a2 2 0 0 0-2 2v7h16v-7a2 2 0 0 0-2-2h-2Zm-6 0V7a2 2 0 1 1 4 0v4H10Z"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="h-8 w-8"
+      fill="currentColor"
+    >
+      <path d="M16 11V7a4 4 0 1 0-8 0v4H6a2 2 0 0 0-2 2v7h16v-7a2 2 0 0 0-2-2h-2Zm-6 0V7a2 2 0 1 1 4 0v4H10Z" />
     </svg>
   );
   const VerifyIcon = (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor">
-      <path d="M20 8v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9l5 4Zm-6.293 5.293L11 15l-1.707-1.707-1.414 1.414L11 17.828l4.121-4.121-1.414-1.414Z"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="h-8 w-8"
+      fill="currentColor"
+    >
+      <path d="M20 8v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9l5 4Zm-6.293 5.293L11 15l-1.707-1.707-1.414 1.414L11 17.828l4.121-4.121-1.414-1.414Z" />
     </svg>
   );
 
   return (
     <AuthShell
-      title={step === 1 ? (t("auth.register") || "Create account") : (t("auth.verifyEmail") || "Verify your email")}
+      title={step === 1 ? t("auth.register") : t("auth.verifyEmail")}
       description={
         step === 1
-          ? (t("auth.registerDescription") || "Create your account to continue")
-          : (t("auth.verifyEmailDescription") || "We sent a link and an OTP code to your email.")
+          ? t("auth.registerDescription")
+          : t("auth.verifyEmailDescription")
       }
       icon={step === 1 ? RegisterIcon : VerifyIcon}
       footer={footer}
@@ -171,11 +186,10 @@ export default function RegisterPage() {
         <form onSubmit={submitStep1} className="space-y-6">
           {/* Twins toggle */}
           <div className="flex items-center justify-between rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-700">
-            <span className="font-medium">{t("auth.twinsRegistration") || "Twins registration"}</span>
-            <Switch
-              checked={isTwins}
-              onChange={setIsTwins}
-            />
+            <span className="font-medium">
+              {t("auth.twinsRegistration") || "Twins registration"}
+            </span>
+            <Switch checked={isTwins} onChange={setIsTwins} />
           </div>
 
           {/* Names */}
@@ -266,7 +280,7 @@ export default function RegisterPage() {
               id="email"
               name="email"
               type="email"
-              placeholder={t('forms.youExampleCom') || "you@example.com"}
+              placeholder={t("forms.youExampleCom")}
               value={formData.email}
               onChange={handleChange}
               required
@@ -282,7 +296,7 @@ export default function RegisterPage() {
             <PasswordInput
               id="password"
               name="password"
-              placeholder={t('forms.password') || "••••••••"}
+              placeholder={t("forms.password") || "••••••••"}
               value={formData.password}
               onChange={handleChange}
               required
@@ -296,7 +310,7 @@ export default function RegisterPage() {
             <PasswordInput
               id="confirmPassword"
               name="confirmPassword"
-              placeholder={t('forms.password') || "••••••••"}
+              placeholder={t("forms.password") || "••••••••"}
               value={formData.confirmPassword}
               onChange={handleChange}
               required
@@ -305,7 +319,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Terms */}
- <div className="flex items-start gap-3 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-600 ">
+          <div className="flex items-start gap-3 rounded-2xl bg-gray-50/60 p-4 text-sm text-gray-600 ">
             <input
               id="acceptTerms"
               name="acceptTerms"
@@ -316,18 +330,23 @@ export default function RegisterPage() {
               required
             />
             <label htmlFor="acceptTerms">
-              {t("auth.agreePrefix") || "I agree to the"} {" "}
+              {t("auth.agreePrefix") || "I agree to the"}{" "}
               <Link href="/terms" className="font-semibold text-[#c49a47]">
                 {t("auth.terms") || "Terms & Conditions"}
               </Link>{" "}
-              {t("auth.and") || "and"} {" "}
+              {t("auth.and") || "and"}{" "}
               <Link href="/privacy" className="font-semibold text-[#c49a47]">
                 {t("auth.privacy") || "Privacy Policy"}
               </Link>
             </label>
           </div>
 
-          <Button type="submit" variant="primary" className="w-full" isLoading={isLoading}>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full"
+            isLoading={isLoading}
+          >
             {t("auth.continue") || "Continue"}
           </Button>
         </form>

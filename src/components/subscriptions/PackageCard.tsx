@@ -2,6 +2,7 @@
 
 import { SubscriptionPackage } from '@/types/subscription';
 import { Check } from 'lucide-react';
+import { useI18n } from '@/contexts/I18nContext';
 
 interface PackageCardProps {
   package: SubscriptionPackage;
@@ -16,6 +17,7 @@ export function PackageCard({
   onSelect,
   discountedPrice,
 }: PackageCardProps) {
+  const { t } = useI18n();
   const hasDiscount = discountedPrice !== undefined && discountedPrice < pkg.price;
 
   const featureLines = pkg.description
@@ -63,11 +65,11 @@ export function PackageCard({
                 <span className="text-4xl font-bold text-[#c49a47]">
                   {discountedPrice?.toFixed(2)}
                 </span>
-                <span className="mb-1 text-sm font-medium text-gray-500">AED</span>
+                <span className="mb-1 text-sm font-medium text-gray-500">{t('units.aed')}</span>
               </div>
               <div className="mt-2 flex items-center gap-2">
                 <span className="text-sm text-gray-400 line-through">
-                  {pkg.price.toFixed(2)} AED
+                  {pkg.price.toFixed(2)} {t('units.aed')}
                 </span>
                 <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
                   Save {(((pkg.price - (discountedPrice ?? 0)) / pkg.price) * 100).toFixed(0)}%
@@ -79,7 +81,7 @@ export function PackageCard({
  <span className="text-4xl font-bold text-gray-900 ">
                 {pkg.price.toFixed(2)}
               </span>
-              <span className="mb-1 text-sm font-medium text-gray-500">AED</span>
+              <span className="mb-1 text-sm font-medium text-gray-500">{t('units.aed')}</span>
             </div>
           )}
         </div>

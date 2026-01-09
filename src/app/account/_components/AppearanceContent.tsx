@@ -199,7 +199,7 @@ export default function AppearanceContent({
       }
     }
 
-    if (!form.profile_id) return "Profile ID missing";
+    if (!form.profile_id) return t("account.appearance.errors.profileMissing");
     return null;
   };
 
@@ -261,13 +261,7 @@ export default function AppearanceContent({
   };
 
   if (loadingLookups) {
-    return (
-      <AccountPageLoader
-        message={
-          t("account.appearance.loading") || "Loading appearance options..."
-        }
-      />
-    );
+    return <AccountPageLoader message={t("account.appearance.loading")} />;
   }
 
   return (
@@ -300,7 +294,7 @@ export default function AppearanceContent({
                   hair_color_id: value ? Number(value) : null,
                 }))
               }
-              placeholder={t("forms.selectHairColor") || "Select hair color"}
+              placeholder={t("forms.selectHairColor")}
               searchable={false}
             />
           </AccountField>
@@ -327,7 +321,7 @@ export default function AppearanceContent({
                   hair_type_id: value ? Number(value) : null,
                 }))
               }
-              placeholder={t("forms.selectHairType") || "Select hair type"}
+              placeholder={t("forms.selectHairType")}
               searchable={false}
             />
           </AccountField>
@@ -354,7 +348,7 @@ export default function AppearanceContent({
                   hair_length_id: value ? Number(value) : null,
                 }))
               }
-              placeholder={t("forms.selectHairLength") || "Select hair length"}
+              placeholder={t("forms.selectHairLength")}
               searchable={false}
             />
           </AccountField>
@@ -382,7 +376,7 @@ export default function AppearanceContent({
                   eye_color_id: value ? Number(value) : null,
                 }))
               }
-              placeholder={t("forms.selectEyeColor") || "Select eye color"}
+              placeholder={t("forms.selectEyeColor")}
               searchable={false}
             />
           </AccountField>
@@ -414,10 +408,10 @@ export default function AppearanceContent({
                 }))
               }
               options={[
-                { value: "cm", label: "cm" },
-                { value: "in", label: "in" },
+                { value: "cm", label: t("units.cm") },
+                { value: "in", label: t("units.in") },
               ]}
-              placeholder="e.g., 175.5"
+              placeholder={t("account.appearance.placeholders.height")}
               required
               min={0}
               step={0.1}
@@ -441,8 +435,8 @@ export default function AppearanceContent({
               onUnitChange={(u) =>
                 setForm((p) => ({ ...p, shoe_size_unit: u as MeasurementUnit }))
               }
-              options={[{ value: "EU", label: "EU" }]}
-              placeholder="e.g., 43.5"
+              options={[{ value: "EU", label: t("units.eu") }]}
+              placeholder={t("account.appearance.placeholders.shoe")}
               required
               min={0}
               step={0.1}
@@ -460,12 +454,16 @@ export default function AppearanceContent({
           >
             <SingleSelect
               options={[
-                { value: "XS", label: "XS" },
-                { value: "S", label: "S" },
-                { value: "M", label: "M" },
-                { value: "L", label: "L" },
-                { value: "XL", label: "XL" },
-                { value: "XXL", label: "XXL" },
+                { value: "XXS", label: t("sizes.xxs") },
+                { value: "XS", label: t("sizes.xs") },
+                { value: "S", label: t("sizes.s") },
+                { value: "M", label: t("sizes.m") },
+                { value: "L", label: t("sizes.l") },
+                { value: "XL", label: t("sizes.xl") },
+                { value: "XXL", label: t("sizes.xxl") },
+                { value: "XXXL", label: t("sizes.xxxl") },
+                { value: "4XL", label: t("sizes.4xl") },
+                { value: "5XL", label: t("sizes.5xl") },
               ]}
               value={form.tshirt_size}
               onChange={(value) =>
@@ -473,7 +471,7 @@ export default function AppearanceContent({
                   target: { name: "tshirt_size", value: String(value) },
                 } as any)
               }
-              placeholder={t("forms.selectSize") || "Select size"}
+              placeholder={t("forms.selectSize")}
               searchable={false}
             />
           </AccountField>
@@ -487,13 +485,27 @@ export default function AppearanceContent({
             }
             required
           >
-            <Input
-              name="pants_size"
-              type="text"
-              placeholder="e.g., 32/32 or M"
+            <SingleSelect
+              options={[
+                { value: "XXS", label: t("sizes.xxs") },
+                { value: "XS", label: t("sizes.xs") },
+                { value: "S", label: t("sizes.s") },
+                { value: "M", label: t("sizes.m") },
+                { value: "L", label: t("sizes.l") },
+                { value: "XL", label: t("sizes.xl") },
+                { value: "XXL", label: t("sizes.xxl") },
+                { value: "XXXL", label: t("sizes.xxxl") },
+                { value: "4XL", label: t("sizes.4xl") },
+                { value: "5XL", label: t("sizes.5xl") },
+              ]}
               value={form.pants_size}
-              onChange={onChange}
-              required
+              onChange={(value) =>
+                onChange({
+                  target: { name: "pants_size", value: String(value) },
+                } as any)
+              }
+              placeholder={t("forms.selectSize")}
+              searchable={false}
             />
           </AccountField>
 
@@ -506,13 +518,27 @@ export default function AppearanceContent({
             }
             required
           >
-            <Input
-              name="jacket_size"
-              type="text"
-              placeholder="e.g., 50 EU or L"
+            <SingleSelect
+              options={[
+                { value: "XXS", label: t("sizes.xxs") },
+                { value: "XS", label: t("sizes.xs") },
+                { value: "S", label: t("sizes.s") },
+                { value: "M", label: t("sizes.m") },
+                { value: "L", label: t("sizes.l") },
+                { value: "XL", label: t("sizes.xl") },
+                { value: "XXL", label: t("sizes.xxl") },
+                { value: "XXXL", label: t("sizes.xxxl") },
+                { value: "4XL", label: t("sizes.4xl") },
+                { value: "5XL", label: t("sizes.5xl") },
+              ]}
               value={form.jacket_size}
-              onChange={onChange}
-              required
+              onChange={(value) =>
+                onChange({
+                  target: { name: "jacket_size", value: String(value) },
+                } as any)
+              }
+              placeholder={t("forms.selectSize")}
+              searchable={false}
             />
           </AccountField>
 
@@ -543,10 +569,10 @@ export default function AppearanceContent({
                 }))
               }
               options={[
-                { value: "cm", label: "cm" },
-                { value: "in", label: "in" },
+                { value: "cm", label: t("units.cm") },
+                { value: "in", label: t("units.in") },
               ]}
-              placeholder="e.g., 95.5"
+              placeholder={t("account.appearance.placeholders.chest")}
               required
               min={0}
               step={0.1}
@@ -580,10 +606,10 @@ export default function AppearanceContent({
                 }))
               }
               options={[
-                { value: "cm", label: "cm" },
-                { value: "in", label: "in" },
+                { value: "cm", label: t("units.cm") },
+                { value: "in", label: t("units.in") },
               ]}
-              placeholder="e.g., 88.5"
+              placeholder={t("account.appearance.placeholders.bust")}
               required
               min={0}
               step={0.1}
@@ -617,10 +643,10 @@ export default function AppearanceContent({
                 }))
               }
               options={[
-                { value: "cm", label: "cm" },
-                { value: "in", label: "in" },
+                { value: "cm", label: t("units.cm") },
+                { value: "in", label: t("units.in") },
               ]}
-              placeholder="e.g., 72.5"
+              placeholder={t("account.appearance.placeholders.waist")}
               required
               min={0}
               step={0.1}

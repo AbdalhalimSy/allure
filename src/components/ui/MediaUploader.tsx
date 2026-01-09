@@ -237,7 +237,7 @@ export default function MediaUploader({
               </div>
               <div className="space-y-2">
                 <p className="text-sm font-medium text-gray-700 ">
-                  {t("account.profession.upload.uploading") || "Uploading..."}
+                  {t("account.profession.upload.uploading")}
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                   <div

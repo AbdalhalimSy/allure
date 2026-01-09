@@ -16,7 +16,7 @@ export default function AccountPageLoader({ message }: AccountPageLoaderProps) {
         size="xl"
         variant="spinner"
         color="primary"
-        text={message || t("common.loading") || "Loading..."}
+        text={message || t("common.loading")}
         center
       />
     </div>

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { setAuthToken, setActiveProfileId } from "@/lib/api/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 
 function toProfileId(value: string | null): number | null {
   if (!value) return null;
@@ -15,6 +16,7 @@ function toProfileId(value: string | null): number | null {
 function ImpersonateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const { setUser, fetchProfile } = useAuth();
   const [status, setStatus] = useState("Preparing impersonation...");
   const ranRef = useRef(false);
@@ -62,7 +64,7 @@ function ImpersonateContent() {
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
       <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#c49a47]" />
-      <h1 className="text-xl font-semibold text-gray-900">Switching user</h1>
+      <h1 className="text-xl font-semibold text-gray-900">{t('auth.switchingUser')}</h1>
       <p className="text-sm text-gray-600">{status}</p>
     </div>
   );

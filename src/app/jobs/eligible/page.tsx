@@ -13,9 +13,9 @@ export default function EligibleRolesPage() {
   const { t } = useI18n();
   const { isAuthenticated, activeProfileId } = useAuth();
   const { data: eligibleJobs, isLoading, error, refetch } = useEligibleRoles();
-  const [sortBy, setSortBy] = useState<
-    "best-match" | "expiration"
-  >("best-match");
+  const [sortBy, setSortBy] = useState<"best-match" | "expiration">(
+    "best-match"
+  );
 
   // Sort jobs based on selected criteria and add roles_count
   const sortedJobs = eligibleJobs
@@ -25,11 +25,11 @@ export default function EligibleRolesPage() {
           if (sortBy === "best-match") {
             // Sort by highest eligibility score in roles
             const aMaxScore = Math.max(
-              ...a.roles.map((r) => r.eligibility_score),
+              ...a.roles.map((r) => r.eligibility_score ?? 0),
               0
             );
             const bMaxScore = Math.max(
-              ...b.roles.map((r) => r.eligibility_score),
+              ...b.roles.map((r) => r.eligibility_score ?? 0),
               0
             );
             return bMaxScore - aMaxScore;
@@ -50,18 +50,17 @@ export default function EligibleRolesPage() {
           <div className="mb-4 flex justify-center">
             <AlertCircle className="h-16 w-16 text-yellow-500" />
           </div>
- <h2 className="mb-4 text-2xl font-bold text-gray-900 ">
-            {t("auth.loginRequired") || "Login Required"}
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 ">
+            {t("auth.loginRequired")}
           </h2>
- <p className="mb-6 text-gray-600 ">
-            {t("jobs.eligibleRoles.loginMessage") ||
-              "Please login to see roles you're eligible for."}
+          <p className="mb-6 text-gray-600 ">
+            {t("jobs.eligibleRoles.loginMessage")}
           </p>
           <Link
             href="/login"
             className="inline-block rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-8 py-3 font-medium text-white shadow-lg transition-all hover:scale-105"
           >
-            {t("auth.login") || "Login"}
+            {t("auth.login")}
           </Link>
         </SurfaceCard>
       </div>
@@ -69,19 +68,22 @@ export default function EligibleRolesPage() {
   }
 
   return (
- <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white ">
       {/* Hero Section */}
- <div className="relative overflow-hidden bg-linear-to-br from-[#c49a47]/10 via-white to-[#d4af69]/10 ">
+      <div className="relative overflow-hidden bg-linear-to-br from-[#c49a47]/10 via-white to-[#d4af69]/10 ">
         <div className="container relative mx-auto max-w-7xl px-6 py-24 lg:px-8 text-center">
           <div className="mb-6 flex items-center justify-center gap-3">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#c49a47] to-[#d4af69] shadow-xl">
               <Sparkles className="h-8 w-8 text-white" />
             </div>
           </div>
- <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
-            Your <span className="text-[#c49a47]">Perfect Matches</span>
+          <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
+            Your{" "}
+            <span className="text-[#c49a47]">
+              {t("jobs.roleCard.perfectMatches")}
+            </span>
           </h1>
- <p className="mx-auto max-w-2xl text-lg text-gray-600 ">
+          <p className="mx-auto max-w-2xl text-lg text-gray-600 ">
             Roles specially curated based on your profile. These opportunities
             match your age, gender, ethnicity, and other criteria.
           </p>
@@ -94,30 +96,30 @@ export default function EligibleRolesPage() {
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-[#c49a47]" />
- <h2 className="text-xl font-semibold text-gray-900 ">
+            <h2 className="text-xl font-semibold text-gray-900 ">
               {isLoading
-                ? t("jobs.eligibleRoles.loading") || "Loading..."
-                : `${sortedJobs.length} ${
-                    t("jobs.eligibleRoles.matchesFound") || "Eligible Opportunities"
-                  }`}
+                ? t("jobs.eligibleRoles.loading")
+                : `${sortedJobs.length} ${t(
+                    "jobs.eligibleRoles.matchesFound"
+                  )}`}
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
- <label className="text-sm font-medium text-gray-700 ">
-              {t("jobs.eligibleRoles.sortBy") || "Sort by"}:
+            <label className="text-sm font-medium text-gray-700 ">
+              {t("jobs.eligibleRoles.sortBy")}:
             </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
- className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-[#c49a47] focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 "
+              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-[#c49a47] focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 "
             >
               <option value="best-match">
-                {t("jobs.eligibleRoles.bestMatch") || "Best Match"}
+                {t("jobs.eligibleRoles.bestMatch")}
               </option>
 
               <option value="expiration">
-                {t("jobs.eligibleRoles.expiringSoon") || "Expiring Soon"}
+                {t("jobs.eligibleRoles.expiringSoon")}
               </option>
             </select>
           </div>
@@ -138,19 +140,19 @@ export default function EligibleRolesPage() {
             <div className="mb-4 flex justify-center">
               <AlertCircle className="h-16 w-16 text-red-500" />
             </div>
- <h3 className="mb-2 text-xl font-bold text-gray-900 ">
-              {t("jobs.eligibleRoles.errors.loadFailed") || "Failed to Load"}
+            <h3 className="mb-2 text-xl font-bold text-gray-900 ">
+              {t("jobs.eligibleRoles.errors.loadFailed")}
             </h3>
- <p className="mb-6 text-gray-600 ">
+            <p className="mb-6 text-gray-600 ">
               {error instanceof Error
                 ? error.message
-                : t("jobs.eligibleRoles.errors.generic") || "Something went wrong"}
+                : t("jobs.eligibleRoles.errors.generic")}
             </p>
             <button
               onClick={() => refetch()}
               className="rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105"
             >
-              {t("jobs.eligibleRoles.tryAgain") || "Try Again"}
+              {t("jobs.eligibleRoles.tryAgain")}
             </button>
           </SurfaceCard>
         )}
@@ -161,18 +163,17 @@ export default function EligibleRolesPage() {
             <div className="mb-4 flex justify-center">
               <Sparkles className="h-16 w-16 text-gray-400" />
             </div>
- <h3 className="mb-2 text-xl font-bold text-gray-900 ">
-              {t("jobs.eligibleRoles.noMatches") || "No Eligible Roles Yet"}
+            <h3 className="mb-2 text-xl font-bold text-gray-900 ">
+              {t("jobs.eligibleRoles.noMatches")}
             </h3>
- <p className="mb-6 text-gray-600 ">
-              {t("jobs.eligibleRoles.noMatchesMessage") ||
-                "We couldn't find any roles matching your profile at the moment. Check back soon or explore all available jobs."}
+            <p className="mb-6 text-gray-600 ">
+              {t("jobs.eligibleRoles.noMatchesMessage")}
             </p>
             <Link
               href="/jobs"
               className="inline-block rounded-full bg-linear-to-r from-[#c49a47] to-[#d4af69] px-6 py-3 font-medium text-white shadow-lg transition-all hover:scale-105"
             >
-              {t("jobs.eligibleRoles.browseAllJobs") || "Browse All Jobs"}
+              {t("jobs.eligibleRoles.browseAllJobs")}
             </Link>
           </SurfaceCard>
         )}

@@ -5,9 +5,11 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle, Loader2, XCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/ui/Button";
+import { useI18n } from "@/contexts/I18nContext";
 import { getPaymentStatus } from "@/lib/api/payments";
 
 function PaymentResultContent() {
+  const { t } = useI18n();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<
     "checking" | "success" | "failed" | "pending"
@@ -123,30 +125,28 @@ function PaymentResultContent() {
               <p className="text-gray-600 ">{message}</p>
             </div>
 
-            {orderDetails && (
               <div className="mb-6 space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-4 ">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 ">Order ID</span>
+                  <span className="text-gray-600 ">{t('payment.orderId')}</span>
                   <span className="font-mono font-medium text-gray-900 ">
                     {orderDetails.order_id}
                   </span>
                 </div>
                 {orderDetails.tracking_id && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 ">Tracking ID</span>
+                    <span className="text-gray-600 ">{t('payment.trackingId')}</span>
                     <span className="font-mono font-medium text-gray-900 ">
                       {orderDetails.tracking_id}
                     </span>
                   </div>
                 )}
                 <div className="flex items-center justify-between text-sm border-t border-gray-200 pt-2 ">
-                  <span className="text-gray-600 ">Amount</span>
+                  <span className="text-gray-600 ">{t('payment.amount')}</span>
                   <span className="font-semibold text-gray-900 ">
-                    AED {orderDetails.amount.toFixed(2)}
+                    {t('units.aed')} {orderDetails.amount.toFixed(2)}
                   </span>
                 </div>
               </div>
-            )}
 
             <div className="space-y-3">
               {status === "success" ? (

@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
   );
 
   if (!hydrated) {
-    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading") || "Loading..."}</div>;
+    return <div className="mx-auto max-w-sm px-6 py-20 text-center text-gray-500">{t("auth.loading")}</div>;
   }
   if (isAuthenticated) return null;
 
@@ -94,7 +94,7 @@ export default function ForgotPasswordPage() {
             <Input
               id="email"
               type="email"
-              placeholder={t('forms.youExampleCom') || "you@example.com"}
+              placeholder={t('forms.youExampleCom')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

@@ -17,8 +17,7 @@
         "placeholder": "your.email@example.com"
       },
       "phone": {
-        "label": "رقم الهاتف",
-        "placeholder": "+971 XX XXX XXXX"
+        "label": "رقم الهاتف"
       },
       "message": {
         "label": "الرسالة",
@@ -83,12 +82,6 @@
         "phone": "+961 3 727 908",
         "email": "lebanon@allureagencys.com"
       }
-    },
-    "cta": {
-      "title": "هل أنت مستعد للبدء؟",
-      "subtitle": "سواء كنت تتطلع للانضمام إلى قائمة المواهب لدينا أو حجز الفريق المثالي لمشروعك",
-      "talentButton": "انضم كموهبة",
-      "clientButton": "تصفح المواهب"
     }
   }
 }

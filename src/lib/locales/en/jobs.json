@@ -6,7 +6,6 @@
       "subtitle": "Discover active opportunities and roles. Filter by profession, location, dates and appearance to pinpoint the perfect casting for your project."
     },
     "appliedJobs": {
-      "title": "My Applications",
       "subtitle": "Track and manage your job applications",
       "stats": {
         "total": "Total",
@@ -37,13 +36,7 @@
         "callTimeUpdate": "Update Call Time",
         "callTimeConfirm": "Confirm Call Time",
         "noCallTimeSlots": "Call time slots are not available yet",
-        "description": "Description",
         "status": "Status"
-      },
-      "actions": {
-        "viewDetails": "View Role Details",
-        "contact": "Contact",
-        "close": "Close"
       },
       "pagination": {
         "previous": "Previous",
@@ -64,7 +57,6 @@
       "overview": "Overview",
       "details": "Details",
       "errors": {
-        "profileNotLoaded": "Profile not loaded. Please try again.",
         "fetchFailed": "Failed to fetch job details",
         "loadFailed": "Failed to load job",
         "generic": "An error occurred"
@@ -98,28 +90,18 @@
       "notEligibleToApply": "You are not eligible to apply for this role.",
       "canNotApply": "Can not apply",
       "physicalRequirements": "Physical Requirements",
-      "availableCallTimes": "Available Call Times",
       "noCallTimes": "No call time slots available for this role",
-      "every": "Every",
       "min": "min",
-      "spot": "spot",
-      "availableLabel": "Available",
-      "slots": "slots",
-      "perTime": "per time",
       "spotLeft": "spot left",
       "spotsLeft": "spots left",
       "fullyBooked": "Fully Booked",
       "additionalRequirements": "Additional Requirements",
       "applyFor": "Apply for",
       "alreadyApplied": "Already applied",
-      "applied": "Applied",
       "loginToApply": "Login to apply",
       "jobLocations": "Job Locations",
-      "noLocations": "No locations specified",
-      "residenceCountries": "Residence Countries",
       "requirements": "Requirements",
       "talentLocation": "Talent Location",
-      "doNotMeetRequirements": "Do Not Meet Requirements",
       "multipleRolesAllowed": "Multiple Roles Allowed",
       "singleRoleOnly": "Single Role Only",
       "shootingDates": "Shooting Dates",
@@ -142,16 +124,12 @@
       "showing": "Showing",
       "of": "of",
       "updating": "Updating...",
-      "previous": "Previous",
-      "next": "Next",
-      "page": "Page",
       "noMoreJobs": "No more jobs to load",
       "authRequired": "Sign in to View Jobs",
       "authRequiredDescription": "Create an account or sign in to explore casting calls and apply for opportunities that match your profile.",
       "allJobs": "All Jobs",
       "eligibleOnly": "Eligible for Me",
       "errors": {
-        "profileNotLoaded": "Profile not loaded. Please try again.",
         "fetchFailed": "Failed to fetch jobs",
         "loadFailed": "Failed to load jobs",
         "generic": "An error occurred"
@@ -174,39 +152,22 @@
       "resetAllTitle": "Reset All Filters",
       "section": {
         "dates": "Dates",
-        "professional": "Professional",
-        "location": "Location & Origin",
-        "appearance": "Appearance"
+        "professional": "Professional"
       },
-      "shootingFrom": "Shooting From",
-      "shootingTo": "Shooting To",
-      "expirationFrom": "Expiration From",
-      "expirationTo": "Expiration To",
-      "selectStartDate": "Select start date",
-      "selectEndDate": "Select end date",
       "eligible": "Eligibility",
       "allJobs": "All Jobs",
       "eligibleOnly": "Eligible Only",
       "notEligible": "Not Eligible",
       "professions": "Professions",
       "selectProfessions": "Select professions...",
-      "subProfessions": "Sub Professions",
-      "selectSubProfessions": "Select sub professions...",
-      "ethnicities": "Ethnicities",
-      "selectEthnicities": "Select ethnicities...",
       "jobCountries": "Job Countries",
       "selectCountries": "Select countries...",
       "talentResidenceCountries": "Talent Residence Countries",
       "nationalities": "Nationalities",
-      "selectNationalities": "Select nationalities...",
-      "hairColors": "Hair Colors",
-      "selectHairColors": "Select hair colors...",
-      "eyeColors": "Eye Colors",
-      "selectEyeColors": "Select eye colors..."
+      "selectNationalities": "Select nationalities..."
     },
     "jobApplication": {
       "applyForRole": "Apply for Role",
-      "callTime": "Call Time",
       "callTimeRequired": "Please select a call time slot and time",
       "callTimeShortlistNotice": "If shortlisted, you will be asked to choose a call time.",
       "answerRequired": "Please answer",
@@ -219,22 +180,11 @@
       "infoBox": "Make sure all required fields are filled before submitting. Your application will be reviewed by the casting team.",
       "submit": "Submit Application"
     },
-    "castingOpportunity": {
-      "labels": {
-        "location": "Location",
-        "timeline": "Timeline",
-        "budget": "Budget",
-        "status": "Status",
-        "open": "Open",
-        "requirements": "Key Requirements"
-      }
-    },
     "eligibleRoles": {
       "loading": "Loading your matches...",
       "matchesFound": "Eligible Opportunities",
       "sortBy": "Sort by",
       "bestMatch": "Best Match",
-      "shootingDate": "Shooting Date",
       "expiringSoon": "Expiring Soon",
       "loginMessage": "Please login to see roles you're eligible for.",
       "noMatches": "No Eligible Roles Yet",
@@ -245,6 +195,10 @@
         "loadFailed": "Failed to Load",
         "generic": "Something went wrong"
       }
+    },
+    "roleCard": {
+      "noPhysicalRequirements": "No additional physical requirements specified",
+      "perfectMatches": "Perfect Matches"
     }
   }
 }
