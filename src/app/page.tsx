@@ -114,6 +114,12 @@ export default function HomePage() {
   }, [fetchPartners]);
 
   const fetchJobs = useCallback(async () => {
+      // Wait for auth to hydrate
+      if (!hydrated) return;
+      
+      // Skip if authenticated but no profile yet
+      if (isAuthenticated && !activeProfileId) return;
+      
       try {
         setJobsLoading(true);
         const params = new URLSearchParams({ per_page: "6" });
@@ -131,34 +137,40 @@ export default function HomePage() {
         const res = await apiClient.get(usePublic ? "/public/jobs" : "/jobs", {
           params,
         });
-        const data = res.data;
-        if (data?.status === "success" || data?.status === true) {
-          setJobs(data.data || []);
+        // API route wraps response in extra data layer: {data: {status, data, meta}}
+        const result = res.data.data || res.data;
+        if (result?.status === "success" || result?.status === true) {
+          setJobs(result.data || []);
         }
       } catch (error) {
         console.error("Failed to load jobs", error);
       } finally {
         setJobsLoading(false);
       }
-  }, [activeProfileId, isAuthenticated, getCountryId]);
+  }, [activeProfileId, isAuthenticated, getCountryId, hydrated]);
 
   useEffect(() => {
     fetchJobs();
   }, [fetchJobs]);
 
   const fetchTalents = useCallback(async () => {
+      // Wait for auth to hydrate
+      if (!hydrated) return;
+      
       try {
         setTalentsLoading(true);
         const res = await apiClient.get("/talents?per_page=8");
-        if (res.data?.status === "success") {
-          setTalents(res.data.data || []);
+        // API route wraps response in extra data layer: {data: {status, data, meta}}
+        const result = res.data.data || res.data;
+        if (result?.status === "success" || result?.status === true) {
+          setTalents(result.data || []);
         }
       } catch (error) {
         console.error("Failed to load talents", error);
       } finally {
         setTalentsLoading(false);
       }
-  }, []);
+  }, [hydrated]);
 
   useEffect(() => {
     fetchTalents();

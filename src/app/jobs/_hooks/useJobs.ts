@@ -150,7 +150,12 @@ export function useJobs(showEligibleOnly: boolean) {
           }
         }
       } catch (err) {
+        // Silently ignore aborted requests (fetch AbortError or Axios CanceledError)
         if (err instanceof DOMException && err.name === "AbortError") return;
+        if ((err as any)?.code === "ERR_CANCELED" || (err as any)?.message?.includes("canceled")) {
+          return;
+        }
+
         if (requestIdRef.current === requestId && reset) {
           setError(
             err instanceof Error ? err.message : t("jobs.jobs.errors.generic")

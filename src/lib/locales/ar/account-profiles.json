@@ -1,0 +1,61 @@
+{
+  "account": {
+    "profiles": {
+      "title": "ملفاتي الشخصية",
+      "description": "إدارة ملفات المواهب الخاصة بك. يمكنك إنشاء ملفات متعددة لشخصيات مختلفة أو أفراد العائلة أو التوائم.",
+      "addProfile": "إضافة ملف جديد",
+      "createNewProfile": "إنشاء ملف جديد",
+      "createFirst": "إنشاء ملف",
+      "createProfile": "إنشاء ملف",
+      "creating": "جاري الإنشاء...",
+      "noProfiles": "لا توجد ملفات",
+      "noProfilesDescription": "أنشئ ملفك الأول للبدء",
+      "primaryAccount": "الحساب الأساسي",
+      "otherProfiles": "ملفات أخرى",
+      "primary": "أساسي",
+      "active": "نشط",
+      "createdOn": "تم الإنشاء",
+      "createSuccess": "تم إنشاء الملف بنجاح",
+      "createError": "فشل في إنشاء الملف",
+      "basicInformation": "المعلومات الأساسية",
+      "contactInformation": "معلومات الاتصال",
+      "locationDemographics": "الموقع والديموغرافيا",
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "secondTwinName": "الاسم الثاني (للتوائم)",
+        "gender": "الجنس",
+        "dob": "تاريخ الميلاد",
+        "mobile": "رقم الجوال",
+        "whatsapp": "رقم الواتساب",
+        "country": "الدولة",
+        "nationalities": "الجنسيات",
+        "ethnicities": "الأعراق"
+      },
+      "placeholders": {
+        "firstName": "أدخل الاسم الأول",
+        "lastName": "أدخل اسم العائلة",
+        "secondTwinName": "اختياري: للتوائم",
+        "dob": "اختر تاريخ الميلاد",
+        "mobile": "+971501234567",
+        "whatsapp": "+971501234567",
+        "country": "اختر الدولة",
+        "nationalities": "اختر الجنسيات",
+        "ethnicities": "اختر الأعراق (اختياري)"
+      },
+      "errors": {
+        "firstNameRequired": "الاسم الأول مطلوب",
+        "lastNameRequired": "اسم العائلة مطلوب",
+        "dobRequired": "تاريخ الميلاد مطلوب",
+        "mobileRequired": "رقم الجوال مطلوب",
+        "countryRequired": "الدولة مطلوبة",
+        "nationalityRequired": "جنسية واحدة على الأقل مطلوبة"
+      }
+    }
+  },
+  "profile": {
+    "switched": "تم تبديل الملف بنجاح",
+    "switchFailed": "فشل في تبديل الملف",
+    "primary": "أساسي"
+  }
+}

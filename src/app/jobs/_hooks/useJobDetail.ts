@@ -37,7 +37,9 @@ export function useJobDetail(jobId: string | string[]) {
         );
       }
 
-      const result: JobDetailResponse = await response.json();
+      const rawData = await response.json();
+      // API route may wrap response: { data: { status, data } }
+      const result: JobDetailResponse = rawData.data || rawData;
 
       if (result.status === "success" || result.status === true) {
         setJob(result.data);

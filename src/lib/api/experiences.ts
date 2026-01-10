@@ -43,8 +43,16 @@ export async function fetchSavedExperiences(): Promise<ExperienceEntry[]> {
   const response = await apiClient.get('/profile/experiences', {
     params: { profile_id: profileId },
   });
-  const data = response.data?.data || [];
-  return mapApiResponseToEntries(data);
+
+  // API route may wrap payload: { data: { status, data } }
+  const result = response.data?.data || response.data;
+
+  if (result?.status && result?.status !== 'success' && result?.status !== true) {
+    throw new Error(result?.message || 'Failed to load experiences');
+  }
+
+  const data = result?.data ?? result ?? [];
+  return mapApiResponseToEntries(data as ExperienceResponseItem[]);
 }
 
 function getMediaUrl(path: string): string {

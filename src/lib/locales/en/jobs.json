@@ -61,6 +61,7 @@
         "loadFailed": "Failed to load job",
         "generic": "An error occurred"
       },
+      "tryAgain": "Try Again",
       "expiresIn": "Expires in",
       "days": "days",
       "applicationClosed": "Application Closed",

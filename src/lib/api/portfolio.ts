@@ -12,7 +12,14 @@ export const fetchPortfolio = async (): Promise<PortfolioItem[]> => {
     params: { profile_id: profileId },
   });
 
-  const data: PortfolioMedia[] = response.data.data || [];
+  // API route may wrap payload: { data: { status, data } }
+  const result = response.data?.data || response.data;
+
+  if (result?.status && result?.status !== 'success' && result?.status !== true) {
+    throw new Error(result?.message || 'Failed to load portfolio');
+  }
+
+  const data: PortfolioMedia[] = result?.data ?? result ?? [];
   return data.map((m, idx): PortfolioItem => ({
     id: m.id,
     profile_id: m.profile_id,

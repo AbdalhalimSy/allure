@@ -12,6 +12,7 @@ import enAccountProfession from '@/lib/locales/en/account-profession.json';
 import enAccountExperience from '@/lib/locales/en/account-experience.json';
 import enAccountPortfolio from '@/lib/locales/en/account-portfolio.json';
 import enAccountProfilePhotos from '@/lib/locales/en/account-profilePhotos.json';
+import enAccountProfiles from '@/lib/locales/en/account-profiles.json';
 import enJobs from '@/lib/locales/en/jobs.json';
 import enTalents from '@/lib/locales/en/talents.json';
 import enAbout from '@/lib/locales/en/about.json';
@@ -31,6 +32,7 @@ import arAccountProfession from '@/lib/locales/ar/account-profession.json';
 import arAccountExperience from '@/lib/locales/ar/account-experience.json';
 import arAccountPortfolio from '@/lib/locales/ar/account-portfolio.json';
 import arAccountProfilePhotos from '@/lib/locales/ar/account-profilePhotos.json';
+import arAccountProfiles from '@/lib/locales/ar/account-profiles.json';
 import arJobs from '@/lib/locales/ar/jobs.json';
 import arTalents from '@/lib/locales/ar/talents.json';
 import arAbout from '@/lib/locales/ar/about.json';
@@ -58,11 +60,13 @@ const translations = {
       experience: enAccountExperience,
       portfolio: enAccountPortfolio,
       profilePhotos: enAccountProfilePhotos,
+      ...enAccountProfiles.account,
       billing: enAccountBilling,
       basic: enAccountBasic,
       appearance: enAccountAppearance,
       security: enAccountSecurity,
     },
+    ...enAccountProfiles.profile,
     ...enAuth,
     ...enJobs,
     ...enTalents,
@@ -81,11 +85,13 @@ const translations = {
       experience: arAccountExperience,
       portfolio: arAccountPortfolio,
       profilePhotos: arAccountProfilePhotos,
+      ...arAccountProfiles.account,
       billing: arAccountBilling,
       basic: arAccountBasic,
       appearance: arAccountAppearance,
       security: arAccountSecurity,
     },
+    ...arAccountProfiles.profile,
     ...arAuth,
     ...arJobs,
     ...arTalents,

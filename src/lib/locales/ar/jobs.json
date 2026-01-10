@@ -60,8 +60,7 @@
         "fetchFailed": "فشل جلب تفاصيل الوظيفة",
         "loadFailed": "فشل تحميل الوظيفة",
         "generic": "حدث خطأ"
-      },
-      "expiresIn": "ينتهي خلال",
+      },      "tryAgain": "حاول مرة أخرى",      "expiresIn": "ينتهي خلال",
       "days": "أيام",
       "applicationClosed": "التقديم مغلق",
       "openToApply": "متاح للتقديم",

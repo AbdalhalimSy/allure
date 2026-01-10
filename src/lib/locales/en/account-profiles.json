@@ -1,0 +1,61 @@
+{
+  "account": {
+    "profiles": {
+      "title": "My Profiles",
+      "description": "Manage your talent profiles. You can create multiple profiles for different personas, family members, or twins.",
+      "addProfile": "Add New Profile",
+      "createNewProfile": "Create New Profile",
+      "createFirst": "Create Profile",
+      "createProfile": "Create Profile",
+      "creating": "Creating...",
+      "noProfiles": "No profiles found",
+      "noProfilesDescription": "Create your first profile to get started",
+      "primaryAccount": "Primary Account",
+      "otherProfiles": "Other Profiles",
+      "primary": "Primary",
+      "active": "Active",
+      "createdOn": "Created",
+      "createSuccess": "Profile created successfully",
+      "createError": "Failed to create profile",
+      "basicInformation": "Basic Information",
+      "contactInformation": "Contact Information",
+      "locationDemographics": "Location & Demographics",
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "secondTwinName": "Second Name (for twins)",
+        "gender": "Gender",
+        "dob": "Date of Birth",
+        "mobile": "Mobile Number",
+        "whatsapp": "WhatsApp Number",
+        "country": "Country",
+        "nationalities": "Nationalities",
+        "ethnicities": "Ethnicities"
+      },
+      "placeholders": {
+        "firstName": "Enter first name",
+        "lastName": "Enter last name",
+        "secondTwinName": "Optional: for twins",
+        "dob": "Select date of birth",
+        "mobile": "+971501234567",
+        "whatsapp": "+971501234567",
+        "country": "Select country",
+        "nationalities": "Select nationalities",
+        "ethnicities": "Select ethnicities (optional)"
+      },
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "dobRequired": "Date of birth is required",
+        "mobileRequired": "Mobile number is required",
+        "countryRequired": "Country is required",
+        "nationalityRequired": "At least one nationality is required"
+      }
+    }
+  },
+  "profile": {
+    "switched": "Profile switched successfully",
+    "switchFailed": "Failed to switch profile",
+    "primary": "Primary"
+  }
+}

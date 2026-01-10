@@ -4,8 +4,10 @@ import {
   TbX,
   TbChevronDown,
   TbCalendar,
+  TbLock,
 } from 'react-icons/tb';
 import { useI18n } from '@/contexts/I18nContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { ExperienceEntry } from '@/types/experience';
 import { Input, TextArea, FileUploader, DatePicker } from '@/components/ui';
 
@@ -29,6 +31,8 @@ export default function ExperienceEntryForm({
   disabled = false,
 }: ExperienceEntryFormProps) {
   const { t } = useI18n();
+  const { user } = useAuth();
+  const isPremium = user?.is_premium ?? false;
 
   const translate = (
     key: string,
@@ -214,13 +218,34 @@ export default function ExperienceEntryForm({
  <label className="block text-sm font-medium text-gray-800 mb-2">
               {translate('account.experience.fields.attachment', 'Attachment (optional)')}
             </label>
-            <FileUploader
-              accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*"
-              multiple={false}
-              maxSize={10 * 1024 * 1024}
-              value={entry.attachment ? [entry.attachment] : []}
-              onChange={(files) => update({ attachment: files[0] })}
-            />
+            {isPremium ? (
+              <FileUploader
+                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*"
+                multiple={false}
+                maxSize={10 * 1024 * 1024}
+                value={entry.attachment ? [entry.attachment] : []}
+                onChange={(files) => update({ attachment: files[0] })}
+              />
+            ) : (
+              <div className="rounded-lg border-2 border-dashed border-amber-200 bg-amber-50 p-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
+                    <TbLock className="h-5 w-5 text-amber-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-semibold text-amber-900 mb-1">
+                      {translate('account.experience.premiumFeature', 'Premium Feature')}
+                    </h4>
+                    <p className="text-sm text-amber-700">
+                      {translate(
+                        'account.experience.premiumAttachmentMessage',
+                        'Upgrade to premium to attach documents and media to your experiences.'
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

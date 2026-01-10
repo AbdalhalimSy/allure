@@ -24,6 +24,8 @@
   "validation": {
     "incomplete": "Complete required fields"
   },
+  "premiumFeature": "Premium Feature",
+  "premiumAttachmentMessage": "Upgrade to premium to attach documents and media to your experiences.",
   "buttons": {
     "saving": "Saving..."
   },

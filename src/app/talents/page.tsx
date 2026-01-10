@@ -51,7 +51,7 @@ export default function TalentsPage() {
   const fetchTalents = useCallback(
     async (page: number = 1, reset: boolean = false) => {
       const requestId = ++requestIdRef.current;
-      
+
       try {
         // Abort previous request
         if (abortRef.current) {
@@ -98,7 +98,7 @@ export default function TalentsPage() {
             } else {
               setTalents((prev) => [...prev, ...result.data]);
             }
-            
+
             setMeta(
               result.meta || {
                 current_page: page,
@@ -116,7 +116,15 @@ export default function TalentsPage() {
           }
         }
       } catch (err) {
+        // Silently ignore aborted requests (Axios throws CanceledError, fetch throws AbortError)
         if (err instanceof DOMException && err.name === "AbortError") {
+          return;
+        }
+        // Axios-specific cancel error
+        if (
+          (err as any)?.code === "ERR_CANCELED" ||
+          (err as any)?.message?.includes("canceled")
+        ) {
           return;
         }
         if (requestIdRef.current === requestId && reset) {
@@ -136,7 +144,7 @@ export default function TalentsPage() {
   // Initial fetch and refetch on filters change
   useEffect(() => {
     if (!initializedRef.current) return;
-    
+
     setTalents([]);
     setHasMore(true);
     fetchTalents(1, true);

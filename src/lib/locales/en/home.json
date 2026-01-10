@@ -64,7 +64,9 @@
         "kicker": "Allure Talents",
         "title": "Every look, Every Age, Every Story",
         "subtitle": "Find the right talent for your campaign, shoot, or production.",
-        "viewAll": "Browse all talents"
+        "viewAll": "Browse all talents",
+        "loading": "Loading talents…",
+        "empty": "No talents available at the moment."
       },
       "twins": {
         "kicker": "SPECIAL CATEGORY",

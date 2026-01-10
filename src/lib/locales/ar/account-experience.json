@@ -24,6 +24,8 @@
   "validation": {
     "incomplete": "أكمل الحقول المطلوبة"
   },
+  "premiumFeature": "ميزة مميزة",
+  "premiumAttachmentMessage": "قم بالترقية إلى الحساب المميز لإرفاق المستندات والوسائط بتجاربك.",
   "buttons": {
     "saving": "جاري الحفظ..."
   },

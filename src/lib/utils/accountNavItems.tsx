@@ -7,6 +7,7 @@ import {
   TbShieldCheck,
   TbCreditCard,
   TbCamera,
+  TbUsers,
 } from "react-icons/tb";
 import { ProfileData } from "@/contexts/AuthContext";
 import {
@@ -83,6 +84,14 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
         // No completion field - these are informational pages
       },
       {
+        id: "profiles",
+        label: "My Profiles",
+        labelKey: "account.nav.profiles",
+        icon: <TbUsers />,
+        section: "account",
+        // No completion field - profile management page
+      },
+      {
         id: "billing",
         label: "Billing & Plans",
         labelKey: "account.nav.billing",
@@ -120,6 +129,14 @@ export const getAccountNavItems = (profile: ProfileData | undefined) => {
       icon: <TbShieldCheck />,
       section: "account",
       // No completion field - informational page
+    },
+    {
+      id: "profiles",
+      label: "My Profiles",
+      labelKey: "account.nav.profiles",
+      icon: <TbUsers />,
+      section: "account",
+      // No completion field - profile management page
     },
     {
       id: "billing",
