@@ -262,7 +262,7 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
 
     const hasFeatured = items.some((i) => i.featured_image);
     const newItems: PortfolioItem[] = newFiles.map((file, idx) => {
-      const mediaType = file.type.startsWith("video") ? "video" : "image";
+      const mediaType = file.type.startsWith("video") ? "video" : "photo";
       return {
         tempKey: `new-${Date.now()}-${idx}`,
         media_type: mediaType,
@@ -386,6 +386,10 @@ export default function PortfolioContent({ onBack }: PortfolioContentProps) {
           <p className="mt-2 text-xs text-gray-600 ">
             {t("account.portfolio.syncHint") ||
               "Upload multiple images or videos, drag to reorder, then sync to push changes live."}
+          </p>
+          <p className="mt-2 text-xs text-gray-600">
+            {t("account.portfolio.completeHint") ||
+              "Your portfolio must include at least one photo and at least one video to be considered complete."}
           </p>
         </div>
       </div>

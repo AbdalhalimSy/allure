@@ -117,6 +117,7 @@ type User = {
   name?: string;
   email?: string;
   avatarUrl?: string;
+  is_premium?: boolean;
   profile?: ProfileData;
   talent?: TalentData;
 };
@@ -153,7 +154,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       const { data } = await apiClient.get(url);
       if (data.status === "success" && data.data) {
-        const { profile, talent } = data.data;
+        const { profile, talent, is_premium } = data.data;
         
         // Set active profile ID if not already set
         if (!currentActiveId && talent?.primary_profile_id) {
@@ -169,6 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           name: `${profile.first_name} ${profile.last_name}`,
           email: localStorage.getItem("auth_email") || undefined,
           avatarUrl: profile.profile_picture ? getMediaUrl(profile.profile_picture) : undefined,
+          is_premium: Boolean(is_premium),
           profile,
           talent,
         }));

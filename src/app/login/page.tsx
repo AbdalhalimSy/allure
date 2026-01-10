@@ -61,6 +61,9 @@ export default function LoginPage() {
       const token = data?.data?.token;
       const userData = data?.data?.user;
       const talentData = data?.data?.talent;
+      const isPremium = Boolean(
+        userData?.is_premium ?? talentData?.is_premium ?? data?.data?.is_premium
+      );
       
       if (token) {
         // Step 1: Set auth token
@@ -79,6 +82,7 @@ export default function LoginPage() {
           id: userData?.id,
           name: userData?.name || "Allure User", 
           email: userData?.email || email,
+          is_premium: isPremium,
           talent: talentData,
         });
         

@@ -16,7 +16,7 @@ export const fetchPortfolio = async (): Promise<PortfolioItem[]> => {
   return data.map((m, idx): PortfolioItem => ({
     id: m.id,
     profile_id: m.profile_id,
-    media_type: m.media_type || 'image',
+    media_type: m.media_type || 'photo',
     file_path: m.file_path,
     file_url: m.file_url,
     thumbnail_url: m.thumbnail_url,

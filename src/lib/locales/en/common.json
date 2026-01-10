@@ -4,6 +4,8 @@
     "back": "Back",
     "remove": "Remove",
     "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
     "saveAndContinue": "Save & Continue",
     "notifications": {
       "title": "Enable Notifications",

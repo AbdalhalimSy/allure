@@ -15,13 +15,16 @@
     "hairLength": "طول الشعر",
     "eyeColor": "لون العينين",
     "height": "الطول",
+    "weight": "الوزن",
     "shoeSize": "مقاس الحذاء",
     "tshirtSize": "مقاس القميص",
     "pantsSize": "مقاس البنطال",
     "jacketSize": "مقاس السترة",
     "chest": "الصدر",
     "bust": "القياس",
-    "waist": "الخصر"
+    "waist": "الخصر",
+    "tattoos": "الوشوم",
+    "piercings": "الثقوب"
   },
   "placeholders": {
     "selectHairColor": "اختر لون الشعر",

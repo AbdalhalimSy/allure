@@ -2,7 +2,7 @@
 export interface PortfolioMedia {
   id: number;
   profile_id: number;
-  media_type: string; // e.g. image, video
+  media_type: string; // e.g. photo, video
   file_path: string;
   file_url: string;
   thumbnail_url: string | null;

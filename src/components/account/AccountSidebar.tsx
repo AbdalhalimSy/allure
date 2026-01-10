@@ -117,7 +117,7 @@ function NavItemComponent({
                   ${
                     active
                       ? "bg-white/30 text-white"
-                      : `bg-opacity-10 ${getCompletionColor(item.completion)}`
+                      : `bg-opacity-10 text-yellow-700 ${getCompletionColor(item.completion)}`
                   }
                 `}
               aria-label={`${label} - ${item.completion}% complete`}

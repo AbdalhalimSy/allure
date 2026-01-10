@@ -7,12 +7,14 @@ import {
   TbMicrophone,
   TbLanguage,
   TbChevronDown,
+  TbBrandInstagram,
 } from "react-icons/tb";
 import { Profession, ProfessionEntry } from "@/types/profession";
 import { useI18n } from "@/contexts/I18nContext";
 import MediaUploader from "@/components/ui/MediaUploader";
 import LanguageManager from "./LanguageManager";
 import SingleSelect from "@/components/ui/SingleSelect";
+import SocialManager from "./SocialManager";
 
 interface ProfessionEntryFormProps {
   index: number;
@@ -85,6 +87,10 @@ export default function ProfessionEntryForm({
     professionRequirements?.requires_languages ||
       subProfessionRequirements?.requires_languages
   );
+  const requiresSocials = Boolean(
+    professionRequirements?.requires_socials ||
+      subProfessionRequirements?.requires_socials
+  );
   // Social and size requirements are intentionally ignored per latest requirements
 
   const missingRequirements: string[] = [];
@@ -114,7 +120,12 @@ export default function ProfessionEntryForm({
       translate("account.profession.languages.label", "Languages")
     );
   }
-  // Socials and sizes are ignored
+  if (requiresSocials && entry.socials.length === 0) {
+    missingRequirements.push(
+      translate("account.profession.socials.label", "Social profiles")
+    );
+  }
+  // Sizes are ignored
 
   const hasMissingRequiredFields = !isOpen && missingRequirements.length > 0;
 
@@ -163,6 +174,10 @@ export default function ProfessionEntryForm({
     requiresLanguages && {
       label: translate("account.profession.languages.label", "Languages"),
       icon: TbLanguage,
+    },
+    requiresSocials && {
+      label: translate("account.profession.socials.label", "Socials"),
+      icon: TbBrandInstagram,
     },
   ].filter(Boolean) as { label: string; icon: typeof TbCamera }[];
 
@@ -392,6 +407,15 @@ export default function ProfessionEntryForm({
             />
           </div>
         )}
+
+        <div className="border-t border-gray-100 px-5 py-5 ">
+          <SocialManager
+            socials={entry.socials}
+            onChange={(socials) => onChange({ ...entry, socials })}
+            disabled={disabled}
+            required={requiresSocials}
+          />
+        </div>
       </div>
     </div>
   );

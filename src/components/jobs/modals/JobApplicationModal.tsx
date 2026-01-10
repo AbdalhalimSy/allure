@@ -164,10 +164,17 @@ export default function JobApplicationModal({
         formData.append(`media_${conditionId}`, file);
       });
 
+      const token = localStorage.getItem("auth_token") || "";
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
       const response = await fetch(
         `/api/jobs/${jobId}/roles/${role.id}/apply`,
         {
           method: "POST",
+          headers,
           body: formData,
         }
       );
@@ -224,7 +231,7 @@ export default function JobApplicationModal({
                 ) : (
                   <Circle className="h-4 w-4" />
                 )}
-                Yes
+                {t("common.yes")}
               </span>
             </label>
             <label className="group relative cursor-pointer">
@@ -244,7 +251,7 @@ export default function JobApplicationModal({
                 ) : (
                   <Circle className="h-4 w-4" />
                 )}
-                No
+                {t("common.no")}
               </span>
             </label>
           </div>

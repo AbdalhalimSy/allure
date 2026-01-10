@@ -81,7 +81,7 @@ export function JobRoleCard({
   const isDisabled =
     alreadyApplied ||
     role.can_apply === false ||
-    !job.open_to_apply ||
+    (job.open_to_apply === false) ||
     !isAuthenticated ||
     !activeProfileId;
 
@@ -238,19 +238,21 @@ export function JobRoleCard({
 
               {/* Basic Requirements Grid */}
               <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
-                <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
-                  <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
-                    <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                {role.gender && (
+                  <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
+                    <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
+                      <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-600 mb-0.5">
+                        {t("jobs.jobDetail.gender")}
+                      </p>
+                      <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
+                        {t(`filters.${role.gender}`)}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">
-                      {t("jobs.jobDetail.gender")}
-                    </p>
-                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
-                      {t(`filters.${role.gender}`)}
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
                   <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
@@ -267,21 +269,23 @@ export function JobRoleCard({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
-                  <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
-                    <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                {role.ethnicity && (Array.isArray(role.ethnicity) ? role.ethnicity.length > 0 : true) && (
+                  <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
+                    <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
+                      <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-600 mb-0.5">
+                        {t("jobs.jobDetail.ethnicity")}
+                      </p>
+                      <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
+                        {Array.isArray(role.ethnicity)
+                          ? role.ethnicity.join(", ")
+                          : role.ethnicity}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-gray-600 mb-0.5">
-                      {t("jobs.jobDetail.ethnicity")}
-                    </p>
-                    <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
-                      {Array.isArray(role.ethnicity)
-                        ? role.ethnicity.join(", ")
-                        : role.ethnicity}
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
                   <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
@@ -480,17 +484,17 @@ export function JobRoleCard({
                     {Object.entries(role.meta_conditions[0]).map(
                       ([key, value]) => {
                         const attrKeyMap: Record<string, string> = {
-                          hair_color: "content.hairColor",
-                          hair_length: "content.hairLength",
-                          hair_type: "content.hairType",
-                          eye_color: "content.eyeColor",
-                          height: "content.height",
-                          weight: "content.weight",
-                          shoe_size: "content.shoeSize",
-                          pants_size: "content.pantsSize",
-                          tshirt_size: "content.tshirtSize",
-                          tattoos: "content.tattoos",
-                          piercings: "content.piercings",
+                          hair_color: "talents.hairColor",
+                          hair_length: "talents.hairLength",
+                          hair_type: "talents.hairType",
+                          eye_color: "talents.eyeColor",
+                          height: "talents.height",
+                          weight: "talents.weight",
+                          shoe_size: "talents.shoe",
+                          pants_size: "talents.pants",
+                          tshirt_size: "talents.tshirt",
+                          tattoos: "talents.tattoos",
+                          piercings: "talents.piercings",
                         };
                         const translationKey =
                           attrKeyMap[key as keyof typeof attrKeyMap];
@@ -501,7 +505,7 @@ export function JobRoleCard({
                               key={key}
                               className="flex justify-between items-center px-4 py-3 bg-white rounded-xl border border-violet-200"
                             >
-                              <span className="text-sm text-gray-600 font-medium">
+                              <span className="text-sm text-gray-600 font-medium capitalize">
                                 {translationKey
                                   ? t(translationKey)
                                   : key.replace(/_/g, " ")}

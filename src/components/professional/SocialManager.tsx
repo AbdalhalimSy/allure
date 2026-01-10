@@ -121,7 +121,7 @@ export default function SocialManager({
             >
               <div className="flex items-start gap-3">
                 {/* Platform Selector */}
-                <div className="shrink-0 min-w-[180px]">
+                <div className="flex-1">
                   <SingleSelect
                     options={PLATFORM_OPTIONS.map((option) => ({
                       value: option.value,
@@ -137,7 +137,7 @@ export default function SocialManager({
                 </div>
 
                 {/* URL Input */}
-                <div className="flex-1">
+                <div className="flex-2">
                   <Input
                     type="url"
                     placeholder={t("forms.https") || "https://..."}
@@ -147,19 +147,7 @@ export default function SocialManager({
                   />
                 </div>
 
-                {/* Remove Button */}
-                <button
-                  type="button"
-                  onClick={() => handleRemove(index)}
-                  disabled={disabled}
-                  className="shrink-0 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-                >
-                  <TbX className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Followers Input (Optional) */}
-              <div className="flex items-center gap-3">
+                {/* Followers Input (Optional) */}
                 <div className="flex-1">
                   <Input
                     type="number"
@@ -180,6 +168,16 @@ export default function SocialManager({
                     min={0}
                   />
                 </div>
+
+                {/* Remove Button */}
+                <button
+                  type="button"
+                  onClick={() => handleRemove(index)}
+                  disabled={disabled}
+                  className="shrink-0 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  <TbX className="w-5 h-5" />
+                </button>
               </div>
             </div>
           ))}

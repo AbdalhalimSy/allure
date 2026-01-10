@@ -5,6 +5,7 @@
   "items": "items",
   "featuredHint": "Tip: Star one item to set it as your public profile picture.",
   "syncHint": "Upload multiple images or videos, drag to reorder, then sync to push changes live.",
+  "completeHint": "Your portfolio must include at least one photo and at least one video to be considered complete.",
   "dragAndDrop": "Click to select or drag & drop files",
   "dragHint": "Drag and drop to reorder your portfolio items",
   "noItems": "No portfolio items yet. Upload your work above!",

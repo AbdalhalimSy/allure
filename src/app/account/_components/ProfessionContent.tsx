@@ -181,6 +181,10 @@ export default function ProfessionContent({
       const requiresLanguages = Boolean(
         profession.requires_languages || subProfession?.requires_languages
       );
+      const requiresSocials = Boolean(
+        profession?.requires_socials ||
+        subProfession?.requires_socials
+      );
 
       // Validate required media
       if (requiresPhoto && !entry.photo) {
@@ -221,6 +225,21 @@ export default function ProfessionContent({
           )
         );
         return false;
+      }
+
+      if (requiresSocials) {
+        const hasSocials =
+          entry.socials.length > 0 &&
+          entry.socials.every((s) => s.url && s.platform);
+        if (!hasSocials) {
+          toast.error(
+            translate(
+              "account.profession.errors.socialRequired",
+              `Social profiles are required for ${label}`
+            )
+          );
+          return false;
+        }
       }
     }
 

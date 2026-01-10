@@ -15,13 +15,16 @@
     "hairLength": "Hair Length",
     "eyeColor": "Eye Color",
     "height": "Height",
+    "weight": "Weight",
     "shoeSize": "Shoe Size",
     "tshirtSize": "T-Shirt Size",
     "pantsSize": "Pants Size",
     "jacketSize": "Jacket Size",
     "chest": "Chest",
     "bust": "Bust",
-    "waist": "Waist"
+    "waist": "Waist",
+    "tattoos": "Tattoos",
+    "piercings": "Piercings"
   },
   "placeholders": {
     "selectHairColor": "Select hair color",

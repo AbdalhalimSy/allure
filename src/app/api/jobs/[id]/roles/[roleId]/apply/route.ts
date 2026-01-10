@@ -47,18 +47,44 @@ export async function POST(
       );
     }
 
-    // Validate JSON responses early to provide clear feedback
+    // Parse and validate JSON responses
+    let responsesArray;
     try {
-      JSON.parse(responsesJson as string);
+      responsesArray = JSON.parse(responsesJson as string);
+      if (!Array.isArray(responsesArray)) {
+        throw new Error("responses must be an array");
+      }
     } catch {
       return NextResponse.json(
         {
           status: "error",
-          message: "responses must be valid JSON",
+          message: "responses must be valid JSON array",
           data: null,
         },
         { status: 400 }
       );
+    }
+
+    // Create new FormData with properly formatted responses for backend
+    const backendFormData = new FormData();
+    backendFormData.append("profile_id", profileId.toString());
+    backendFormData.append("approved_payment_terms", approvedPaymentTerms === "true" ? "1" : "0");
+
+    // Add responses as form array
+    responsesArray.forEach((response: { condition_id: number; value: any }, index: number) => {
+      backendFormData.append(`responses[${index}][condition_id]`, response.condition_id.toString());
+      // Convert yes/no to 1/0 for backend compatibility
+      let value = response.value || "";
+      if (value === "yes") value = "1";
+      if (value === "no") value = "0";
+      backendFormData.append(`responses[${index}][value]`, value);
+    });
+
+    // Copy media files (they have pattern media_*)
+    for (const [key, value] of formData.entries()) {
+      if (key.startsWith("media_")) {
+        backendFormData.append(key, value);
+      }
     }
 
     const token = authHeader.replace("Bearer ", "");
@@ -71,7 +97,7 @@ export async function POST(
       {
         method: "POST",
         headers,
-        body: formData,
+        body: backendFormData,
       }
     );
 

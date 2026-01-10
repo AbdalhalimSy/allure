@@ -100,6 +100,30 @@ export function buildSyncProfessionsPayload(
         formData.append(`${prefix}[socials][${socialIndex}][followers]`, social.followers.toString());
       }
     });
+
+    // New explicit social fields expected by backend
+    const findSocial = (platform: string) =>
+      entry.socials.find((s) => s.platform?.toLowerCase() === platform);
+
+    const appendSocialFields = (
+      platform: string,
+      urlKey: string,
+      followersKey: string
+    ) => {
+      const social = findSocial(platform);
+      if (!social) return;
+      if (social.url) {
+        formData.append(`${prefix}[${urlKey}]`, social.url);
+      }
+      if (social.followers !== undefined) {
+        formData.append(`${prefix}[${followersKey}]`, social.followers.toString());
+      }
+    };
+
+    appendSocialFields("instagram", "instagram_url", "instagram_followers");
+    appendSocialFields("tiktok", "tiktok_url", "tiktok_followers");
+    appendSocialFields("youtube", "youtube_url", "youtube_followers");
+    appendSocialFields("facebook", "facebook_url", "facebook_followers");
   });
   
   return formData;
