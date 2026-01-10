@@ -264,7 +264,7 @@ export default function TalentFilterBar({
                 variant="secondary"
                 onClick={handleReset}
                 className="flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3 lg:px-4 h-9 sm:h-10 lg:h-12 text-xs sm:text-sm"
-                title="Reset All Filters"
+                title={t("ui.resetAllFilters") || "Reset All Filters"}
               >
                 <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4 lg:h-4 lg:w-4" />
                 <span className="hidden sm:inline">{t("filters.reset") || "Reset"}</span>

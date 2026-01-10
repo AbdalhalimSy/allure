@@ -54,6 +54,15 @@ export default function CountryFilter() {
 
     // If user never picked a country, default to detected
     if (selectedCountry === null) {
+      // Respect explicit 'All' preference persisted as 'ALL'
+      try {
+        const storedPref = localStorage.getItem("countryFilter");
+        if (storedPref === "ALL") {
+          // User chose 'All' explicitly; do not override
+          return;
+        }
+      } catch {}
+      // No explicit preference; default to detected on first load
       setSelectedCountry(detectedCountry);
       if (detectedCountry === "SA" && locale !== "ar") setLocale("ar");
       return;

@@ -152,12 +152,12 @@ export default function Header() {
                 >
                   {t("nav.login")}
                 </Link>
-                <Link
+                {/* <Link
                   href="/register"
                   className="rounded-full bg-[#c49a47] px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#c49a47]/30 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c49a47]/40 active:translate-y-0 whitespace-nowrap"
                 >
                   {t("nav.signUp")}
-                </Link>
+                </Link> */}
               </div>
             ) : (
               <div className="relative" ref={menuRef}>

@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
     const response = await fetch(`${baseUrl}/auth/resend-email-otp`, {
       method: "POST",
-      headers: getApiHeaders(req),
+      headers: getApiHeaders(req, { includeContentType: true }),
       body: JSON.stringify({ email }),
     });
 

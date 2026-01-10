@@ -25,7 +25,8 @@ export function CountryFilterProvider({ children }: { children: ReactNode }) {
     setSelectedCountryState(country);
     try {
       if (country === null) {
-        localStorage.removeItem('countryFilter');
+        // Persist explicit 'All' selection to avoid auto-detect overriding it
+        localStorage.setItem('countryFilter', 'ALL');
       } else {
         localStorage.setItem('countryFilter', country);
       }
@@ -37,9 +38,11 @@ export function CountryFilterProvider({ children }: { children: ReactNode }) {
   // Hydrate user preference from localStorage
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('countryFilter') as CountryCode | null;
-      if (stored && (stored === 'AE' || stored === 'SA' || stored === 'LB')) {
-        setSelectedCountryState(stored);
+      const stored = localStorage.getItem('countryFilter');
+      if (stored === 'ALL') {
+        setSelectedCountryState(null);
+      } else if (stored && (stored === 'AE' || stored === 'SA' || stored === 'LB')) {
+        setSelectedCountryState(stored as CountryCode);
       }
     } catch {
       // Ignore localStorage errors

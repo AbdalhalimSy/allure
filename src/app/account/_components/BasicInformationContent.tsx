@@ -297,7 +297,7 @@ export default function BasicInformationContent({
                 >
                   <PhoneInput
                     name="whatsapp"
-                    placeholder="123-4567"
+                    placeholder={t("account.basic.phoneExample")}
                     value={formData.whatsapp}
                     onChange={(value) => handlePhoneChange(value, "whatsapp")}
                     required
@@ -311,7 +311,7 @@ export default function BasicInformationContent({
                   onChange={(date) =>
                     setFormData((prev) => ({ ...prev, dob: date }))
                   }
-                  placeholder={t("account.basic.fields.dateOfBirth")}
+                  placeholder={t("account.basic.placeholders.dateOfBirth")}
                   maxDate={new Date().toISOString().split("T")[0]}
                 />
               </AccountField>

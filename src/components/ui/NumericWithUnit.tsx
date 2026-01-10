@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/contexts/I18nContext";
 
 type Option = { value: string; label: string };
 
@@ -30,6 +31,7 @@ export default function NumericWithUnit({
   min,
   step = "any",
 }: NumericWithUnitProps) {
+  const { t } = useI18n();
   return (
     <div className="flex w-full">
       <input
@@ -50,7 +52,7 @@ export default function NumericWithUnit({
         value={unit}
         onChange={(e) => onUnitChange(e.target.value)}
         disabled={disabled}
-        aria-label="unit"
+        aria-label={t("ui.unit") || "unit"}
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>

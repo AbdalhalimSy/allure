@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
     const res = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
-      headers: getApiHeaders(request),
+      headers: getApiHeaders(request, { includeContentType: true }),
       body: JSON.stringify(payload),
     });
     const raw = await res.json().catch(() => ({ status: res.status }));

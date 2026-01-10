@@ -35,7 +35,42 @@
     "maxSelected": "You can select up to {{count}}",
     "selectDate": "Select date",
     "today": "Today",
-    "clear": "Clear"
+    "clear": "Clear",
+    "searchCountry": "Search country...",
+    "enterCode": "Enter code",
+    "phonePlaceholder": "52 342 9898",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "loading": "Loading",
+    "showMoreInfo": "Show more info",
+    "description": "Description",
+    "removeFile": "Remove file",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "openUserMenu": "Open user menu",
+    "unit": "unit",
+    "confirm": "Confirm",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "resetAllFilters": "Reset All Filters"
+  },
+  "datePicker": {
+    "days": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
   },
   "nav": {
     "talents": "Talents",
@@ -143,6 +178,20 @@
   },
   "auth": {
     "switchingUser": "Switching user"
+  },
+  "forms": {
+    "youExampleCom": "you@example.com",
+    "password": "••••••••",
+    "selectTime": "Select Time",
+    "enterYourAnswer": "Enter your answer",
+    "selectHairColor": "Select hair color",
+    "selectHairType": "Select hair type",
+    "selectHairLength": "Select hair length",
+    "selectEyeColor": "Select eye color",
+    "selectSize": "Select size",
+    "newFilePendingUpload": "New file pending upload",
+    "noPreview": "No preview",
+    "https": "https://..."
   },
   "countryDetection": {
     "badge": "Smart Location",

@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
+import apiClient from "@/lib/api/client";
 import Image from "next/image";
 import Loader from "@/components/ui/Loader";
 import AccentTag from "@/components/ui/AccentTag";
@@ -48,13 +49,11 @@ export default function TalentDetailPage() {
 
       // Fetch from talents list - the API doesn't have a single talent endpoint
       // We'll get the full list and filter client-side, or we can optimize later
-      const response = await fetch(`/api/talents?per_page=100`);
+      const response = await apiClient.get(`/talents`, {
+        params: { per_page: 100 },
+      });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch talent details");
-      }
-
-      const result: TalentsResponse = await response.json();
+      const result: TalentsResponse = response.data;
 
       if (result.status === "success") {
         const foundTalent = result.data.find(

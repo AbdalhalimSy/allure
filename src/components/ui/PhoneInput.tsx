@@ -2,6 +2,7 @@
 
 import { forwardRef, useState, useEffect, InputHTMLAttributes, useMemo } from "react";
 import worldCountries from "world-countries";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface Country {
   code: string;
@@ -33,10 +34,12 @@ interface PhoneInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "o
 
 const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
   ({ value = "", onChange, error, className = "", ...props }, ref) => {
+    const { t } = useI18n();
     const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
     const [isOpen, setIsOpen] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [isInitialized, setIsInitialized] = useState(false);
 
     // Detect country based on IP (optional, fails silently)
     useEffect(() => {
@@ -67,25 +70,26 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         } catch (err) {
           // Silently ignore; detection is optional and may fail due to CORS/rate limits
           console.debug("Country detection skipped", err);
+        } finally {
+          setIsInitialized(true);
         }
       };
       detectCountry();
     }, []);
 
-    // Parse initial value if provided (defer state updates to avoid synchronous setState lint warning)
+    // Parse initial value if provided (only on mount or when value is explicitly changed by parent)
     useEffect(() => {
-      if (value) {
+      // Only parse value from parent if it hasn't been initialized yet or if value is explicitly provided
+      if (isInitialized && value) {
         const country = countries.find((c) => value.startsWith(c.dialCode));
         if (country) {
-          setTimeout(() => {
-            setSelectedCountry(country);
-            setPhoneNumber(value.replace(country.dialCode, "").trim());
-          }, 0);
+          setSelectedCountry(country);
+          setPhoneNumber(value.replace(country.dialCode, "").trim());
         } else {
-          setTimeout(() => setPhoneNumber(value), 0);
+          setPhoneNumber(value);
         }
       }
-    }, [value]);
+    }, [value, isInitialized]);
 
     const handleCountrySelect = (country: Country) => {
       setSelectedCountry(country);
@@ -172,7 +176,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
  : "border-gray-300 focus:border-[#c49a47] focus:ring-[#c49a47]/20 "
  } bg-white text-black ${className}`}
-            placeholder="52 342 9898"
+            placeholder={t("ui.phonePlaceholder") || "52 342 9898"}
             {...props}
           />
         </div>
@@ -186,7 +190,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search country..."
+                placeholder={t("ui.searchCountry") || "Search country..."}
  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#c49a47] focus:outline-none focus:ring-2 focus:ring-[#c49a47]/20 "
                 onClick={(e) => e.stopPropagation()}
               />

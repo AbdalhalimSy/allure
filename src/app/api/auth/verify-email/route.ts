@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   try {
     const res = await fetch(`${baseUrl}/auth/verify-email`, {
       method: "POST",
-      headers: getApiHeaders(request),
+      headers: getApiHeaders(request, { includeContentType: true }),
       body: JSON.stringify({ email, code }),
     });
     const raw = await res.json().catch(() => ({ status: res.status }));

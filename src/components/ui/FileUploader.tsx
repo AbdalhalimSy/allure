@@ -3,7 +3,14 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useCallback, useState } from "react";
-import { Upload, X, FileIcon, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import {
+  Upload,
+  X,
+  FileIcon,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 import { useI18n } from "@/contexts/I18nContext";
 
 interface FileItem {
@@ -34,7 +41,8 @@ export default function FileUploader({
   className = "",
 }: FileUploaderProps) {
   const { t } = useI18n();
-  const dragDropLabel = t("home.content.dragAndDrop") || "Click to upload or drag and drop";
+  const dragDropLabel =
+    t("home.content.dragAndDrop") || "Click to upload or drag and drop";
   const resolvedDescription = description ?? "";
   const [isDragging, setIsDragging] = useState(false);
   const [fileItems, setFileItems] = useState<FileItem[]>([]);
@@ -47,39 +55,42 @@ export default function FileUploader({
     return Math.round(bytes / Math.pow(k, i)) + " " + sizes[i];
   };
 
-  const validateFile = useCallback((file: File): string | null => {
-    if (maxSize && file.size > maxSize) {
-      return `File size exceeds ${formatFileSize(maxSize)}`;
-    }
-    
-    if (accept !== "*") {
-      const acceptedTypes = accept.split(",").map(t => t.trim());
-      const fileType = file.type;
-      const fileExtension = "." + file.name.split(".").pop();
-      
-      const isValid = acceptedTypes.some(type => {
-        if (type.startsWith(".")) {
-          return fileExtension.toLowerCase() === type.toLowerCase();
-        }
-        if (type.endsWith("/*")) {
-          const baseType = type.split("/")[0];
-          return fileType.startsWith(baseType + "/");
-        }
-        return fileType === type;
-      });
-      
-      if (!isValid) {
-        return `File type not accepted. Accepted: ${accept}`;
+  const validateFile = useCallback(
+    (file: File): string | null => {
+      if (maxSize && file.size > maxSize) {
+        return `File size exceeds ${formatFileSize(maxSize)}`;
       }
-    }
-    
-    return null;
-  }, [accept, maxSize]);
+
+      if (accept !== "*") {
+        const acceptedTypes = accept.split(",").map((t) => t.trim());
+        const fileType = file.type;
+        const fileExtension = "." + file.name.split(".").pop();
+
+        const isValid = acceptedTypes.some((type) => {
+          if (type.startsWith(".")) {
+            return fileExtension.toLowerCase() === type.toLowerCase();
+          }
+          if (type.endsWith("/*")) {
+            const baseType = type.split("/")[0];
+            return fileType.startsWith(baseType + "/");
+          }
+          return fileType === type;
+        });
+
+        if (!isValid) {
+          return `File type not accepted. Accepted: ${accept}`;
+        }
+      }
+
+      return null;
+    },
+    [accept, maxSize]
+  );
 
   const simulateUpload = useCallback((_fileItem: FileItem, index: number) => {
     // Simulate upload progress
     const interval = setInterval(() => {
-      setFileItems(prev => {
+      setFileItems((prev) => {
         const updated = [...prev];
         if (updated[index].progress < 100) {
           updated[index].progress += 10;
@@ -94,10 +105,10 @@ export default function FileUploader({
 
   const handleFiles = useCallback(
     (files: File[]) => {
-      const newFileItems: FileItem[] = files.map(file => {
+      const newFileItems: FileItem[] = files.map((file) => {
         const error = validateFile(file);
         const isImage = file.type.startsWith("image/");
-        
+
         const item: FileItem = {
           file,
           progress: 0,
@@ -109,9 +120,11 @@ export default function FileUploader({
         if (isImage && !error) {
           const reader = new FileReader();
           reader.onload = (e) => {
-            setFileItems(prev =>
-              prev.map(fi =>
-                fi.file === file ? { ...fi, preview: e.target?.result as string } : fi
+            setFileItems((prev) =>
+              prev.map((fi) =>
+                fi.file === file
+                  ? { ...fi, preview: e.target?.result as string }
+                  : fi
               )
             );
           };
@@ -128,7 +141,7 @@ export default function FileUploader({
           simulateUpload(newFileItems[0], 0);
         }
       } else {
-        setFileItems(prev => [...prev, ...newFileItems]);
+        setFileItems((prev) => [...prev, ...newFileItems]);
         // Start upload simulation for new files
         newFileItems.forEach((item, idx) => {
           if (item.status === "uploading") {
@@ -138,7 +151,9 @@ export default function FileUploader({
       }
 
       // Update parent with valid files
-      const validFiles = newFileItems.filter(fi => !fi.error).map(fi => fi.file);
+      const validFiles = newFileItems
+        .filter((fi) => !fi.error)
+        .map((fi) => fi.file);
       if (onChange && validFiles.length > 0) {
         onChange(multiple ? [...value, ...validFiles] : [validFiles[0]]);
       }
@@ -170,7 +185,7 @@ export default function FileUploader({
   };
 
   const removeFile = (index: number) => {
-    setFileItems(prev => prev.filter((_, i) => i !== index));
+    setFileItems((prev) => prev.filter((_, i) => i !== index));
     if (onChange) {
       const newValue = value.filter((_, i) => i !== index);
       onChange(newValue);
@@ -178,7 +193,7 @@ export default function FileUploader({
   };
 
   const retryFile = (index: number) => {
-    setFileItems(prev => {
+    setFileItems((prev) => {
       const updated = [...prev];
       updated[index].status = "uploading";
       updated[index].progress = 0;
@@ -189,7 +204,7 @@ export default function FileUploader({
   };
 
   // Show existing files from value
-  const existingFiles = value.filter(v => typeof v === "string");
+  const existingFiles = value.filter((v) => typeof v === "string");
 
   // Check if there are any files (either new or existing)
   const hasFiles = fileItems.length > 0 || existingFiles.length > 0;
@@ -204,20 +219,25 @@ export default function FileUploader({
           onDrop={handleDrop}
           className={`relative border-2 border-dashed rounded-lg p-6 transition-all ${
             isDragging
- ? "border-[#c49a47] bg-[#c49a47]/5 "
- : "border-gray-200 hover:border-[#c49a47] "
+              ? "border-[#c49a47] bg-[#c49a47]/5 "
+              : "border-gray-200 hover:border-[#c49a47] "
           }`}
         >
-          <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center">
- <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3">
- <Upload className="h-5 w-5 text-gray-600 " />
+          <label
+            htmlFor="file-upload"
+            className="cursor-pointer flex flex-col items-center"
+          >
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3">
+              <Upload className="h-5 w-5 text-gray-600 " />
             </div>
             <div className="text-center">
- <span className="text-sm font-medium text-gray-700 ">
+              <span className="text-sm font-medium text-gray-700 ">
                 {dragDropLabel}
               </span>
               {resolvedDescription && (
- <p className="text-xs text-gray-500 mt-1">{resolvedDescription}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {resolvedDescription}
+                </p>
               )}
             </div>
             <input
@@ -238,7 +258,7 @@ export default function FileUploader({
           {fileItems.map((item, index) => (
             <div
               key={index}
- className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
+              className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
             >
               {/* Preview or Icon */}
               <div className="shrink-0">
@@ -249,18 +269,18 @@ export default function FileUploader({
                     className="w-10 h-10 rounded object-cover"
                   />
                 ) : (
- <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center">
- <FileIcon className="h-5 w-5 text-gray-600 " />
+                  <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center">
+                    <FileIcon className="h-5 w-5 text-gray-600 " />
                   </div>
                 )}
               </div>
 
               {/* File Info */}
               <div className="flex-1 min-w-0">
- <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-gray-900 truncate">
                   {item.file.name}
                 </p>
- <p className="text-xs text-gray-500 ">
+                <p className="text-xs text-gray-500 ">
                   {formatFileSize(item.file.size)}
                 </p>
 
@@ -268,10 +288,12 @@ export default function FileUploader({
                 {item.status === "uploading" && (
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs mb-1">
- <span className="text-gray-600 ">{t('content.uploading')}</span>
- <span className="text-gray-600 ">{item.progress}%</span>
+                      <span className="text-gray-600 ">
+                        {t("content.uploading")}
+                      </span>
+                      <span className="text-gray-600 ">{item.progress}%</span>
                     </div>
- <div className="w-full bg-gray-200 rounded-full h-1.5">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5">
                       <div
                         className="bg-[#c49a47] h-1.5 rounded-full transition-all"
                         style={{ width: `${item.progress}%` }}
@@ -282,7 +304,7 @@ export default function FileUploader({
 
                 {/* Error Message */}
                 {item.status === "error" && item.error && (
- <p className="text-xs text-red-600 mt-1">{item.error}</p>
+                  <p className="text-xs text-red-600 mt-1">{item.error}</p>
                 )}
               </div>
 
@@ -292,11 +314,11 @@ export default function FileUploader({
                   <Loader2 className="h-5 w-5 text-[#c49a47] animate-spin" />
                 )}
                 {item.status === "complete" && (
- <CheckCircle2 className="h-5 w-5 text-green-600 " />
+                  <CheckCircle2 className="h-5 w-5 text-green-600 " />
                 )}
                 {item.status === "error" && (
                   <>
- <AlertCircle className="h-5 w-5 text-red-600 " />
+                    <AlertCircle className="h-5 w-5 text-red-600 " />
                     <button
                       type="button"
                       onClick={() => retryFile(index)}
@@ -309,10 +331,10 @@ export default function FileUploader({
                 <button
                   type="button"
                   onClick={() => removeFile(index)}
- className="p-1 hover:bg-gray-100 rounded transition-colors"
-                  aria-label="Remove file"
+                  className="p-1 hover:bg-gray-100 rounded transition-colors"
+                  aria-label={t("ui.removeFile") || "Remove file"}
                 >
- <X className="h-4 w-4 text-gray-500 " />
+                  <X className="h-4 w-4 text-gray-500 " />
                 </button>
               </div>
             </div>
@@ -327,20 +349,32 @@ export default function FileUploader({
             // Extract filename from URL
             const getFilenameFromUrl = (urlStr: string) => {
               try {
-                const parts = urlStr.split('/');
+                const parts = urlStr.split("/");
                 const filename = parts[parts.length - 1];
-                return decodeURIComponent(filename.split('?')[0]) || 'Existing file';
+                return (
+                  decodeURIComponent(filename.split("?")[0]) || "Existing file"
+                );
               } catch {
-                return 'Existing file';
+                return "Existing file";
               }
             };
 
             // Check if URL is an image
             const isImageUrl = (urlStr: string) => {
-              const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+              const imageExtensions = [
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".gif",
+                ".webp",
+                ".svg",
+                ".bmp",
+              ];
               const lowerUrl = urlStr.toLowerCase();
-              return imageExtensions.some(ext => lowerUrl.includes(ext)) || 
-                     accept.includes('image');
+              return (
+                imageExtensions.some((ext) => lowerUrl.includes(ext)) ||
+                accept.includes("image")
+              );
             };
 
             const filename = getFilenameFromUrl(url);
@@ -349,7 +383,7 @@ export default function FileUploader({
             return (
               <div
                 key={`existing-${index}`}
- className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
+                className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white "
               >
                 {/* Preview or Icon */}
                 <div className="shrink-0">
@@ -360,32 +394,42 @@ export default function FileUploader({
                       className="w-10 h-10 rounded object-cover"
                       onError={(e) => {
                         // Fallback to icon if image fails to load
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.nextElementSibling?.classList.remove(
+                          "hidden"
+                        );
                       }}
                     />
                   ) : null}
- <div className={`w-10 h-10 rounded bg-gray-100 flex items-center justify-center ${showImagePreview ? 'hidden' : ''}`}>
- <FileIcon className="h-5 w-5 text-gray-600 " />
+                  <div
+                    className={`w-10 h-10 rounded bg-gray-100 flex items-center justify-center ${
+                      showImagePreview ? "hidden" : ""
+                    }`}
+                  >
+                    <FileIcon className="h-5 w-5 text-gray-600 " />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
- <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-sm font-medium text-gray-900 truncate">
                     Existing file: {filename}
                   </p>
- <p className="text-xs text-gray-500 ">{t('content.previouslyUploaded')}</p>
+                  <p className="text-xs text-gray-500 ">
+                    {t("content.previouslyUploaded")}
+                  </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => {
                     if (onChange) {
-                      onChange(value.filter((_, i) => i !== fileItems.length + index));
+                      onChange(
+                        value.filter((_, i) => i !== fileItems.length + index)
+                      );
                     }
                   }}
- className="p-1 hover:bg-gray-100 rounded transition-colors"
-                  aria-label="Remove file"
+                  className="p-1 hover:bg-gray-100 rounded transition-colors"
+                  aria-label={t("ui.removeFile") || "Remove file"}
                 >
- <X className="h-4 w-4 text-gray-500 " />
+                  <X className="h-4 w-4 text-gray-500 " />
                 </button>
               </div>
             );

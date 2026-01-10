@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
+import apiClient from "@/lib/api/client";
 import Loader from "@/components/ui/Loader";
 import Button from "@/components/ui/Button";
 import CallTimeSelector from "@/components/jobs/selectors/CallTimeSelector";
@@ -58,20 +59,15 @@ export default function AppliedJobsPage() {
     try {
       setLoading(true);
       setError(null);
-      const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : "";
-      const url = `/api/jobs/applied?profile_id=${activeProfileId}&per_page=20&page=${pageNum}`;
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
+      const res = await apiClient.get(`/jobs/applied`, {
+        params: {
+          profile_id: activeProfileId,
+          per_page: 20,
+          page: pageNum,
         },
       });
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.message || data.error || t("jobs.appliedJobs.errors.loadFailed"));
-      }
-
-      const result: AppliedJobsResponse = await res.json();
+      const result: AppliedJobsResponse = res.data;
       if (result.status === "success" || result.status === true) {
         const apps = result.data || [];
         setApplications(apps);
@@ -211,29 +207,19 @@ export default function AppliedJobsPage() {
       return;
     }
 
-    const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : "";
-    if (!token) {
-      toast.error(t("jobs.jobs.authRequired") || "Please log in to confirm a call time");
-      return;
-    }
-
     setCallTimeSelections((prev) => ({
       ...prev,
       [app.id]: { ...(prev[app.id] || selection), loading: true, error: "" },
     }));
 
     try {
-      const res = await fetch(`/api/role-applications/${app.id}/select-call-time`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ call_time_slot_id: selection.slotId, selected_time: selection.time }),
-      });
+      const res = await apiClient.post(
+        `/role-applications/${app.id}/select-call-time`,
+        { call_time_slot_id: selection.slotId, selected_time: selection.time }
+      );
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
+      const data = res.data || {};
+      if (data?.status === "error") {
         const message =
           data?.errors?.call_time_slot_id?.[0] ||
           data?.errors?.selected_time?.[0] ||

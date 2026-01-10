@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { X, Music2, ChevronLeft, ChevronRight } from "lucide-react";
 import { LightboxProps } from "./types";
+import { useI18n } from "@/contexts/I18nContext";
 
 export function Lightbox({
   item,
@@ -10,6 +11,7 @@ export function Lightbox({
   hasNext,
   hasPrevious,
 }: LightboxProps) {
+  const { t } = useI18n();
   if (!item) return null;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -32,7 +34,7 @@ export function Lightbox({
       <button
         className="absolute top-4 end-4 z-10 rounded-full bg-white/10 hover:bg-white/20 p-2 sm:p-3 backdrop-blur-sm transition-all shadow-lg"
         onClick={onClose}
-        aria-label="Close"
+        aria-label={t("ui.close") || "Close"}
       >
         <X className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
       </button>
@@ -44,7 +46,7 @@ export function Lightbox({
             e.stopPropagation();
             onPrevious();
           }}
-          aria-label="Previous"
+          aria-label={t("ui.previous") || "Previous"}
         >
           <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8 text-white rtl:scale-x-[-1]" />
         </button>
@@ -57,7 +59,7 @@ export function Lightbox({
             e.stopPropagation();
             onNext();
           }}
-          aria-label="Next"
+          aria-label={t("ui.next") || "Next"}
         >
           <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8 text-white rtl:scale-x-[-1]" />
         </button>

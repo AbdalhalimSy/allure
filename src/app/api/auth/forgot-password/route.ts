@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const res = await fetch(`${baseUrl}/auth/forgot-password`, {
       method: "POST",
-      headers: getApiHeaders(request),
+      headers: getApiHeaders(request, { includeContentType: true }),
       body: JSON.stringify({ email }),
     });
 

@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const res = await fetch(`${baseUrl}/auth/reset-password`, {
       method: "POST",
-      headers: getApiHeaders(request),
+      headers: getApiHeaders(request, { includeContentType: true }),
       body: JSON.stringify({ email, code, password, password_confirmation }),
     });
 

@@ -15,22 +15,6 @@ interface DatePickerProps {
   className?: string;
 }
 
-const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 export default function DatePicker({
   value,
   onChange,
@@ -41,6 +25,43 @@ export default function DatePicker({
   className = "",
 }: DatePickerProps) {
   const { t } = useI18n();
+
+  // Get translated months and days
+  const MONTHS = useMemo(() => {
+    const months = [];
+    for (let i = 0; i < 12; i++) {
+      months.push(
+        t(`datePicker.months.${i}`) ||
+          [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ][i]
+      );
+    }
+    return months;
+  }, [t]);
+
+  const DAYS = useMemo(() => {
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        t(`datePicker.days.${i}`) ||
+          ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][i]
+      );
+    }
+    return days;
+  }, [t]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());

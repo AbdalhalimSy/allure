@@ -128,24 +128,10 @@ export default function HomePage() {
           params.append("country_ids", String(countryId));
         }
 
-        const res = await fetch(
-          `${
-            usePublic ? "/api/public/jobs" : "/api/jobs"
-          }?${params.toString()}`,
-          {
-            headers: {
-              ...(usePublic
-                ? {}
-                : {
-                    Authorization: `Bearer ${
-                      localStorage.getItem("auth_token") || ""
-                    }`,
-                  }),
-            },
-          }
-        );
-        if (!res.ok) return;
-        const data = await res.json();
+        const res = await apiClient.get(usePublic ? "/public/jobs" : "/jobs", {
+          params,
+        });
+        const data = res.data;
         if (data?.status === "success" || data?.status === true) {
           setJobs(data.data || []);
         }

@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
+import apiClient from "@/lib/api/client";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentDetailModal from "@/components/talent/TalentDetailModal";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
@@ -92,15 +93,12 @@ export default function TalentsPage() {
         params.append("page", String(page));
         params.append("per_page", "12");
 
-        const response = await fetch(`/api/talents?${params.toString()}`, {
+        const response = await apiClient.get(`/talents`, {
           signal: abortRef.current.signal,
+          params,
         });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch talents");
-        }
-
-        const result: TalentsResponse = await response.json();
+        const result: TalentsResponse = response.data;
 
         if (result.status === "success") {
           if (reset) {

@@ -39,6 +39,7 @@
     "lastName": "Doe",
     "email": "john.doe@example.com",
     "phone": "52 342 9898",
+    "dateOfBirth": "MM/DD/YYYY",
     "selectGender": "Select gender",
     "selectCountry": "Select country",
     "selectNationalities": "Select nationalities...",

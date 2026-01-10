@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
+import apiClient from "@/lib/api/client";
 import type { Job } from "@/types/job";
 
 export interface EligibleRole {
@@ -22,13 +23,11 @@ export function useEligibleRoles() {
         return [];
       }
 
-      const res = await fetch(`/api/profile/${activeProfileId}/eligible-roles`);
+      const res = await apiClient.get(
+        `/profile/${activeProfileId}/eligible-roles`
+      );
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch eligible roles");
-      }
-
-      const data = await res.json();
+      const data = res.data;
       return data.success ? data.data : [];
     },
     enabled: !!activeProfileId,

@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
+import apiClient from "@/lib/api/client";
 import {
   Job,
   JobFilters,
@@ -52,8 +53,6 @@ export function useJobs(showEligibleOnly: boolean) {
 
         if (page === 1) setError(null);
 
-        const token = localStorage.getItem("auth_token") || "";
-
         // If showEligibleOnly is true, fetch from eligible-roles endpoint
         if (showEligibleOnly) {
           if (usePublic) {
@@ -68,27 +67,14 @@ export function useJobs(showEligibleOnly: boolean) {
             return;
           }
 
-          const response = await fetch(
-            `/api/profile/${activeProfileId}/eligible-roles`,
+          const response = await apiClient.get(
+            `/profile/${activeProfileId}/eligible-roles`,
             {
               signal: abortRef.current.signal,
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
             }
           );
 
-          // Check if this request was aborted
-          if (!response.ok && response.status === 0) {
-            return;
-          }
-
-          if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message || t("jobs.jobs.errors.fetchFailed"));
-          }
-
-          const result: EligibleRolesResponse = await response.json();
+          const result: EligibleRolesResponse = response.data;
           if (result.success) {
             const jobsData = result.data.map((job) => ({
               ...job,
@@ -133,29 +119,15 @@ export function useJobs(showEligibleOnly: boolean) {
           params.append("page", String(page));
           params.append("per_page", String(perPageRef.current));
 
-          const response = await fetch(
-            `${usePublic ? "/api/public/jobs" : "/api/jobs"}?${params.toString()}`,
+          const response = await apiClient.get(
+            usePublic ? "/public/jobs" : "/jobs",
             {
               signal: abortRef.current.signal,
-              headers: {
-                ...(usePublic ? {} : { Authorization: `Bearer ${token}` }),
-              },
+              params,
             }
           );
 
-          // Check if this request was aborted
-          if (!response.ok && response.status === 0) {
-            return;
-          }
-
-          if (!response.ok) {
-            const data = await response.json();
-            throw new Error(
-              data.error || data.message || t("jobs.jobs.errors.fetchFailed")
-            );
-          }
-
-          const result: JobsResponse = await response.json();
+          const result: JobsResponse = response.data;
           if (result.status === "success" || result.status === true) {
             if (reset) {
               setJobs(result.data);

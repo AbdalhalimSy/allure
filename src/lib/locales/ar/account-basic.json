@@ -39,6 +39,7 @@
     "lastName": "علي",
     "email": "you@example.com",
     "phone": "52 342 9898",
+    "dateOfBirth": "MM/DD/YYYY",
     "selectGender": "اختر النوع",
     "selectCountry": "اختر الدولة",
     "selectNationalities": "اختر الجنسيات...",

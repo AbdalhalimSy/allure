@@ -81,7 +81,7 @@ export function JobRoleCard({
   const isDisabled =
     alreadyApplied ||
     role.can_apply === false ||
-    (job.open_to_apply === false) ||
+    job.open_to_apply === false ||
     !isAuthenticated ||
     !activeProfileId;
 
@@ -269,23 +269,26 @@ export function JobRoleCard({
                   </div>
                 </div>
 
-                {role.ethnicity && (Array.isArray(role.ethnicity) ? role.ethnicity.length > 0 : true) && (
-                  <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
-                    <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
-                      <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                {role.ethnicity &&
+                  (Array.isArray(role.ethnicity)
+                    ? role.ethnicity.length > 0
+                    : true) && (
+                    <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
+                      <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
+                        <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs text-gray-600 mb-0.5">
+                          {t("jobs.jobDetail.ethnicity")}
+                        </p>
+                        <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
+                          {Array.isArray(role.ethnicity)
+                            ? role.ethnicity.join(", ")
+                            : role.ethnicity}
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0">
-                      <p className="text-xs text-gray-600 mb-0.5">
-                        {t("jobs.jobDetail.ethnicity")}
-                      </p>
-                      <p className="font-semibold text-sm sm:text-base text-gray-900 truncate">
-                        {Array.isArray(role.ethnicity)
-                          ? role.ethnicity.join(", ")
-                          : role.ethnicity}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                  )}
 
                 <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl bg-linear-to-br from-gray-50 to-gray-100 p-3 sm:p-4 border border-gray-200">
                   <div className="rounded-lg bg-linear-to-br from-[#c49a47] to-[#d4a855] p-1.5 sm:p-2 shrink-0">
@@ -338,7 +341,9 @@ export function JobRoleCard({
                                       )
                                     }
                                     className="p-1.5 hover:bg-amber-100 rounded-lg transition-colors"
-                                    title="Show more info"
+                                    title={
+                                      t("ui.showMoreInfo") || "Show more info"
+                                    }
                                   >
                                     <HelpCircle className="h-4 w-4 text-[#c49a47]" />
                                   </button>
@@ -349,7 +354,7 @@ export function JobRoleCard({
                                 expandedProfession === idx && (
                                   <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-amber-100">
                                     <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                                      Description
+                                      {t("ui.description") || "Description"}
                                     </p>
                                     <p>{description}</p>
                                   </div>
@@ -391,7 +396,9 @@ export function JobRoleCard({
                                       )
                                     }
                                     className="p-1.5 hover:bg-indigo-100 rounded-lg transition-colors"
-                                    title="Show more info"
+                                    title={
+                                      t("ui.showMoreInfo") || "Show more info"
+                                    }
                                   >
                                     <HelpCircle className="h-4 w-4 text-indigo-600" />
                                   </button>
@@ -402,7 +409,7 @@ export function JobRoleCard({
                                 expandedProfession === baseIdx && (
                                   <div className="text-sm text-gray-700 bg-white rounded-lg p-3 border border-indigo-100">
                                     <p className="text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                                      Description
+                                      {t("ui.description") || "Description"}
                                     </p>
                                     <p>{description}</p>
                                   </div>

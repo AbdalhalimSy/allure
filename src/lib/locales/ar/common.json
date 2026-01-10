@@ -35,7 +35,42 @@
     "maxSelected": "يمكنك اختيار حتى {{count}}",
     "selectDate": "اختر التاريخ",
     "today": "اليوم",
-    "clear": "مسح"
+    "clear": "مسح",
+    "searchCountry": "ابحث عن دولة...",
+    "enterCode": "أدخل الكود",
+    "phonePlaceholder": "52 342 9898",
+    "close": "إغلاق",
+    "previous": "السابق",
+    "next": "التالي",
+    "loading": "جارٍ التحميل",
+    "showMoreInfo": "إظهار المزيد",
+    "description": "الوصف",
+    "removeFile": "حذف الملف",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "openUserMenu": "فتح قائمة المستخدم",
+    "unit": "الوحدة",
+    "confirm": "تأكيد",
+    "previousSlide": "الشريحة السابقة",
+    "nextSlide": "الشريحة التالية",
+    "resetAllFilters": "إعادة تعيين جميع المرشحات"
+  },
+  "datePicker": {
+    "days": ["الأحد", "الإث", "الثلا", "الأرب", "الخمي", "الجمع", "السبت"],
+    "months": [
+      "يناير",
+      "فبراير",
+      "مارس",
+      "أبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ]
   },
   "nav": {
     "talents": "المواهب",
@@ -143,6 +178,20 @@
   },
   "auth": {
     "switchingUser": "تبديل المستخدم"
+  },
+  "forms": {
+    "youExampleCom": "you@example.com",
+    "password": "••••••••",
+    "selectTime": "اختر الوقت",
+    "enterYourAnswer": "أدخل إجابتك",
+    "selectHairColor": "اختر لون الشعر",
+    "selectHairType": "اختر نوع الشعر",
+    "selectHairLength": "اختر طول الشعر",
+    "selectEyeColor": "اختر لون العين",
+    "selectSize": "اختر المقاس",
+    "newFilePendingUpload": "ملف جديد بانتظار الرفع",
+    "noPreview": "لا توجد معاينة",
+    "https": "https://..."
   },
   "countryDetection": {
     "badge": "تحديد الموقع الذكي",

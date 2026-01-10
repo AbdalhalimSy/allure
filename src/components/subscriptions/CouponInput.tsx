@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Tag, Loader2, CheckCircle, XCircle } from "lucide-react";
 import Input from "@/components/ui/Input";
 import { validateCoupon } from "@/lib/api/subscriptions";
+import { useI18n } from "@/contexts/I18nContext";
 
 interface CouponInputProps {
   profileId: number;
@@ -18,6 +19,7 @@ export function CouponInput({
   onCouponApplied,
   onCouponCodeChange,
 }: CouponInputProps) {
+  const { t } = useI18n();
   const [code, setCode] = useState("");
   const [isValidating, setIsValidating] = useState(false);
   const [error, setError] = useState("");
@@ -118,7 +120,7 @@ export function CouponInput({
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           onKeyDown={(e) => e.key === "Enter" && handleValidate()}
-          placeholder="Enter code"
+          placeholder={t("ui.enterCode") || "Enter code"}
           disabled={isValidating}
           className="font-mono text-sm uppercase"
         />
