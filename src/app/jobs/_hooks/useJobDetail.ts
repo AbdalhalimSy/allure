@@ -5,7 +5,7 @@ import { DetailedJob, JobDetailResponse } from "@/types/job";
 
 export function useJobDetail(jobId: string | string[]) {
   const { activeProfileId } = useAuth();
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [job, setJob] = useState<DetailedJob | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,9 +16,7 @@ export function useJobDetail(jobId: string | string[]) {
       setError(null);
       const hasProfile = Boolean(activeProfileId);
       const token = localStorage.getItem("auth_token") || "";
-      const headers: Record<string, string> = {
-        "Accept-Language": locale,
-      };
+      const headers: Record<string, string> = {};
 
       if (hasProfile && token) {
         headers.Authorization = `Bearer ${token}`;
@@ -56,7 +54,7 @@ export function useJobDetail(jobId: string | string[]) {
     } finally {
       setLoading(false);
     }
-  }, [activeProfileId, jobId, t, locale]);
+  }, [activeProfileId, jobId, t]);
 
   return {
     job,

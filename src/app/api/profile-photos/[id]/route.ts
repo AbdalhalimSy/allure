@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getAuthApiHeaders } from "@/lib/api/headers";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
+import { NextRequest } from "next/server";
+import { handleAuthenticatedRequest, fetchFromBackend, validateBackendResponse } from "@/lib/api/route-handler";
+import { successResponse } from "@/lib/api/response";
 
 /**
  * PUT /api/profile-photos/[id]
@@ -11,43 +10,18 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
+  return handleAuthenticatedRequest(request, async ({ token, request: req }) => {
     const { id } = await params;
-    const authHeader = request.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "") || "";
+    const body = await req.json();
 
-    if (!token) {
-      return NextResponse.json(
-        { success: false, message: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
-    const body = await request.json();
-
-    const response = await fetch(`${BACKEND_URL}/profile-photos/${id}`, {
+    const response = await fetchFromBackend(req, token, `/profile-photos/${id}`, {
       method: "PUT",
-      headers: {
-        ...getAuthApiHeaders(request, token),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+      body,
     });
+    const data = await validateBackendResponse(response);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(data, { status: response.status });
-    }
-
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error updating profile photo:", error);
-    return NextResponse.json(
-      { success: false, message: "Failed to update profile photo" },
-      { status: 500 }
-    );
-  }
+    return successResponse(data);
+  });
 }
 
 /**
@@ -58,35 +32,14 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
+  return handleAuthenticatedRequest(request, async ({ token, request: req }) => {
     const { id } = await params;
-    const authHeader = request.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "") || "";
 
-    if (!token) {
-      return NextResponse.json(
-        { success: false, message: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
-    const response = await fetch(`${BACKEND_URL}/profile-photos/${id}`, {
+    const response = await fetchFromBackend(req, token, `/profile-photos/${id}`, {
       method: "DELETE",
-      headers: getAuthApiHeaders(request, token),
     });
+    const data = await validateBackendResponse(response);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(data, { status: response.status });
-    }
-
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error deleting profile photo:", error);
-    return NextResponse.json(
-      { success: false, message: "Failed to delete profile photo" },
-      { status: 500 }
-    );
-  }
+    return successResponse(data);
+  });
 }

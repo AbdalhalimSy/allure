@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
@@ -8,6 +8,7 @@ import Label from "@/components/ui/Label";
 import Loader from "@/components/ui/Loader";
 import { JobFilters } from "@/types/job";
 import { useI18n } from "@/contexts/I18nContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import apiClient from "@/lib/api/client";
 import { logger } from "@/lib/utils/logger";
 import {
@@ -38,7 +39,7 @@ export default function JobFilterBar({
   onReset,
   loadingResults = false,
 }: Props) {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const [local, setLocal] = useState<JobFilters>(value);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchText, setSearchText] = useState<string>(value.title || "");
@@ -49,31 +50,36 @@ export default function JobFilterBar({
   const [nationalities, setNationalities] = useState<LookupOption[]>([]);
   const [loadingLookups, setLoadingLookups] = useState(true);
 
-  useEffect(() => {
-    const fetchLookups = async () => {
-      try {
-        setLoadingLookups(true);
-        const [countriesRes, professionsRes, nationalitiesRes] =
-          await Promise.all([
-            apiClient.get(`/lookups/countries?lang=${locale}`),
-            apiClient.get(`/lookups/professions?lang=${locale}`),
-            apiClient.get(`/lookups/nationalities?lang=${locale}`),
-          ]);
+  const fetchLookups = useCallback(async () => {
+    try {
+      setLoadingLookups(true);
+      const [countriesRes, professionsRes, nationalitiesRes] =
+        await Promise.all([
+          apiClient.get('/lookups/countries'),
+          apiClient.get('/lookups/professions'),
+          apiClient.get('/lookups/nationalities'),
+        ]);
 
-        if (countriesRes.data.status === "success")
-          setCountries(countriesRes.data.data);
-        if (professionsRes.data.status === "success")
-          setProfessions(professionsRes.data.data);
-        if (nationalitiesRes.data.status === "success")
-          setNationalities(nationalitiesRes.data.data);
-      } catch (error) {
-        logger.error("Failed to fetch job lookups", error);
-      } finally {
-        setLoadingLookups(false);
-      }
-    };
+      if (countriesRes.data.status === "success")
+        setCountries(countriesRes.data.data);
+      if (professionsRes.data.status === "success")
+        setProfessions(professionsRes.data.data);
+      if (nationalitiesRes.data.status === "success")
+        setNationalities(nationalitiesRes.data.data);
+    } catch (error) {
+      logger.error("Failed to fetch job lookups", error);
+    } finally {
+      setLoadingLookups(false);
+    }
+  }, []);
+
+  // Initial fetch
+  useEffect(() => {
     fetchLookups();
-  }, [locale]);
+  }, [fetchLookups]);
+
+  // Auto-refetch on language change
+  useLanguageSwitch(fetchLookups);
 
   // Sync when parent changes (reset etc.)
   useEffect(() => {

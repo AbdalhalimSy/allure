@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import Link from "next/link";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import Loader from "@/components/ui/Loader";
 import Button from "@/components/ui/Button";
 import CallTimeSelector from "@/components/jobs/selectors/CallTimeSelector";
@@ -53,7 +54,7 @@ export default function AppliedJobsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, activeProfileId, page]);
 
-  const fetchAppliedJobs = async (pageNum: number) => {
+  const fetchAppliedJobs = useCallback(async (pageNum: number) => {
     try {
       setLoading(true);
       setError(null);
@@ -62,7 +63,6 @@ export default function AppliedJobsPage() {
       const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token || ""}`,
-          "Accept-Language": locale,
         },
       });
 
@@ -104,7 +104,14 @@ export default function AppliedJobsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeProfileId, t]);
+
+  // Refetch when language changes
+  useLanguageSwitch(() => {
+    if (activeProfileId) {
+      fetchAppliedJobs(page);
+    }
+  });
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -221,7 +228,6 @@ export default function AppliedJobsPage() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-          "Accept-Language": locale,
         },
         body: JSON.stringify({ call_time_slot_id: selection.slotId, selected_time: selection.time }),
       });

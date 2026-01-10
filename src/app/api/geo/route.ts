@@ -27,13 +27,13 @@ async function fetchGeo(): Promise<GeoResult> {
   if (!resp.ok) {
     // If rate limited, return cached if available
     if (resp.status === 429 && cachedCountry) {
-      return { country: cachedCountry };
+      return { country: cachedCountry ?? undefined };
     }
     throw new Error(`geo provider error ${resp.status}`);
   }
   const data = (await resp.json()) as Record<string, any>;
   // ipinfo: country, ipapi: country
-  return { country: data.country };
+  return { country: data.country ?? undefined };
 }
 
 export async function GET() {
@@ -45,14 +45,14 @@ export async function GET() {
 
     if (!inflight) {
       inflight = fetchGeo().then((res) => {
-        const mapped = mapIso(res.country || undefined);
+        const mapped = mapIso(res.country);
         cachedCountry = mapped;
         cachedAt = Date.now();
-        return { country: mapped ?? null };
+        return { country: mapped ?? undefined };
       }).catch(() => {
         // On error, keep previous cache; set short TTL to avoid hammering
         cachedAt = Date.now() - (DAY_MS - MINUTE_MS * 10); // pretend stale in ~10m
-        return { country: cachedCountry };
+        return { country: cachedCountry ?? undefined };
       });
     }
 

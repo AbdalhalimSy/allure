@@ -6,6 +6,7 @@ import AccountPageWrapper from "../_lib/AccountPageWrapper";
 import AccountSection from "@/components/account/AccountSection";
 import Button from "@/components/ui/Button";
 import { useI18n } from "@/contexts/I18nContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import { PackageCard } from "@/components/subscriptions/PackageCard";
 import { CouponInput } from "@/components/subscriptions/CouponInput";
 import { SubscriptionStatus } from "@/components/subscriptions/SubscriptionStatus";
@@ -26,7 +27,7 @@ import type {
 import { getActiveProfileId } from "@/lib/api/client";
 
 export default function BillingPage() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const [profileId, setProfileId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<
@@ -58,7 +59,7 @@ export default function BillingPage() {
         setLoading(true);
         const [packagesRes, statusRes, historyRes, paymentsRes] =
           await Promise.all([
-            getSubscriptionPackages(locale),
+              getSubscriptionPackages(),
             getSubscriptionStatus(profId),
             getSubscriptionHistory(profId),
             getPaymentHistory(profId),
@@ -89,7 +90,7 @@ export default function BillingPage() {
         setLoading(false);
       }
     },
-    [t, locale]
+    [t]
   );
 
   useEffect(() => {
@@ -101,7 +102,14 @@ export default function BillingPage() {
       setError(t("account.billing.errors.selectProfile"));
       setLoading(false);
     }
-  }, [t, locale, loadData]);
+  }, [t, loadData]);
+
+  // Auto-refetch packages on language change
+  useLanguageSwitch(async () => {
+    if (profileId) {
+      await loadData(profileId);
+    }
+  });
 
   useEffect(() => {
     if (hasSubscription) {

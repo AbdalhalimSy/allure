@@ -11,7 +11,7 @@ import {
 
 export function useJobs(showEligibleOnly: boolean) {
   const { activeProfileId, isAuthenticated } = useAuth();
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const { getCountryId } = useCountryFilter();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +74,6 @@ export function useJobs(showEligibleOnly: boolean) {
               signal: abortRef.current.signal,
               headers: {
                 Authorization: `Bearer ${token}`,
-                "Accept-Language": locale,
               },
             }
           );
@@ -140,7 +139,6 @@ export function useJobs(showEligibleOnly: boolean) {
               signal: abortRef.current.signal,
               headers: {
                 ...(usePublic ? {} : { Authorization: `Bearer ${token}` }),
-                "Accept-Language": locale,
               },
             }
           );
@@ -209,7 +207,6 @@ export function useJobs(showEligibleOnly: boolean) {
     [
       activeProfileId,
       filters,
-      locale,
       t,
       showEligibleOnly,
       isAuthenticated,

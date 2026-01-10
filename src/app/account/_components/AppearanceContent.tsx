@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import AccountSection from "@/components/account/AccountSection";
 import AccountField from "@/components/account/AccountField";
 import AccountPageLoader from "@/components/account/AccountPageLoader";
-import { Input, SingleSelect, Button, NumericWithUnit } from "@/components/ui";
+import { SingleSelect, Button, NumericWithUnit } from "@/components/ui";
 import type { SingleSelectOption } from "@/components/ui/SingleSelect";
 import {
   TbScissors,

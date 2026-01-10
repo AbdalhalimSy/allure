@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import apiClient from "@/lib/api/client";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import {
   HeroBanner,
   MobileAppSection,
@@ -36,7 +37,7 @@ type Partner = {
 export default function HomePage() {
   const router = useRouter();
   const { isAuthenticated, hydrated, activeProfileId } = useAuth();
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const { getCountryId } = useCountryFilter();
 
   const [professions, setProfessions] = useState<Profession[]>([]);
@@ -48,11 +49,10 @@ export default function HomePage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [partnersLoading, setPartnersLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchProfessions = async () => {
+  const fetchProfessions = useCallback(async () => {
       try {
         setProfessionsLoading(true);
-        const res = await apiClient.get(`/lookups/professions?lang=${locale}`);
+        const res = await apiClient.get(`/lookups/professions`);
         if (res.data?.status === "success") {
           const accents = [
             "from-[var(--primary)] to-[#a57b30]",
@@ -89,18 +89,16 @@ export default function HomePage() {
       } finally {
         setProfessionsLoading(false);
       }
-    };
-
-    fetchProfessions();
-  }, [locale, t]);
+  }, [t]);
 
   useEffect(() => {
-    const fetchPartners = async () => {
+    fetchProfessions();
+  }, [fetchProfessions]);
+
+  const fetchPartners = useCallback(async () => {
       try {
         setPartnersLoading(true);
-        const res = await apiClient.get(`/lookups/partners`, {
-          headers: { "Accept-Language": locale },
-        });
+        const res = await apiClient.get(`/lookups/partners`);
         if (res.data?.status === "success") {
           setPartners(res.data.data || []);
         }
@@ -109,13 +107,13 @@ export default function HomePage() {
       } finally {
         setPartnersLoading(false);
       }
-    };
-
-    fetchPartners();
-  }, [locale]);
+  }, []);
 
   useEffect(() => {
-    const fetchJobs = async () => {
+    fetchPartners();
+  }, [fetchPartners]);
+
+  const fetchJobs = useCallback(async () => {
       try {
         setJobsLoading(true);
         const params = new URLSearchParams({ per_page: "6" });
@@ -143,7 +141,6 @@ export default function HomePage() {
                       localStorage.getItem("auth_token") || ""
                     }`,
                   }),
-              "Accept-Language": locale,
             },
           }
         );
@@ -157,18 +154,16 @@ export default function HomePage() {
       } finally {
         setJobsLoading(false);
       }
-    };
-
-    fetchJobs();
-  }, [activeProfileId, isAuthenticated, locale, getCountryId]);
+  }, [activeProfileId, isAuthenticated, getCountryId]);
 
   useEffect(() => {
-    const fetchTalents = async () => {
+    fetchJobs();
+  }, [fetchJobs]);
+
+  const fetchTalents = useCallback(async () => {
       try {
         setTalentsLoading(true);
-        const res = await apiClient.get("/talents?per_page=8", {
-          headers: { "Accept-Language": locale },
-        });
+        const res = await apiClient.get("/talents?per_page=8");
         if (res.data?.status === "success") {
           setTalents(res.data.data || []);
         }
@@ -177,10 +172,21 @@ export default function HomePage() {
       } finally {
         setTalentsLoading(false);
       }
-    };
+  }, []);
 
+  useEffect(() => {
     fetchTalents();
-  }, [locale]);
+  }, [fetchTalents]);
+
+  // Refetch all data when language changes
+  useLanguageSwitch(async () => {
+    await Promise.all([
+      fetchProfessions(),
+      fetchPartners(),
+      fetchJobs(),
+      fetchTalents(),
+    ]);
+  });
 
   const handleProfessionClick = (id: number) => {
     router.push(`/talents?profession_ids=${id}`);
@@ -192,7 +198,6 @@ export default function HomePage() {
       <HeroBanner
         isAuthenticated={isAuthenticated}
         hydrated={hydrated}
-        locale={locale}
         kicker={t("home.content.hero.kicker")}
         ctaRegister={t("home.content.hero.ctaRegister")}
         ctaLogin={t("home.content.hero.ctaLogin")}

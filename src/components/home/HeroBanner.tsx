@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getBanners, type Banner } from "@/lib/api/banners";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 
 interface HeroBannerProps {
   isAuthenticated: boolean;
@@ -20,7 +21,6 @@ interface HeroBannerProps {
   ctaLogin: string;
   ctaDashboard: string;
   ctaBrowse: string;
-  locale: string;
   metrics: {
     speed: string;
     profiles: string;
@@ -35,30 +35,33 @@ export default function HeroBanner({
   ctaRegister,
   ctaDashboard,
   ctaBrowse,
-  locale,
 }: HeroBannerProps) {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Fetch banners from API
-  useEffect(() => {
-    const fetchBanners = async () => {
-      try {
-        setLoading(true);
-        const response = await getBanners(locale);
-        if (response.success && response.data && response.data.length > 0) {
-          setBanners(response.data);
-        }
-      } catch (error) {
-        console.error("Failed to load banners:", error);
-      } finally {
-        setLoading(false);
+  const fetchBanners = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await getBanners();
+      if (response.success && response.data && response.data.length > 0) {
+        setBanners(response.data);
       }
-    };
+    } catch (error) {
+      console.error("Failed to load banners:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
+  // Initial fetch
+  useEffect(() => {
     fetchBanners();
-  }, [locale]);
+  }, [fetchBanners]);
+
+  // Auto-refetch on language change
+  useLanguageSwitch(fetchBanners);
 
   // Auto-play banners
   useEffect(() => {

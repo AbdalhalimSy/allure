@@ -1,27 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getApiHeaders, getAuthApiHeaders } from "@/lib/api/headers";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
+import { getApiHeaders, extractBearerToken } from "@/lib/api/headers";
+import { buildBackendUrl } from "@/lib/config/api-config";
+import { successResponse } from "@/lib/api/response";
+import { handleAuthenticatedRequest, fetchFromBackend, validateBackendResponse } from "@/lib/api/route-handler";
 
 export async function GET(request: NextRequest) {
   try {
-    // Get query parameters from the request URL
-    const { searchParams } = new URL(request.url);
-    const queryString = searchParams.toString();
+    const params = Object.fromEntries(new URL(request.url).searchParams);
+    const token = extractBearerToken(request);
 
-    const url = queryString
-      ? `${BACKEND_URL}/talents?${queryString}`
-      : `${BACKEND_URL}/talents`;
+    // If authenticated, use handleAuthenticatedRequest for consistency
+    if (token) {
+      return handleAuthenticatedRequest(request, async ({ token: authToken, request: req }) => {
+        const response = await fetchFromBackend(req, authToken, "/talents", { params });
+        const data = await validateBackendResponse(response);
+        return successResponse(data);
+      });
+    }
 
-    // Forward request to backend with API key and optional auth
-    const authHeader = request.headers.get("authorization");
-    const token = authHeader && authHeader.startsWith("Bearer ")
-      ? authHeader.replace("Bearer ", "")
-      : null;
-
+    // Public endpoint - no authentication required
+    const url = buildBackendUrl("/talents", params);
     const response = await fetch(url, {
       method: "GET",
-      headers: token ? getAuthApiHeaders(request, token) : getApiHeaders(request),
+      headers: getApiHeaders(request),
     });
 
     const data = await response.json();

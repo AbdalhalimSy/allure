@@ -5,9 +5,10 @@ import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
 import Label from "@/components/ui/Label";
 import Switch from "@/components/ui/Switch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Loader from "@/components/ui/Loader";
 import { TalentFilters } from "@/types/talent";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import {
   Search,
   SlidersHorizontal,
@@ -59,68 +60,72 @@ export default function TalentFilterBar({
   const [loadingLookups, setLoadingLookups] = useState(true);
 
   // Fetch lookup data
-  useEffect(() => {
-    const fetchLookups = async () => {
-      try {
-        setLoadingLookups(true);
-        // Avoid hammering the API; cache responses and retry on 429
-        const countriesRes = await fetchWithRetry(() =>
-          cachedGet(`countries:${locale}`, () =>
-            apiClient.get(`/lookups/countries?lang=${locale}`)
-          )
-        );
-        const nationalitiesRes = await fetchWithRetry(() =>
-          cachedGet(`nationalities:${locale}`, () =>
-            apiClient.get(`/lookups/nationalities?lang=${locale}`)
-          )
-        );
-        const ethnicitiesRes = await fetchWithRetry(() =>
-          cachedGet(`ethnicities:${locale}`, () =>
-            apiClient.get(`/lookups/ethnicities?lang=${locale}`)
-          )
-        );
-        const professionsRes = await fetchWithRetry(() =>
-          cachedGet(`professions:${locale}`, () =>
-            apiClient.get(`/lookups/professions?lang=${locale}`)
-          )
-        );
-        const appearanceRes = await fetchWithRetry(() =>
-          cachedGet(`appearance:${locale}`, () =>
-            apiClient.get(`/lookups/appearance-options?lang=${locale}`)
-          )
-        );
+  const fetchLookups = useCallback(async () => {
+    try {
+      setLoadingLookups(true);
+      // Avoid hammering the API; cache responses and retry on 429
+      const countriesRes = await fetchWithRetry(() =>
+        cachedGet(`countries:${locale}`, () =>
+          apiClient.get('/lookups/countries')
+        )
+      );
+      const nationalitiesRes = await fetchWithRetry(() =>
+        cachedGet(`nationalities:${locale}`, () =>
+          apiClient.get('/lookups/nationalities')
+        )
+      );
+      const ethnicitiesRes = await fetchWithRetry(() =>
+        cachedGet(`ethnicities:${locale}`, () =>
+          apiClient.get('/lookups/ethnicities')
+        )
+      );
+      const professionsRes = await fetchWithRetry(() =>
+        cachedGet(`professions:${locale}`, () =>
+          apiClient.get('/lookups/professions')
+        )
+      );
+      const appearanceRes = await fetchWithRetry(() =>
+        cachedGet(`appearance:${locale}`, () =>
+          apiClient.get('/lookups/appearance-options')
+        )
+      );
 
-        if (countriesRes.data.status === "success") {
-          const countriesData = countriesRes.data.data;
-          setCountries(countriesData);
-        }
-        if (nationalitiesRes.data.status === "success") {
-          const nationalitiesData = nationalitiesRes.data.data;
-          setNationalities(nationalitiesData);
-        }
-        if (ethnicitiesRes.data.status === "success") {
-          const ethnicitiesData = ethnicitiesRes.data.data;
-          setEthnicities(ethnicitiesData);
-        }
-        if (professionsRes.data.status === "success") {
-          const professionsData = professionsRes.data.data;
-          setProfessions(professionsData);
-        }
-        if (appearanceRes.data.status === "success") {
-          const hairColorsData = appearanceRes.data.data.hair_colors || [];
-          const eyeColorsData = appearanceRes.data.data.eye_colors || [];
-          setHairColors(hairColorsData);
-          setEyeColors(eyeColorsData);
-        }
-      } catch (error) {
-        logger.error("Failed to fetch lookups", error);
-      } finally {
-        setLoadingLookups(false);
+      if (countriesRes.data.status === "success") {
+        const countriesData = countriesRes.data.data;
+        setCountries(countriesData);
       }
-    };
-
-    fetchLookups();
+      if (nationalitiesRes.data.status === "success") {
+        const nationalitiesData = nationalitiesRes.data.data;
+        setNationalities(nationalitiesData);
+      }
+      if (ethnicitiesRes.data.status === "success") {
+        const ethnicitiesData = ethnicitiesRes.data.data;
+        setEthnicities(ethnicitiesData);
+      }
+      if (professionsRes.data.status === "success") {
+        const professionsData = professionsRes.data.data;
+        setProfessions(professionsData);
+      }
+      if (appearanceRes.data.status === "success") {
+        const hairColorsData = appearanceRes.data.data.hair_colors || [];
+        const eyeColorsData = appearanceRes.data.data.eye_colors || [];
+        setHairColors(hairColorsData);
+        setEyeColors(eyeColorsData);
+      }
+    } catch (error) {
+      logger.error("Failed to fetch lookups", error);
+    } finally {
+      setLoadingLookups(false);
+    }
   }, [locale]);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchLookups();
+  }, [fetchLookups]);
+
+  // Auto-refetch on language change
+  useLanguageSwitch(fetchLookups);
 
   // Keep local state in sync when parent resets/changes filters externally
   useEffect(() => {

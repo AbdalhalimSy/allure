@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import JobFilterBar from "@/components/jobs/filters/JobFilterBar";
 import { JobFilters } from "@/types/job";
 import { JobsHero } from "./_components/JobsHero";
@@ -35,6 +36,11 @@ export default function JobsPage() {
     setHasMore,
     setMeta,
   } = useJobs(showEligibleOnly);
+
+  // Refetch when language changes
+  useLanguageSwitch(() => {
+    fetchJobs(1, true);
+  });
 
   // Fetch jobs when filters, profile, or eligible toggle changes (first page)
   useEffect(() => {

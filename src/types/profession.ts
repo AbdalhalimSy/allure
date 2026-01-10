@@ -7,6 +7,8 @@ export interface SubProfession {
   requires_audio: boolean;
   requires_languages: boolean;
   requires_sizes: boolean;
+  requires_socials?: boolean;
+  requires_socials_description?: string | null;
 }
 
 export interface Profession {
@@ -17,6 +19,7 @@ export interface Profession {
   requires_audio: boolean;
   requires_languages: boolean;
   requires_socials: boolean;
+  requires_socials_description?: string | null;
   sub_professions: SubProfession[];
 }
 

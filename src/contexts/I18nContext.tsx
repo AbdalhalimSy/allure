@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
+import { languageSwitchHandler } from '@/lib/api/language-switch-handler';
 import enCommon from '@/lib/locales/en/common.json';
 import enHome from '@/lib/locales/en/home.json';
 import enAccountMain from '@/lib/locales/en/account-main.json';
@@ -106,6 +107,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setLocale(next);
     try {
       localStorage.setItem('locale', next);
+      // Trigger language switch handler to notify all registered components
+      languageSwitchHandler.switchLocale(next).catch((error) => {
+        console.error('Error during language switch:', error);
+      });
     } catch {}
   }, []);
 

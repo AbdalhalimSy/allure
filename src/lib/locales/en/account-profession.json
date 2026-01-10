@@ -71,7 +71,8 @@
     "videoFor": "Video is required for {{label}}",
     "audioFor": "Audio is required for {{label}}",
     "languageFor": "At least one language is required for {{label}}",
-    "socialFor": "At least one social media link is required for {{label}}"
+    "socialFor": "At least one social media link is required for {{label}}",
+    "socialRequired": "Social profiles are required for this profession."
   },
   "success": "Professional information saved successfully",
   "buttons": {
@@ -119,13 +120,18 @@
     "addFirst": "Add Your First Link",
     "empty": "No social media links added yet",
     "followers": "Followers (optional)",
+    "url": {
+      "label": "Profile URL"
+    },
     "platform": {
+      "label": "Platform",
       "instagram": "Instagram",
       "facebook": "Facebook",
       "twitter": "Twitter/X",
       "youtube": "YouTube",
       "linkedin": "LinkedIn",
       "tiktok": "TikTok",
+      "snapchat": "Snapchat",
       "other": "Other"
     }
   }

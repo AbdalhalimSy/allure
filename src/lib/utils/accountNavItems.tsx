@@ -15,7 +15,6 @@ import {
   calculateProfessionCompletion,
   calculateExperienceCompletion,
   calculatePortfolioCompletion,
-  calculatePhotosCompletion,
 } from "./profileCompletion";
 
 export const getAccountNavItems = (profile: ProfileData | undefined) => {

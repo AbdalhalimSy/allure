@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import Loader from "@/components/ui/Loader";
 import JobApplicationModal from "@/components/jobs/modals/JobApplicationModal";
 import { useAuth } from "@/contexts/AuthContext";
@@ -20,6 +21,9 @@ export default function JobDetailPage() {
   const { job, loading, error, fetchJob } = useJobDetail(params.id as string);
   const { selectedRole, isApplicationOpen, handleApply, closeApplicationModal } =
     useJobApply(job);
+
+  // Refetch when language changes
+  useLanguageSwitch(fetchJob);
 
   useEffect(() => {
     fetchJob();

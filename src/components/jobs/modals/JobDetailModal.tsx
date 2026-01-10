@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import { AlertCircle, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import Loader from "@/components/ui/Loader";
 import JobApplicationModal from "./JobApplicationModal";
 import { useJobDetail } from "@/app/jobs/_hooks/useJobDetail";
@@ -23,6 +24,13 @@ export default function JobDetailModal({ jobId, isOpen, onClose }: JobDetailModa
   const { job, loading, error, fetchJob } = useJobDetail(normalizedJobId || "");
   const { selectedRole, isApplicationOpen, handleApply, closeApplicationModal } =
     useJobApply(job);
+
+  // Refetch when language changes
+  useLanguageSwitch(() => {
+    if (isOpen && normalizedJobId) {
+      fetchJob();
+    }
+  });
 
   useEffect(() => {
     if (isOpen && normalizedJobId) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { languageSwitchHandler } from './language-switch-handler';
 
 // Simple token store (in-memory + localStorage hydration)
 let authToken: string | null = null;
@@ -14,13 +15,8 @@ const apiClient = axios.create({
 // Resolve the preferred locale for API requests
 function getPreferredLocale(): string {
   if (typeof window === 'undefined') return 'en';
-  const stored = localStorage.getItem('locale');
-  if (stored === 'ar' || stored === 'en') return stored;
-  const navLang = navigator.language?.startsWith('ar') ? 'ar' : 'en';
-  try {
-    localStorage.setItem('locale', navLang);
-  } catch {}
-  return navLang;
+  // Use languageSwitchHandler as single source of truth
+  return languageSwitchHandler.getLocale();
 }
 
 // Get current profile ID from localStorage

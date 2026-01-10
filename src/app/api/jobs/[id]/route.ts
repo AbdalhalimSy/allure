@@ -1,34 +1,16 @@
 
-import { NextRequest, NextResponse } from "next/server";
-import { getAuthApiHeaders } from "@/lib/api/headers";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
+import { NextRequest } from "next/server";
+import { handleAuthenticatedRequest, fetchFromBackend, validateBackendResponse } from "@/lib/api/route-handler";
+import { successResponse } from "@/lib/api/response";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  try {
+  return handleAuthenticatedRequest(request, async ({ token, request: req }) => {
     const { id } = await params;
-    const { searchParams } = new URL(request.url);
-    const queryString = searchParams.toString();
-    
-    const url = queryString
-      ? `${BACKEND_URL}/jobs/${id}?${queryString}`
-      : `${BACKEND_URL}/jobs/${id}`;
+    const searchParams = Object.fromEntries(new URL(req.url).searchParams);
 
-    // Get authorization token from the request
-    const authHeader = request.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "") || "";
+    const response = await fetchFromBackend(req, token, `/jobs/${id}`, { params: searchParams });
+    const data = await validateBackendResponse(response);
 
-    const response = await fetch(url, {
-      method: "GET",
-      headers: getAuthApiHeaders(request, token),
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json({ status: "error", message: data.message || "Job not found.", data: null }, { status: response.status });
-    }
-    return NextResponse.json(data);
-  } catch {
-    return NextResponse.json({ status: "error", message: "Internal server error", data: null }, { status: 500 });
-  }
+    return successResponse(data);
+  });
 }

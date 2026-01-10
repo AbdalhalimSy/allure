@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useI18n } from "@/contexts/I18nContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import { getSubscriptionPackages } from "@/lib/api/subscriptions";
 import { initiatePayment, redirectToPaymentGateway } from "@/lib/api/payments";
 import type { SubscriptionPackage } from "@/types/subscription";
@@ -24,7 +25,7 @@ import Button from "@/components/ui/Button";
 export default function PackagesPage() {
   const router = useRouter();
   const { data: user } = useAuth();
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,7 +40,7 @@ export default function PackagesPage() {
   const loadPackages = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await getSubscriptionPackages(locale);
+      const response = await getSubscriptionPackages();
       if (response.status === "success" && Array.isArray(response.data)) {
         setPackages(response.data);
         // Auto-select the first package if available
@@ -52,7 +53,7 @@ export default function PackagesPage() {
     } finally {
       setLoading(false);
     }
-  }, [locale]);
+  }, []);
 
   useEffect(() => {
     loadPackages();
@@ -64,6 +65,9 @@ export default function PackagesPage() {
       }
     }
   }, [loadPackages]);
+
+  // Auto-refetch on language change
+  useLanguageSwitch(loadPackages);
 
   const handleProceedToPayment = async () => {
     if (!user) {

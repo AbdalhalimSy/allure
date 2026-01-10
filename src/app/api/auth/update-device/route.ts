@@ -1,37 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getAuthApiHeaders } from "@/lib/api/headers";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://allureportal.sawatech.ae/api";
+import { NextRequest } from "next/server";
+import { handleAuthenticatedRequest, fetchFromBackend, validateBackendResponse } from "@/lib/api/route-handler";
+import { successResponse } from "@/lib/api/response";
 
 export async function POST(request: NextRequest) {
-  try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  return handleAuthenticatedRequest(request, async ({ token, request: req }) => {
+    const body = await req.json();
 
-    const token = authHeader.replace("Bearer ", "");
-    const body = await request.json();
-
-    const response = await fetch(`${BACKEND_URL}/auth/update-device`, {
+    const response = await fetchFromBackend(req, token, "/auth/update-device", {
       method: "POST",
-      headers: getAuthApiHeaders(request, token),
-      body: JSON.stringify(body),
+      body,
     });
+    const data = await validateBackendResponse(response);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: data.message || "Failed to register device" },
-        { status: response.status }
-      );
-    }
-
-    return NextResponse.json(data, { status: response.status });
-  } catch (error) {
-    console.error("Update device error", error);
-    const message = error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
+    return successResponse(data);
+  });
 }

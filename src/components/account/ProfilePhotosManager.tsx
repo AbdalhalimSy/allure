@@ -39,8 +39,7 @@ export default function ProfilePhotosManager() {
         setError("No active profile selected");
         return;
       }
-      const token = localStorage.getItem("auth_token") || "";
-      const response = await getProfilePhotos(activeProfileId, token);
+      const response = await getProfilePhotos(activeProfileId);
       if (response.success) {
         setPhotos(response.data);
       }
@@ -87,8 +86,7 @@ export default function ProfilePhotosManager() {
         setError("No active profile selected");
         return;
       }
-      const token = localStorage.getItem("auth_token") || "";
-      const response = await uploadProfilePhoto(file, activeProfileId, token);
+      const response = await uploadProfilePhoto(file, activeProfileId);
 
       if (response.success) {
         setSuccessMessage("Photo uploaded! Waiting for admin approval.");
@@ -107,8 +105,11 @@ export default function ProfilePhotosManager() {
 
     try {
       setError(null);
-      const token = localStorage.getItem("auth_token") || "";
-      const response = await deleteProfilePhoto(photoId, token);
+      if (!activeProfileId) {
+        setError("No active profile selected");
+        return;
+      }
+      const response = await deleteProfilePhoto(photoId, activeProfileId);
 
       if (response.success) {
         setSuccessMessage("Photo deleted successfully");

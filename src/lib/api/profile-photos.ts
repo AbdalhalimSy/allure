@@ -1,8 +1,10 @@
 /**
  * Profile Photos API Service
+ * Uses centralized apiClient for consistent auth and error handling
  */
 
-import {
+import apiClient from './client';
+import type {
   ProfilePhotosResponse,
   UploadPhotoResponse,
   UpdatePhotoResponse,
@@ -11,79 +13,37 @@ import {
 
 /**
  * Fetch all profile photos for a specific profile
- * 
- * BREAKING CHANGE: Now requires profile_id parameter
  */
 export async function getProfilePhotos(
-  profileId: number,
-  token: string
+  profileId: number
 ): Promise<ProfilePhotosResponse> {
-  const response = await fetch(`/api/profile-photos?profile_id=${profileId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-    },
+  const { data } = await apiClient.get<ProfilePhotosResponse>('/profile-photos', {
+    params: { profile_id: profileId },
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to fetch profile photos");
-  }
-
   return data;
 }
 
 /**
  * Upload a new profile photo
- * 
- * BREAKING CHANGE: Now requires profile_id in the request body
  */
 export async function uploadProfilePhoto(
   file: File,
-  profileId: number,
-  token: string
+  profileId: number
 ): Promise<UploadPhotoResponse> {
   const formData = new FormData();
   formData.append("profile_picture", file);
   formData.append("profile_id", profileId.toString());
 
-  const response = await fetch("/api/profile-photos", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to upload profile photo");
-  }
-
-  return data;
-}
-
-/**
- * Mark a photo as profile picture
- * 
- * NOTE: This endpoint is DEPRECATED. Use uploadProfilePhoto to upload a new photo instead.
- * Once approved by admin, the new photo becomes the profile picture automatically.
- */
-export async function markAsProfilePicture(
-  photoId: number,
-  token: string
-): Promise<UpdatePhotoResponse> {
-  // Deprecated: log the attempted usage for debugging while keeping signature intact
-  console.warn("markAsProfilePicture is deprecated; upload a new photo instead", {
-    photoId,
-    hasToken: Boolean(token),
-  });
-  throw new Error(
-    "This endpoint is deprecated. To update your profile photo, please upload a new one using uploadProfilePhoto(). Your current photo will remain active until the new one is approved."
+  const { data } = await apiClient.post<UploadPhotoResponse>(
+    '/profile-photos',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
+  return data;
 }
 
 /**
@@ -91,21 +51,31 @@ export async function markAsProfilePicture(
  */
 export async function deleteProfilePhoto(
   photoId: number,
-  token: string
+  profileId: number
 ): Promise<DeletePhotoResponse> {
-  const response = await fetch(`/api/profile-photos/${photoId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-    },
-  });
+  const { data } = await apiClient.delete<DeletePhotoResponse>(
+    `/profile-photos/${photoId}`,
+    {
+      params: { profile_id: profileId },
+    }
+  );
+  return data;
+}
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to delete profile photo");
-  }
-
+/**
+ * Update a profile photo (mark as profile picture)
+ */
+export async function updateProfilePhoto(
+  photoId: number,
+  profileId: number,
+  payload: any
+): Promise<UpdatePhotoResponse> {
+  const { data } = await apiClient.put<UpdatePhotoResponse>(
+    `/profile-photos/${photoId}`,
+    payload,
+    {
+      params: { profile_id: profileId },
+    }
+  );
   return data;
 }

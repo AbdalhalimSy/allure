@@ -414,6 +414,13 @@ export default function ProfessionEntryForm({
             onChange={(socials) => onChange({ ...entry, socials })}
             disabled={disabled}
             required={requiresSocials}
+            description={
+              requiresSocials
+                ? selectedSubProfession?.requires_socials_description ||
+                  selectedProfession?.requires_socials_description ||
+                  undefined
+                : undefined
+            }
           />
         </div>
       </div>

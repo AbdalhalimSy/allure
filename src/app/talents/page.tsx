@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import TalentCard from "@/components/talent/TalentCard";
 import TalentDetailModal from "@/components/talent/TalentDetailModal";
 import TalentFilterBar from "@/components/talent/TalentFilterBar";
@@ -16,7 +17,7 @@ import { Users, AlertCircle } from "lucide-react";
 export default function TalentsPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const { getCountryId } = useCountryFilter();
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,9 +94,6 @@ export default function TalentsPage() {
 
         const response = await fetch(`/api/talents?${params.toString()}`, {
           signal: abortRef.current.signal,
-          headers: {
-            "Accept-Language": locale,
-          },
         });
 
         if (!response.ok) {
@@ -153,14 +151,19 @@ export default function TalentsPage() {
         }
       }
     },
-    [filters, locale, getCountryId]
+    [filters, getCountryId]
   );
 
   useEffect(() => {
     if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
       fetchTalents(1, true);
     }
-  }, [filters, locale, fetchTalents]);
+  }, [filters, fetchTalents]);
+
+  // Refetch when language changes
+  useLanguageSwitch(() => {
+    fetchTalents(1, true);
+  });
 
   // Intersection Observer for infinite scroll
   useEffect(() => {

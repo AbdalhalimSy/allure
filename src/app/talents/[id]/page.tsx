@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
+import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
 import Image from "next/image";
 import Loader from "@/components/ui/Loader";
 import AccentTag from "@/components/ui/AccentTag";
@@ -33,7 +34,7 @@ import {
 export default function TalentDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const [talent, setTalent] = useState<Talent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,11 +48,7 @@ export default function TalentDetailPage() {
 
       // Fetch from talents list - the API doesn't have a single talent endpoint
       // We'll get the full list and filter client-side, or we can optimize later
-      const response = await fetch(`/api/talents?per_page=100`, {
-        headers: {
-          "Accept-Language": locale,
-        },
-      });
+      const response = await fetch(`/api/talents?per_page=100`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch talent details");
@@ -77,11 +74,14 @@ export default function TalentDetailPage() {
     } finally {
       setLoading(false);
     }
-  }, [params.id, locale]);
+  }, [params.id]);
 
   useEffect(() => {
     fetchTalent();
-  }, [params.id, locale, fetchTalent]);
+  }, [fetchTalent]);
+
+  // Refetch when language changes
+  useLanguageSwitch(fetchTalent);
 
   // Set selected photo when talent loads
   useEffect(() => {

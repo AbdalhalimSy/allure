@@ -3,9 +3,9 @@
  * Eliminates code duplication across multiple profile/filter components
  */
 
-import { useState, useEffect, useMemo } from 'react';
-import { useI18n } from '@/contexts/I18nContext';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import apiClient from '@/lib/api/client';
+import { useLanguageSwitch } from '@/hooks/useLanguageSwitch';
 
 export interface LookupData {
   nationalities: any[];
@@ -48,7 +48,6 @@ const DEFAULT_OPTIONS: LookupOptions = {
  * });
  */
 export function useLookupData(options: LookupOptions = {}) {
-  const { locale } = useI18n();
   
   // Stabilize options to prevent unnecessary re-fetches
   const mergedOptions = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [options]);
@@ -70,8 +69,7 @@ export function useLookupData(options: LookupOptions = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchLookups = async () => {
+  const fetchLookups = useCallback(async () => {
       try {
         setLoading(true);
         setError(null);
@@ -80,17 +78,17 @@ export function useLookupData(options: LookupOptions = {}) {
         const keys: ('countries' | 'nationalities' | 'ethnicities')[] = [];
 
         if (mergedOptions.fetchCountries) {
-          requests.push(apiClient.get(`/lookups/countries?lang=${locale}`));
+          requests.push(apiClient.get(`/lookups/countries`));
           keys.push('countries');
         }
 
         if (mergedOptions.fetchNationalities) {
-          requests.push(apiClient.get(`/lookups/nationalities?lang=${locale}`));
+          requests.push(apiClient.get(`/lookups/nationalities`));
           keys.push('nationalities');
         }
 
         if (mergedOptions.fetchEthnicities) {
-          requests.push(apiClient.get(`/lookups/ethnicities?lang=${locale}`));
+          requests.push(apiClient.get(`/lookups/ethnicities`));
           keys.push('ethnicities');
         }
 
@@ -126,7 +124,7 @@ export function useLookupData(options: LookupOptions = {}) {
         // Handle appearance options separately if requested
         if (mergedOptions.fetchAppearanceOptions) {
           try {
-            const appResponse = await apiClient.get(`/lookups/appearance-options?lang=${locale}`);
+            const appResponse = await apiClient.get(`/lookups/appearance-options`);
             if (appResponse.data.status === 'success' && appResponse.data.data) {
               const appOptions = appResponse.data.data;
               newData.hairColors = appOptions.hair_colors || [];
@@ -154,10 +152,15 @@ export function useLookupData(options: LookupOptions = {}) {
       } finally {
         setLoading(false);
       }
-    };
+  }, [mergedOptions]);
 
+  // Initial fetch
+  useEffect(() => {
     fetchLookups();
-  }, [locale, mergedOptions]);
+  }, [fetchLookups]);
+
+  // Refetch when language changes
+  useLanguageSwitch(fetchLookups);
 
   return { data, loading, error };
 }
