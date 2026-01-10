@@ -16,7 +16,6 @@ import { useJobs } from "./_hooks/useJobs";
 export default function JobsPage() {
   const { activeProfileId, isAuthenticated } = useAuth();
   const [showEligibleOnly, setShowEligibleOnly] = useState(false);
-  const [switching, setSwitching] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const observerTargetRef = useRef<HTMLDivElement>(null);
@@ -31,36 +30,12 @@ export default function JobsPage() {
     meta,
     hasMore,
     fetchJobs,
-    setJobs,
-    setLoading,
-    setHasMore,
-    setMeta,
   } = useJobs(showEligibleOnly);
 
   // Refetch when language changes
   useLanguageSwitch(() => {
     fetchJobs(1, true);
   });
-
-  // Fetch jobs when filters, profile, or eligible toggle changes (first page)
-  useEffect(() => {
-    // Skip if still loading auth
-    if (isAuthenticated && !activeProfileId) {
-      return;
-    }
-    
-    // Reset and fetch
-    setJobs([]);
-    setLoading(true);
-    setHasMore(true);
-    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
-    setSwitching(true);
-    
-    fetchJobs(1, true).finally(() => {
-      setSwitching(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, activeProfileId, showEligibleOnly, isAuthenticated]);
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
@@ -118,7 +93,7 @@ export default function JobsPage() {
           <EligibleToggle
             checked={showEligibleOnly}
             onChange={setShowEligibleOnly}
-            disabled={loading || switching}
+            disabled={loading}
           />
         )}
 
@@ -127,11 +102,11 @@ export default function JobsPage() {
             value={filters}
             onChange={handleFilterChange}
             onReset={handleReset}
-            loadingResults={loading || switching}
+            loadingResults={loading}
           />
         </div>
 
-        {switching || (loading && jobs.length === 0) ? (
+        {loading && jobs.length === 0 ? (
           <JobsLoadingState />
         ) : error ? (
           <JobsErrorState error={error} onRetry={() => fetchJobs(1, true)} />

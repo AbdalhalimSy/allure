@@ -152,7 +152,9 @@
       "resetAllTitle": "إعادة تعيين جميع المرشحات",
       "section": {
         "dates": "التواريخ",
-        "professional": "المهني"
+        "professional": "المهني",
+        "demographics": "الديموغرافية",
+        "appearance": "المظهر"
       },
       "eligible": "الأهلية",
       "allJobs": "جميع الوظائف",
@@ -164,7 +166,13 @@
       "selectCountries": "اختر البلدان...",
       "talentResidenceCountries": "بلدان إقامة المواهب",
       "nationalities": "الجنسيات",
-      "selectNationalities": "اختر الجنسيات..."
+      "selectNationalities": "اختر الجنسيات...",
+      "ethnicities": "الأعراق",
+      "selectEthnicities": "اختر الأعراق...",
+      "hairColors": "ألوان الشعر",
+      "selectHairColors": "اختر ألوان الشعر...",
+      "eyeColors": "ألوان العين",
+      "selectEyeColor": "اختر ألوان العين..."
     },
     "jobApplication": {
       "applyForRole": "التقديم على الدور",

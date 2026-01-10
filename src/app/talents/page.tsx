@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
 import { useLanguageSwitch } from "@/hooks/useLanguageSwitch";
@@ -16,7 +16,6 @@ import { Talent, TalentFilters, TalentsResponse } from "@/types/talent";
 import { Users, AlertCircle } from "lucide-react";
 
 export default function TalentsPage() {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { t } = useI18n();
   const { getCountryId } = useCountryFilter();
@@ -34,33 +33,27 @@ export default function TalentsPage() {
   const [hasMore, setHasMore] = useState(true);
   const [selectedTalent, setSelectedTalent] = useState<Talent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const requestIdRef = useRef(0); // Track the latest request to avoid stale loading flips
+  const requestIdRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const observerTargetRef = useRef<HTMLDivElement>(null);
-  const queryHydratedRef = useRef(false);
+  const initializedRef = useRef(false);
 
-  // Reset talents and show loading when pathname changes (navigation)
+  // Initialize filters from URL on mount
   useEffect(() => {
-    setTalents([]);
-    setLoading(true);
-    setHasMore(true);
-    setMeta({ current_page: 1, per_page: 12, total: 0, last_page: 1 });
-  }, [pathname]);
-
-  useEffect(() => {
-    if (queryHydratedRef.current) return;
+    if (initializedRef.current) return;
     const professionParam = searchParams.get("profession_ids");
     if (professionParam) {
-      setFilters((prev) => ({ ...prev, profession_ids: professionParam }));
+      setFilters({ profession_ids: professionParam });
     }
-    queryHydratedRef.current = true;
+    initializedRef.current = true;
   }, [searchParams]);
 
   const fetchTalents = useCallback(
     async (page: number = 1, reset: boolean = false) => {
       const requestId = ++requestIdRef.current;
+      
       try {
-        // Abort any in-flight request to avoid race conditions
+        // Abort previous request
         if (abortRef.current) {
           abortRef.current.abort();
         }
@@ -68,16 +61,14 @@ export default function TalentsPage() {
 
         if (reset) {
           setLoading(true);
+          setError(null);
         } else {
           setLoadingMore(true);
         }
 
-        if (page === 1) setError(null);
-
-        // Build query string from filters
+        // Build query params
         const params = new URLSearchParams();
 
-        // Add country filter if selected
         const countryId = getCountryId();
         if (countryId !== null) {
           params.append("country_ids", String(countryId));
@@ -89,7 +80,6 @@ export default function TalentsPage() {
           }
         });
 
-        // Add page and per_page
         params.append("page", String(page));
         params.append("per_page", "12");
 
@@ -98,24 +88,17 @@ export default function TalentsPage() {
           params,
         });
 
-        const result: TalentsResponse = response.data;
+        // API route may wrap response in extra data layer when authenticated
+        const result: TalentsResponse = response.data.data || response.data;
 
-        if (result.status === "success") {
-          if (reset) {
-            setTalents(result.data);
-            setMeta(
-              result.meta || {
-                current_page: 1,
-                per_page: 12,
-                total: 0,
-                last_page: 1,
-              }
-            );
-            setHasMore(
-              (result.meta?.current_page || 1) < (result.meta?.last_page || 1)
-            );
-          } else {
-            setTalents((prev) => [...prev, ...result.data]);
+        if (requestIdRef.current === requestId) {
+          if (result.status === "success") {
+            if (reset) {
+              setTalents(result.data);
+            } else {
+              setTalents((prev) => [...prev, ...result.data]);
+            }
+            
             setMeta(
               result.meta || {
                 current_page: page,
@@ -128,21 +111,19 @@ export default function TalentsPage() {
               (result.meta?.current_page || page) <
                 (result.meta?.last_page || 1)
             );
+          } else {
+            throw new Error(result.message || "Failed to load talents");
           }
-        } else {
-          throw new Error(result.message || "Failed to load talents");
         }
       } catch (err) {
-        // Ignore abort errors silently
         if (err instanceof DOMException && err.name === "AbortError") {
           return;
         }
-        if (reset) {
+        if (requestIdRef.current === requestId && reset) {
           setError(err instanceof Error ? err.message : "An error occurred");
         }
         console.error("Error fetching talents:", err);
       } finally {
-        // Only clear loading for the latest request so aborted/stale calls don't hide the skeleton
         if (requestIdRef.current === requestId) {
           setLoading(false);
           setLoadingMore(false);
@@ -152,10 +133,13 @@ export default function TalentsPage() {
     [filters, getCountryId]
   );
 
+  // Initial fetch and refetch on filters change
   useEffect(() => {
-    if (Object.keys(filters).length > 0 || Object.keys(filters).length === 0) {
-      fetchTalents(1, true);
-    }
+    if (!initializedRef.current) return;
+    
+    setTalents([]);
+    setHasMore(true);
+    fetchTalents(1, true);
   }, [filters, fetchTalents]);
 
   // Refetch when language changes

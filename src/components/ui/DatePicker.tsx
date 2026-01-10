@@ -63,9 +63,11 @@ export default function DatePicker({
   }, [t]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [showYearPicker, setShowYearPicker] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const pickerRef = useRef<HTMLDivElement>(null);
+  const yearListRef = useRef<HTMLDivElement>(null);
 
   // Parse the value to date object
   const selectedDate = useMemo(() => (value ? new Date(value) : null), [value]);
@@ -77,6 +79,18 @@ export default function DatePicker({
       setCurrentYear(selectedDate.getFullYear());
     }
   }, [selectedDate]);
+
+  // Scroll to current year when year picker opens
+  useEffect(() => {
+    if (showYearPicker && yearListRef.current) {
+      const yearElement = yearListRef.current.querySelector(
+        `[data-year="${currentYear}"]`
+      );
+      if (yearElement) {
+        yearElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+    }
+  }, [showYearPicker, currentYear]);
 
   // Close on outside click
   useEffect(() => {
@@ -136,6 +150,22 @@ export default function DatePicker({
     } else {
       setCurrentMonth(currentMonth + 1);
     }
+  };
+
+  const handleYearSelect = (year: number) => {
+    setCurrentYear(year);
+    setShowYearPicker(false);
+  };
+
+  const generateYearList = () => {
+    const currentYearNow = new Date().getFullYear();
+    const startYear = currentYearNow - 100;
+    const endYear = currentYearNow + 50;
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year);
+    }
+    return years;
   };
 
   const handleClear = (e: React.MouseEvent) => {
@@ -259,11 +289,15 @@ export default function DatePicker({
             <ChevronLeft className="h-5 w-5 rtl:scale-x-[-1]" />
           </button>
 
-          <div className="text-center">
+          <button
+            type="button"
+            onClick={() => setShowYearPicker(!showYearPicker)}
+            className="flex-1 rounded-lg px-3 py-1.5 text-center transition-all duration-200 hover:bg-gray-100"
+          >
             <div className="text-sm font-semibold text-gray-900 ">
               {MONTHS[currentMonth]} {currentYear}
             </div>
-          </div>
+          </button>
 
           <button
             type="button"
@@ -274,20 +308,48 @@ export default function DatePicker({
           </button>
         </div>
 
-        {/* Days of week */}
-        <div className="mb-2 grid grid-cols-7 gap-1">
-          {DAYS.map((day) => (
-            <div
-              key={day}
-              className="text-center text-xs font-semibold text-gray-500 "
-            >
-              {day}
+        {/* Year Picker */}
+        {showYearPicker ? (
+          <div
+            ref={yearListRef}
+            className="max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-gray-50/50 p-2"
+          >
+            <div className="grid grid-cols-3 gap-2">
+              {generateYearList().map((year) => (
+                <button
+                  key={year}
+                  type="button"
+                  data-year={year}
+                  onClick={() => handleYearSelect(year)}
+                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                    year === currentYear
+                      ? "bg-[#c49a47] text-white shadow-md scale-105"
+                      : "bg-white text-gray-700 hover:bg-gray-100 hover:scale-105"
+                  }`}
+                >
+                  {year}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <>
+            {/* Days of week */}
+            <div className="mb-2 grid grid-cols-7 gap-1">
+              {DAYS.map((day) => (
+                <div
+                  key={day}
+                  className="text-center text-xs font-semibold text-gray-500 "
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
 
-        {/* Calendar grid */}
-        <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+            {/* Calendar grid */}
+            <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+          </>
+        )}
 
         {/* Quick actions */}
         <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 ">

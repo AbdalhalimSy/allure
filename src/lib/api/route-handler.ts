@@ -66,7 +66,7 @@ export async function fetchFromBackend(
   const url = buildBackendUrl(endpoint, options.params);
   const headers = options.multipart
     ? getMultipartHeaders(request, token)
-    : getAuthApiHeaders(request, token);
+    : getAuthApiHeaders(request, token, { includeContentType: !!options.body });
 
   return fetch(url, {
     method: options.method || "GET",

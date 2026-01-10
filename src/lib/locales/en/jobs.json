@@ -152,7 +152,9 @@
       "resetAllTitle": "Reset All Filters",
       "section": {
         "dates": "Dates",
-        "professional": "Professional"
+        "professional": "Professional",
+        "demographics": "Talent Demographics",
+        "appearance": "Appearance"
       },
       "eligible": "Eligibility",
       "allJobs": "All Jobs",
@@ -164,7 +166,13 @@
       "selectCountries": "Select countries...",
       "talentResidenceCountries": "Talent Residence Countries",
       "nationalities": "Nationalities",
-      "selectNationalities": "Select nationalities..."
+      "selectNationalities": "Select nationalities...",
+      "ethnicities": "Ethnicities",
+      "selectEthnicities": "Select ethnicities...",
+      "hairColors": "Hair Colors",
+      "selectHairColors": "Select hair colors...",
+      "eyeColors": "Eye Colors",
+      "selectEyeColor": "Select eye colors..."
     },
     "jobApplication": {
       "applyForRole": "Apply for Role",

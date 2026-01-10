@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useCountryFilter } from "@/contexts/CountryFilterContext";
@@ -11,7 +11,7 @@ import {
 } from "@/types/job";
 
 export function useJobs(showEligibleOnly: boolean) {
-  const { activeProfileId, isAuthenticated } = useAuth();
+  const { activeProfileId, isAuthenticated, hydrated } = useAuth();
   const { t } = useI18n();
   const { getCountryId } = useCountryFilter();
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -28,7 +28,7 @@ export function useJobs(showEligibleOnly: boolean) {
   const [hasMore, setHasMore] = useState(true);
   const requestIdRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
-  const perPageRef = useRef(12);
+  const initialFetchRef = useRef(false);
 
   const fetchJobs = useCallback(
     async (page: number = 1, reset: boolean = false) => {
@@ -36,22 +36,18 @@ export function useJobs(showEligibleOnly: boolean) {
       const usePublic = !isAuthenticated || !activeProfileId;
 
       try {
-        // Only abort previous requests, don't abort the current one yet
-        const previousAbortController = abortRef.current;
-        abortRef.current = new AbortController();
-        
-        // Abort the previous request
-        if (previousAbortController) {
-          previousAbortController.abort();
+        // Abort previous request
+        if (abortRef.current) {
+          abortRef.current.abort();
         }
+        abortRef.current = new AbortController();
 
         if (reset) {
           setLoading(true);
+          setError(null);
         } else {
           setLoadingMore(true);
         }
-
-        if (page === 1) setError(null);
 
         // If showEligibleOnly is true, fetch from eligible-roles endpoint
         if (showEligibleOnly) {
@@ -60,10 +56,6 @@ export function useJobs(showEligibleOnly: boolean) {
               t("jobs.jobs.errors.authRequired") ||
                 "Login to view eligible roles"
             );
-            if (reset) {
-              setLoading(false);
-            }
-            setLoadingMore(false);
             return;
           }
 
@@ -82,14 +74,16 @@ export function useJobs(showEligibleOnly: boolean) {
               open_to_apply: true,
             })) as Job[];
 
-            setJobs(jobsData);
-            setMeta({
-              current_page: 1,
-              per_page: jobsData.length,
-              total: jobsData.length,
-              last_page: 1,
-            });
-            setHasMore(false);
+            if (requestIdRef.current === requestId) {
+              setJobs(jobsData);
+              setMeta({
+                current_page: 1,
+                per_page: jobsData.length,
+                total: jobsData.length,
+                last_page: 1,
+              });
+              setHasMore(false);
+            }
           } else {
             throw new Error(result.message || t("jobs.jobs.errors.loadFailed"));
           }
@@ -117,7 +111,7 @@ export function useJobs(showEligibleOnly: boolean) {
           });
 
           params.append("page", String(page));
-          params.append("per_page", String(perPageRef.current));
+          params.append("per_page", "12");
 
           const response = await apiClient.get(
             usePublic ? "/public/jobs" : "/jobs",
@@ -127,23 +121,17 @@ export function useJobs(showEligibleOnly: boolean) {
             }
           );
 
-          const result: JobsResponse = response.data;
-          if (result.status === "success" || result.status === true) {
-            if (reset) {
-              setJobs(result.data);
-              setMeta(
-                result.meta || {
-                  current_page: 1,
-                  per_page: 12,
-                  total: 0,
-                  last_page: 1,
-                }
-              );
-              setHasMore(
-                (result.meta?.current_page || 1) < (result.meta?.last_page || 1)
-              );
-            } else {
-              setJobs((prev) => [...prev, ...result.data]);
+          // API route wraps response in extra data layer: {data: {status, data, meta}}
+          const result: JobsResponse = response.data.data || response.data;
+          
+          if (requestIdRef.current === requestId) {
+            if (result.status === "success" || result.status === true) {
+              if (reset) {
+                setJobs(result.data);
+              } else {
+                setJobs((prev) => [...prev, ...result.data]);
+              }
+              
               setMeta(
                 result.meta || {
                   current_page: page,
@@ -156,14 +144,14 @@ export function useJobs(showEligibleOnly: boolean) {
                 (result.meta?.current_page || page) <
                   (result.meta?.last_page || 1)
               );
+            } else {
+              throw new Error(result.message || t("jobs.jobs.errors.loadFailed"));
             }
-          } else {
-            throw new Error(result.message || t("jobs.jobs.errors.loadFailed"));
           }
         }
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
-        if (reset) {
+        if (requestIdRef.current === requestId && reset) {
           setError(
             err instanceof Error ? err.message : t("jobs.jobs.errors.generic")
           );
@@ -186,6 +174,21 @@ export function useJobs(showEligibleOnly: boolean) {
     ]
   );
 
+  // Initial fetch and refetch on dependencies change
+  useEffect(() => {
+    // Wait for auth to hydrate
+    if (!hydrated) return;
+
+    // Skip if authenticated but no profile yet
+    if (isAuthenticated && !activeProfileId) return;
+
+    // Reset state and fetch
+    setJobs([]);
+    setHasMore(true);
+    initialFetchRef.current = true;
+    fetchJobs(1, true);
+  }, [hydrated, isAuthenticated, activeProfileId, showEligibleOnly, filters, fetchJobs]);
+
   return {
     jobs,
     loading,
@@ -196,9 +199,5 @@ export function useJobs(showEligibleOnly: boolean) {
     meta,
     hasMore,
     fetchJobs,
-    setJobs,
-    setLoading,
-    setHasMore,
-    setMeta,
   };
 }

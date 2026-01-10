@@ -153,8 +153,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         : "/profile/me";
       
       const { data } = await apiClient.get(url);
-      if (data.status === "success" && data.data) {
-        const { profile, talent, is_premium } = data.data;
+      // API response structure: { data: { status, data: { profile, talent } } }
+      if (data?.data?.status === "success" && data?.data?.data) {
+        const { profile, talent, is_premium } = data.data.data;
         
         // Set active profile ID if not already set
         if (!currentActiveId && talent?.primary_profile_id) {

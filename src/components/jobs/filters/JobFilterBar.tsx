@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import MultiSelect from "@/components/ui/MultiSelect";
-import SingleSelect from "@/components/ui/SingleSelect";
 import Label from "@/components/ui/Label";
 import Loader from "@/components/ui/Loader";
 import { JobFilters } from "@/types/job";
@@ -24,6 +23,12 @@ interface LookupOption {
   id: number;
   name: string;
   code?: string;
+  slug?: string;
+}
+
+interface AppearanceOptions {
+  hair_colors: LookupOption[];
+  eye_colors: LookupOption[];
 }
 
 type Props = {
@@ -48,17 +53,27 @@ export default function JobFilterBar({
   const [countries, setCountries] = useState<LookupOption[]>([]);
   const [professions, setProfessions] = useState<LookupOption[]>([]);
   const [nationalities, setNationalities] = useState<LookupOption[]>([]);
+  const [ethnicities, setEthnicities] = useState<LookupOption[]>([]);
+  const [hairColors, setHairColors] = useState<LookupOption[]>([]);
+  const [eyeColors, setEyeColors] = useState<LookupOption[]>([]);
   const [loadingLookups, setLoadingLookups] = useState(true);
 
   const fetchLookups = useCallback(async () => {
     try {
       setLoadingLookups(true);
-      const [countriesRes, professionsRes, nationalitiesRes] =
-        await Promise.all([
-          apiClient.get('/lookups/countries'),
-          apiClient.get('/lookups/professions'),
-          apiClient.get('/lookups/nationalities'),
-        ]);
+      const [
+        countriesRes,
+        professionsRes,
+        nationalitiesRes,
+        ethnicitiesRes,
+        appearanceRes,
+      ] = await Promise.all([
+        apiClient.get("/lookups/countries"),
+        apiClient.get("/lookups/professions"),
+        apiClient.get("/lookups/nationalities"),
+        apiClient.get("/lookups/ethnicities"),
+        apiClient.get("/lookups/appearance-options"),
+      ]);
 
       if (countriesRes.data.status === "success")
         setCountries(countriesRes.data.data);
@@ -66,6 +81,13 @@ export default function JobFilterBar({
         setProfessions(professionsRes.data.data);
       if (nationalitiesRes.data.status === "success")
         setNationalities(nationalitiesRes.data.data);
+      if (ethnicitiesRes.data.status === "success")
+        setEthnicities(ethnicitiesRes.data.data);
+      if (appearanceRes.data.status === "success") {
+        const appearance = appearanceRes.data.data as AppearanceOptions;
+        setHairColors(appearance.hair_colors || []);
+        setEyeColors(appearance.eye_colors || []);
+      }
     } catch (error) {
       logger.error("Failed to fetch job lookups", error);
     } finally {
@@ -172,7 +194,7 @@ export default function JobFilterBar({
               type="button"
               variant="secondary"
               onClick={handleReset}
- className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0"
+              className="hidden md:flex items-center gap-2 text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0"
             >
               <RotateCcw className="h-4 w-4" />
               <span>{t("jobs.jobsFilter.reset")}</span>
@@ -183,7 +205,7 @@ export default function JobFilterBar({
               type="button"
               variant="secondary"
               onClick={handleReset}
- className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3"
+              className="md:hidden flex items-center text-red-600 hover:bg-red-50 hover:text-red-700 shrink-0 px-2 sm:px-3"
               title={t("jobs.jobsFilter.resetAllTitle")}
             >
               <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -197,53 +219,14 @@ export default function JobFilterBar({
           showAdvanced
             ? "z-60 opacity-100 translate-y-0 max-h-[2000px] overflow-visible"
             : "z-0 opacity-0 -translate-y-2 max-h-0 overflow-hidden pointer-events-none"
- } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out `}
+        } rounded-2xl border border-gray-200/80 bg-white/95 shadow-lg backdrop-blur-xl transition-all duration-300 ease-in-out`}
         aria-hidden={!showAdvanced}
       >
         <div className="space-y-6 p-4 sm:p-6">
-          {/* Shooting Dates & Eligibility */}
-          <div className="space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="text-sm sm:text-base font-semibold text-gray-900 ">
-                {t("jobs.jobsFilter.section.dates")}
-              </h3>
-            </div>
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="space-y-2">
-                <Label>{t("jobs.jobsFilter.eligible")}</Label>
-                <SingleSelect
-                  options={[
-                    { value: "", label: t("jobs.jobsFilter.allJobs") },
-                    { value: "true", label: t("jobs.jobsFilter.eligibleOnly") },
-                    { value: "false", label: t("jobs.jobsFilter.notEligible") },
-                  ]}
-                  value={
-                    local.eligible === undefined
-                      ? ""
-                      : local.eligible
-                      ? "true"
-                      : "false"
-                  }
-                  onChange={(val) =>
-                    update({
-                      eligible:
-                        val === ""
-                          ? undefined
-                          : val === "true",
-                      page: 1,
-                    })
-                  }
-                  placeholder={t("jobs.jobsFilter.allJobs")}
-                  searchable={false}
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Professional & Location */}
           <div className="space-y-4">
- <div className="border-b border-gray-200/50 pb-2 ">
- <h3 className="text-sm sm:text-base font-semibold text-gray-900 ">
+            <div className="border-b border-gray-200/50 pb-2">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                 {t("jobs.jobsFilter.section.professional")}
               </h3>
             </div>
@@ -311,6 +294,17 @@ export default function JobFilterBar({
                   loading={loadingLookups}
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Talent Demographics */}
+          <div className="space-y-4">
+            <div className="border-b border-gray-200/50 pb-2">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900">
+                {t("jobs.jobsFilter.section.demographics")}
+              </h3>
+            </div>
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
                 <Label>{t("jobs.jobsFilter.nationalities")}</Label>
                 <MultiSelect
@@ -329,6 +323,80 @@ export default function JobFilterBar({
                     })
                   }
                   placeholder={t("jobs.jobsFilter.selectNationalities")}
+                  loading={loadingLookups}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("jobs.jobsFilter.ethnicities")}</Label>
+                <MultiSelect
+                  options={ethnicities}
+                  value={
+                    Array.isArray(local.ethnicity_ids)
+                      ? local.ethnicity_ids
+                      : local.ethnicity_ids
+                      ? [local.ethnicity_ids]
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      ethnicity_ids: ids.length ? ids : undefined,
+                      page: 1,
+                    })
+                  }
+                  placeholder={t("jobs.jobsFilter.selectEthnicities")}
+                  loading={loadingLookups}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Appearance */}
+          <div className="space-y-4">
+            <div className="border-b border-gray-200/50 pb-2">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900">
+                {t("jobs.jobsFilter.section.appearance")}
+              </h3>
+            </div>
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-2">
+                <Label>{t("jobs.jobsFilter.hairColors")}</Label>
+                <MultiSelect
+                  options={hairColors}
+                  value={
+                    Array.isArray(local.hair_color_ids)
+                      ? local.hair_color_ids
+                      : local.hair_color_ids
+                      ? [local.hair_color_ids]
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      hair_color_ids: ids.length ? ids : undefined,
+                      page: 1,
+                    })
+                  }
+                  placeholder={t("jobs.jobsFilter.selectHairColors")}
+                  loading={loadingLookups}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("jobs.jobsFilter.eyeColors")}</Label>
+                <MultiSelect
+                  options={eyeColors}
+                  value={
+                    Array.isArray(local.eye_color_ids)
+                      ? local.eye_color_ids
+                      : local.eye_color_ids
+                      ? [local.eye_color_ids]
+                      : []
+                  }
+                  onChange={(ids) =>
+                    update({
+                      eye_color_ids: ids.length ? ids : undefined,
+                      page: 1,
+                    })
+                  }
+                  placeholder={t("jobs.jobsFilter.selectEyeColor")}
                   loading={loadingLookups}
                 />
               </div>
